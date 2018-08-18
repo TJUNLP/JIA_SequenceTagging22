@@ -602,7 +602,7 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
     word_embedding = Embedding(input_dim=sourcevocabsize + 1,
                               output_dim=emd_dim,
                               input_length=input_seq_lenth,
-                              mask_zero=True,
+                              mask_zero=False,
                               trainable=True,
                               weights=[source_W])(word_input)
     word_embedding_dropout = Dropout(0.5)(word_embedding)
