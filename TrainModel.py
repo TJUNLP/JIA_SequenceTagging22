@@ -591,7 +591,7 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
     char_embedding = Embedding(input_dim= sourcecharsize,
                                output_dim=char_emd_dim,
                                batch_input_shape=(batch_size, input_seq_lenth, input_word_length),
-                               mask_zero=True,
+                               mask_zero=False,
                                trainable=True,
                                weights=[character_W])
     char_embedding2 = TimeDistributed(char_embedding)(char_input)
@@ -602,7 +602,7 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
     word_embedding = Embedding(input_dim=sourcevocabsize + 1,
                               output_dim=emd_dim,
                               input_length=input_seq_lenth,
-                              mask_zero=False,
+                              mask_zero=True,
                               trainable=True,
                               weights=[source_W])(word_input)
     word_embedding_dropout = Dropout(0.5)(word_embedding)
