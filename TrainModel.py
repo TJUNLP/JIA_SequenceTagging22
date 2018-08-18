@@ -11,7 +11,6 @@ from Evaluate import evaluation_NER, evaluation_NER2
 # from keras.layers.embeddings import Embedding
 from keras.layers import Flatten,Lambda,Conv2D
 from keras.layers.core import Dropout, Activation, Permute, RepeatVector
-from keras.legacy.layers import Merge
 from keras.layers.merge import concatenate, Concatenate, multiply, Dot
 from keras.layers import TimeDistributed, Input, Bidirectional, Dense, Embedding, LSTM, Conv1D, GlobalMaxPooling1D, RepeatVector, AveragePooling1D
 from keras.models import Model
@@ -20,7 +19,6 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from keras import optimizers
 from keras.layers.normalization import BatchNormalization
 from keras.callbacks import Callback
-from keras import regularizers
 # from keras.losses import my_cross_entropy_withWeight
 
 def get_training_batch_xy_bias(inputsX, entlabel_train, inputsY, max_s, max_t,
