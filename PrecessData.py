@@ -113,6 +113,7 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
     data_t_all=[]
     data_tO_all = []
     data_tBIOES_all = []
+    data_tType_all = []
     f = open(file,'r')
     fr = f.readlines()
 
@@ -120,6 +121,7 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
     data_t = []
     data_tO = []
     data_tBIOES = []
+    data_tType = []
     data_s = []
     for line in fr:
 
@@ -140,15 +142,21 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
                 targetvecBIOES[0] = 1
                 data_tBIOES.append(targetvecBIOES)
 
+                targetvecType = np.zeros(5 + 1)
+                targetvecType[0] = 1
+                data_tType.append(targetvecType)
+
             # print(data_s)
             # print(data_t)
             data_s_all.append(data_s)
             data_t_all.append(data_t)
             data_tO_all.append(data_tO)
             data_tBIOES_all.append(data_tBIOES)
+            data_tType_all.append(data_tType)
             data_t = []
             data_tO = []
             data_tBIOES = []
+            data_tType = []
             data_s = []
             count = 0
             continue
@@ -184,11 +192,25 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
             targetvecBIOES[5] = 1
         data_tBIOES.append(targetvecBIOES)
 
+        targetvecType = np.zeros(5 + 1)
+
+        if sent[4] == 'O':
+            targetvecType[1] = 1
+        elif 'LOC' in sent[4]:
+            targetvecType[2] = 1
+        elif 'ORG' in sent[4]:
+            targetvecType[3] = 1
+        elif 'PER' in sent[4]:
+            targetvecType[4] = 1
+        elif 'MISC' in sent[4]:
+            targetvecType[5] = 1
+        data_tType.append(targetvecType)
+
         count += 1
 
 
     f.close()
-    return [data_s_all, data_t_all, data_tO_all, data_tBIOES_all]
+    return [data_s_all, data_t_all, data_tO_all, data_tBIOES_all, data_tType_all]
 
 
 def make_idx_character_index(file, max_s, max_c, source_vob):

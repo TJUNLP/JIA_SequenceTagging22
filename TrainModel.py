@@ -621,25 +621,26 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
 
     BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode = 'concat')(embedding)
     # BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True))(word_embedding_dropout)
+    BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
-    BiLSTM_dropout = BatchNormalization(axis=1)(BiLSTM_dropout)
+    mlp2_hidden1 = TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
+    output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(mlp2_hidden1)
 
+    mlp2_hidden2 = TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
+    output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(mlp2_hidden2)
 
-    mlp2_hidden1 = TimeDistributed(Dense(50, activation='relu'))(BiLSTM_dropout)
-    output1 = TimeDistributed(Dense(2+1, activation='sigmoid', name='isOther'))(mlp2_hidden1)
-
-    mlp1_hidden1 =TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
-    mlp1_concat = concatenate([mlp2_hidden1, mlp1_hidden1], axis=-1)
-    mlp1_hidden2 = TimeDistributed(Dense(targetvocabsize+1, activation='relu'))(mlp1_concat)
+    mlp1_hidden3_1 =TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
+    # mlp1_concat = concatenate([mlp2_hidden1, mlp1_hidden1], axis=-1)
+    mlp1_hidden3_2 = TimeDistributed(Dense(targetvocabsize+1, activation='relu'))(mlp1_hidden3_1)
     crflayer = CRF(targetvocabsize+1, sparse_target=False, name='finall')
-    output12 = crflayer(mlp1_hidden2)
+    output3 = crflayer(mlp1_hidden3_2)
 
-    Models = Model([word_input, char_input], [output12, output1])
+    Models = Model([word_input, char_input], [output3, output1, output2])
     Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
-                   loss={'finall': crflayer.loss_function, 'isOther': 'binary_crossentropy'},
-                   loss_weights={'finall': 1., 'isOther': 1.},
-                   metrics={'finall': [crflayer.accuracy], 'isOther': ['acc']})
+                   loss={'finall': crflayer.loss_function, 'BIOES': 'categorical_crossentropy', 'Type': 'categorical_crossentropy'},
+                   loss_weights={'finall': 1., 'BIOES': 1., 'Type': 1.},
+                   metrics={'finall': [crflayer.accuracy], 'BIOES': ['acc'], 'Type': ['acc']})
 
     return Models
 
@@ -800,6 +801,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     y = np.asarray(traindata[1], dtype="int32")
     y_O = np.asarray(traindata[2], dtype="int32")
     y_BIOES = np.asarray(traindata[3], dtype="int32")
+    y_Type = np.asarray(traindata[4], dtype="int32")
     # entlabel_train = np.asarray(entlabel_traindata, dtype="int32")
     # poslabel_train = np.asarray(poslabel_traindata, dtype="int32")
     input_char = np.asarray(chartrain, dtype="int32")
@@ -807,6 +809,8 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     y_val = np.asarray(devdata[1], dtype="int32")
     y_O_val = np.asarray(devdata[2], dtype="int32")
     y_BIOES_val = np.asarray(devdata[3], dtype="int32")
+    y_Type_val = np.asarray(devdata[4], dtype="int32")
+
     input_char_val = np.asarray(chardev, dtype="int32")
 
     nn_model = SelectModel(Modelname, sourcevocabsize=len(source_vob), targetvocabsize=len(target_vob),
@@ -858,10 +862,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                           len(target_vob), target_idex_word,
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char], [y, y_O, y_BIOES],
+        history = nn_model.fit([x_word, input_char], [y, y_BIOES, y_Type],
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_val, y_O_val, y_BIOES_val]),
+                               validation_data=([x_word_val, input_char_val], [y_val, y_BIOES_val, y_Type_val]),
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
@@ -952,17 +956,17 @@ if __name__ == "__main__":
     maxlen = 50
 
 
-    modelname = 'creat_Model_BiLSTM_CRF'
+    # modelname = 'creat_Model_BiLSTM_CRF'
     modelname = 'Model_BiLSTM_CRF_multi2'
-    modelname = 'Model_BiLSTM_CnnDecoder_multi2'
+    # modelname = 'Model_BiLSTM_CnnDecoder_multi2'
     # modelname = 'creat_Model_BiLSTM_CnnDecoder'
 
     print(modelname)
 
     w2v_file = "./data/w2v/glove.6B.100d.txt"
-    datafile = "./data/model/data_fix_multi3.pkl"
+    datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./data/model/" + modelname + "_41.h5"
+    modelfile = "./model/" + modelname + "_21.h5"
 
     resultdir = "./data/result/"
 
