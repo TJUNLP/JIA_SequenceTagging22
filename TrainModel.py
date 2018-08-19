@@ -860,10 +860,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                           len(target_vob), target_idex_word,
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char], [y],
+        history = nn_model.fit([x_word, input_char], [y,y_BIOES,y_Type],
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_val]),
+                               validation_data=([x_word_val, input_char_val], [y_val, y_BIOES_val, y_Type_val]),
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
