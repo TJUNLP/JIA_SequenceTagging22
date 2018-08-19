@@ -954,8 +954,8 @@ if __name__ == "__main__":
     maxlen = 50
 
 
-    # modelname = 'creat_Model_BiLSTM_CRF'
-    modelname = 'Model_BiLSTM_CRF_multi2'
+    modelname = 'creat_Model_BiLSTM_CRF'
+    # modelname = 'Model_BiLSTM_CRF_multi2'
     # modelname = 'Model_BiLSTM_CnnDecoder_multi2'
     # modelname = 'creat_Model_BiLSTM_CnnDecoder'
 
@@ -964,7 +964,7 @@ if __name__ == "__main__":
     w2v_file = "./data/w2v/glove.6B.100d.txt"
     datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_21.h5"
+    modelfile = "./model/" + modelname + "_1.h5"
 
     resultdir = "./data/result/"
 
