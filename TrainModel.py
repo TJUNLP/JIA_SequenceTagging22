@@ -522,7 +522,7 @@ def creat_Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq
     char_embedding = Embedding(input_dim= sourcecharsize,
                                output_dim=char_emd_dim,
                                batch_input_shape=(batch_size, input_seq_lenth, input_word_length),
-                               mask_zero=True,
+                               mask_zero=False,
                                trainable=True,
                                weights=[character_W])
 
@@ -555,9 +555,8 @@ def creat_Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq
 
     BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode = 'concat')(embedding)
     # BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True))(word_embedding_dropout)
+    BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
-
-    BiLSTM_dropout = BatchNormalization(axis=1)(BiLSTM_dropout)
 
     TimeD = TimeDistributed(Dense(targetvocabsize+1))(BiLSTM_dropout)
     # TimeD = TimeDistributed(Dense(int(hidden_dim / 2)))(BiLSTM_dropout)
@@ -569,11 +568,11 @@ def creat_Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq
     model = crflayer(TimeD)#0.8746633147782367
     # # model = crf(BiLSTM_dropout)#0.870420501714492
 
-    Models = Model([word_input, char_input], model)
+    Models = Model([word_input, char_input], [model])
 
     # Models.compile(loss=loss, optimizer='adam', metrics=['acc'])
-    Models.compile(loss=crflayer.loss_function, optimizer='adam', metrics=[crflayer.accuracy])
-    # Models.compile(loss=crf.loss_function, optimizer=optimizers.RMSprop(lr=0.01), metrics=[crf.accuracy])
+    # Models.compile(loss=crflayer.loss_function, optimizer='adam', metrics=[crflayer.accuracy])
+    Models.compile(loss=crflayer.loss_function, optimizer=optimizers.RMSprop(lr=0.0005), metrics=[crflayer.accuracy])
 
     return Models
 
@@ -655,7 +654,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
     predictions = nn_model.predict([testx, testchar])
 
 
-    if len(predictions) >= 2:
+    if len(predictions) >= 2 and len(predictions) < 10:
 
         for si in range(0, len(predictions[0])):
 
@@ -665,7 +664,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
                 next_index = np.argmax(word)
                 next_token = index2word[next_index]
                 ptag.append(next_token)
-            # print('next_token--ptag--',str(ptag))
+            print('next_token--ptag--',str(ptag))
 
             sent = predictions[1][si]
             ptag2 = []
@@ -722,6 +721,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
     pickle.dump(testresult, open(resultfile, 'wb'))
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult)
+
 
     return P, R, F, PR_count, P_count, TR_count
 
@@ -860,10 +860,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                           len(target_vob), target_idex_word,
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char], [y, y_BIOES, y_Type],
+        history = nn_model.fit([x_word, input_char], [y],
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_val, y_BIOES_val, y_Type_val]),
+                               validation_data=([x_word_val, input_char_val], [y_val]),
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
@@ -903,7 +903,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
             else:
                 earlystopping += 1
 
-            print(epoch, P, R, F, '  maxF=',maxF)
+            print(epoch, P, R, F, '  maxF=', maxF)
 
         if earlystopping >= 10:
             break
@@ -972,7 +972,7 @@ if __name__ == "__main__":
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    batch_size = 100
+    batch_size = 50
     retrain = False
     Test = True
     valid = False
