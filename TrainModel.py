@@ -731,7 +731,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             result.append(ttag)
             testresult.append(result)
 
-    pickle.dump(testresult, open(resultfile, 'wb'))
+    # pickle.dump(testresult, open(resultfile, 'wb'))
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult)
 
