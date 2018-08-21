@@ -601,7 +601,7 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
     word_embedding = Embedding(input_dim=sourcevocabsize + 1,
                               output_dim=emd_dim,
                               input_length=input_seq_lenth,
-                              mask_zero=True,
+                              mask_zero=False,
                               trainable=True,
                               weights=[source_W])(word_input)
     word_embedding_dropout = Dropout(0.5)(word_embedding)
@@ -621,20 +621,33 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
-    mlp2_hidden1 = TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
-    output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(mlp2_hidden1)
+    # mlp2_hidden1 = TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
+    decoderlayer1_1 = Conv1D(50, 1, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
+    decoderlayer1_2 = Conv1D(50, 2, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
+    decoderlayer1_3 = Conv1D(50, 3, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
+    decoderlayer1_4 = Conv1D(50, 4, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
+    decodelayer1 = concatenate([decoderlayer1_1, decoderlayer1_2, decoderlayer1_3, decoderlayer1_4], axis=-1)
+    decodelayer1 = Dropout(0.5)(decodelayer1)
+    output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
 
-    mlp2_hidden2 = TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
-    output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(mlp2_hidden2)
+    # mlp2_hidden2 = TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
+    decoderlayer2_1 = Conv1D(50, 1, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
+    decoderlayer2_2 = Conv1D(50, 2, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
+    decoderlayer2_3 = Conv1D(50, 3, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
+    decoderlayer2_4 = Conv1D(50, 4, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
+    decodelayer2 = concatenate([decoderlayer2_1, decoderlayer2_2, decoderlayer2_3, decoderlayer2_4], axis=-1)
+    decodelayer2 = Dropout(0.5)(decodelayer2)
+    output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
 
-    mlp1_hidden3_1 =TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
+    # mlp1_hidden3_1 =TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
     # mlp1_concat = concatenate([mlp2_hidden1, mlp1_hidden1], axis=-1)
-    mlp1_hidden3_2 = TimeDistributed(Dense(targetvocabsize+1, activation='relu'))(mlp1_hidden3_1)
+    decodelayer3 = concatenate([decodelayer1, decodelayer2], axis=-1)
+    mlp1_hidden3_2 = TimeDistributed(Dense(targetvocabsize+1, activation='relu'))(decodelayer3)
     crflayer = CRF(targetvocabsize+1, sparse_target=False, name='finall')
     output3 = crflayer(mlp1_hidden3_2)
 
     Models = Model([word_input, char_input], [output3, output1, output2])
-    Models.compile(optimizer=optimizers.RMSprop(lr=0.0005),
+    Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
                    loss={'finall': crflayer.loss_function, 'BIOES': 'categorical_crossentropy', 'Type': 'categorical_crossentropy'},
                    loss_weights={'finall': 1., 'BIOES': 1., 'Type': 1.},
                    metrics={'finall': [crflayer.accuracy], 'BIOES': ['acc'], 'Type': ['acc']})
@@ -664,7 +677,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
                 next_index = np.argmax(word)
                 next_token = index2word[next_index]
                 ptag.append(next_token)
-            print('next_token--ptag--',str(ptag))
+            # print('next_token--ptag--',str(ptag))
 
             sent = predictions[1][si]
             ptag2 = []
@@ -964,7 +977,7 @@ if __name__ == "__main__":
     w2v_file = "./data/w2v/glove.6B.100d.txt"
     datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_2.h5"
+    modelfile = "./model/" + modelname + "_3.h5"
 
     resultdir = "./data/result/"
 
