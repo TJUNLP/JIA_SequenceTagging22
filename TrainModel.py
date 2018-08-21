@@ -641,7 +641,7 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
 
     # mlp1_hidden3_1 =TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
     # mlp1_concat = concatenate([mlp2_hidden1, mlp1_hidden1], axis=-1)
-    decodelayer3 = concatenate([decodelayer1, decodelayer2], axis=-1)
+    decodelayer3 = concatenate([output1, output2], axis=-1)
     mlp1_hidden3_2 = TimeDistributed(Dense(targetvocabsize+1, activation='relu'))(decodelayer3)
     crflayer = CRF(targetvocabsize+1, sparse_target=False, name='finall')
     output3 = crflayer(mlp1_hidden3_2)
@@ -985,7 +985,7 @@ if __name__ == "__main__":
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    batch_size = 50
+    batch_size = 32
     retrain = False
     Test = True
     valid = False
