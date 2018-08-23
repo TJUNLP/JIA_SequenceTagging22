@@ -628,9 +628,9 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
     decoderlayer1_4 = Conv1D(50, 4, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
     decodelayer1 = concatenate([decoderlayer1_1, decoderlayer1_2, decoderlayer1_3, decoderlayer1_4], axis=-1)
     decodelayer1 = Dropout(0.5)(decodelayer1)
-    output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
-    # crflayer1 = CRF(5 + 1, sparse_target=False, name='BIOES')
-    # output1 = crflayer1(decodelayer1)
+    # output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
+    crflayer1 = CRF(5 + 1, sparse_target=False, name='BIOES')
+    output1 = crflayer1(decodelayer1)
     # mlp2_hidden2 = TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
     decoderlayer2_1 = Conv1D(50, 1, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
     decoderlayer2_2 = Conv1D(50, 2, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
@@ -638,21 +638,28 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
     decoderlayer2_4 = Conv1D(50, 4, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
     decodelayer2 = concatenate([decoderlayer2_1, decoderlayer2_2, decoderlayer2_3, decoderlayer2_4], axis=-1)
     decodelayer2 = Dropout(0.5)(decodelayer2)
-    output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
-    # crflayer2 = CRF(5 + 1, sparse_target=False, name='Type')
-    # output2 = crflayer2(decodelayer2)
+    # output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
+    crflayer2 = CRF(5 + 1, sparse_target=False, name='Type')
+    output2 = crflayer2(decodelayer2)
     # mlp1_hidden3_1 =TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
     # mlp1_concat = concatenate([mlp2_hidden1, mlp1_hidden1], axis=-1)
     decodelayer3 = concatenate([output1, output2], axis=-1)
-    mlp1_hidden3_2 = TimeDistributed(Dense(targetvocabsize+1, activation=None))(decodelayer3)
-    crflayer = CRF(targetvocabsize+1, sparse_target=False, name='finall')
-    output3 = crflayer(mlp1_hidden3_2)
+    # mlp1_hidden3_2 = TimeDistributed(Dense(targetvocabsize+1, activation=None))(decodelayer3)
+    # crflayer = CRF(targetvocabsize+1, sparse_target=False, name='finall')
+    # output3 = crflayer(mlp1_hidden3_2)
+    output3 = TimeDistributed(Dense(targetvocabsize + 1, activation='softmax'), name='finall')(decodelayer3)
 
     Models = Model([word_input, char_input], [output3, output1, output2])
+    # Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
+    #                loss={'finall': crflayer.loss_function, 'BIOES': 'categorical_crossentropy', 'Type': 'categorical_crossentropy'},
+    #                loss_weights={'finall': 1., 'BIOES': 1., 'Type': 1.},
+    #                metrics={'finall': [crflayer.accuracy], 'BIOES': ['acc'], 'Type': ['acc']})
+
     Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
-                   loss={'finall': crflayer.loss_function, 'BIOES': 'categorical_crossentropy', 'Type': 'categorical_crossentropy'},
+                   loss={'finall': 'categorical_crossentropy', 'BIOES': crflayer1.loss_function,
+                         'Type': crflayer2.loss_function},
                    loss_weights={'finall': 1., 'BIOES': 1., 'Type': 1.},
-                   metrics={'finall': [crflayer.accuracy], 'BIOES': ['acc'], 'Type': ['acc']})
+                   metrics={'finall': ['acc'], 'BIOES': [crflayer2.accuracy], 'Type': [crflayer2.accuracy]})
 
     return Models
 
@@ -979,7 +986,7 @@ if __name__ == "__main__":
     w2v_file = "./data/w2v/glove.6B.100d.txt"
     datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_41.h5"
+    modelfile = "./model/" + modelname + "_42.h5"
 
     resultdir = "./data/result/"
 
