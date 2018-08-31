@@ -558,14 +558,7 @@ def creat_Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
-    decoderlayer1_1 = Conv1D(50, 1, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decoderlayer1_2 = Conv1D(50, 2, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decoderlayer1_3 = Conv1D(50, 3, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decoderlayer1_4 = Conv1D(50, 4, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decodelayer1 = concatenate([decoderlayer1_1, decoderlayer1_2, decoderlayer1_3, decoderlayer1_4], axis=-1)
-    decodelayer1 = Dropout(0.5)(decodelayer1)
-
-    TimeD = TimeDistributed(Dense(targetvocabsize+1))(decodelayer1)
+    TimeD = TimeDistributed(Dense(targetvocabsize+1))(BiLSTM_dropout)
     # TimeD = TimeDistributed(Dense(int(hidden_dim / 2)))(BiLSTM_dropout)
     TimeD = Dropout(0.5)(TimeD)
 
@@ -995,7 +988,7 @@ if __name__ == "__main__":
     w2v_file = "./data/w2v/glove.6B.100d.txt"
     datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_CNN_1.h5"
+    modelfile = "./model/" + modelname + "_1.h5"
 
     resultdir = "./data/result/"
 
