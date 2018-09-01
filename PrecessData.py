@@ -752,7 +752,7 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
     pickle.dump([train, dev, test, source_W, source_vob, sourc_idex_word,
                 target_vob, target_idex_word, max_s, k,
                  chartrain,chardev,chartest, source_char, character_W, max_c, char_emd_dim,
-                 pos_train, pos_dev, pos_test, pos_vob, pos_idex_word, pos_W, pos_k], out)
+                 pos_train, pos_dev, pos_test, pos_vob, pos_idex_word, pos_W, pos_k], out, 0)
     out.close()
 
 def zero_digits(s):

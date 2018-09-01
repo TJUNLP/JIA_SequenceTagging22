@@ -1,6 +1,6 @@
 # -*- encoding:utf-8 -*-
 
-import pickle
+import pickle, datetime
 import os.path
 import numpy as np
 import matplotlib.pyplot as plt
@@ -742,7 +742,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             result.append(ttag)
             testresult.append(result)
 
-    # pickle.dump(testresult, open(resultfile, 'wb'))
+    pickle.dump(testresult, open(resultfile, 'w'), 0)
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult)
 
@@ -966,7 +966,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
 
     nnmodel.load_weights(lstm_modelfile)
     # nnmodel = load_model(lstm_modelfile)
-    resultfile = resultdir + "result-" + 'infer_test'
+    resultfile = resultdir + "result-" + lstm_modelfile + str(datetime.datetime.now())
 
     P, R, F, PR_count, P_count, TR_count = test_model(nnmodel, testdata, chartest,pos_test, target_idex_word, resultfile,
                                                       batch_size)
