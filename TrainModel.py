@@ -742,7 +742,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             result.append(ttag)
             testresult.append(result)
 
-    pickle.dump(testresult, open(resultfile, 'w'), 0)
+    pickle.dump(str(testresult), open(resultfile, 'w'), 0)
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult)
 
@@ -1035,4 +1035,4 @@ if __name__ == "__main__":
 #
 # KTF.set_session(tf.Session(config=tf.ConfigProto(device_count={'gpu': 0})))
 
-# CUDA_VISIBLE_DEVICES="" python Model.py
+# CUDA_VISIBLE_DEVICES=1 python TrainModel.py
