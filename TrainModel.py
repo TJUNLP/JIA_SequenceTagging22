@@ -1,6 +1,6 @@
 # -*- encoding:utf-8 -*-
 
-import pickle, datetime
+import pickle, datetime, codecs
 import os.path
 import numpy as np
 import matplotlib.pyplot as plt
@@ -741,8 +741,10 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             result.append(ptag)
             result.append(ttag)
             testresult.append(result)
-
-    pickle.dump(str(testresult), open(resultfile, 'w'), 0)
+    fres = codecs.open(resultfile, 'w', encoding='utf-8')
+    for res in testresult:
+        fres.write(str(res[0]) + '\n' + str(res[1]))
+    fres.close()
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult)
 
