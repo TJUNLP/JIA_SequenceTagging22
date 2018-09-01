@@ -966,7 +966,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
 
     nnmodel.load_weights(lstm_modelfile)
     # nnmodel = load_model(lstm_modelfile)
-    resultfile = resultdir + "result-" + lstm_modelfile + str(datetime.datetime.now())
+    resultfile = resultdir + "result-" + modelname+ '-' + str(datetime.datetime.now())
 
     P, R, F, PR_count, P_count, TR_count = test_model(nnmodel, testdata, chartest,pos_test, target_idex_word, resultfile,
                                                       batch_size)

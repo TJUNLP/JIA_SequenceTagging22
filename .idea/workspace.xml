@@ -2,83 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/PrecessData.py" afterPath="$PROJECT_DIR$/PrecessData.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel.py" afterPath="$PROJECT_DIR$/TrainModel.py" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-10" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-11" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-12" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-13" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-14" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-15" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-16" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-17" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-18" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-19" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-2" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-20" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-21" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-22" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-23" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-24" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-25" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-26" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-27" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-28" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-29" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-3" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-30" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-31" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-32" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-33" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-34" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-35" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-36" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-37" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-38" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-39" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-4" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-40" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-41" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-42" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-43" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-44" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-45" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-46" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-47" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-48" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-49" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-5" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-50" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-51" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-52" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-53" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-54" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-55" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-56" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-57" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-58" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-59" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-6" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-60" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-61" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-62" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-63" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-64" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-65" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-66" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-67" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-68" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-69" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-7" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-70" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-71" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-72" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-73" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-74" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-8" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-9" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data/result/result-infer_test" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -95,8 +19,8 @@
       <file leaf-file-name="TrainModel.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="744" column="52" lean-forward="false" selection-start-line="744" selection-start-column="52" selection-end-line="744" selection-end-column="52" />
+            <state relative-caret-position="405">
+              <caret line="968" column="54" lean-forward="false" selection-start-line="968" selection-start-column="54" selection-end-line="968" selection-end-column="54" />
               <folding>
                 <element signature="e#26#49#0" expanded="true" />
                 <element signature="e#21153#23889#0" expanded="false" />
@@ -569,8 +493,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="744" column="52" lean-forward="false" selection-start-line="744" selection-start-column="52" selection-end-line="744" selection-end-column="52" />
+        <state relative-caret-position="405">
+          <caret line="968" column="54" lean-forward="false" selection-start-line="968" selection-start-column="54" selection-end-line="968" selection-end-column="54" />
           <folding>
             <element signature="e#26#49#0" expanded="true" />
             <element signature="e#21153#23889#0" expanded="false" />
