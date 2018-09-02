@@ -621,35 +621,30 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
-    # mlp2_hidden1 = TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
-    decoderlayer1_1 = Conv1D(50, 1, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decoderlayer1_2 = Conv1D(50, 2, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decoderlayer1_3 = Conv1D(50, 3, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decoderlayer1_4 = Conv1D(50, 4, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decodelayer1 = concatenate([decoderlayer1_1, decoderlayer1_2, decoderlayer1_3, decoderlayer1_4], axis=-1)
-    decodelayer1 = Dropout(0.5)(decodelayer1)
+    mlp1_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
+    mlp1_hidden1 = Dropout(0.5)(mlp1_hidden1)
+    mlp1_hidden2 = TimeDistributed(Dense(100, activation='relu'))(mlp1_hidden1)
     # output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
-    mlp1_hidden1_2 = TimeDistributed(Dense(5 + 1, activation=None))(decodelayer1)
+    mlp1_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp1_hidden2)
     crflayer1 = CRF(5 + 1, sparse_target=False, learn_mode='marginal', name='BIOES')
-    output1 = crflayer1(mlp1_hidden1_2)
-    # mlp2_hidden2 = TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
-    decoderlayer2_1 = Conv1D(50, 1, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decoderlayer2_2 = Conv1D(50, 2, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decoderlayer2_3 = Conv1D(50, 3, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decoderlayer2_4 = Conv1D(50, 4, activation='relu', strides=1, padding='same')(BiLSTM_dropout)
-    decodelayer2 = concatenate([decoderlayer2_1, decoderlayer2_2, decoderlayer2_3, decoderlayer2_4], axis=-1)
-    decodelayer2 = Dropout(0.5)(decodelayer2)
+    output1 = crflayer1(mlp1_hidden3)
+
+    mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
+    mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1)
+    mlp2_hidden2 = TimeDistributed(Dense(100, activation='relu'))(mlp2_hidden1)
     # output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
-    mlp1_hidden2_2 = TimeDistributed(Dense(5 + 1, activation=None))(decodelayer2)
+    mlp2_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp2_hidden2)
     crflayer2 = CRF(5 + 1, sparse_target=False, name='Type', learn_mode='marginal')
-    output2 = crflayer2(mlp1_hidden2_2)
-    # mlp1_hidden3_1 =TimeDistributed(Dense(100, activation='relu'))(BiLSTM_dropout)
-    # mlp1_concat = concatenate([mlp2_hidden1, mlp1_hidden1], axis=-1)
-    decodelayer3 = concatenate([output1, output2], axis=-1)
+    output2 = crflayer2(mlp2_hidden3)
+
+    decodelayer3_1 = concatenate([output1, output2], axis=-1)
+    decoderlayer3_2 = Conv1D(128, 4, activation='relu', strides=1, padding='valid')(decodelayer3_1)
+    decoderlayer3_3 = Conv1D(64, 2, activation='relu', strides=1, padding='valid')(decoderlayer3_2)
+
     # mlp1_hidden3_2 = TimeDistributed(Dense(targetvocabsize+1, activation=None))(decodelayer3)
     # crflayer = CRF(targetvocabsize+1, sparse_target=False, name='finall')
     # output3 = crflayer(mlp1_hidden3_2)
-    output3 = TimeDistributed(Dense(targetvocabsize + 1, activation='softmax'), name='finall')(decodelayer3)
+    output3 = TimeDistributed(Dense(targetvocabsize + 1, activation='softmax'), name='finall')(decoderlayer3_3)
 
     Models = Model([word_input, char_input], [output3, output1, output2])
     # Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
@@ -883,10 +878,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                           len(target_vob), target_idex_word,
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char], [y],
+        history = nn_model.fit([x_word, input_char], [y, y_BIOES, y_Type],
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_val]),
+                               validation_data=([x_word_val, input_char_val], [y_val, y_BIOES_val, y_Type_val]),
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
@@ -978,7 +973,7 @@ if __name__ == "__main__":
 
 
     modelname = 'creat_Model_BiLSTM_CRF'
-    # modelname = 'Model_BiLSTM_CRF_multi2'
+    modelname = 'Model_BiLSTM_CRF_multi2'
     # modelname = 'Model_BiLSTM_CnnDecoder_multi2'
     # modelname = 'creat_Model_BiLSTM_CnnDecoder'
 
@@ -987,7 +982,7 @@ if __name__ == "__main__":
     w2v_file = "./data/w2v/glove.6B.100d.txt"
     datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_2.h5"
+    modelfile = "./model/" + modelname + "_lstm_cnn_1.h5"
 
     resultdir = "./data/result/"
 
