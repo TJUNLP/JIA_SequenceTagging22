@@ -1,5 +1,13 @@
 # -*- encoding:utf-8 -*-
 
+import tensorflow as tf
+config = tf.ConfigProto(allow_soft_placement=True)
+#最多占gpu资源的70%
+gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.7)
+#开始不会给tensorflow全部gpu资源 而是按需增加
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
+
 import pickle, datetime, codecs
 import os.path
 import numpy as np
@@ -616,7 +624,7 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
 
     embedding = concatenate([word_embedding_dropout, char_macpool], axis=-1)
 
-    BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode = 'concat')(embedding)
+    BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True,), merge_mode = 'concat')(embedding)
     # BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True))(word_embedding_dropout)
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
@@ -1029,4 +1037,5 @@ if __name__ == "__main__":
 #
 # KTF.set_session(tf.Session(config=tf.ConfigProto(device_count={'gpu': 0})))
 
-# CUDA_VISIBLE_DEVICES=1 python TrainModel.py
+# CUDA_VISIBLE_DEVICES=1 python3 TrainModel.py
+
