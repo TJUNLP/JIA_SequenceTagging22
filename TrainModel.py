@@ -715,7 +715,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             result2.append(ttag)
             testresult2.append(result2)
 
-        P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult2)
+        P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult2, resultfile='')
         print('OP2>>>>>>>>>>')
         print(P, R, F)
 
@@ -910,7 +910,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         if epoch >= saveepoch:
         # if epoch >=0:
             saveepoch += save_inter
-            resultfile = resultdir+"result-"+str(saveepoch)
+            resultfile = ''
             print('the dev result-----------------------')
             P, R, F, PR_count, P_count, TR_count = test_model(nn_model, devdata, chardev, pos_dev, target_idex_word, resultfile, batch_size)
             print(P, R, F)
@@ -965,7 +965,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
 
     nnmodel.load_weights(lstm_modelfile)
     # nnmodel = load_model(lstm_modelfile)
-    resultfile = resultdir + "result-" + modelname+ '-' + str(datetime.datetime.now())
+    resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
 
     P, R, F, PR_count, P_count, TR_count = test_model(nnmodel, testdata, chartest,pos_test, target_idex_word, resultfile,
                                                       batch_size)

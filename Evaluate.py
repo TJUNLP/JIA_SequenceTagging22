@@ -125,7 +125,8 @@ def evaluation_NER(testresult, resultfile):
     total_predict_right = 0.
     total_predict = 0.
     total_right = 0.
-    fres = codecs.open(resultfile, 'w', encoding='utf-8')
+    if resultfile != '':
+        fres = codecs.open(resultfile, 'w', encoding='utf-8')
     for sent in testresult:
         ptag = sent[0]
         ttag = sent[1]
@@ -360,11 +361,13 @@ def evaluation_NER(testresult, resultfile):
                 # print('ptag-error-other', i, '  --'+ptag[i]+'--')
                 # print(ptag)
                 i += 1
-        print('total_predict_right = ', total_predict_right)
-        print('total_predict = ', total_predict)
-
-        fres.write(str(total_predict_right) + '\t' + str(total_predict) + '\n' + str(ptag) + '\n' + str(ttag) + '\n')
-    fres.close()
+        # print('total_predict_right = ', total_predict_right)
+        # print('total_predict = ', total_predict)
+        if resultfile != '':
+            if ptag != ttag:
+                fres.write(str(total_predict_right) + '\t' + str(total_predict) + '\n' + str(ptag) + '\n' + str(ttag) + '\n')
+    if resultfile != '':
+        fres.close()
 
     # print('len(testresult)--= ', len(testresult))
     # print('total_predict_right--= ', total_predict_right)
