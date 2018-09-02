@@ -741,12 +741,9 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             result.append(ptag)
             result.append(ttag)
             testresult.append(result)
-    fres = codecs.open(resultfile, 'w', encoding='utf-8')
-    for res in testresult:
-        fres.write(str(res[0]) + '\n' + str(res[1]))
-    fres.close()
 
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult)
+
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult, resultfile)
 
 
     return P, R, F, PR_count, P_count, TR_count

@@ -1,5 +1,5 @@
 import numpy as np
-import pickle
+import pickle, codecs
 
 
 def predict_rel(testdata, entlabel_testdata, testresult, sourc_index2word, entl_index2word):
@@ -120,12 +120,12 @@ def predict_rel(testdata, entlabel_testdata, testresult, sourc_index2word, entl_
         id += 1
         print(str(id))
 
-def evaluation_NER(testresult):
+def evaluation_NER(testresult, resultfile):
 
     total_predict_right = 0.
     total_predict = 0.
     total_right = 0.
-
+    fres = codecs.open(resultfile, 'w', encoding='utf-8')
     for sent in testresult:
         ptag = sent[0]
         ttag = sent[1]
@@ -360,8 +360,11 @@ def evaluation_NER(testresult):
                 # print('ptag-error-other', i, '  --'+ptag[i]+'--')
                 # print(ptag)
                 i += 1
-        # print('total_predict_right = ', total_predict_right)
-        # print('total_predict = ', total_predict)
+        print('total_predict_right = ', total_predict_right)
+        print('total_predict = ', total_predict)
+
+        fres.write(str(total_predict_right) + '\t' + str(total_predict) + '\n' + str(ptag) + '\n' + str(ttag) + '\n')
+    fres.close()
 
     # print('len(testresult)--= ', len(testresult))
     # print('total_predict_right--= ', total_predict_right)
