@@ -27,6 +27,7 @@ def BiLSTM_CRF_multi2_alone(sourcevocabsize, targetvocabsize, source_W, input_se
                               hidden_dim, emd_dim,
                               sourcecharsize, character_W, input_word_length, char_emd_dim,
                               sourcepossize, pos_W,pos_emd_dim,
+                            batch_size=32,
                               loss='categorical_crossentropy', optimizer='rmsprop'):
 
     word_input = Input(shape=(input_seq_lenth,), dtype='int32')
