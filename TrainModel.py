@@ -672,7 +672,7 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
 def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
     index2word[0] = ''
     index2word_BIOES = {0: '', 1: 'B', 2: 'I', 3: 'O', 4: 'E', 5: 'S'}
-    index2word_Type = {0: '', 1:'O', 2: 'LOC', 3: 'ORG', 4: 'PER', 5: 'MISC'}
+    index2word_Type = {0: '', 1: 'O', 2: 'LOC', 3: 'ORG', 4: 'PER', 5: 'MISC'}
 
     testx = np.asarray(testdata[0], dtype="int32")
     testy = np.asarray(testdata[1], dtype="int32")
@@ -705,7 +705,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             # print('next_token--ptag--',str(ptag))
 
             ptag_Type = []
-            for word in predictions[1][si]:
+            for word in predictions[2][si]:
                 next_index = np.argmax(word)
                 next_token = index2word_Type[next_index]
                 ptag_Type.append(next_token)

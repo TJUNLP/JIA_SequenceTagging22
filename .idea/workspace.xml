@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/Evaluate.py" afterPath="$PROJECT_DIR$/Evaluate.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel.py" afterPath="$PROJECT_DIR$/TrainModel.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,8 +19,8 @@
       <file leaf-file-name="TrainModel.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="749" column="43" lean-forward="true" selection-start-line="749" selection-start-column="43" selection-end-line="749" selection-end-column="43" />
+            <state relative-caret-position="-262">
+              <caret line="707" column="37" lean-forward="false" selection-start-line="707" selection-start-column="37" selection-end-line="707" selection-end-column="37" />
               <folding>
                 <element signature="e#3504#7290#0" expanded="false" />
                 <element signature="e#7446#9285#0" expanded="false" />
@@ -34,7 +33,7 @@
       <file leaf-file-name="PrecessData.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1575">
+            <state relative-caret-position="-996">
               <caret line="109" column="4" lean-forward="false" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
               <folding />
             </state>
@@ -702,14 +701,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1575">
-          <caret line="109" column="4" lean-forward="false" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="263">
@@ -722,10 +713,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PrecessData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-996">
+          <caret line="109" column="4" lean-forward="false" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="749" column="43" lean-forward="true" selection-start-line="749" selection-start-column="43" selection-end-line="749" selection-end-column="43" />
+        <state relative-caret-position="-262">
+          <caret line="707" column="37" lean-forward="false" selection-start-line="707" selection-start-column="37" selection-end-line="707" selection-end-column="37" />
           <folding>
             <element signature="e#3504#7290#0" expanded="false" />
             <element signature="e#7446#9285#0" expanded="false" />
