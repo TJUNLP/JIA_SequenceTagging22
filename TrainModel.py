@@ -745,8 +745,8 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             testresult3.append(result3)
 
 
-        # P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
-        # print('BIOES>>>>>>>>>>', P, R, F)
+        P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
+        print('BIOES>>>>>>>>>>', P, R, F)
         P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile='')
         print('Type>>>>>>>>>>', P, R, F)
 
