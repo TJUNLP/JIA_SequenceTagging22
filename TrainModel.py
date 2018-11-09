@@ -646,8 +646,8 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
     output2 = crflayer2(mlp2_hidden3)
 
     decodelayer3_1 = concatenate([output1, output2], axis=-1)
-    decoderlayer3_2 = Conv1D(128, 4, activation='relu', strides=1, padding='same')(decodelayer3_1)
-    decoderlayer3_3 = Conv1D(64, 2, activation='relu', strides=1, padding='same')(decoderlayer3_2)
+    # decoderlayer3_2 = Conv1D(128, 4, activation='relu', strides=1, padding='same')(decodelayer3_1)
+    decoderlayer3_3 = Conv1D(64, 3, activation='relu', strides=1, padding='same')(decodelayer3_1)
 
     # mlp1_hidden3_2 = TimeDistributed(Dense(targetvocabsize+1, activation=None))(decodelayer3)
     # crflayer = CRF(targetvocabsize+1, sparse_target=False, name='finall')
