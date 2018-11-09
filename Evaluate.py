@@ -664,8 +664,8 @@ def evaluation_NER_BIOES(testresult, resultfile):
                 i += 1
 
             else:
-                print('ptag-error-other', i, '  --'+ptag[i]+'--')
-                print(ptag)
+                # print('ptag-error-other', i, '  --'+ptag[i]+'--')
+                # print(ptag)
                 i += 1
         # print('total_predict_right = ', total_predict_right)
         # print('total_predict = ', total_predict)

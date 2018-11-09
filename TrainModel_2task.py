@@ -687,96 +687,52 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
     testresult3 = []
     predictions = nn_model.predict([testx, testchar])
 
-    if len(predictions) >= 2 and len(predictions) < 10:
-
-        for si in range(0, len(predictions[0])):
-
-            ptag = []
-            for word in predictions[0][si]:
-                next_index = np.argmax(word)
-                next_token = index2word[next_index]
-                ptag.append(next_token)
-            # print('next_token--ptag--',str(ptag))
-
-            ptag_BIOES = []
-            for word in predictions[1][si]:
-                next_index = np.argmax(word)
-                next_token = index2word_BIOES[next_index]
-                ptag_BIOES.append(next_token)
-            # print('next_token--ptag--',str(ptag))
-
-            ptag_Type = []
-            for word in predictions[2][si]:
-                next_index = np.argmax(word)
-                next_token = index2word_Type[next_index]
-                ptag_Type.append(next_token)
-            # print('next_token--ptag--',str(ptag))
-
-            ttag = []
-            for word in testy[si]:
-                next_index = np.argmax(word)
-                next_token = index2word[next_index]
-                ttag.append(next_token)
-
-            ttag_BIOES = []
-            for word in testy_BIOES[si]:
-                next_index = np.argmax(word)
-                next_token = index2word_BIOES[next_index]
-                ttag_BIOES.append(next_token)
-
-            ttag_Type = []
-            for word in testy_Type[si]:
-                next_index = np.argmax(word)
-                next_token = index2word_Type[next_index]
-                ttag_Type.append(next_token)
-
-            result = []
-            result.append(ptag)
-            result.append(ttag)
-            testresult.append(result)
-
-            result2 = []
-            result2.append(ptag_BIOES)
-            result2.append(ttag_BIOES)
-            testresult2.append(result2)
-
-            result3 = []
-            result3.append(ptag_Type)
-            result3.append(ttag_Type)
-            testresult3.append(result3)
 
 
-        P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
-        print('BIOES>>>>>>>>>>', P, R, F)
-        P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile='')
-        print('Type>>>>>>>>>>', P, R, F)
+    for si in range(0, len(predictions[0])):
+
+        ptag_BIOES = []
+        for word in predictions[0][si]:
+            next_index = np.argmax(word)
+            next_token = index2word_BIOES[next_index]
+            ptag_BIOES.append(next_token)
+        # print('next_token--ptag--',str(ptag))
+
+        ptag_Type = []
+        for word in predictions[1][si]:
+            next_index = np.argmax(word)
+            next_token = index2word_Type[next_index]
+            ptag_Type.append(next_token)
+        # print('next_token--ptag--',str(ptag))
+
+        ttag_BIOES = []
+        for word in testy_BIOES[si]:
+            next_index = np.argmax(word)
+            next_token = index2word_BIOES[next_index]
+            ttag_BIOES.append(next_token)
+
+        ttag_Type = []
+        for word in testy_Type[si]:
+            next_index = np.argmax(word)
+            next_token = index2word_Type[next_index]
+            ttag_Type.append(next_token)
 
 
+        result2 = []
+        result2.append(ptag_BIOES)
+        result2.append(ttag_BIOES)
+        testresult2.append(result2)
 
-    else:
-        for si in range(0, len(predictions)):
+        result3 = []
+        result3.append(ptag_Type)
+        result3.append(ttag_Type)
+        testresult3.append(result3)
 
-            sent = predictions[si]
-            ptag = []
-            for word in sent:
-                next_index = np.argmax(word)
-                next_token = index2word[next_index]
-                ptag.append(next_token)
-            # print('next_token--ptag--',str(ptag))
 
-            senty = testy[si]
-            ttag = []
-            for word in senty:
-                next_index = np.argmax(word)
-                next_token = index2word[next_index]
-                ttag.append(next_token)
-
-            result = []
-            result.append(ptag)
-            result.append(ttag)
-            testresult.append(result)
-
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult, resultfile)
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
+    print('BIOES>>>>>>>>>>', P, R, F)
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile='')
+    print('Type>>>>>>>>>>', P, R, F)
 
 
     return P, R, F, PR_count, P_count, TR_count
@@ -837,6 +793,20 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                                         input_word_length=input_word_length,
                                                         char_emd_dim=char_emd_dim,
                                           sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+    elif modelname is 'BiLSTM_CRF_multi2_alone':
+        nn_model = BiLSTM_CRF_multi2_alone(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                              source_W=source_W,
+                                              input_seq_lenth=input_seq_lenth,
+                                              output_seq_lenth=output_seq_lenth,
+                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                              sourcecharsize=sourcecharsize,
+                                              character_W=character_W,
+                                              input_word_length=input_word_length,
+                                              char_emd_dim=char_emd_dim,
+                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+
 
     return nn_model
 
@@ -916,10 +886,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                           len(target_vob), target_idex_word,
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char], [y, y_BIOES, y_Type],
+        history = nn_model.fit([x_word, input_char], [y_BIOES, y_Type],
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_val, y_BIOES_val, y_Type_val]),
+                               validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_Type_val]),
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
@@ -1011,16 +981,15 @@ if __name__ == "__main__":
 
 
     modelname = 'creat_Model_BiLSTM_CRF'
-    modelname = 'Model_BiLSTM_CRF_multi2'
-    # modelname = 'Model_BiLSTM_CnnDecoder_multi2'
-    # modelname = 'creat_Model_BiLSTM_CnnDecoder'
+    modelname = 'BiLSTM_CRF_multi2_alone'
+
 
     print(modelname)
 
     w2v_file = "./data/w2v/glove.6B.100d.txt"
     datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_lstm_cnn_1.h5"
+    modelfile = "./model/" + modelname + "_1.h5"
 
     resultdir = "./data/result/"
 
