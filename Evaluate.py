@@ -380,6 +380,313 @@ def evaluation_NER(testresult, resultfile):
 
     return P, R, F, total_predict_right, total_predict, total_right
 
+def evaluation_NER_Type(testresult, resultfile):
+
+    total_predict_right = 0.
+    total_predict = 0.
+    total_right = 0.
+    if resultfile != '':
+        fres = codecs.open(resultfile, 'w', encoding='utf-8')
+    for sent in testresult:
+        ptag = sent[0]
+        ttag = sent[1]
+        # print('ptag--'+str(ptag))
+        # print('ttag--'+str(ttag))
+
+        i = 0
+        while i < len(ttag):
+            # print('ttag['+str(i)+'] is-'+ttag[i]+'-')
+
+            if ttag[i] == '':
+                # print( i, '  --', ttag[i], '--')
+                i += 1
+
+            elif ttag[i].__contains__('LOC'):
+                j = i+1
+                while j < len(ttag):
+                    if ttag[j].__contains__('LOC'):
+                        j += 1
+                    else:
+                        total_right += 1.
+                        # print(i, ttag[i], 'total_right = ', total_right)
+                        i = j
+                        break
+
+            elif ttag[i].__contains__('ORG'):
+                j = i + 1
+                while j < len(ttag):
+                    if ttag[j].__contains__('ORG'):
+                        j += 1
+                    else:
+                        total_right += 1.
+                        # print(i, ttag[i], 'total_right = ', total_right)
+                        i = j
+                        break
+
+            elif ttag[i].__contains__('PER'):
+                j = i + 1
+                while j < len(ttag):
+                    if ttag[j].__contains__('PER'):
+                        j += 1
+                    else:
+                        total_right += 1.
+                        # print(i, ttag[i], 'total_right = ', total_right)
+                        i = j
+                        break
+
+            elif ttag[i].__contains__('MISC'):
+                j = i + 1
+                while j < len(ttag):
+                    if ttag[j].__contains__('MISC'):
+                        j += 1
+                    else:
+                        total_right += 1.
+                        # print(i, ttag[i], 'total_right = ', total_right)
+                        i = j
+                        break
+
+            elif ttag[i].__contains__('O'):
+                i += 1
+
+            else:
+                print('error-other', i, '  --'+ttag[i]+'--')
+                print(ttag)
+        # print('total_right = ', total_right)
+
+
+        i = 0
+        while i < len(ptag):
+
+            if ptag[i] == '':
+                # print('ptag', i, '  --'+ttag[i]+'--')
+                i += 1
+
+            elif ptag[i].__contains__('LOC'):
+                j = i
+                while j < len(ptag):
+                    if ptag[j].__contains__('LOC'):
+                        j +=1
+                        # if j == len(ptag) - 1:
+                        #     i += 1
+                    else:
+                        total_predict += 1
+                        if ttag[i].__contains__('LOC'):
+                            k = i+1
+                            while k < len(ttag):
+                                if ttag[k].__contains__('LOC'):
+                                    k += 1
+                                else:
+                                    if j ==k:
+                                        total_predict_right +=1
+                                    break
+                        i = j
+                        break
+
+            elif ptag[i].__contains__('ORG'):
+                j = i
+                while j < len(ptag):
+                    if ptag[j].__contains__('ORG'):
+                        j +=1
+                        # if j == len(ptag) - 1:
+                        #     i += 1
+                    else:
+                        total_predict += 1
+                        if ttag[i].__contains__('ORG'):
+                            k = i+1
+                            while k < len(ttag):
+                                if ttag[k].__contains__('ORG'):
+                                    k += 1
+                                else:
+                                    if j ==k:
+                                        total_predict_right +=1
+                                    break
+                        i = j
+                        break
+
+            elif ptag[i].__contains__('MISC'):
+                j = i
+                while j < len(ptag):
+                    if ptag[j].__contains__('MISC'):
+                        j += 1
+                        # if j == len(ptag) - 1:
+                        #     i += 1
+                    else:
+                        total_predict += 1
+                        if ttag[i].__contains__('MISC'):
+                            k = i + 1
+                            while k < len(ttag):
+                                if ttag[k].__contains__('MISC'):
+                                    k += 1
+                                else:
+                                    if j == k:
+                                        total_predict_right += 1
+                                    break
+                        i = j
+                        break
+
+            elif ptag[i].__contains__('PER'):
+                j = i
+                while j < len(ptag):
+                    if ptag[j].__contains__('PER'):
+                        j += 1
+                        # if j == len(ptag) - 1:
+                        #     i += 1
+                    else:
+                        total_predict += 1
+                        if ttag[i].__contains__('PER'):
+                            k = i + 1
+                            while k < len(ttag):
+                                if ttag[k].__contains__('PER'):
+                                    k += 1
+                                else:
+                                    if j == k:
+                                        total_predict_right += 1
+                                    break
+                        i = j
+                        break
+
+            elif ptag[i].__contains__('O'):
+                i += 1
+
+            else:
+                # print('ptag-error-other', i, '  --'+ptag[i]+'--')
+                # print(ptag)
+                i += 1
+        # print('total_predict_right = ', total_predict_right)
+        # print('total_predict = ', total_predict)
+        if resultfile != '':
+            if ptag != ttag:
+                fres.write(str(total_predict_right) + '\t' + str(total_predict) + '\n' + str(ptag) + '\n' + str(ttag) + '\n')
+    if resultfile != '':
+        fres.close()
+
+    # print('len(testresult)--= ', len(testresult))
+    # print('total_predict_right--= ', total_predict_right)
+    # print('total_predict--= ', total_predict)
+    # print('total_right--=', total_right)
+
+    P = total_predict_right / float(total_predict) if total_predict != 0 else 0
+    R = total_predict_right / float(total_right)
+    F = (2 * P * R) / float(P + R) if P != 0 else 0
+
+    return P, R, F, total_predict_right, total_predict, total_right
+
+
+def evaluation_NER_BIOES(testresult, resultfile):
+
+    total_predict_right = 0.
+    total_predict = 0.
+    total_right = 0.
+    if resultfile != '':
+        fres = codecs.open(resultfile, 'w', encoding='utf-8')
+    for sent in testresult:
+        ptag = sent[0]
+        ttag = sent[1]
+        # print('ptag--'+str(ptag))
+        # print('ttag--'+str(ttag))
+
+        i = 0
+        while i < len(ttag):
+            # print('ttag['+str(i)+'] is-'+ttag[i]+'-')
+
+            if ttag[i] == '':
+                # print( i, '  --', ttag[i], '--')
+                i += 1
+
+            elif ttag[i].__contains__('S'):
+
+                total_right += 1.
+                # print(i, ttag[i], 'total_right = ', total_right)
+                i += 1
+
+            elif ttag[i].__contains__('B'):
+                j = i+1
+                while j < len(ttag):
+                    if ttag[j].__contains__('I'):
+                        j += 1
+                    elif ttag[j].__contains__('E'):
+                        total_right += 1.
+                        # print(i, ttag[i], 'total_right = ', total_right)
+                        i = j + 1
+                        break
+                    else:
+                        print('error', i)
+
+            elif ttag[i].__contains__('O'):
+                i += 1
+
+            else:
+                print('error-other', i, '  --'+ttag[i]+'--')
+                print(ttag)
+        # print('total_right = ', total_right)
+
+
+        i = 0
+        while i < len(ptag):
+
+            if ptag[i] == '':
+                # print('ptag', i, '  --'+ttag[i]+'--')
+                i += 1
+
+            elif ptag[i].__contains__('S'):
+                total_predict += 1.
+                if ttag[i].__contains__('S'):
+                    total_predict_right += 1.
+                i += 1
+
+            elif ptag[i].__contains__('B'):
+                j = i+1
+                if j == len(ptag):
+                  i += 1
+                while j < len(ptag):
+                    if ptag[j].__contains__('I'):
+                        j +=1
+                        if j == len(ptag) - 1:
+                            i += 1
+                    elif ptag[j].__contains__('E'):
+                        total_predict += 1
+                        if ttag[i].__contains__('B'):
+                            k = i+1
+                            while k < len(ttag):
+                                if ttag[k].__contains__('I'):
+                                    k += 1
+                                elif ttag[k].__contains__('E'):
+                                    if j ==k:
+                                        total_predict_right +=1
+                                    break
+                        i = j + 1
+                        break
+                    else:
+                        i = j
+                        break
+
+            elif ptag[i].__contains__('O'):
+                i += 1
+
+            else:
+                print('ptag-error-other', i, '  --'+ptag[i]+'--')
+                print(ptag)
+                i += 1
+        # print('total_predict_right = ', total_predict_right)
+        # print('total_predict = ', total_predict)
+        if resultfile != '':
+            if ptag != ttag:
+                fres.write(str(total_predict_right) + '\t' + str(total_predict) + '\n' + str(ptag) + '\n' + str(ttag) + '\n')
+    if resultfile != '':
+        fres.close()
+
+    # print('len(testresult)--= ', len(testresult))
+    # print('total_predict_right--= ', total_predict_right)
+    # print('total_predict--= ', total_predict)
+    # print('total_right--=', total_right)
+
+    P = total_predict_right / float(total_predict) if total_predict != 0 else 0
+    R = total_predict_right / float(total_right)
+    F = (2 * P * R) / float(P + R) if P != 0 else 0
+
+    return P, R, F, total_predict_right, total_predict, total_right
+
+
 def evaluation_NER2(testresult):
 
     total_predict_right = 0.

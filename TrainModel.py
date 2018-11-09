@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras import backend as K
 from PrecessData import get_data, make_idx_data_index
-from Evaluate import evaluation_NER, evaluation_NER2
+from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES
 # from keras.models import Sequential
 # from keras.layers.embeddings import Embedding
 from keras.layers import Flatten,Lambda,Conv2D
@@ -671,42 +671,63 @@ def Model_BiLSTM_CRF_multi2(sourcevocabsize, targetvocabsize, source_W, input_se
 
 def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
     index2word[0] = ''
+    index2word_BIOES = {0: '', 1: 'B', 2: 'I', 3: 'O', 4: 'E', 5: 'S'}
+    index2word_Type = {0: '', 1:'O', 2: 'LOC', 3: 'ORG', 4: 'PER', 5: 'MISC'}
+
     testx = np.asarray(testdata[0], dtype="int32")
     testy = np.asarray(testdata[1], dtype="int32")
+    testy_BIOES = np.asarray(testdata[3], dtype="int32")
+    testy_Type = np.asarray(testdata[4], dtype="int32")
     poslabel_test = np.asarray(pos_data, dtype="int32")
     testchar = np.asarray(chardata, dtype="int32")
 
     testresult = []
     testresult2 = []
+    testresult3 = []
     predictions = nn_model.predict([testx, testchar])
-
 
     if len(predictions) >= 2 and len(predictions) < 10:
 
         for si in range(0, len(predictions[0])):
 
-            sent = predictions[0][si]
             ptag = []
-            for word in sent:
+            for word in predictions[0][si]:
                 next_index = np.argmax(word)
                 next_token = index2word[next_index]
                 ptag.append(next_token)
             # print('next_token--ptag--',str(ptag))
 
-            sent = predictions[1][si]
-            ptag2 = []
-            for word in sent:
+            ptag_BIOES = []
+            for word in predictions[1][si]:
                 next_index = np.argmax(word)
-                next_token = index2word[next_index]
-                ptag2.append(next_token)
+                next_token = index2word_BIOES[next_index]
+                ptag_BIOES.append(next_token)
             # print('next_token--ptag--',str(ptag))
 
-            senty = testy[si]
+            ptag_Type = []
+            for word in predictions[1][si]:
+                next_index = np.argmax(word)
+                next_token = index2word_Type[next_index]
+                ptag_Type.append(next_token)
+            # print('next_token--ptag--',str(ptag))
+
             ttag = []
-            for word in senty:
+            for word in testy[si]:
                 next_index = np.argmax(word)
                 next_token = index2word[next_index]
                 ttag.append(next_token)
+
+            ttag_BIOES = []
+            for word in testy_BIOES[si]:
+                next_index = np.argmax(word)
+                next_token = index2word_BIOES[next_index]
+                ttag_BIOES.append(next_token)
+
+            ttag_Type = []
+            for word in testy_Type[si]:
+                next_index = np.argmax(word)
+                next_token = index2word_Type[next_index]
+                ttag_Type.append(next_token)
 
             result = []
             result.append(ptag)
@@ -714,13 +735,22 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             testresult.append(result)
 
             result2 = []
-            result2.append(ptag2)
-            result2.append(ttag)
+            result2.append(ptag_BIOES)
+            result2.append(ttag_BIOES)
             testresult2.append(result2)
 
-        P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult2, resultfile='')
-        print('OP2>>>>>>>>>>')
-        print(P, R, F)
+            result3 = []
+            result3.append(ptag_Type)
+            result3.append(ttag_Type)
+            testresult3.append(result3)
+
+
+        P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
+        print('BIOES>>>>>>>>>>', P, R, F)
+        P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult3, resultfile='')
+        print('Type>>>>>>>>>>', P, R, F)
+
+
 
     else:
         for si in range(0, len(predictions)):
@@ -744,7 +774,6 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             result.append(ptag)
             result.append(ttag)
             testresult.append(result)
-
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult, resultfile)
 
