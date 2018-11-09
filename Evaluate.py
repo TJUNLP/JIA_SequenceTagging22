@@ -390,8 +390,8 @@ def evaluation_NER_Type(testresult, resultfile):
     for sent in testresult:
         ptag = sent[0]
         ttag = sent[1]
-        print('ptag--'+str(ptag))
-        print('ttag--'+str(ttag))
+        # print('ptag--'+str(ptag))
+        # print('ttag--'+str(ttag))
 
         i = 0
         while i < len(ttag):
