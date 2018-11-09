@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras import backend as K
 from PrecessData import get_data, make_idx_data_index
-from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES
+from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
 # from keras.models import Sequential
 # from keras.layers.embeddings import Embedding
 from keras.layers import Flatten,Lambda,Conv2D
@@ -747,7 +747,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
 
         P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
         print('BIOES>>>>>>>>>>', P, R, F)
-        P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult3, resultfile='')
+        P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile='')
         print('Type>>>>>>>>>>', P, R, F)
 
 

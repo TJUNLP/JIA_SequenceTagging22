@@ -203,7 +203,7 @@ def evaluation_NER(testresult, resultfile):
                 i += 1
 
             else:
-                print('error-other', i, '  --'+ttag[i]+'--')
+                print('final-error-other', i, '  --'+ttag[i]+'--')
                 print(ttag)
         # print('total_right = ', total_right)
 
@@ -449,7 +449,7 @@ def evaluation_NER_Type(testresult, resultfile):
                 i += 1
 
             else:
-                print('error-other', i, '  --'+ttag[i]+'--')
+                print('Type-error-other', i, '  --'+ttag[i]+'--')
                 print(ttag)
         # print('total_right = ', total_right)
 
@@ -616,7 +616,7 @@ def evaluation_NER_BIOES(testresult, resultfile):
                 i += 1
 
             else:
-                print('error-other', i, '  --'+ttag[i]+'--')
+                print('BIOESerror-other', i, '  --'+ttag[i]+'--')
                 print(ttag)
         # print('total_right = ', total_right)
 
