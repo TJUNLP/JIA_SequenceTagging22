@@ -366,8 +366,8 @@ def evaluation_NER(testresult, resultfile):
         if resultfile != '':
             # if ptag != ttag:
             fres.write(str(total_predict_right) + '\t' + str(total_predict) + '\n' +
-                       str(ptag).replace('', ", \'\'") + '\n' +
-                       str(ttag).replace('', ", \'\'") + '\n')
+                       str(ptag) + '\n' +
+                       str(ttag) + '\n')
     if resultfile != '':
         fres.close()
 
@@ -559,8 +559,8 @@ def evaluation_NER_Type(testresult, resultfile):
         if resultfile != '':
             # if ptag != ttag:
             fres.write(str(total_predict_right) + '\t' + str(total_predict) + '\n' +
-                       str(ptag).replace('', ", \'\'") + '\n' +
-                       str(ttag).replace('', ", \'\'") + '\n')
+                       str(ptag) + '\n' +
+                       str(ttag) + '\n')
     if resultfile != '':
         fres.close()
 
@@ -676,8 +676,8 @@ def evaluation_NER_BIOES(testresult, resultfile):
         if resultfile != '':
             # if ptag != ttag:
             fres.write(str(total_predict_right) + '\t' + str(total_predict) + '\n' +
-                       str(ptag).replace('', ", \'\'") + '\n' +
-                       str(ttag).replace('', ", \'\'") + '\n')
+                       str(ptag) + '\n' +
+                       str(ttag) + '\n')
     if resultfile != '':
         fres.close()
 
