@@ -472,15 +472,16 @@ def evaluation_NER_Type(testresult, resultfile):
                         #     i += 1
                     else:
                         total_predict += 1
-                        if ttag[i].__contains__('LOC') and ('LOC' not in ttag[max(i-1, 0)]):
-                            k = i+1
-                            while k < len(ttag):
-                                if ttag[k].__contains__('LOC'):
-                                    k += 1
-                                else:
-                                    if j ==k:
-                                        total_predict_right +=1
-                                    break
+                        if ttag[i].__contains__('LOC'):
+                            if i<0 or (i-1 >=0 and 'LOC' not in ttag[i-1]):
+                                k = i+1
+                                while k < len(ttag):
+                                    if ttag[k].__contains__('LOC'):
+                                        k += 1
+                                    else:
+                                        if j ==k:
+                                            total_predict_right +=1
+                                        break
                         i = j
                         break
 
@@ -493,15 +494,16 @@ def evaluation_NER_Type(testresult, resultfile):
                         #     i += 1
                     else:
                         total_predict += 1
-                        if ttag[i].__contains__('ORG') and ('LOC' not in ttag[max(i-1, 0)]):
-                            k = i+1
-                            while k < len(ttag):
-                                if ttag[k].__contains__('ORG'):
-                                    k += 1
-                                else:
-                                    if j ==k:
-                                        total_predict_right +=1
-                                    break
+                        if ttag[i].__contains__('ORG'):
+                            if i < 0 or (i - 1 >= 0 and 'LOC' not in ttag[i - 1]):
+                                k = i+1
+                                while k < len(ttag):
+                                    if ttag[k].__contains__('ORG'):
+                                        k += 1
+                                    else:
+                                        if j ==k:
+                                            total_predict_right +=1
+                                        break
                         i = j
                         break
 
@@ -514,15 +516,16 @@ def evaluation_NER_Type(testresult, resultfile):
                         #     i += 1
                     else:
                         total_predict += 1
-                        if ttag[i].__contains__('MISC') and ('LOC' not in ttag[max(i-1, 0)]):
-                            k = i + 1
-                            while k < len(ttag):
-                                if ttag[k].__contains__('MISC'):
-                                    k += 1
-                                else:
-                                    if j == k:
-                                        total_predict_right += 1
-                                    break
+                        if ttag[i].__contains__('MISC'):
+                            if i < 0 or (i - 1 >= 0 and 'LOC' not in ttag[i - 1]):
+                                k = i + 1
+                                while k < len(ttag):
+                                    if ttag[k].__contains__('MISC'):
+                                        k += 1
+                                    else:
+                                        if j == k:
+                                            total_predict_right += 1
+                                        break
                         i = j
                         break
 
@@ -535,15 +538,16 @@ def evaluation_NER_Type(testresult, resultfile):
                         #     i += 1
                     else:
                         total_predict += 1
-                        if ttag[i].__contains__('PER') and ('LOC' not in ttag[max(i-1, 0)]):
-                            k = i + 1
-                            while k < len(ttag):
-                                if ttag[k].__contains__('PER'):
-                                    k += 1
-                                else:
-                                    if j == k:
-                                        total_predict_right += 1
-                                    break
+                        if ttag[i].__contains__('PER'):
+                            if i < 0 or (i - 1 >= 0 and 'LOC' not in ttag[i - 1]):
+                                k = i + 1
+                                while k < len(ttag):
+                                    if ttag[k].__contains__('PER'):
+                                        k += 1
+                                    else:
+                                        if j == k:
+                                            total_predict_right += 1
+                                        break
                         i = j
                         break
 
