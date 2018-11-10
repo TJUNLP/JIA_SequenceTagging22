@@ -472,7 +472,7 @@ def evaluation_NER_Type(testresult, resultfile):
                         #     i += 1
                     else:
                         total_predict += 1
-                        if ttag[i].__contains__('LOC'):
+                        if ttag[i].__contains__('LOC') and ('LOC' not in ttag[max(i-1, 0)]):
                             k = i+1
                             while k < len(ttag):
                                 if ttag[k].__contains__('LOC'):
@@ -493,7 +493,7 @@ def evaluation_NER_Type(testresult, resultfile):
                         #     i += 1
                     else:
                         total_predict += 1
-                        if ttag[i].__contains__('ORG'):
+                        if ttag[i].__contains__('ORG') and ('LOC' not in ttag[max(i-1, 0)]):
                             k = i+1
                             while k < len(ttag):
                                 if ttag[k].__contains__('ORG'):
@@ -514,7 +514,7 @@ def evaluation_NER_Type(testresult, resultfile):
                         #     i += 1
                     else:
                         total_predict += 1
-                        if ttag[i].__contains__('MISC'):
+                        if ttag[i].__contains__('MISC') and ('LOC' not in ttag[max(i-1, 0)]):
                             k = i + 1
                             while k < len(ttag):
                                 if ttag[k].__contains__('MISC'):
@@ -535,7 +535,7 @@ def evaluation_NER_Type(testresult, resultfile):
                         #     i += 1
                     else:
                         total_predict += 1
-                        if ttag[i].__contains__('PER'):
+                        if ttag[i].__contains__('PER') and ('LOC' not in ttag[max(i-1, 0)]):
                             k = i + 1
                             while k < len(ttag):
                                 if ttag[k].__contains__('PER'):
