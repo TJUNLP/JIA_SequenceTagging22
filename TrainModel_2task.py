@@ -29,6 +29,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.callbacks import Callback
 # from keras.losses import my_cross_entropy_withWeight
 from network.BiLSTM_CRF_multi2_alone import BiLSTM_CRF_multi2_alone
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order
 
 def get_training_batch_xy_bias(inputsX, entlabel_train, inputsY, max_s, max_t,
                                batchsize, vocabsize, target_idex_word, lossnum, shuffle=False):
@@ -805,8 +806,19 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                               input_word_length=input_word_length,
                                               char_emd_dim=char_emd_dim,
                                               sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+    elif modelname is 'BiLSTM_CRF_multi2_order':
+        nn_model = BiLSTM_CRF_multi2_order(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                              source_W=source_W,
+                                              input_seq_lenth=input_seq_lenth,
+                                              output_seq_lenth=output_seq_lenth,
+                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                              sourcecharsize=sourcecharsize,
+                                              character_W=character_W,
+                                              input_word_length=input_word_length,
+                                              char_emd_dim=char_emd_dim,
+                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
-
+    BiLSTM_CRF_multi2_order
 
     return nn_model
 
@@ -982,6 +994,7 @@ if __name__ == "__main__":
 
     modelname = 'creat_Model_BiLSTM_CRF'
     modelname = 'BiLSTM_CRF_multi2_alone'
+    modelname = 'BiLSTM_CRF_multi2_order'
 
 
     print(modelname)
