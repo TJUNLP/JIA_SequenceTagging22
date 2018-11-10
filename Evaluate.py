@@ -473,7 +473,7 @@ def evaluation_NER_Type(testresult, resultfile):
                     else:
                         total_predict += 1
                         if ttag[i].__contains__('LOC'):
-                            if i<0 or (i-1 >=0 and 'LOC' not in ttag[i-1]):
+                            if i-1 < 0 or (i-1 >=0 and 'LOC' not in ttag[i-1]):
                                 k = i+1
                                 while k < len(ttag):
                                     if ttag[k].__contains__('LOC'):
@@ -495,7 +495,7 @@ def evaluation_NER_Type(testresult, resultfile):
                     else:
                         total_predict += 1
                         if ttag[i].__contains__('ORG'):
-                            if i < 0 or (i - 1 >= 0 and 'LOC' not in ttag[i - 1]):
+                            if i-1 < 0 or (i - 1 >= 0 and 'LOC' not in ttag[i - 1]):
                                 k = i+1
                                 while k < len(ttag):
                                     if ttag[k].__contains__('ORG'):
@@ -517,7 +517,7 @@ def evaluation_NER_Type(testresult, resultfile):
                     else:
                         total_predict += 1
                         if ttag[i].__contains__('MISC'):
-                            if i < 0 or (i - 1 >= 0 and 'LOC' not in ttag[i - 1]):
+                            if i-1 < 0 or (i - 1 >= 0 and 'LOC' not in ttag[i - 1]):
                                 k = i + 1
                                 while k < len(ttag):
                                     if ttag[k].__contains__('MISC'):
@@ -539,7 +539,7 @@ def evaluation_NER_Type(testresult, resultfile):
                     else:
                         total_predict += 1
                         if ttag[i].__contains__('PER'):
-                            if i < 0 or (i - 1 >= 0 and 'LOC' not in ttag[i - 1]):
+                            if i-1 < 0 or (i - 1 >= 0 and 'LOC' not in ttag[i - 1]):
                                 k = i + 1
                                 while k < len(ttag):
                                     if ttag[k].__contains__('PER'):
