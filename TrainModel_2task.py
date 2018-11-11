@@ -732,7 +732,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile=resultfile+'.BIORS.txt')
     print('BIOES>>>>>>>>>>', P, R, F)
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile=resultfile+'.BIORS.txt')
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile=resultfile+'.Type.txt')
     print('Type>>>>>>>>>>', P, R, F)
 
 
