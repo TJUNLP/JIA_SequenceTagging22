@@ -730,9 +730,9 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
         testresult3.append(result3)
 
 
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile=resultfile+'.BIORS.txt')
     print('BIOES>>>>>>>>>>', P, R, F)
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile='')
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile=resultfile+'.BIORS.txt')
     print('Type>>>>>>>>>>', P, R, F)
 
 
@@ -818,7 +818,6 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                               char_emd_dim=char_emd_dim,
                                               sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
-    BiLSTM_CRF_multi2_order
 
     return nn_model
 
