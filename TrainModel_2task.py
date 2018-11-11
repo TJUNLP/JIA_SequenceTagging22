@@ -717,14 +717,16 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
             ttag_BIOES.append(next_token)
 
         ttag_Type = []
-        for word in testy_Type[si]:
-            next_index = np.argmax(word)
-            if isfinall:
+        if isfinall:
+            for word in testy[si]:
+                next_index = np.argmax(word)
                 next_token = index2word[next_index]
-            else:
+                ttag_Type.append(next_token)
+        else:
+            for word in testy_Type[si]:
+                next_index = np.argmax(word)
                 next_token = index2word_Type[next_index]
-            ttag_Type.append(next_token)
-
+                ttag_Type.append(next_token)
 
         result2 = []
         result2.append(ptag_BIOES)

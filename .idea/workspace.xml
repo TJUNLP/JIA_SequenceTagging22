@@ -35,8 +35,8 @@
       <file leaf-file-name="Evaluate.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6285">
-              <caret line="536" column="48" lean-forward="false" selection-start-line="536" selection-start-column="48" selection-end-line="536" selection-end-column="48" />
+            <state relative-caret-position="419">
+              <caret line="207" column="19" lean-forward="false" selection-start-line="207" selection-start-column="19" selection-end-line="207" selection-end-column="19" />
               <folding>
                 <element signature="e#140#4116#0" expanded="false" />
                 <element signature="e#25020#33605#0" expanded="false" />
@@ -48,8 +48,8 @@
       <file leaf-file-name="TrainModel_2task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="831" column="43" lean-forward="false" selection-start-line="831" selection-start-column="43" selection-end-line="831" selection-end-column="43" />
+            <state relative-caret-position="323">
+              <caret line="726" column="44" lean-forward="false" selection-start-line="726" selection-start-column="44" selection-end-line="726" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -98,8 +98,8 @@
         <option value="$PROJECT_DIR$/network/Model_BiLSTM_CRF_multi2_alone.py" />
         <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_alone.py" />
         <option value="$PROJECT_DIR$/TrainModel.py" />
-        <option value="$PROJECT_DIR$/Evaluate.py" />
         <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
+        <option value="$PROJECT_DIR$/Evaluate.py" />
         <option value="$PROJECT_DIR$/TrainModel_2task.py" />
       </list>
     </option>
@@ -737,17 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6285">
-          <caret line="536" column="48" lean-forward="false" selection-start-line="536" selection-start-column="48" selection-end-line="536" selection-end-column="48" />
-          <folding>
-            <element signature="e#140#4116#0" expanded="false" />
-            <element signature="e#25020#33605#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_alone.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -790,10 +779,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="207" column="19" lean-forward="false" selection-start-line="207" selection-start-column="19" selection-end-line="207" selection-end-column="19" />
+          <folding>
+            <element signature="e#140#4116#0" expanded="false" />
+            <element signature="e#25020#33605#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="831" column="43" lean-forward="false" selection-start-line="831" selection-start-column="43" selection-end-line="831" selection-end-column="43" />
+        <state relative-caret-position="323">
+          <caret line="726" column="44" lean-forward="false" selection-start-line="726" selection-start-column="44" selection-end-line="726" selection-end-column="44" />
           <folding />
         </state>
       </provider>
