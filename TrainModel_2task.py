@@ -688,7 +688,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
     testresult3 = []
     predictions = nn_model.predict([testx, testchar])
 
-
+    isfinall = False
 
     for si in range(0, len(predictions[0])):
 
@@ -702,7 +702,11 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
         ptag_Type = []
         for word in predictions[1][si]:
             next_index = np.argmax(word)
-            next_token = index2word_Type[next_index]
+            if len(word) == 6:
+                next_token = index2word_Type[next_index]
+            else:
+                isfinall = True
+                next_token = index2word[next_index]
             ptag_Type.append(next_token)
         # print('next_token--ptag--',str(ptag))
 
@@ -715,7 +719,10 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
         ttag_Type = []
         for word in testy_Type[si]:
             next_index = np.argmax(word)
-            next_token = index2word_Type[next_index]
+            if isfinall:
+                next_token = index2word[next_index]
+            else:
+                next_token = index2word_Type[next_index]
             ttag_Type.append(next_token)
 
 
@@ -732,7 +739,10 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile=resultfile+'.BIORS.txt')
     print('BIOES>>>>>>>>>>', P, R, F)
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile=resultfile+'.Type.txt')
+    if isfinall:
+        P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult3, resultfile=resultfile)
+    else:
+        P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile=resultfile+'.Type.txt')
     print('Type>>>>>>>>>>', P, R, F)
 
 
@@ -897,10 +907,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                           len(target_vob), target_idex_word,
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char], [y_BIOES, y_Type],
+        history = nn_model.fit([x_word, input_char], [y_BIOES, y],#y_Type
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_Type_val]),
+                               validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_val]),#y_Type_val
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
@@ -1001,7 +1011,7 @@ if __name__ == "__main__":
     w2v_file = "./data/w2v/glove.6B.100d.txt"
     datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_1.h5"
+    modelfile = "./model/" + modelname + "_finall_1.h5"
 
     resultdir = "./data/result/"
 
