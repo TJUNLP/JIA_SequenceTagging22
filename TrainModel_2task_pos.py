@@ -29,7 +29,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.callbacks import Callback
 # from keras.losses import my_cross_entropy_withWeight
 from network.BiLSTM_CRF_multi2_alone import BiLSTM_CRF_multi2_alone
-from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_multi2_order2, BiLSTM_CRF_multi2_order3, BiLSTM_CRF_multi2_order31
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_multi2_order2, BiLSTM_CRF_multi2_order3, BiLSTM_CRF_multi2_order32
 
 def get_training_batch_xy_bias(inputsX, entlabel_train, inputsY, max_s, max_t,
                                batchsize, vocabsize, target_idex_word, lossnum, shuffle=False):
@@ -686,7 +686,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
     testresult = []
     testresult2 = []
     testresult3 = []
-    predictions = nn_model.predict([testx, testchar])
+    predictions = nn_model.predict([testx, testchar, poslabel_test])
 
     isfinall = False
 
@@ -854,7 +854,7 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                               char_emd_dim=char_emd_dim,
                                               sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
-    elif modelname is 'BiLSTM_CRF_multi2_order31':
+    elif modelname is 'BiLSTM_CRF_multi2_order32':
         nn_model = BiLSTM_CRF_multi2_order31(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                               source_W=source_W,
                                               input_seq_lenth=input_seq_lenth,
@@ -887,6 +887,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     # entlabel_train = np.asarray(entlabel_traindata, dtype="int32")
     # poslabel_train = np.asarray(poslabel_traindata, dtype="int32")
     input_char = np.asarray(chartrain, dtype="int32")
+    input_pos = np.asarray(pos_train, dtype="int32")
     x_word_val = np.asarray(devdata[0], dtype="int32")
     y_val = np.asarray(devdata[1], dtype="int32")
     y_O_val = np.asarray(devdata[2], dtype="int32")
@@ -894,6 +895,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     y_Type_val = np.asarray(devdata[4], dtype="int32")
 
     input_char_val = np.asarray(chardev, dtype="int32")
+    input_pos_val = np.asarray(pos_dev, dtype="int32")
 
     nn_model = SelectModel(Modelname, sourcevocabsize=len(source_vob), targetvocabsize=len(target_vob),
                                      source_W=source_W,
@@ -944,10 +946,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                           len(target_vob), target_idex_word,
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char], [y_BIOES, y_Type],#y_Type
+        history = nn_model.fit([x_word, input_char, input_pos], [y_BIOES, y_Type],#y_Type
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_Type_val]),#y_Type_val
+                               validation_data=([x_word_val, input_char_val, input_pos_val], [y_BIOES_val, y_Type_val]),#y_Type_val
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
@@ -1043,7 +1045,7 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order'
     modelname = 'BiLSTM_CRF_multi2_order2'
     modelname = 'BiLSTM_CRF_multi2_order3'
-    modelname = 'BiLSTM_CRF_multi2_order31'
+    modelname = 'BiLSTM_CRF_multi2_order32'
 
 
     print(modelname)
