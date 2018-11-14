@@ -855,7 +855,7 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                               sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
     elif modelname is 'BiLSTM_CRF_multi2_order32':
-        nn_model = BiLSTM_CRF_multi2_order31(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+        nn_model = BiLSTM_CRF_multi2_order32(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                               source_W=source_W,
                                               input_seq_lenth=input_seq_lenth,
                                               output_seq_lenth=output_seq_lenth,
