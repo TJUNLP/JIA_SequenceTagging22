@@ -29,7 +29,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.callbacks import Callback
 # from keras.losses import my_cross_entropy_withWeight
 from network.BiLSTM_CRF_multi2_alone import BiLSTM_CRF_multi2_alone
-from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_multi2_order2, BiLSTM_CRF_multi2_order3
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_multi2_order2, BiLSTM_CRF_multi2_order3, BiLSTM_CRF_multi2_order31
 
 def get_training_batch_xy_bias(inputsX, entlabel_train, inputsY, max_s, max_t,
                                batchsize, vocabsize, target_idex_word, lossnum, shuffle=False):
@@ -854,6 +854,17 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                               char_emd_dim=char_emd_dim,
                                               sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
+    elif modelname is 'BiLSTM_CRF_multi2_order31':
+        nn_model = BiLSTM_CRF_multi2_order31(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                              source_W=source_W,
+                                              input_seq_lenth=input_seq_lenth,
+                                              output_seq_lenth=output_seq_lenth,
+                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                              sourcecharsize=sourcecharsize,
+                                              character_W=character_W,
+                                              input_word_length=input_word_length,
+                                              char_emd_dim=char_emd_dim,
+                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
     return nn_model
 
