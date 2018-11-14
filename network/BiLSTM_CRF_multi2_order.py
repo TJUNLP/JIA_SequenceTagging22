@@ -358,13 +358,16 @@ def BiLSTM_CRF_multi2_order32(sourcevocabsize, targetvocabsize, source_W, input_
                               weights=[source_W])(word_input)
     word_embedding_dropout = Dropout(0.5)(word_embedding)
 
-    pos_input = Input(shape=(input_seq_lenth,), dtype='int32')
-    pos_embeding = Embedding(input_dim=sourcepossize + 1,
-                                  output_dim=pos_emd_dim,
-                                  input_length=input_seq_lenth,
-                                  mask_zero=True,
-                                  trainable=True,
-                                  weights=[pos_W])(pos_input)
+    pos_input = Input(shape=(input_seq_lenth, 3,), dtype='int32')
+    pos_embedding = Embedding(input_dim=sourcepossize+ 1,
+                             output_dim=pos_emd_dim,
+                               batch_input_shape=(batch_size, input_seq_lenth, 3),
+                               mask_zero=True,
+                               trainable=True,
+                             weights=[pos_W])
+    pos_embedding2 = TimeDistributed(pos_embedding)(pos_input)
+    pos_cnn = TimeDistributed(Conv1D(50, 2, activation='relu', border_mode='valid'))(pos_embedding2)
+    pos_macpool = TimeDistributed(GlobalMaxPooling1D())(pos_cnn)
 
     embedding = concatenate([word_embedding_dropout, char_macpool], axis=-1)
 
@@ -384,7 +387,7 @@ def BiLSTM_CRF_multi2_order32(sourcevocabsize, targetvocabsize, source_W, input_
     mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
     mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1)
 
-    BiLSTM_pos = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(pos_embeding)
+    BiLSTM_pos = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(pos_macpool)
     BiLSTM_pos = Dropout(0.5)(BiLSTM_pos)
     mlp2_hidden1 = concatenate([BiLSTM_pos, mlp2_hidden1], axis=-1)
 
