@@ -1052,7 +1052,7 @@ if __name__ == "__main__":
     datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
     modelfile = "./model/" + modelname + "_finall_1.h5"
-    modelfile = "./model/" + modelname + "_Type_3.h5"
+    modelfile = "./model/" + modelname + "_Type_4.h5"
 
     resultdir = "./data/result/"
 
