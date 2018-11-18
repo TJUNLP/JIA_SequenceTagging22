@@ -581,7 +581,7 @@ def creat_Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq
 
     # Models.compile(loss=loss, optimizer='adam', metrics=['acc'])
     # Models.compile(loss=crflayer.loss_function, optimizer='adam', metrics=[crflayer.accuracy])
-    Models.compile(loss=crflayer.loss_function, optimizer=optimizers.RMSprop(lr=0.0005), metrics=[crflayer.accuracy])
+    Models.compile(loss=crflayer.loss_function, optimizer=optimizers.RMSprop(lr=0.001), metrics=[crflayer.accuracy])
 
     return Models
 
@@ -1008,11 +1008,11 @@ if __name__ == "__main__":
 
     maxlen = 50
 
-
-    modelname = 'creat_Model_BiLSTM_CRF'
-    modelname = 'Model_BiLSTM_CRF_multi2'
     # modelname = 'Model_BiLSTM_CnnDecoder_multi2'
     # modelname = 'creat_Model_BiLSTM_CnnDecoder'
+    modelname = 'creat_Model_BiLSTM_CRF'
+    # modelname = 'Model_BiLSTM_CRF_multi2'
+
 
     print(modelname)
 
@@ -1020,6 +1020,7 @@ if __name__ == "__main__":
     datafile = "./model/data_fix_multi3.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
     modelfile = "./model/" + modelname + "_lstm_cnn_1.h5"
+    modelfile = "./model/" + modelname + "_2.h5"
 
     resultdir = "./data/result/"
 

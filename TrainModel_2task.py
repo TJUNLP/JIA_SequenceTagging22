@@ -1043,7 +1043,7 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order'
     modelname = 'BiLSTM_CRF_multi2_order2'
     modelname = 'BiLSTM_CRF_multi2_order3'
-    modelname = 'BiLSTM_CRF_multi2_order31'
+    # modelname = 'BiLSTM_CRF_multi2_order31'
 
 
     print(modelname)
