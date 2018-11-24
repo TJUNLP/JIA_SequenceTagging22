@@ -540,9 +540,8 @@ def BiLSTM_CRF_multi2_order3_split(sourcevocabsize, targetvocabsize, source_W, i
 
     embedding = concatenate([word_embedding_dropout, char_macpool], axis=-1)
 
-    BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True,), merge_mode = 'concat')
-    BiLSTM_w = BiLSTM(word_embedding_dropout)
-    BiLSTM_c = BiLSTM(char_macpool)
+    BiLSTM_w = Bidirectional(LSTM(hidden_dim, return_sequences=True,), merge_mode = 'concat')(word_embedding_dropout)
+    BiLSTM_c = Bidirectional(LSTM(hidden_dim, return_sequences=True,), merge_mode = 'concat')(char_macpool)
 
     BiLSTM_all = concatenate([BiLSTM_w, BiLSTM_c],axis=-1)
     BiLSTM_all = BatchNormalization(axis=1)(BiLSTM_all)
