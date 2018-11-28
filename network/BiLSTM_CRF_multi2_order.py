@@ -633,7 +633,6 @@ def BiLSTM_CRF_multi2_order_pos(sourcevocabsize, targetvocabsize, source_W, inpu
 
     mlp1_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
     mlp1_hidden1 = Dropout(0.5)(mlp1_hidden1)
-
     mlp1_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp1_hidden1)
     # output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
     mlp1_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp1_hidden2)
@@ -643,13 +642,17 @@ def BiLSTM_CRF_multi2_order_pos(sourcevocabsize, targetvocabsize, source_W, inpu
     mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
     mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1)
 
+    BiLSTM_pos = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(pos_macpool)
+    BiLSTM_pos = Dropout(0.5)(BiLSTM_pos)
+    mlp2_hidden1 = concatenate([BiLSTM_pos, mlp2_hidden1], axis=-1)
+
     mlp2_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden1)
-    mlp2_hidden3 = concatenate([mlp1_hidden2, mlp2_hidden2], axis=-1)
-    mlp2_hidden3 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden3)
+    mlp2_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden2)
     # output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
-    mlp2_hidden3 = TimeDistributed(Dense(targetvocabsize + 1, activation=None))(mlp2_hidden3)
-    crflayer2 = CRF(targetvocabsize + 1, sparse_target=False, name='Type', learn_mode='marginal')
-    output2 = crflayer2(mlp2_hidden3)
+    mlp2_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp2_hidden2)
+    mlp2_hidden4 = average([mlp1_hidden3, mlp2_hidden3])
+    crflayer2 = CRF(5 + 1, sparse_target=False, name='Type', learn_mode='marginal')
+    output2 = crflayer2(mlp2_hidden4)
 
 
     Models = Model([word_input, char_input, pos_input], [output1, output2])
