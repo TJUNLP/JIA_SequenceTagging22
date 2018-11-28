@@ -90,7 +90,7 @@ def load_vec_character(vocab_c_inx, k=30):
     for i in vocab_c_inx:
         W[vocab_c_inx[i]] = np.random.uniform(-1*math.sqrt(3/k), math.sqrt(3/k), k)
 
-    return W,k
+    return W, k
 
 
 def load_vec_onehot(vocab_w_inx):
@@ -353,48 +353,61 @@ def make_idx_POS_index(file, max_s, source_vob):
     count = 0
     data_s_all = []
     data_s = []
-    strat_sen = True
+
     f = open(file,'r')
     fr = f.readlines()
+    sen_i = 0
+
     for i, line in enumerate(fr):
 
         if line.__len__() <= 1:
             num = max_s - count
             # print('num ', num, 'max_s', max_s, 'count', count)
-            for inum in range(0, num):
-                data_s.append([0, 0, 0])
+            # for inum in range(0, num):
+            #     data_s.append([0, 0, 0, 0, 0])
             # print(data_s)
             # print(data_t)
             data_s_all.append(data_s)
             data_s = []
             count = 0
-            strat_sen = True
+            sen_i = 0
             continue
 
         data_w = []
 
-        if strat_sen is True:
-            data_w.append(0)
-        else:
-            sourc_pre = fr[i - 1].strip('\r\n').rstrip('\n').split(' ')[1]
-            data_w.append(source_vob[sourc_pre])
+
+        for k in range(2, 0, -1):
+            if sen_i - k < 0:
+                data_w.append(0)
+                # print('>>>')
+            else:
+                sourc_pre = fr[i - k].strip('\r\n').rstrip('\n').split(' ')[1]
+                data_w.append(source_vob[sourc_pre])
+                # print(sourc_pre)
 
         sent = line.strip('\r\n').rstrip('\n').split(' ')[1]
         if not source_vob.__contains__(sent):
             data_w.append(source_vob["**UNK**"])
         else:
             data_w.append(source_vob[sent])
+        # print(sent)
 
-        if i + 1 >= fr.__len__() or fr[i + 1].__len__() <= 1:
-            data_w.append(0)
-        else:
-            sourc_back = fr[i + 1].strip('\r\n').rstrip('\n').split(' ')[1]
-            data_w.append(source_vob[sourc_back])
+        for k in range(1, 3):
+            if i + k >= fr.__len__() or fr[i + k].__len__() <= 1:
+                for s in range(k, 3):
+                    data_w.append(0)
+                    # print('<<<')
+                break
+            else:
+                sourc_back = fr[i + k].strip('\r\n').rstrip('\n').split(' ')[1]
+                data_w.append(source_vob[sourc_back])
+                # print(sourc_back)
 
         data_s.append(data_w)
-
+        if len(data_w) is not 5:
+            print('____________________', data_w)
         count += 1
-        strat_sen = False
+        sen_i += 1
 
     f.close()
     # print(data_t_all)
@@ -702,8 +715,7 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
     print("word2vec loaded!")
     print("all vocab size: " + str(len(source_vob)))
     print("source_W  size: " + str(len(source_W)))
-    print ("num words in source word2vec: " + str(len(source_w2v))+\
-          " source  unknown words: "+str(len(source_vob)-len(source_w2v)))
+    print ("num words in source word2vec: " + str(len(source_w2v)))
 
     # if max_s > maxlen:
     #     max_s = maxlen
@@ -748,7 +760,7 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
         chartest = make_idx_character_index(testfile, max_s, max_c, source_char)
 
     print ("dataset created!")
-    out = open(datafile,'wb')
+    out = open(datafile, 'wb')#
     pickle.dump([train, dev, test, source_W, source_vob, sourc_idex_word,
                 target_vob, target_idex_word, max_s, k,
                  chartrain,chardev,chartest, source_char, character_W, max_c, char_emd_dim,

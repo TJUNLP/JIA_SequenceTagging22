@@ -1,12 +1,12 @@
 # -*- encoding:utf-8 -*-
 
 import tensorflow as tf
-config = tf.ConfigProto(allow_soft_placement=True)
-#最多占gpu资源的70%
-gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.7)
-#开始不会给tensorflow全部gpu资源 而是按需增加
-config.gpu_options.allow_growth = True
-sess = tf.Session(config=config)
+# config = tf.ConfigProto(allow_soft_placement=True)
+# #最多占gpu资源的70%
+# gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.7)
+# #开始不会给tensorflow全部gpu资源 而是按需增加
+# config.gpu_options.allow_growth = True
+# sess = tf.Session(config=config)
 
 import pickle, datetime, codecs
 import os.path
@@ -29,7 +29,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.callbacks import Callback
 # from keras.losses import my_cross_entropy_withWeight
 from network.BiLSTM_CRF_multi2_alone import BiLSTM_CRF_multi2_alone
-from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_multi2_order2, BiLSTM_CRF_multi2_order3, BiLSTM_CRF_multi2_order32
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order_pos
 
 def get_training_batch_xy_bias(inputsX, entlabel_train, inputsY, max_s, max_t,
                                batchsize, vocabsize, target_idex_word, lossnum, shuffle=False):
@@ -818,44 +818,9 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                               input_word_length=input_word_length,
                                               char_emd_dim=char_emd_dim,
                                               sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-    elif modelname is 'BiLSTM_CRF_multi2_order':
-        nn_model = BiLSTM_CRF_multi2_order(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                              source_W=source_W,
-                                              input_seq_lenth=input_seq_lenth,
-                                              output_seq_lenth=output_seq_lenth,
-                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                              sourcecharsize=sourcecharsize,
-                                              character_W=character_W,
-                                              input_word_length=input_word_length,
-                                              char_emd_dim=char_emd_dim,
-                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
-    elif modelname is 'BiLSTM_CRF_multi2_order2':
-        nn_model = BiLSTM_CRF_multi2_order2(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                              source_W=source_W,
-                                              input_seq_lenth=input_seq_lenth,
-                                              output_seq_lenth=output_seq_lenth,
-                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                              sourcecharsize=sourcecharsize,
-                                              character_W=character_W,
-                                              input_word_length=input_word_length,
-                                              char_emd_dim=char_emd_dim,
-                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-
-    elif modelname is 'BiLSTM_CRF_multi2_order3':
-        nn_model = BiLSTM_CRF_multi2_order3(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                              source_W=source_W,
-                                              input_seq_lenth=input_seq_lenth,
-                                              output_seq_lenth=output_seq_lenth,
-                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                              sourcecharsize=sourcecharsize,
-                                              character_W=character_W,
-                                              input_word_length=input_word_length,
-                                              char_emd_dim=char_emd_dim,
-                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-
-    elif modelname is 'BiLSTM_CRF_multi2_order32':
-        nn_model = BiLSTM_CRF_multi2_order32(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+    elif modelname is 'BiLSTM_CRF_multi2_order_pos':
+        nn_model = BiLSTM_CRF_multi2_order_pos(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                               source_W=source_W,
                                               input_seq_lenth=input_seq_lenth,
                                               output_seq_lenth=output_seq_lenth,
@@ -1046,12 +1011,12 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order2'
     modelname = 'BiLSTM_CRF_multi2_order3'
     modelname = 'BiLSTM_CRF_multi2_order32'
-
+    modelname = 'BiLSTM_CRF_multi2_order_pos'
 
     print(modelname)
 
     w2v_file = "./data/w2v/glove.6B.100d.txt"
-    datafile = "./model/data_fix_multi3.pkl"
+    datafile = "./model/data_fix_multi_pos.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
     modelfile = "./model/" + modelname + "_finall_1.h5"
     modelfile = "./model/" + modelname + "_Type_3.h5"
