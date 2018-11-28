@@ -652,7 +652,7 @@ def BiLSTM_CRF_multi2_order_pos(sourcevocabsize, targetvocabsize, source_W, inpu
     output2 = crflayer2(mlp2_hidden3)
 
 
-    Models = Model([word_input, char_input], [output1, output2])
+    Models = Model([word_input, char_input, pos_input], [output1, output2])
     # Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
     #                loss={'finall': crflayer.loss_function, 'BIOES': 'categorical_crossentropy', 'Type': 'categorical_crossentropy'},
     #                loss_weights={'finall': 1., 'BIOES': 1., 'Type': 1.},
