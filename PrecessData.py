@@ -363,8 +363,8 @@ def make_idx_POS_index(file, max_s, source_vob):
         if line.__len__() <= 1:
             num = max_s - count
             # print('num ', num, 'max_s', max_s, 'count', count)
-            # for inum in range(0, num):
-            #     data_s.append([0, 0, 0, 0, 0])
+            for inum in range(0, num):
+                data_s.append([0, 0, 0, 0, 0])
             # print(data_s)
             # print(data_t)
             data_s_all.append(data_s)
