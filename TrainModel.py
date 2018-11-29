@@ -679,13 +679,13 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
     testy = np.asarray(testdata[1], dtype="int32")
     testy_BIOES = np.asarray(testdata[3], dtype="int32")
     testy_Type = np.asarray(testdata[4], dtype="int32")
-    poslabel_test = np.asarray(pos_data, dtype="int32")
+    testpos = np.asarray(pos_data, dtype="int32")
     testchar = np.asarray(chardata, dtype="int32")
 
     testresult = []
     testresult2 = []
     testresult3 = []
-    predictions = nn_model.predict([testx, testchar])
+    predictions = nn_model.predict([testx, testchar, testpos])
 
     if len(predictions) >= 2 and len(predictions) < 10:
 
