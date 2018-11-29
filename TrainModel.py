@@ -858,6 +858,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     # entlabel_train = np.asarray(entlabel_traindata, dtype="int32")
     # poslabel_train = np.asarray(poslabel_traindata, dtype="int32")
     input_char = np.asarray(chartrain, dtype="int32")
+    input_pos = np.asarray(pos_train, dtype="int32")
     x_word_val = np.asarray(devdata[0], dtype="int32")
     y_val = np.asarray(devdata[1], dtype="int32")
     y_O_val = np.asarray(devdata[2], dtype="int32")
@@ -865,6 +866,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     y_Type_val = np.asarray(devdata[4], dtype="int32")
 
     input_char_val = np.asarray(chardev, dtype="int32")
+    input_pos_val = np.asarray(chardev, dtype="int32")
 
     nn_model = SelectModel(Modelname, sourcevocabsize=len(source_vob), targetvocabsize=len(target_vob),
                                      source_W=source_W,
@@ -916,10 +918,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
         #, y_BIOES, y_Type   , y_BIOES_val, y_Type_val
-        history = nn_model.fit([x_word, input_char], [y],
+        history = nn_model.fit([x_word, input_char,input_pos], [y],
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_val]),
+                               validation_data=([x_word_val, input_char_val, pos_dev], [y_val]),
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
