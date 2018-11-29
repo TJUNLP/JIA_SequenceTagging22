@@ -1010,8 +1010,8 @@ if __name__ == "__main__":
     maxlen = 50
 
     # modelname = 'Model_BiLSTM_CnnDecoder_multi2'
-    # modelname = 'creat_Model_BiLSTM_CnnDecoder'
-    modelname = 'creat_Model_BiLSTM_CRF'
+    modelname = 'creat_Model_BiLSTM_CnnDecoder'
+    # modelname = 'creat_Model_BiLSTM_CRF'
     # modelname = 'Model_BiLSTM_CRF_multi2'
 
 
