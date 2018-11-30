@@ -1016,7 +1016,7 @@ if __name__ == "__main__":
     print(modelname)
 
     w2v_file = "./data/w2v/glove.6B.100d.txt"
-    datafile = "./model/data_fix_multi_pos.pkl"
+    datafile = "./model/data_fix_multi3.pkl" #"./model/data_fix_multi_pos.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
     modelfile = "./model/" + modelname + "_finall_1.h5"
     modelfile = "./model/" + modelname + "_Type_pos3_1.h5"

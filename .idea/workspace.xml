@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/TrainModel_2task_pos.py" afterPath="$PROJECT_DIR$/TrainModel_2task_pos.py" />
-      <change beforePath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" afterPath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,8 +38,8 @@
       <file leaf-file-name="TrainModel_2task_pos.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="1021" column="54" lean-forward="false" selection-start-line="1021" selection-start-column="54" selection-end-line="1021" selection-end-column="54" />
+            <state relative-caret-position="354">
+              <caret line="1023" column="32" lean-forward="true" selection-start-line="1023" selection-start-column="32" selection-end-line="1023" selection-end-column="32" />
               <folding>
                 <element signature="e#26#49#0" expanded="true" />
                 <element signature="e#3656#7442#0" expanded="false" />
@@ -794,8 +792,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="1021" column="54" lean-forward="false" selection-start-line="1021" selection-start-column="54" selection-end-line="1021" selection-end-column="54" />
+        <state relative-caret-position="354">
+          <caret line="1023" column="32" lean-forward="true" selection-start-line="1023" selection-start-column="32" selection-end-line="1023" selection-end-column="32" />
           <folding>
             <element signature="e#26#49#0" expanded="true" />
             <element signature="e#3656#7442#0" expanded="false" />
