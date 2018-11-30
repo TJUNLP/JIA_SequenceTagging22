@@ -612,15 +612,16 @@ def BiLSTM_CRF_multi2_order_pos(sourcevocabsize, targetvocabsize, source_W, inpu
                               weights=[source_W])(word_input)
     word_embedding_dropout = Dropout(0.5)(word_embedding)
 
-    pos_input = Input(shape=(input_seq_lenth, 5,), dtype='int32')
+    pos_k = 3 #5
+    pos_input = Input(shape=(input_seq_lenth, pos_k,), dtype='int32')
     pos_embedding = Embedding(input_dim=sourcepossize + 1,
                               output_dim=pos_emd_dim,
-                              batch_input_shape=(batch_size, input_seq_lenth, 5),
+                              batch_input_shape=(batch_size, input_seq_lenth, pos_k),
                               mask_zero=False,
                               trainable=True,
                               weights=[pos_W])
     pos_embedding2 = TimeDistributed(pos_embedding)(pos_input)
-    pos_cnn = TimeDistributed(Conv1D(50, 5, activation='relu', border_mode='valid'))(pos_embedding2)
+    pos_cnn = TimeDistributed(Conv1D(50, pos_k, activation='relu', border_mode='valid'))(pos_embedding2)
     pos_macpool = TimeDistributed(GlobalMaxPooling1D())(pos_cnn)
 
 
