@@ -643,9 +643,9 @@ def BiLSTM_CRF_multi2_order_pos(sourcevocabsize, targetvocabsize, source_W, inpu
     mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
     mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1)
 
-    BiLSTM_pos = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(pos_macpool)
-    BiLSTM_pos = Dropout(0.5)(BiLSTM_pos)
-    mlp2_hidden1 = concatenate([BiLSTM_pos, mlp2_hidden1], axis=-1)
+    # BiLSTM_pos = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(pos_macpool)
+    # BiLSTM_pos = Dropout(0.5)(BiLSTM_pos)
+    # mlp2_hidden1 = concatenate([BiLSTM_pos, mlp2_hidden1], axis=-1)
 
     mlp2_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden1)
     mlp2_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden2)
