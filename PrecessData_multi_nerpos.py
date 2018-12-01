@@ -360,10 +360,13 @@ def make_idx_POS_index(file, max_s, target_vob):
 
         if line.__len__() <= 1:
 
-            targetvec = np.zeros(len(target_vob) + 1)
-            targetvec[0] = 1
-            data_t.append(targetvec)
-            
+            num = max_s - count
+            # print('num ', num, 'max_s', max_s, 'count', count)
+            for inum in range(0, num):
+                targetvec = np.zeros(len(target_vob) + 1)
+                targetvec[0] = 1
+                data_t.append(targetvec)
+
             data_t_all.append(data_t)
             data_t = []
             count = 0
@@ -373,7 +376,7 @@ def make_idx_POS_index(file, max_s, target_vob):
         targetvec = np.zeros(len(target_vob) + 1)
         targetvec[target_vob[sent[1]]] = 1
         data_t.append(targetvec)
-
+        count += 1
     f.close()
 
     return data_t_all
