@@ -359,8 +359,11 @@ def make_idx_POS_index(file, max_s, target_vob):
     for i, line in enumerate(fr):
 
         if line.__len__() <= 1:
-            num = max_s - count
-            # print('num ', num, 'max_s', max_s, 'count', count)
+
+            targetvec = np.zeros(len(target_vob) + 1)
+            targetvec[0] = 1
+            data_t.append(targetvec)
+            
             data_t_all.append(data_t)
             data_t = []
             count = 0
