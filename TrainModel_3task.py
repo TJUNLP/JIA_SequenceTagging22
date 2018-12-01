@@ -161,7 +161,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     y_O_val = np.asarray(dev[2], dtype="int32")
     y_BIOES_val = np.asarray(dev[3], dtype="int32")
     y_Type_val = np.asarray(dev[4], dtype="int32")
-    y_Pos_val = np.asarray(pos_test, dtype="int32")
+    y_Pos_val = np.asarray(pos_dev, dtype="int32")
 
     input_char_val = np.asarray(chardev, dtype="int32")
 

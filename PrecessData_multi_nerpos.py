@@ -723,12 +723,16 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
     train = make_idx_data_index(trainfile,max_s,source_vob,target_vob)
     dev = make_idx_data_index(devfile,max_s,source_vob,target_vob)
     test = make_idx_data_index(testfile, max_s, source_vob, target_vob)
+    print(len(train))
 
     pos_target_vob, pos_target_idex_word = get_pos_label_index([trainfile, devfile, testfile])
-    pos_train = make_idx_POS_index(trainfile, max_s, pos_target_vob)
-    pos_dev = make_idx_POS_index(devfile, max_s, pos_target_vob)
-    pos_test = make_idx_POS_index(testfile, max_s, pos_target_vob)
 
+    pos_train = make_idx_POS_index(trainfile, max_s, pos_target_vob)
+    print(len(pos_train))
+    pos_dev = make_idx_POS_index(devfile, max_s, pos_target_vob)
+    print(len(pos_dev))
+    pos_test = make_idx_POS_index(testfile, max_s, pos_target_vob)
+    print(len(pos_test))
 
     withFix = True
 

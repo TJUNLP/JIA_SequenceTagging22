@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/PrecessData_multi_nerpos.py" afterPath="$PROJECT_DIR$/PrecessData_multi_nerpos.py" />
+      <change beforePath="$PROJECT_DIR$/TrainModel_3task.py" afterPath="$PROJECT_DIR$/TrainModel_3task.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -12,28 +13,36 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_3task.coverage" NAME="TrainModel_3task Coverage Results" MODIFIED="1543669015517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task_pos.coverage" NAME="TrainModel_2task_pos Coverage Results" MODIFIED="1543379889285" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task.coverage" NAME="TrainModel_2task Coverage Results" MODIFIED="1543047158961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel.coverage" NAME="TrainModel Coverage Results" MODIFIED="1535877051429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TrainModel_3task.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TrainModel_3task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_3task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="327" column="13" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="45" />
+            <state relative-caret-position="109">
+              <caret line="241" column="23" lean-forward="true" selection-start-line="241" selection-start-column="23" selection-end-line="241" selection-end-column="23" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrecessData_multi_nerpos.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PrecessData_multi_nerpos.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_multi_nerpos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="367" column="22" lean-forward="false" selection-start-line="367" selection-start-column="16" selection-end-line="367" selection-end-column="22" />
-              <folding />
+            <state relative-caret-position="78">
+              <caret line="723" column="37" lean-forward="false" selection-start-line="723" selection-start-column="30" selection-end-line="723" selection-end-column="37" />
+              <folding>
+                <element signature="e#10108#11041#0" expanded="false" />
+                <element signature="e#11081#13103#0" expanded="false" />
+                <element signature="e#13143#13884#0" expanded="false" />
+                <element signature="e#13920#14813#0" expanded="false" />
+                <element signature="e#14854#15848#0" expanded="false" />
+                <element signature="e#15898#18618#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -100,8 +109,8 @@
         <option value="$PROJECT_DIR$/TrainModel_2task_pos.py" />
         <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
         <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi3_nerpos.py" />
-        <option value="$PROJECT_DIR$/TrainModel_3task.py" />
         <option value="$PROJECT_DIR$/PrecessData_multi_nerpos.py" />
+        <option value="$PROJECT_DIR$/TrainModel_3task.py" />
       </list>
     </option>
   </component>
@@ -203,7 +212,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.TrainModel_2task_pos">
+  <component name="RunManager" selected="Python.TrainModel_3task">
     <configuration name="TrainModel" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -261,16 +270,37 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <list size="3">
+    <configuration name="TrainModel_3task" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="JIA_SequenceTagging22" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/TrainModel_3task.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list size="4">
       <item index="0" class="java.lang.String" itemvalue="Python.TrainModel" />
       <item index="1" class="java.lang.String" itemvalue="Python.TrainModel_2task" />
       <item index="2" class="java.lang.String" itemvalue="Python.TrainModel_2task_pos" />
+      <item index="3" class="java.lang.String" itemvalue="Python.TrainModel_3task" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Python.TrainModel_2task_pos" />
-        <item index="1" class="java.lang.String" itemvalue="Python.TrainModel_2task" />
-        <item index="2" class="java.lang.String" itemvalue="Python.TrainModel" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Python.TrainModel_3task" />
+        <item index="1" class="java.lang.String" itemvalue="Python.TrainModel_2task_pos" />
+        <item index="2" class="java.lang.String" itemvalue="Python.TrainModel_2task" />
+        <item index="3" class="java.lang.String" itemvalue="Python.TrainModel" />
       </list>
     </recent_temporary>
   </component>
@@ -296,7 +326,7 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33124018" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.299843" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -787,18 +817,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_3task.py">
+    <entry file="file://$PROJECT_DIR$/PrecessData_multi_nerpos.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="327" column="13" lean-forward="true" selection-start-line="15" selection-start-column="37" selection-end-line="15" selection-end-column="45" />
-          <folding />
+        <state relative-caret-position="78">
+          <caret line="723" column="37" lean-forward="false" selection-start-line="723" selection-start-column="30" selection-end-line="723" selection-end-column="37" />
+          <folding>
+            <element signature="e#10108#11041#0" expanded="false" />
+            <element signature="e#11081#13103#0" expanded="false" />
+            <element signature="e#13143#13884#0" expanded="false" />
+            <element signature="e#13920#14813#0" expanded="false" />
+            <element signature="e#14854#15848#0" expanded="false" />
+            <element signature="e#15898#18618#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData_multi_nerpos.py">
+    <entry file="file://$PROJECT_DIR$/TrainModel_3task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="367" column="22" lean-forward="false" selection-start-line="367" selection-start-column="16" selection-end-line="367" selection-end-column="22" />
+        <state relative-caret-position="109">
+          <caret line="241" column="23" lean-forward="true" selection-start-line="241" selection-start-column="23" selection-end-line="241" selection-end-column="23" />
           <folding />
         </state>
       </provider>
