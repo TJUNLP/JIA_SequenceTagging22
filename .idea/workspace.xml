@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/PrecessData_multi_nerpos.py" afterPath="$PROJECT_DIR$/PrecessData_multi_nerpos.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_3task.py" afterPath="$PROJECT_DIR$/TrainModel_3task.py" />
-    </list>
+    <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +20,8 @@
       <file leaf-file-name="TrainModel_3task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_3task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="241" column="23" lean-forward="true" selection-start-line="241" selection-start-column="23" selection-end-line="241" selection-end-column="23" />
+            <state relative-caret-position="49">
+              <caret line="237" column="57" lean-forward="true" selection-start-line="237" selection-start-column="57" selection-end-line="237" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -834,8 +831,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_3task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="241" column="23" lean-forward="true" selection-start-line="241" selection-start-column="23" selection-end-line="241" selection-end-column="23" />
+        <state relative-caret-position="49">
+          <caret line="237" column="57" lean-forward="true" selection-start-line="237" selection-start-column="57" selection-end-line="237" selection-end-column="57" />
           <folding />
         </state>
       </provider>
