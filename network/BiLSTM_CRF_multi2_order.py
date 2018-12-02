@@ -625,14 +625,20 @@ def BiLSTM_CRF_multi2_order_pos(sourcevocabsize, targetvocabsize, source_W, inpu
     pos_macpool = TimeDistributed(GlobalMaxPooling1D())(pos_cnn)
 
 
-    embedding = concatenate([word_embedding_dropout, char_macpool,pos_macpool], axis=-1)
+
+
+    embedding = concatenate([word_embedding_dropout, char_macpool], axis=-1)
 
     BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True,), merge_mode = 'concat')(embedding)
     # BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True))(word_embedding_dropout)
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
-    mlp1_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
+    BiLSTM_pos = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(pos_macpool)
+    BiLSTM_pos = Dropout(0.5)(BiLSTM_pos)
+    BiLSTM_output = concatenate([BiLSTM_dropout, BiLSTM_pos], axis=-1)
+
+    mlp1_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_output)
     mlp1_hidden1 = Dropout(0.5)(mlp1_hidden1)
     mlp1_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp1_hidden1)
     # output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
@@ -640,7 +646,7 @@ def BiLSTM_CRF_multi2_order_pos(sourcevocabsize, targetvocabsize, source_W, inpu
     crflayer1 = CRF(5 + 1, sparse_target=False, learn_mode='marginal', name='BIOES')
     output1 = crflayer1(mlp1_hidden3)
 
-    mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
+    mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_output)
     mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1)
 
     # BiLSTM_pos = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(pos_macpool)
