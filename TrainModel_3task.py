@@ -1,12 +1,12 @@
 # -*- encoding:utf-8 -*-
 
 import tensorflow as tf
-config = tf.ConfigProto(allow_soft_placement=True)
-#最多占gpu资源的70%
-gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.7)
-#开始不会给tensorflow全部gpu资源 而是按需增加
-config.gpu_options.allow_growth = True
-sess = tf.Session(config=config)
+# config = tf.ConfigProto(allow_soft_placement=True)
+# #最多占gpu资源的70%
+# gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.7)
+# #开始不会给tensorflow全部gpu资源 而是按需增加
+# config.gpu_options.allow_growth = True
+# sess = tf.Session(config=config)
 
 import pickle, datetime, codecs
 import os.path
@@ -310,7 +310,7 @@ if __name__ == "__main__":
     w2v_file = "./data/w2v/glove.6B.100d.txt"
     datafile = "./model/data_fix_multi3_nerpos.pkl"
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_1.h5"
+    modelfile = "./model/" + modelname + "_2.h5"
 
     resultdir = "./data/result/"
 
