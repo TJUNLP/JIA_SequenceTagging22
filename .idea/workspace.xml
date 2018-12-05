@@ -22,7 +22,7 @@
       <file leaf-file-name="TrainModel_3task.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_3task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="281">
+            <state relative-caret-position="4260">
               <caret line="312" column="44" lean-forward="false" selection-start-line="312" selection-start-column="44" selection-end-line="312" selection-end-column="44" />
               <folding>
                 <element signature="e#26#49#0" expanded="true" />
@@ -34,8 +34,8 @@
       <file leaf-file-name="TrainModel_2task_pos.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="1021" column="54" lean-forward="false" selection-start-line="1021" selection-start-column="54" selection-end-line="1021" selection-end-column="54" />
+            <state relative-caret-position="269">
+              <caret line="958" column="29" lean-forward="false" selection-start-line="958" selection-start-column="29" selection-end-line="958" selection-end-column="29" />
               <folding>
                 <element signature="e#3656#7442#0" expanded="false" />
                 <element signature="e#7598#9437#0" expanded="false" />
@@ -141,8 +141,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -170,6 +168,8 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -314,7 +314,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25723737" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26137304" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -672,14 +672,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6495">
           <caret line="723" column="37" lean-forward="false" selection-start-line="723" selection-start-column="30" selection-end-line="723" selection-end-column="37" />
-          <folding>
-            <element signature="e#10108#11041#0" expanded="false" />
-            <element signature="e#11081#13103#0" expanded="false" />
-            <element signature="e#13143#13884#0" expanded="false" />
-            <element signature="e#13920#14813#0" expanded="false" />
-            <element signature="e#14854#15848#0" expanded="false" />
-            <element signature="e#15898#18618#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -701,7 +693,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_3task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="281">
+        <state relative-caret-position="4260">
           <caret line="312" column="44" lean-forward="false" selection-start-line="312" selection-start-column="44" selection-end-line="312" selection-end-column="44" />
           <folding>
             <element signature="e#26#49#0" expanded="true" />
@@ -711,8 +703,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="1021" column="54" lean-forward="false" selection-start-line="1021" selection-start-column="54" selection-end-line="1021" selection-end-column="54" />
+        <state relative-caret-position="269">
+          <caret line="958" column="29" lean-forward="false" selection-start-line="958" selection-start-column="29" selection-end-line="958" selection-end-column="29" />
           <folding>
             <element signature="e#3656#7442#0" expanded="false" />
             <element signature="e#7598#9437#0" expanded="false" />
