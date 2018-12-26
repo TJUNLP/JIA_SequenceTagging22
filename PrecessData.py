@@ -759,7 +759,7 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
         chardev = make_idx_character_index(devfile, max_s, max_c, source_char)
         chartest = make_idx_character_index(testfile, max_s, max_c, source_char)
 
-    print ("dataset created!")
+    print(datafile, "dataset created!")
     out = open(datafile, 'wb')#
     pickle.dump([train, dev, test, source_W, source_vob, sourc_idex_word,
                 target_vob, target_idex_word, max_s, k,
