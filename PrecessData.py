@@ -692,7 +692,7 @@ def get_Character_index_withFix(files):
 
 
 
-def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_dim=25, maxlen = 50):
+def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_dim=25, withFix = True, maxlen = 50):
     """
     数据处理的入口函数
     Converts the input files  into the end2end model input formats
@@ -736,7 +736,7 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
     # print('entlabel vocab size:'+str(len(entlabel_vob)))
     print('shape in pos_W:', pos_W.shape)
 
-    withFix = True
+
 
     if withFix is True:
         source_char, sourc_idex_char, max_c = get_Character_index_withFix({trainfile, devfile, testfile})
@@ -767,28 +767,6 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
                  pos_train, pos_dev, pos_test, pos_vob, pos_idex_word, pos_W, pos_k], out, 0)
     out.close()
 
-def zero_digits(s):
-    """
-    Replace every digit in a string by a zero.
-    """
-    return re.sub('\d', '0', s)
-
-def peplacedigital(s):
-    if len(s)==1:
-        s='1'
-    elif len(s)==2:
-        s='10'
-    elif len(s)==3:
-        s='100'
-    else:
-        s='1000'
-    return s
-
-def getClass_weight(x=10):
-    cw = {0: 1, 1: 1}
-    for i in range(2, x+1):
-        cw[i] = 10
-    return cw
 
 if __name__=="__main__":
     print(20*2)

@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/PrecessData.py" afterPath="$PROJECT_DIR$/PrecessData.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel_2task.py" afterPath="$PROJECT_DIR$/TrainModel_2task.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_2task_pos.py" afterPath="$PROJECT_DIR$/TrainModel_2task_pos.py" />
+      <change beforePath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" afterPath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,6 +33,18 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="TrainModel_2task_pos.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="5580">
+              <caret line="372" column="7" lean-forward="true" selection-start-line="372" selection-start-column="7" selection-end-line="372" selection-end-column="7" />
+              <folding>
+                <element signature="e#26#49#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="PrecessData_multi_nerpos.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_multi_nerpos.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -43,23 +55,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_2task_pos.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
+      <file leaf-file-name="BiLSTM_CRF_multi2_order.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="303">
-              <caret line="372" column="7" lean-forward="true" selection-start-line="372" selection-start-column="7" selection-end-line="372" selection-end-column="7" />
-              <folding>
-                <element signature="e#26#49#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TrainModel.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TrainModel.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15600">
-              <caret line="1040" column="16" lean-forward="false" selection-start-line="1040" selection-start-column="8" selection-end-line="1040" selection-end-column="16" />
+            <state relative-caret-position="75">
+              <caret line="170" column="28" lean-forward="false" selection-start-line="170" selection-start-column="4" selection-end-line="170" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -68,8 +68,8 @@
       <file leaf-file-name="TrainModel_2task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="212" column="52" lean-forward="true" selection-start-line="212" selection-start-column="52" selection-end-line="212" selection-end-column="52" />
+            <state relative-caret-position="-92">
+              <caret line="376" column="0" lean-forward="true" selection-start-line="376" selection-start-column="0" selection-end-line="376" selection-end-column="0" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -80,8 +80,8 @@
       <file leaf-file-name="PrecessData.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="372">
-              <caret line="764" column="26" lean-forward="false" selection-start-line="764" selection-start-column="16" selection-end-line="764" selection-end-column="26" />
+            <state relative-caret-position="690">
+              <caret line="781" column="32" lean-forward="true" selection-start-line="781" selection-start-column="32" selection-end-line="781" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -105,13 +105,13 @@
         <option value="$PROJECT_DIR$/network/Model_BiLSTM_CRF_multi2_alone.py" />
         <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_alone.py" />
         <option value="$PROJECT_DIR$/Evaluate.py" />
-        <option value="$PROJECT_DIR$/PrecessData.py" />
         <option value="$PROJECT_DIR$/TrainModel.py" />
         <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi3_nerpos.py" />
         <option value="$PROJECT_DIR$/PrecessData_multi_nerpos.py" />
-        <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
         <option value="$PROJECT_DIR$/TrainModel_3task.py" />
         <option value="$PROJECT_DIR$/TrainModel_2task_pos.py" />
+        <option value="$PROJECT_DIR$/PrecessData.py" />
+        <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
         <option value="$PROJECT_DIR$/TrainModel_2task.py" />
       </list>
     </option>
@@ -673,37 +673,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-57">
-          <caret line="640" column="39" lean-forward="false" selection-start-line="640" selection-start-column="39" selection-end-line="640" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="372">
-          <caret line="764" column="26" lean-forward="false" selection-start-line="764" selection-start-column="16" selection-end-line="764" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_multi_nerpos.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-265">
           <caret line="727" column="62" lean-forward="false" selection-start-line="727" selection-start-column="43" selection-end-line="727" selection-end-column="62" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="303">
-          <caret line="372" column="7" lean-forward="true" selection-start-line="372" selection-start-column="7" selection-end-line="372" selection-end-column="7" />
-          <folding>
-            <element signature="e#26#49#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -725,10 +699,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5580">
+          <caret line="372" column="7" lean-forward="true" selection-start-line="372" selection-start-column="7" selection-end-line="372" selection-end-column="7" />
+          <folding>
+            <element signature="e#26#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PrecessData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="690">
+          <caret line="781" column="32" lean-forward="true" selection-start-line="781" selection-start-column="32" selection-end-line="781" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="170" column="28" lean-forward="false" selection-start-line="170" selection-start-column="4" selection-end-line="170" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="212" column="52" lean-forward="true" selection-start-line="212" selection-start-column="52" selection-end-line="212" selection-end-column="52" />
+        <state relative-caret-position="-92">
+          <caret line="376" column="0" lean-forward="true" selection-start-line="376" selection-start-column="0" selection-end-line="376" selection-end-column="0" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>

@@ -374,14 +374,17 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order'
     modelname = 'BiLSTM_CRF_multi2_order2'
     modelname = 'BiLSTM_CRF_multi2_order3'
-    # modelname = 'BiLSTM_CRF_multi2_order31'
-    modelname = 'BiLSTM_CRF_multi2_order3_split'
+
 
 
     print(modelname)
 
     w2v_file = "./data/w2v/glove.6B.100d.txt"
-    datafile = "./model/data_fix_multi3.pkl"
+
+    withFix = False
+
+    datafile = "./model/data_fix=" + str(withFix) + "_pos=False.pkl"
+
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
     modelfile = "./model/" + modelname + "_finall_1.h5"
     modelfile = "./model/" + modelname + "_Type_1.h5"
@@ -397,9 +400,11 @@ if __name__ == "__main__":
     Test = True
     valid = False
     Label = False
+
+
     if not os.path.exists(datafile):
         print("Precess data....")
-        get_data(trainfile,devfile, testfile, w2v_file, datafile, w2v_k=100, char_emd_dim=25, maxlen=maxlen)
+        get_data(trainfile,devfile, testfile, w2v_file, datafile, w2v_k=100, char_emd_dim=25, withFix=True, maxlen=maxlen)
     if not os.path.exists(modelfile):
         print("Lstm data has extisted: " + datafile)
         print("Training EE model....")
@@ -414,6 +419,7 @@ if __name__ == "__main__":
 
     if Test:
         print("test EE model....")
+        print(datafile)
         print(modelfile)
         infer_e2e_model(modelname, datafile, modelfile, resultdir, hidden_dim=200, batch_size=batch_size)
 
