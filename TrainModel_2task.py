@@ -381,14 +381,14 @@ if __name__ == "__main__":
 
     w2v_file = "./data/w2v/glove.6B.100d.txt"
 
-    withFix = True
+    withFix = False
     withPos = False
 
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
     # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
     modelfile = "./model/" + modelname + "_finall_1.h5"
-    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "__Type_3.h5"
+    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "__Type_2.h5"
 
     resultdir = "./data/result/"
 
