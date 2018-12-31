@@ -129,7 +129,7 @@ def Model_BiLSTM_CRF_withPOS(sourcevocabsize, targetvocabsize, source_W, input_s
     pos_cnn = TimeDistributed(Conv1D(50, pos_k, activation='relu', border_mode='valid'))(pos_embedding2)
     pos_macpool = TimeDistributed(GlobalMaxPooling1D())(pos_cnn)
 
-    pos_rnn = TimeDistributed(Bidirectional(LSTM(25, return_sequences=True), merge_mode='concat'))(pos_embedding2)
+    pos_rnn = TimeDistributed(Bidirectional(LSTM(25, return_sequences=False), merge_mode='concat'))(pos_embedding2)
 
 
     embedding = concatenate([word_embedding_dropout, char_macpool, pos_rnn], axis=-1)
