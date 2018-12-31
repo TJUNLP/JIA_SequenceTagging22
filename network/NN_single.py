@@ -57,14 +57,6 @@ def Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth
 
     word_embedding_dropout = Dropout(0.5)(word_embedding)
 
-    pos_input = Input(shape=(input_seq_lenth,), dtype='int32')
-    pos_embeding = Embedding(input_dim=sourcepossize + 1,
-                                  output_dim=pos_emd_dim,
-                                  input_length=input_seq_lenth,
-                                  mask_zero=False,
-                                  trainable=True,
-                                  weights=[pos_W])(pos_input)
-
     embedding = concatenate([word_embedding_dropout, char_macpool], axis=-1)
 
     BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode = 'concat')(embedding)

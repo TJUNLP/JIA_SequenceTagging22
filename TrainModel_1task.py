@@ -270,7 +270,7 @@ if __name__ == "__main__":
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
-                "__single_1.h5"
+                "__single_2.h5"
 
 
     batch_size = 32
@@ -294,6 +294,7 @@ if __name__ == "__main__":
 
     if Test:
         print("test EE model....")
+        print(datafile)
         print(modelfile)
         infer_e2e_model(modelname, datafile, modelfile, resultdir, hidden_dim=200, batch_size=batch_size)
 
