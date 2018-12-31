@@ -7,14 +7,22 @@ def testNumberofTAG(files):
     Type = {'LOC': 0, 'ORG': 0,'PER': 0, 'MISC': 0}
     Pos = {}
 
+    PosinEnt = {}
+
+    before1 = {}
+    before2 = {}
+    after1 = {}
+    after2 = {}
+
     for testf in files:
         f = open(testf, 'r')
         fr = f.readlines()
-        for line in fr:
+        start = 0
+        for id, line in enumerate(fr):
             if line.__len__() <= 1:
-
+                start = 0
                 continue
-
+            start += 1
             sourc = line.strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
 
             if sourc[1] in Pos.keys():
@@ -32,7 +40,41 @@ def testNumberofTAG(files):
             else:
                 sp = sourc[4].split('-')
                 BIOES[sp[0]] += 1
-                Type[sp[1]] +=1
+                Type[sp[1]] += 1
+
+                if sourc[1] in PosinEnt.keys():
+                    PosinEnt[sourc[1]] = PosinEnt[sourc[1]] + 1
+                else:
+                    PosinEnt[sourc[1]] = 1
+
+                if 'S-' in sourc[4] or 'B-' in sourc[4]:
+                    if start > 2:
+                        chch2 = fr[id-2].strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
+                        if chch2[1] in before2.keys():
+                            before2[chch2[1]] = before2[chch2[1]] + 1
+                        else:
+                            before2[chch2[1]] = 1
+                    if start > 1:
+                        chch1 = fr[id-1].strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
+                        if chch1[1] in before1.keys():
+                            before1[chch1[1]] = before1[chch1[1]] + 1
+                        else:
+                            before1[chch1[1]] = 1
+
+                if 'S-' in sourc[4] or 'E-' in sourc[4]:
+
+                    if id + 1 < fr.__len__() and fr[id + 1].__len__() > 1:
+                        chch1 = fr[id + 1].strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
+                        if chch1[1] in after1.keys():
+                            after1[chch1[1]] = after1[chch1[1]] + 1
+                        else:
+                            after1[chch1[1]] = 1
+                    if id + 2 < fr.__len__() and fr[id + 2].__len__() > 1:
+                        chch2 = fr[id + 2].strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
+                        if chch2[1] in after2.keys():
+                            after2[chch2[1]] = after2[chch2[1]] + 1
+                        else:
+                            after2[chch2[1]] = 1
 
         f.close()
 
@@ -48,6 +90,31 @@ def testNumberofTAG(files):
     for pp in Pos.keys():
         print(pp, Pos[pp])
 
+    print('-----------------PosinEnt')
+    PosinEnt = sorted(PosinEnt.items(), key=lambda d: d[1], reverse=True)
+    for ent in PosinEnt:
+        print(ent)
+
+    print('-----------------before1')
+    before1 = sorted(before1.items(), key=lambda d: d[1], reverse=True)
+    for be in before1:
+        print(be)
+
+    print('-----------------before2')
+    before2 = sorted(before2.items(), key=lambda d: d[1], reverse=True)
+    for be in before2:
+        print(be)
+
+    print('-----------------after1')
+    after1 = sorted(after1.items(), key=lambda d: d[1], reverse=True)
+    for af in after1:
+        print(af)
+
+    print('-----------------after2')
+    after2 = sorted(after2.items(), key=lambda d: d[1], reverse=True)
+    for af in after2:
+        print(af)
+
 
 
 if __name__ == '__main__':
@@ -56,4 +123,6 @@ if __name__ == '__main__':
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    testNumberofTAG([trainfile, devfile, testfile])
+    # testNumberofTAG([trainfile, devfile, testfile])
+
+    print([1]* 3)

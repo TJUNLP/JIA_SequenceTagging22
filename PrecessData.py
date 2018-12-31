@@ -366,7 +366,7 @@ def make_idx_POS_index(file, max_s, source_vob, Poswidth=3):
             num = max_s - count
             # print('num ', num, 'max_s', max_s, 'count', count)
             for inum in range(0, num):
-                data_s.append([0, 0, 0, 0, 0])
+                data_s.append([0] * Poswidth)
             # print(data_s)
             # print(data_t)
             data_s_all.append(data_s)

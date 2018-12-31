@@ -269,7 +269,7 @@ if __name__ == "__main__":
     withPos = True
     Poswidth = 3
 
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
+    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_pos" + str(Poswidth) + ".pkl"
 
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
                 "__single_pos" + str(Poswidth) + "_1.h5"

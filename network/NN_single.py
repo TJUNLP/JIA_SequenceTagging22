@@ -132,7 +132,7 @@ def Model_BiLSTM_CRF_withPOS(sourcevocabsize, targetvocabsize, source_W, input_s
     pos_rnn = TimeDistributed(Bidirectional(LSTM(25, return_sequences=True), merge_mode='concat'))(pos_embedding2)
 
 
-    embedding = concatenate([word_embedding_dropout, char_macpool], axis=-1)
+    embedding = concatenate([word_embedding_dropout, char_macpool, pos_rnn], axis=-1)
 
     BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode = 'concat')(embedding)
     # BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True))(word_embedding_dropout)
@@ -149,7 +149,7 @@ def Model_BiLSTM_CRF_withPOS(sourcevocabsize, targetvocabsize, source_W, input_s
     model = crflayer(TimeD)#0.8746633147782367
     # # model = crf(BiLSTM_dropout)#0.870420501714492
 
-    Models = Model([word_input, char_input], [model])
+    Models = Model([word_input, char_input, pos_input], [model])
 
     # Models.compile(loss=loss, optimizer='adam', metrics=['acc'])
     # Models.compile(loss=crflayer.loss_function, optimizer='adam', metrics=[crflayer.accuracy])
