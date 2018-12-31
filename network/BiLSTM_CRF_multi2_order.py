@@ -412,7 +412,7 @@ def BiLSTM_CRF_multi2_order_pos(sourcevocabsize, targetvocabsize, source_W, inpu
                               hidden_dim, emd_dim,
                               sourcecharsize, character_W, input_word_length, char_emd_dim,
                               sourcepossize, pos_W,pos_emd_dim,
-                            batch_size=32,
+                            batch_size=32, pos_k=3,
                               loss='categorical_crossentropy', optimizer='rmsprop'):
 
     word_input = Input(shape=(input_seq_lenth,), dtype='int32')
@@ -437,7 +437,7 @@ def BiLSTM_CRF_multi2_order_pos(sourcevocabsize, targetvocabsize, source_W, inpu
                               weights=[source_W])(word_input)
     word_embedding_dropout = Dropout(0.5)(word_embedding)
 
-    pos_k = 3 #5
+
     pos_input = Input(shape=(input_seq_lenth, pos_k,), dtype='int32')
     pos_embedding = Embedding(input_dim=sourcepossize + 1,
                               output_dim=pos_emd_dim,

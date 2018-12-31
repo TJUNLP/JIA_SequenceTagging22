@@ -348,7 +348,9 @@ def make_idx_character_index_withFix(file, max_s, max_c, source_vob):
     return data_s_all
 
 
-def make_idx_POS_index(file, max_s, source_vob):
+def make_idx_POS_index(file, max_s, source_vob, Poswidth=3):
+
+    width = (Poswidth-1)//2
 
     count = 0
     data_s_all = []
@@ -376,7 +378,7 @@ def make_idx_POS_index(file, max_s, source_vob):
         data_w = []
 
 
-        for k in range(2, 0, -1):
+        for k in range(width, 0, -1):
             if sen_i - k < 0:
                 data_w.append(0)
                 # print('>>>')
@@ -392,9 +394,9 @@ def make_idx_POS_index(file, max_s, source_vob):
             data_w.append(source_vob[sent])
         # print(sent)
 
-        for k in range(1, 3):
+        for k in range(1, width+1):
             if i + k >= fr.__len__() or fr[i + k].__len__() <= 1:
-                for s in range(k, 3):
+                for s in range(k, width+1):
                     data_w.append(0)
                     # print('<<<')
                 break
@@ -404,7 +406,7 @@ def make_idx_POS_index(file, max_s, source_vob):
                 # print(sourc_back)
 
         data_s.append(data_w)
-        if len(data_w) is not 5:
+        if len(data_w) is not Poswidth:
             print('____________________', data_w)
         count += 1
         sen_i += 1
@@ -692,7 +694,7 @@ def get_Character_index_withFix(files):
 
 
 
-def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_dim=25, withFix = True, maxlen = 50):
+def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_dim=25, withFix = True, maxlen = 50, Poswidth=3):
     """
     数据处理的入口函数
     Converts the input files  into the end2end model input formats
@@ -727,9 +729,9 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
     test = make_idx_data_index(testfile, max_s, source_vob, target_vob)
 
     pos_vob, pos_idex_word = get_Feature_index([trainfile,devfile,testfile])
-    pos_train = make_idx_POS_index(trainfile, max_s, pos_vob)
-    pos_dev = make_idx_POS_index(devfile, max_s, pos_vob)
-    pos_test = make_idx_POS_index(testfile, max_s, pos_vob)
+    pos_train = make_idx_POS_index(trainfile, max_s, pos_vob, Poswidth=Poswidth)
+    pos_dev = make_idx_POS_index(devfile, max_s, pos_vob, Poswidth=Poswidth)
+    pos_test = make_idx_POS_index(testfile, max_s, pos_vob, Poswidth=Poswidth)
     pos_W, pos_k = load_vec_character(pos_vob, 30)
     # pos_k, pos_W = load_vec_onehot(pos_vob)
 

@@ -1,6 +1,6 @@
 # -*- encoding:utf-8 -*-
 
-import tensorflow as tf
+# import tensorflow as tf
 # config = tf.ConfigProto(allow_soft_placement=True)
 # #最多占gpu资源的70%
 # gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.7)
@@ -12,141 +12,49 @@ import pickle, datetime, codecs
 import os.path
 import numpy as np
 import matplotlib.pyplot as plt
-from keras import backend as K
-from PrecessData import get_data, make_idx_data_index
-from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
-# from keras.models import Sequential
-# from keras.layers.embeddings import Embedding
-from keras.layers import Flatten,Lambda,Conv2D
-from keras.layers.core import Dropout, Activation, Permute, RepeatVector
-from keras.layers.merge import concatenate, Concatenate, multiply, Dot
-from keras.layers import TimeDistributed, Input, Bidirectional, Dense, Embedding, LSTM, Conv1D, GlobalMaxPooling1D, RepeatVector, AveragePooling1D
-from keras.models import Model
-from keras_contrib.layers import CRF
-from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from keras import optimizers
-from keras.layers.normalization import BatchNormalization
-from keras.callbacks import Callback
-# from keras.losses import my_cross_entropy_withWeight
-from network.BiLSTM_CRF_multi2_alone import BiLSTM_CRF_multi2_alone
-from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order_pos
+from PrecessData import get_data
+from Evaluate import evaluation_NER
+from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder
+
 
 
 def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
     index2word[0] = ''
-    index2word_BIOES = {0: '', 1: 'B', 2: 'I', 3: 'O', 4: 'E', 5: 'S'}
-    index2word_Type = {0: '', 1: 'O', 2: 'LOC', 3: 'ORG', 4: 'PER', 5: 'MISC'}
 
     testx = np.asarray(testdata[0], dtype="int32")
     testy = np.asarray(testdata[1], dtype="int32")
-    testy_BIOES = np.asarray(testdata[3], dtype="int32")
-    testy_Type = np.asarray(testdata[4], dtype="int32")
-    poslabel_test = np.asarray(pos_data, dtype="int32")
+    testpos = np.asarray(pos_data, dtype="int32")
     testchar = np.asarray(chardata, dtype="int32")
 
     testresult = []
-    testresult2 = []
-    testresult3 = []
-    predictions = nn_model.predict([testx, testchar, poslabel_test])
 
-    isfinall = False
+    predictions = nn_model.predict([testx, testchar])
 
-    for si in range(0, len(predictions[0])):
+    for si in range(0, len(predictions)):
 
-        ptag_BIOES = []
-        for word in predictions[0][si]:
+        sent = predictions[si]
+        ptag = []
+        for word in sent:
             next_index = np.argmax(word)
-            next_token = index2word_BIOES[next_index]
-            ptag_BIOES.append(next_token)
+            next_token = index2word[next_index]
+            ptag.append(next_token)
         # print('next_token--ptag--',str(ptag))
 
-        ptag_Type = []
-        for word in predictions[1][si]:
+        senty = testy[si]
+        ttag = []
+        for word in senty:
             next_index = np.argmax(word)
-            if len(word) == 6:
-                next_token = index2word_Type[next_index]
-            else:
-                isfinall = True
-                next_token = index2word[next_index]
-            ptag_Type.append(next_token)
-        # print('next_token--ptag--',str(ptag))
+            next_token = index2word[next_index]
+            ttag.append(next_token)
 
-        ttag_BIOES = []
-        for word in testy_BIOES[si]:
-            next_index = np.argmax(word)
-            next_token = index2word_BIOES[next_index]
-            ttag_BIOES.append(next_token)
+        result = []
+        result.append(ptag)
+        result.append(ttag)
+        testresult.append(result)
 
-        ttag_Type = []
-        if isfinall:
-            for word in testy[si]:
-                next_index = np.argmax(word)
-                next_token = index2word[next_index]
-                ttag_Type.append(next_token)
-        else:
-            for word in testy_Type[si]:
-                next_index = np.argmax(word)
-                next_token = index2word_Type[next_index]
-                ttag_Type.append(next_token)
-
-        result2 = []
-        result2.append(ptag_BIOES)
-        result2.append(ttag_BIOES)
-        testresult2.append(result2)
-
-        result3 = []
-        result3.append(ptag_Type)
-        result3.append(ttag_Type)
-        testresult3.append(result3)
-
-
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile=resultfile+'.BIORS.txt')
-    print('BIOES>>>>>>>>>>', P, R, F)
-    if isfinall:
-        P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult3, resultfile=resultfile)
-    else:
-        P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile=resultfile+'.Type.txt')
-    print('Type>>>>>>>>>>', P, R, F)
-
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult, resultfile)
 
     return P, R, F, PR_count, P_count, TR_count
-
-
-
-def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
-                             input_seq_lenth,
-                             output_seq_lenth,
-                             hidden_dim, emd_dim,
-                     sourcecharsize,character_W,input_word_length,char_emd_dim,
-                        sourcepossize, pos_W,pos_emd_dim,
-                     loss='categorical_crossentropy', optimizer='rmsprop'):
-    nn_model = None
-    if modelname is 'BiLSTM_CRF_multi2_alone':
-        nn_model = BiLSTM_CRF_multi2_alone(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                              source_W=source_W,
-                                              input_seq_lenth=input_seq_lenth,
-                                              output_seq_lenth=output_seq_lenth,
-                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                              sourcecharsize=sourcecharsize,
-                                              character_W=character_W,
-                                              input_word_length=input_word_length,
-                                              char_emd_dim=char_emd_dim,
-                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-
-    elif modelname is 'BiLSTM_CRF_multi2_order_pos':
-        nn_model = BiLSTM_CRF_multi2_order_pos(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                              source_W=source_W,
-                                              input_seq_lenth=input_seq_lenth,
-                                              output_seq_lenth=output_seq_lenth,
-                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                              sourcecharsize=sourcecharsize,
-                                              character_W=character_W,
-                                              input_word_length=input_word_length,
-                                              char_emd_dim=char_emd_dim,
-                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim,
-                                               batch_size=batch_size, pos_k=Poswidth)
-
-    return nn_model
 
 
 def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidden_dim=200, batch_size=50, retrain=False):
@@ -226,10 +134,11 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                           len(target_vob), target_idex_word,
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char, input_pos], [y_BIOES, y_Type],#y_Type
+        #, y_BIOES, y_Type   , y_BIOES_val, y_Type_val
+        history = nn_model.fit([x_word, input_char], [y],
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val, input_pos_val], [y_BIOES_val, y_Type_val]),#y_Type_val
+                               validation_data=([x_word_val, input_char_val], [y_val]),
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
@@ -271,18 +180,13 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
 
             print(epoch, P, R, F, '  maxF=', maxF)
 
-        if earlystopping >= 20:
+        if earlystopping >= 10:
             break
 
     return nn_model
 
 
 def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=200, batch_size=50):
-    # traindata, testdata, source_W, source_vob, sourc_idex_word, target_vob, \
-    # target_idex_word, max_s, k \
-    #     = pickle.load(open(eelstmfile, 'rb'))
-
-    # load training data and test data
 
     traindata, devdata, testdata, source_W, source_vob, sourc_idex_word, \
     target_vob, target_idex_word, max_s, k, \
@@ -309,18 +213,48 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
     print('P= ', P, '  R= ', R, '  F= ', F)
 
 
+def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
+                             input_seq_lenth,
+                             output_seq_lenth,
+                             hidden_dim, emd_dim,
+                     sourcecharsize,character_W,input_word_length,char_emd_dim,
+                        sourcepossize, pos_W,pos_emd_dim,
+                     loss='categorical_crossentropy', optimizer='rmsprop'):
+    nn_model = None
+    if modelname is 'Model_BiLSTM_CnnDecoder':
+        nn_model = Model_BiLSTM_CnnDecoder(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                                       source_W=source_W,
+                                                       input_seq_lenth=input_seq_lenth,
+                                                       output_seq_lenth=output_seq_lenth,
+                                                       hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                                        sourcecharsize=sourcecharsize,
+                                                        character_W=character_W,
+                                                        input_word_length=input_word_length,
+                                                        char_emd_dim=char_emd_dim,
+                                                 sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+    elif modelname is 'Model_BiLSTM_CRF':
+        nn_model = Model_BiLSTM_CRF(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                                       source_W=source_W,
+                                                       input_seq_lenth=input_seq_lenth,
+                                                       output_seq_lenth=output_seq_lenth,
+                                                       hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                                        sourcecharsize=sourcecharsize,
+                                                        character_W=character_W,
+                                                        input_word_length=input_word_length,
+                                                        char_emd_dim=char_emd_dim,
+                                          sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+
+    return nn_model
+
+
 if __name__ == "__main__":
 
     maxlen = 50
 
-
-    modelname = 'creat_Model_BiLSTM_CRF'
-    modelname = 'BiLSTM_CRF_multi2_alone'
-    modelname = 'BiLSTM_CRF_multi2_order'
-    modelname = 'BiLSTM_CRF_multi2_order2'
-    modelname = 'BiLSTM_CRF_multi2_order3'
-    modelname = 'BiLSTM_CRF_multi2_order32'
-    modelname = 'BiLSTM_CRF_multi2_order_pos'
+    # modelname = 'Model_BiLSTM_CnnDecoder'
+    modelname = 'Model_BiLSTM_CRF'
 
     print(modelname)
 
@@ -331,12 +265,12 @@ if __name__ == "__main__":
     resultdir = "./data/result/"
 
     withFix = False
-    withPos = True
-    Poswidth = 3
+    withPos = False
 
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
-    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) +\
-                "__Type_pos" + str(Poswidth) + "_1.h5"
+
+    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
+                "__single_1.h5"
 
 
     batch_size = 32
@@ -345,7 +279,7 @@ if __name__ == "__main__":
 
     if not os.path.exists(datafile):
         print("Precess data....")
-        get_data(trainfile,devfile, testfile, w2v_file, datafile, w2v_k=100, char_emd_dim=25, withFix=withFix, maxlen=maxlen, Poswidth=Poswidth)
+        get_data(trainfile,devfile, testfile, w2v_file, datafile, w2v_k=100, char_emd_dim=25, withFix=withFix, maxlen=maxlen)
     if not os.path.exists(modelfile):
         print("Lstm data has extisted: " + datafile)
         print("Training EE model....")
@@ -365,17 +299,10 @@ if __name__ == "__main__":
 
 
 
+    # import tensorflow as tf
+    # import keras.backend.tensorflow_backend as KTF
+    #
+    # KTF.set_session(tf.Session(config=tf.ConfigProto(device_count={'gpu': 0})))
 
-
-    '''
-    lstm hidenlayer,
-    bash size,
-    epoach
-    '''
-# import tensorflow as tf
-# import keras.backend.tensorflow_backend as KTF
-#
-# KTF.set_session(tf.Session(config=tf.ConfigProto(device_count={'gpu': 0})))
-
-# CUDA_VISIBLE_DEVICES=1 python3 TrainModel.py
+    # CUDA_VISIBLE_DEVICES=1 python3 TrainModel.py
 
