@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/PrecessData.py" afterPath="$PROJECT_DIR$/PrecessData.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel_1task_pos.py" afterPath="$PROJECT_DIR$/TrainModel_1task_pos.py" />
-      <change beforePath="$PROJECT_DIR$/network/NN_single.py" afterPath="$PROJECT_DIR$/network/NN_single.py" />
-      <change beforePath="$PROJECT_DIR$/testdemo.py" afterPath="$PROJECT_DIR$/testdemo.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,8 +34,8 @@
       <file leaf-file-name="TrainModel_1task_pos.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_1task_pos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="283" column="12" lean-forward="true" selection-start-line="283" selection-start-column="8" selection-end-line="283" selection-end-column="16" />
+            <state relative-caret-position="377">
+              <caret line="299" column="24" lean-forward="false" selection-start-line="299" selection-start-column="24" selection-end-line="299" selection-end-column="24" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -123,9 +120,9 @@
         <option value="$PROJECT_DIR$/TrainModel_2task_pos.py" />
         <option value="$PROJECT_DIR$/TrainModel_1task.py" />
         <option value="$PROJECT_DIR$/network/NN_single.py" />
-        <option value="$PROJECT_DIR$/TrainModel_1task_pos.py" />
         <option value="$PROJECT_DIR$/testdemo.py" />
         <option value="$PROJECT_DIR$/PrecessData.py" />
+        <option value="$PROJECT_DIR$/TrainModel_1task_pos.py" />
       </list>
     </option>
   </component>
@@ -761,8 +758,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_1task_pos.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="283" column="12" lean-forward="true" selection-start-line="283" selection-start-column="8" selection-end-line="283" selection-end-column="16" />
+        <state relative-caret-position="377">
+          <caret line="299" column="24" lean-forward="false" selection-start-line="299" selection-start-column="24" selection-end-line="299" selection-end-column="24" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
