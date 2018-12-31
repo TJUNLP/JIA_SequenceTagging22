@@ -26,7 +26,7 @@ def Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth
                               output_seq_lenth,
                               hidden_dim, emd_dim,
                               sourcecharsize, character_W, input_word_length, char_emd_dim,
-                              sourcepossize, pos_W,pos_emd_dim,
+                              sourcepossize, pos_W,pos_emd_dim, batch_size=32,
                               loss='categorical_crossentropy', optimizer='rmsprop'):
 
     word_input = Input(shape=(input_seq_lenth,), dtype='int32')
@@ -170,7 +170,7 @@ def Model_BiLSTM_CnnDecoder(sourcevocabsize, targetvocabsize, source_W, input_se
                               output_seq_lenth,
                               hidden_dim, emd_dim,
                               sourcecharsize, character_W, input_word_length, char_emd_dim,
-                              sourcepossize, pos_W, pos_emd_dim,
+                              sourcepossize, pos_W, pos_emd_dim,batch_size=32,
                               loss='categorical_crossentropy', optimizer='rmsprop'):
 
     # 0.8349149507609669--attention,lstm*2decoder
