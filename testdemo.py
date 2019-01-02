@@ -1,5 +1,6 @@
 
 import tensorflow as k
+import codecs
 
 def testNumberofTAG(files):
     wholeTag = {}
@@ -134,6 +135,43 @@ def testNumberofTAG(files):
     print(VB, PREP, PUNC)
 
 
+def SyntaxAwareTag(files):
+
+    for testf in files:
+        fw = codecs.open(testf+'.SyntaxAware.txt', 'w', encoding='utf-8')
+        f = open(testf, 'r')
+        fr = f.readlines()
+
+        for id, line in enumerate(fr):
+            if line.__len__() <= 1:
+                fw.write('\n')
+                continue
+
+            str = line.strip('\r\n').rstrip('\n').rstrip('\r')
+
+            sourc = line.strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
+            if sourc[4] == 'O':
+                if 'VB' in sourc[1]:
+                    str = str + ' ' + 'VB'
+
+                if 'IN' == sourc[1] or 'CC' == sourc[1] or 'TO' == sourc[1]:
+                    str = str + ' ' + 'PREP'
+
+                if "," == sourc[1] or ":" == sourc[1] or "(" == sourc[1] or ")" == sourc[1] or \
+                    "." == sourc[1] or "\"" == sourc[1]:
+                    str = str + ' ' + 'PUNC'
+
+            else:
+                str = str + ' ' + sourc[4]
+
+            fw.write(str + '\n')
+
+        fw.close()
+
+
+
+
+
 
 if __name__ == '__main__':
 
@@ -141,4 +179,6 @@ if __name__ == '__main__':
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    testNumberofTAG([trainfile, devfile, testfile])
+    # testNumberofTAG([trainfile, devfile, testfile])
+
+    SyntaxAwareTag([trainfile, devfile, testfile])

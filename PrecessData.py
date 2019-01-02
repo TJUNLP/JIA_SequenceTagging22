@@ -190,6 +190,8 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
             targetvecBIOES[4] = 1
         elif sent[4][0] == 'S':
             targetvecBIOES[5] = 1
+        else:
+            targetvecBIOES[5] = 1
         data_tBIOES.append(targetvecBIOES)
 
         targetvecType = np.zeros(5 + 1)
@@ -204,6 +206,8 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
             targetvecType[4] = 1
         elif 'MISC' in sent[4]:
             targetvecType[5] = 1
+        else:
+            targetvecType[1] = 1
         data_tType.append(targetvecType)
 
         count += 1
