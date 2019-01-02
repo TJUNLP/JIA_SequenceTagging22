@@ -12,7 +12,7 @@ import pickle, datetime, codecs
 import os.path
 import numpy as np
 import matplotlib.pyplot as plt
-from PrecessData import get_data
+from PrecessData_syntaxaware import get_data
 from Evaluate import evaluation_NER
 from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder
 
