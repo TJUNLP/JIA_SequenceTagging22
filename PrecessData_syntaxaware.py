@@ -141,11 +141,11 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
                 targetvecO[0] = 1
                 data_tO.append(targetvecO)
 
-                targetvecBIOES = np.zeros(5 + 1)
+                targetvecBIOES = np.zeros(8 + 1)
                 targetvecBIOES[0] = 1
                 data_tBIOES.append(targetvecBIOES)
 
-                targetvecType = np.zeros(5 + 1)
+                targetvecType = np.zeros(8 + 1)
                 targetvecType[0] = 1
                 data_tType.append(targetvecType)
 
