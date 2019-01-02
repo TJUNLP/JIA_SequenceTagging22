@@ -13,6 +13,9 @@ def testNumberofTAG(files):
     before2 = {}
     after1 = {}
     after2 = {}
+    VB = 0
+    PREP = 0
+    PUNC = 0
 
     for testf in files:
         f = open(testf, 'r')
@@ -37,6 +40,18 @@ def testNumberofTAG(files):
 
             if sourc[4] == 'O':
                 BIOES['O'] += 1
+
+                if 'VB' in sourc[1]:
+                    VB += 1
+
+                if 'IN' == sourc[1] or 'CC' == sourc[1] or 'TO' == sourc[1]:
+                    PREP += 1
+
+                if "," == sourc[1] or ":" == sourc[1] or "(" == sourc[1] or ")" == sourc[1] or \
+                    "." == sourc[1] or "\"" == sourc[1]:
+                    PUNC += 1
+                    # print(line)
+
             else:
                 sp = sourc[4].split('-')
                 BIOES[sp[0]] += 1
@@ -115,6 +130,9 @@ def testNumberofTAG(files):
     for af in after2:
         print(af)
 
+    print('******')
+    print(VB, PREP, PUNC)
+
 
 
 if __name__ == '__main__':
@@ -123,6 +141,4 @@ if __name__ == '__main__':
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    # testNumberofTAG([trainfile, devfile, testfile])
-
-    print([1]* 3)
+    testNumberofTAG([trainfile, devfile, testfile])
