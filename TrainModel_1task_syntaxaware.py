@@ -13,7 +13,7 @@ import os.path
 import numpy as np
 import matplotlib.pyplot as plt
 from PrecessData_syntaxaware import get_data
-from Evaluate import evaluation_NER
+from Evaluate import evaluation_NER_syntaxaware
 from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder
 
 
@@ -52,7 +52,7 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
         result.append(ttag)
         testresult.append(result)
 
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult, resultfile)
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER_syntaxaware(testresult, resultfile)
 
     return P, R, F, PR_count, P_count, TR_count
 
@@ -69,21 +69,21 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     # train model
     x_word = np.asarray(traindata[0], dtype="int32")
     y = np.asarray(traindata[1], dtype="int32")
-    y_O = np.asarray(traindata[2], dtype="int32")
-    y_BIOES = np.asarray(traindata[3], dtype="int32")
-    y_Type = np.asarray(traindata[4], dtype="int32")
+    # y_O = np.asarray(traindata[2], dtype="int32")
+    # y_BIOES = np.asarray(traindata[3], dtype="int32")
+    # y_Type = np.asarray(traindata[4], dtype="int32")
     # entlabel_train = np.asarray(entlabel_traindata, dtype="int32")
     # poslabel_train = np.asarray(poslabel_traindata, dtype="int32")
     input_char = np.asarray(chartrain, dtype="int32")
-    input_pos = np.asarray(pos_train, dtype="int32")
+    # input_pos = np.asarray(pos_train, dtype="int32")
     x_word_val = np.asarray(devdata[0], dtype="int32")
     y_val = np.asarray(devdata[1], dtype="int32")
-    y_O_val = np.asarray(devdata[2], dtype="int32")
-    y_BIOES_val = np.asarray(devdata[3], dtype="int32")
-    y_Type_val = np.asarray(devdata[4], dtype="int32")
+    # y_O_val = np.asarray(devdata[2], dtype="int32")
+    # y_BIOES_val = np.asarray(devdata[3], dtype="int32")
+    # y_Type_val = np.asarray(devdata[4], dtype="int32")
 
     input_char_val = np.asarray(chardev, dtype="int32")
-    input_pos_val = np.asarray(pos_dev, dtype="int32")
+    # input_pos_val = np.asarray(pos_dev, dtype="int32")
 
     nn_model = SelectModel(Modelname, sourcevocabsize=len(source_vob), targetvocabsize=len(target_vob),
                                      source_W=source_W,
