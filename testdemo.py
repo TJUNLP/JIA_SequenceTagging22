@@ -85,7 +85,7 @@ def testNumberofTAG(files):
                             after1[chch1[1]] = after1[chch1[1]] + 1
                         else:
                             after1[chch1[1]] = 1
-                    if id + 2 < fr.__len__() and fr[id + 2].__len__() > 1:
+                    if id + 2 < fr.__len__() and fr[id + 2].__len__() > 1 and fr[id + 1].__len__() > 1:
                         chch2 = fr[id + 2].strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
                         if chch2[1] in after2.keys():
                             after2[chch2[1]] = after2[chch2[1]] + 1
@@ -103,8 +103,10 @@ def testNumberofTAG(files):
     for tt2 in Type.keys():
         print(tt2, Type[tt2])
 
-    for pp in Pos.keys():
-        print(pp, Pos[pp])
+    print('-----------------Pos')
+    Pos = sorted(Pos.items(), key=lambda d: d[1], reverse=True)
+    for pp in Pos:
+        print(pp)
 
     print('-----------------PosinEnt')
     PosinEnt = sorted(PosinEnt.items(), key=lambda d: d[1], reverse=True)
@@ -182,6 +184,6 @@ if __name__ == '__main__':
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    # testNumberofTAG([trainfile, devfile, testfile])
+    testNumberofTAG([trainfile, devfile, testfile])
 
-    SyntaxAwareTag([trainfile, devfile, testfile])
+    # SyntaxAwareTag([trainfile, devfile, testfile])
