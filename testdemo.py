@@ -154,12 +154,15 @@ def SyntaxAwareTag(files):
                 if 'VB' in sourc[1]:
                     str = str + ' ' + 'VB'
 
-                if 'IN' == sourc[1] or 'CC' == sourc[1] or 'TO' == sourc[1]:
+                elif 'IN' == sourc[1] or 'CC' == sourc[1] or 'TO' == sourc[1]:
                     str = str + ' ' + 'PREP'
 
-                if "," == sourc[1] or ":" == sourc[1] or "(" == sourc[1] or ")" == sourc[1] or \
+                elif "," == sourc[1] or ":" == sourc[1] or "(" == sourc[1] or ")" == sourc[1] or \
                     "." == sourc[1] or "\"" == sourc[1]:
                     str = str + ' ' + 'PUNC'
+
+                else:
+                    str = str + ' ' + sourc[4]
 
             else:
                 str = str + ' ' + sourc[4]

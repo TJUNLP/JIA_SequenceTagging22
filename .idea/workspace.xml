@@ -2,9 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/PrecessData_syntaxaware.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_1task_syntaxaware.py" afterPath="$PROJECT_DIR$/TrainModel_1task_syntaxaware.py" />
+      <change beforePath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.testa.BIOES.txt.SyntaxAware.txt" afterPath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.testa.BIOES.txt.SyntaxAware.txt" />
+      <change beforePath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.testb.BIOES.txt.SyntaxAware.txt" afterPath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.testb.BIOES.txt.SyntaxAware.txt" />
+      <change beforePath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.train.BIOES.txt.SyntaxAware.txt" afterPath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.train.BIOES.txt.SyntaxAware.txt" />
+      <change beforePath="$PROJECT_DIR$/testdemo.py" afterPath="$PROJECT_DIR$/testdemo.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$testdemo.coverage" NAME="testdemo Coverage Results" MODIFIED="1546400498204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$testdemo.coverage" NAME="testdemo Coverage Results" MODIFIED="1546414210792" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_3task.coverage" NAME="TrainModel_3task Coverage Results" MODIFIED="1543669015517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task_pos.coverage" NAME="TrainModel_2task_pos Coverage Results" MODIFIED="1543379889285" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task.coverage" NAME="TrainModel_2task Coverage Results" MODIFIED="1543047158961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -50,28 +51,16 @@
         <entry file="file://$PROJECT_DIR$/PrecessData.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="394">
-              <caret line="211" column="0" lean-forward="true" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
+              <caret line="211" column="0" lean-forward="false" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NN_single.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network/NN_single.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="284">
-              <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
-              <folding>
-                <element signature="e#27#58#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TrainModel_1task_syntaxaware.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TrainModel_1task_syntaxaware.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_1task_syntaxaware.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
+            <state relative-caret-position="190">
               <caret line="281" column="13" lean-forward="false" selection-start-line="281" selection-start-column="8" selection-end-line="281" selection-end-column="16" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
@@ -83,7 +72,7 @@
       <file leaf-file-name="PrecessData_syntaxaware.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_syntaxaware.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-242">
+            <state relative-caret-position="18">
               <caret line="497" column="13" lean-forward="false" selection-start-line="497" selection-start-column="8" selection-end-line="497" selection-end-column="13" />
               <folding>
                 <element signature="e#34#52#0" expanded="true" />
@@ -92,11 +81,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="testdemo.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="testdemo.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/testdemo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="146" column="30" lean-forward="false" selection-start-line="146" selection-start-column="30" selection-end-line="146" selection-end-column="30" />
+            <state relative-caret-position="353">
+              <caret line="164" column="46" lean-forward="false" selection-start-line="164" selection-start-column="46" selection-end-line="164" selection-end-column="46" />
               <folding>
                 <element signature="e#1#23#0" expanded="true" />
               </folding>
@@ -138,10 +127,10 @@
         <option value="$PROJECT_DIR$/TrainModel_1task.py" />
         <option value="$PROJECT_DIR$/network/NN_single.py" />
         <option value="$PROJECT_DIR$/TrainModel_1task_pos.py" />
-        <option value="$PROJECT_DIR$/testdemo.py" />
         <option value="$PROJECT_DIR$/PrecessData.py" />
         <option value="$PROJECT_DIR$/TrainModel_1task_syntaxaware.py" />
         <option value="$PROJECT_DIR$/PrecessData_syntaxaware.py" />
+        <option value="$PROJECT_DIR$/testdemo.py" />
       </list>
     </option>
   </component>
@@ -242,7 +231,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.PrecessData_syntaxaware">
+  <component name="RunManager" selected="Python.testdemo">
     <configuration name="PrecessData_syntaxaware" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -347,8 +336,8 @@
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.PrecessData_syntaxaware" />
-        <item index="1" class="java.lang.String" itemvalue="Python.testdemo" />
+        <item index="0" class="java.lang.String" itemvalue="Python.testdemo" />
+        <item index="1" class="java.lang.String" itemvalue="Python.PrecessData_syntaxaware" />
         <item index="2" class="java.lang.String" itemvalue="Python.__init__" />
         <item index="3" class="java.lang.String" itemvalue="Python.TrainModel_3task" />
         <item index="4" class="java.lang.String" itemvalue="Python.TrainModel_2task_pos" />
@@ -373,15 +362,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1251" height="732" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.0455259" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.043956045" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23655914" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23655914" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -451,7 +439,7 @@
         <state relative-caret-position="1470">
           <caret line="116" column="0" lean-forward="true" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
           <folding>
-            <element signature="e#27#58#0" expanded="true" />
+            <element signature="e#27#58#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -494,22 +482,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testdemo.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="146" column="30" lean-forward="false" selection-start-line="146" selection-start-column="30" selection-end-line="146" selection-end-column="30" />
-          <folding>
-            <element signature="e#1#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_single.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="284">
           <caret line="116" column="0" lean-forward="false" selection-start-line="116" selection-start-column="0" selection-end-line="116" selection-end-column="0" />
           <folding>
-            <element signature="e#27#58#0" expanded="true" />
+            <element signature="e#27#58#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -517,14 +495,32 @@
     <entry file="file://$PROJECT_DIR$/PrecessData.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="394">
-          <caret line="211" column="0" lean-forward="true" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
+          <caret line="211" column="0" lean-forward="false" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_1task_syntaxaware.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="281" column="13" lean-forward="false" selection-start-line="281" selection-start-column="8" selection-end-line="281" selection-end-column="16" />
+          <folding>
+            <element signature="e#298#329#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data/CoNLL2003_NER/eng.testa.BIOES.txt.SyntaxAware.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_syntaxaware.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-242">
+        <state relative-caret-position="18">
           <caret line="497" column="13" lean-forward="false" selection-start-line="497" selection-start-column="8" selection-end-line="497" selection-end-column="13" />
           <folding>
             <element signature="e#34#52#0" expanded="true" />
@@ -532,12 +528,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_1task_syntaxaware.py">
+    <entry file="file://$PROJECT_DIR$/testdemo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="281" column="13" lean-forward="false" selection-start-line="281" selection-start-column="8" selection-end-line="281" selection-end-column="16" />
+        <state relative-caret-position="353">
+          <caret line="164" column="46" lean-forward="false" selection-start-line="164" selection-start-column="46" selection-end-line="164" selection-end-column="46" />
           <folding>
-            <element signature="e#298#329#0" expanded="true" />
+            <element signature="e#1#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
