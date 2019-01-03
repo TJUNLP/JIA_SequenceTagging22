@@ -52,9 +52,14 @@ def Model_BiLSTM_CRF_multi3_nerpos_1(sourcevocabsize, targetvocabsize, source_W,
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
+    mlp3_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
+    mlp3_hidden1 = Dropout(0.5)(mlp3_hidden1)
+    mlp3_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp3_hidden1)
+    output3 = TimeDistributed(Dense(targetpossize + 1, activation='softmax'), name='pos')(mlp3_hidden2)
 
     mlp1_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
-    mlp1_hidden1 = Dropout(0.5)(mlp1_hidden1)
+    mlp1_hidden1_1 = concatenate([mlp1_hidden1, mlp3_hidden2],axis=-1)
+    mlp1_hidden1 = Dropout(0.5)(mlp1_hidden1_1)
     mlp1_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp1_hidden1)
     # output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
     mlp1_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp1_hidden2)
@@ -62,7 +67,8 @@ def Model_BiLSTM_CRF_multi3_nerpos_1(sourcevocabsize, targetvocabsize, source_W,
     output1 = crflayer1(mlp1_hidden3)
 
     mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
-    mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1)
+    mlp2_hidden1_1 = concatenate([mlp2_hidden1, mlp3_hidden2], axis=-1)
+    mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1_1)
     mlp2_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden1)
     # output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
     mlp2_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp2_hidden2)
@@ -71,11 +77,7 @@ def Model_BiLSTM_CRF_multi3_nerpos_1(sourcevocabsize, targetvocabsize, source_W,
     output2 = crflayer2(mlp2_hidden4)
 
 
-    mlp3_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
-    mlp3_hidden1 = Dropout(0.5)(mlp3_hidden1)
-    mlp3_hidden2 = TimeDistributed(Dense(128, activation='relu'))(mlp3_hidden1)
-    mlp3_hidden3 = TimeDistributed(Dense(64, activation=None))(mlp3_hidden2)
-    output3 = TimeDistributed(Dense(targetpossize + 1, activation='softmax'), name='pos')(mlp3_hidden3)
+
 
     Models = Model([word_input, char_input], [output1, output2, output3])
     # Models.compile(optimizer=optimizers.RMSprop(lr=0.001),

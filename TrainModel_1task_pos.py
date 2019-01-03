@@ -272,7 +272,7 @@ if __name__ == "__main__":
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_pos" + str(Poswidth) + ".pkl"
 
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
-                "__single_pos" + str(Poswidth) + "_2.h5"
+                "__single_pos" + str(Poswidth) + "_3.h5"
 
 
     batch_size = 32
