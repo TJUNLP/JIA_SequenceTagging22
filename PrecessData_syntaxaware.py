@@ -141,11 +141,11 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
                 targetvecO[0] = 1
                 data_tO.append(targetvecO)
 
-                targetvecBIOES = np.zeros(8 + 1)
+                targetvecBIOES = np.zeros(11 + 1)
                 targetvecBIOES[0] = 1
                 data_tBIOES.append(targetvecBIOES)
 
-                targetvecType = np.zeros(8 + 1)
+                targetvecType = np.zeros(11 + 1)
                 targetvecType[0] = 1
                 data_tType.append(targetvecType)
 
@@ -182,7 +182,7 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
             targetvecO[2] = 1
         data_tO.append(targetvecO)
 
-        targetvecBIOES = np.zeros(8 + 1)
+        targetvecBIOES = np.zeros(11 + 1)
         if sent[5] == 'O':
             targetvecBIOES[3] = 1
         elif sent[5][0] == 'B':
@@ -199,9 +199,15 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
             targetvecBIOES[7] = 1
         elif sent[5] == 'PUNC':
             targetvecBIOES[8] = 1
+        elif sent[5] == 'CD':
+            targetvecBIOES[9] = 1
+        elif sent[5] == 'DT':
+            targetvecBIOES[10] = 1
+        elif sent[5] == 'JJ':
+            targetvecBIOES[11] = 1
         data_tBIOES.append(targetvecBIOES)
 
-        targetvecType = np.zeros(8 + 1)
+        targetvecType = np.zeros(11 + 1)
 
         if sent[5] == 'O':
             targetvecType[1] = 1
@@ -219,6 +225,12 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
             targetvecType[7] = 1
         elif sent[5] == 'PUNC':
             targetvecType[8] = 1
+        elif sent[5] == 'CD':
+            targetvecType[9] = 1
+        elif sent[5] == 'DT':
+            targetvecType[10] = 1
+        elif sent[5] == 'JJ':
+            targetvecType[11] = 1
 
         data_tType.append(targetvecType)
 

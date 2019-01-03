@@ -163,6 +163,15 @@ def SyntaxAwareTag(files):
                     "." == sourc[1] or "\"" == sourc[1]:
                     str = str + ' ' + 'PUNC'
 
+                elif "CD" == sourc[1]:
+                    str = str + ' ' + 'CD'
+
+                elif "DT" == sourc[1]:
+                    str = str + ' ' + 'DT'
+
+                elif "JJ" == sourc[1]:
+                    str = str + ' ' + 'JJ'
+
                 else:
                     str = str + ' ' + sourc[4]
 
@@ -184,6 +193,6 @@ if __name__ == '__main__':
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    testNumberofTAG([trainfile, devfile, testfile])
-
-    # SyntaxAwareTag([trainfile, devfile, testfile])
+    # testNumberofTAG([trainfile, devfile, testfile])
+    #
+    SyntaxAwareTag([trainfile, devfile, testfile])

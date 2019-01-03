@@ -267,10 +267,10 @@ if __name__ == "__main__":
     withFix = False
     withPos = False
 
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_syntaxaware.pkl"
+    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_syntaxaware_6.pkl"
 
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
-                "__SyntaxAware_3.h5"
+                "__SyntaxAware_6_1.h5"
 
 
     batch_size = 32

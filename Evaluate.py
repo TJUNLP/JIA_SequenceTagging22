@@ -200,8 +200,9 @@ def evaluation_NER_syntaxaware(testresult, resultfile):
                     else:
                         print('error-MISC', i)
 
-            elif ttag[i].__contains__('O') or ttag[i].__contains__('VB') or\
-                    ttag[i].__contains__('PREP') or ttag[i].__contains__('PUNC'):
+            elif ttag[i].__contains__('O') or ttag[i].__contains__('VB') or ttag[i].__contains__('CD') or\
+                    ttag[i].__contains__('PREP') or ttag[i].__contains__('PUNC') or \
+                    ttag[i].__contains__('DT') or ttag[i].__contains__('JJ'):
                 i += 1
 
             else:
@@ -356,8 +357,9 @@ def evaluation_NER_syntaxaware(testresult, resultfile):
                         i = j
                         break
 
-            elif ptag[i].__contains__('O') or ptag[i].__contains__('VB') or \
-                     ptag[i].__contains__('PREP') or ptag[i].__contains__('PUNC'):
+            elif ptag[i].__contains__('O') or ptag[i].__contains__('VB') or ptag[i].__contains__('PREP') or\
+                ptag[i].__contains__('PUNC') or ptag[i].__contains__('CD') or\
+                     ptag[i].__contains__('DT') or ptag[i].__contains__('JJ'):
                 i += 1
 
             else:

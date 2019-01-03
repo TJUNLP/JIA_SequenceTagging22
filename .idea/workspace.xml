@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_1task.py" afterPath="$PROJECT_DIR$/TrainModel_1task.py" />
+      <change beforePath="$PROJECT_DIR$/Evaluate.py" afterPath="$PROJECT_DIR$/Evaluate.py" />
+      <change beforePath="$PROJECT_DIR$/PrecessData_syntaxaware.py" afterPath="$PROJECT_DIR$/PrecessData_syntaxaware.py" />
+      <change beforePath="$PROJECT_DIR$/TrainModel_1task_syntaxaware.py" afterPath="$PROJECT_DIR$/TrainModel_1task_syntaxaware.py" />
+      <change beforePath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.testa.BIOES.txt.SyntaxAware.txt" afterPath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.testa.BIOES.txt.SyntaxAware.txt" />
+      <change beforePath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.testb.BIOES.txt.SyntaxAware.txt" afterPath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.testb.BIOES.txt.SyntaxAware.txt" />
+      <change beforePath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.train.BIOES.txt.SyntaxAware.txt" afterPath="$PROJECT_DIR$/data/CoNLL2003_NER/eng.train.BIOES.txt.SyntaxAware.txt" />
+      <change beforePath="$PROJECT_DIR$/testdemo.py" afterPath="$PROJECT_DIR$/testdemo.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -14,7 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$testdemo.coverage" NAME="testdemo Coverage Results" MODIFIED="1546431714168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$testdemo.coverage" NAME="testdemo Coverage Results" MODIFIED="1546494849689" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_3task.coverage" NAME="TrainModel_3task Coverage Results" MODIFIED="1543669015517" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task_pos.coverage" NAME="TrainModel_2task_pos Coverage Results" MODIFIED="1543379889285" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task.coverage" NAME="TrainModel_2task Coverage Results" MODIFIED="1543047158961" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -27,7 +31,7 @@
       <file leaf-file-name="TrainModel_2task_pos.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1605">
+            <state relative-caret-position="0">
               <caret line="136" column="34" lean-forward="false" selection-start-line="136" selection-start-column="19" selection-end-line="136" selection-end-column="46" />
               <folding />
             </state>
@@ -46,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrecessData.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PrecessData.py">
+      <file leaf-file-name="PrecessData_syntaxaware.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PrecessData_syntaxaware.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3105">
-              <caret line="211" column="0" lean-forward="false" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
+            <state relative-caret-position="-8327">
+              <caret line="232" column="28" lean-forward="false" selection-start-line="232" selection-start-column="28" selection-end-line="232" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -59,8 +63,8 @@
       <file leaf-file-name="testdemo.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/testdemo.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1365">
-              <caret line="92" column="14" lean-forward="false" selection-start-line="92" selection-start-column="14" selection-end-line="92" selection-end-column="14" />
+            <state relative-caret-position="91">
+              <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
               <folding>
                 <element signature="e#1#23#0" expanded="true" />
               </folding>
@@ -68,23 +72,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_1task_syntaxaware.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TrainModel_1task_syntaxaware.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_1task_syntaxaware.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
+            <state relative-caret-position="213">
               <caret line="272" column="32" lean-forward="false" selection-start-line="272" selection-start-column="32" selection-end-line="272" selection-end-column="32" />
-              <folding>
-                <element signature="e#298#329#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_1task.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
+      <file leaf-file-name="Evaluate.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="444">
-              <caret line="272" column="27" lean-forward="false" selection-start-line="272" selection-start-column="27" selection-end-line="272" selection-end-column="27" />
+            <state relative-caret-position="298">
+              <caret line="386" column="0" lean-forward="false" selection-start-line="386" selection-start-column="0" selection-end-line="386" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -123,11 +125,11 @@
         <option value="$PROJECT_DIR$/network/NN_single.py" />
         <option value="$PROJECT_DIR$/TrainModel_1task_pos.py" />
         <option value="$PROJECT_DIR$/PrecessData.py" />
+        <option value="$PROJECT_DIR$/TrainModel_1task.py" />
         <option value="$PROJECT_DIR$/PrecessData_syntaxaware.py" />
         <option value="$PROJECT_DIR$/Evaluate.py" />
         <option value="$PROJECT_DIR$/testdemo.py" />
         <option value="$PROJECT_DIR$/TrainModel_1task_syntaxaware.py" />
-        <option value="$PROJECT_DIR$/TrainModel_1task.py" />
       </list>
     </option>
   </component>
@@ -363,7 +365,7 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40188384" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33124018" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -437,7 +439,7 @@
         <state relative-caret-position="3990">
           <caret line="272" column="32" lean-forward="false" selection-start-line="272" selection-start-column="32" selection-end-line="272" selection-end-column="32" />
           <folding>
-            <element signature="e#298#329#0" expanded="true" />
+            <element signature="e#298#329#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -472,9 +474,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3690">
           <caret line="252" column="0" lean-forward="true" selection-start-line="252" selection-start-column="0" selection-end-line="252" selection-end-column="0" />
-          <folding>
-            <element signature="e#298#329#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -500,7 +500,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task_pos.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1605">
+        <state relative-caret-position="0">
           <caret line="136" column="34" lean-forward="false" selection-start-line="136" selection-start-column="19" selection-end-line="136" selection-end-column="46" />
           <folding />
         </state>
@@ -533,59 +533,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData_syntaxaware.py">
+    <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="153" column="37" lean-forward="true" selection-start-line="153" selection-start-column="37" selection-end-line="153" selection-end-column="37" />
-          <folding>
-            <element signature="e#34#52#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="356" column="29" lean-forward="true" selection-start-line="356" selection-start-column="29" selection-end-line="356" selection-end-column="29" />
+        <state relative-caret-position="459">
+          <caret line="273" column="0" lean-forward="true" selection-start-line="273" selection-start-column="0" selection-end-line="273" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3105">
+        <state relative-caret-position="15">
           <caret line="211" column="0" lean-forward="false" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="386" column="0" lean-forward="false" selection-start-line="386" selection-start-column="0" selection-end-line="386" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/testdemo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1365">
-          <caret line="92" column="14" lean-forward="false" selection-start-line="92" selection-start-column="14" selection-end-line="92" selection-end-column="14" />
+        <state relative-caret-position="91">
+          <caret line="184" column="0" lean-forward="true" selection-start-line="184" selection-start-column="0" selection-end-line="184" selection-end-column="0" />
           <folding>
             <element signature="e#1#23#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_1task_syntaxaware.py">
+    <entry file="file://$PROJECT_DIR$/PrecessData_syntaxaware.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="272" column="32" lean-forward="false" selection-start-line="272" selection-start-column="32" selection-end-line="272" selection-end-column="32" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-8327">
+          <caret line="232" column="28" lean-forward="false" selection-start-line="232" selection-start-column="28" selection-end-line="232" selection-end-column="28" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
+    <entry file="file://$PROJECT_DIR$/TrainModel_1task_syntaxaware.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="444">
-          <caret line="272" column="27" lean-forward="false" selection-start-line="272" selection-start-column="27" selection-end-line="272" selection-end-column="27" />
-          <folding>
-            <element signature="e#298#329#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="213">
+          <caret line="272" column="32" lean-forward="false" selection-start-line="272" selection-start-column="32" selection-end-line="272" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
