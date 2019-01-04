@@ -57,18 +57,18 @@ def Model_BiLSTM_CRF_multi3_nerpos_1(sourcevocabsize, targetvocabsize, source_W,
     mlp3_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp3_hidden1)
     output3 = TimeDistributed(Dense(targetpossize + 1, activation='softmax'), name='pos')(mlp3_hidden2)
 
-    mlp1_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
-    mlp1_hidden1_1 = concatenate([mlp1_hidden1, mlp3_hidden2],axis=-1)
-    mlp1_hidden1 = Dropout(0.5)(mlp1_hidden1_1)
+    embedding2 = concatenate([BiLSTM_dropout, mlp3_hidden1], axis=-1)
+
+    mlp1_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding2)
+    mlp1_hidden1 = Dropout(0.5)(mlp1_hidden1)
     mlp1_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp1_hidden1)
     # output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
     mlp1_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp1_hidden2)
     crflayer1 = CRF(5 + 1, sparse_target=False, learn_mode='marginal', name='BIOES')
     output1 = crflayer1(mlp1_hidden3)
 
-    mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
-    mlp2_hidden1_1 = concatenate([mlp2_hidden1, mlp3_hidden2], axis=-1)
-    mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1_1)
+    mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding2)
+    mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1)
     mlp2_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden1)
     # output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
     mlp2_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp2_hidden2)
@@ -89,7 +89,7 @@ def Model_BiLSTM_CRF_multi3_nerpos_1(sourcevocabsize, targetvocabsize, source_W,
                    loss={'BIOES': crflayer1.loss_function,
                          'Type': crflayer2.loss_function, 'pos': 'categorical_crossentropy'},
 
-    loss_weights={'BIOES': 1., 'Type': 1.,'pos': 1.},
+    loss_weights={'BIOES': 1., 'Type': 1.,'pos': 0.5},
                    metrics={'BIOES': [crflayer2.accuracy], 'Type': [crflayer2.accuracy], 'pos': ['acc']})
 
     return Models
