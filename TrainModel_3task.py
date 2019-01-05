@@ -28,7 +28,7 @@ from keras import optimizers
 from keras.layers.normalization import BatchNormalization
 from keras.callbacks import Callback
 # from keras.losses import my_cross_entropy_withWeight
-from network.BiLSTM_CRF_multi3_nerpos import Model_BiLSTM_CRF_multi3_nerpos_1
+from network.BiLSTM_CRF_multi3 import Model_BiLSTM_CRF_multi3_1
 
 
 
@@ -123,8 +123,8 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                              hidden_dim, emd_dim,
                      sourcecharsize,character_W,input_word_length,char_emd_dim, targetpossize):
     nn_model = None
-    if modelname is 'Model_BiLSTM_CRF_multi3_nerpos_1':
-        nn_model = Model_BiLSTM_CRF_multi3_nerpos_1(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+    if modelname is 'Model_BiLSTM_CRF_multi3_1':
+        nn_model = Model_BiLSTM_CRF_multi3_1(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                                        source_W=source_W,
                                                        input_seq_lenth=input_seq_lenth,
                                                        output_seq_lenth=output_seq_lenth,
@@ -303,20 +303,21 @@ if __name__ == "__main__":
 
     maxlen = 50
 
-    modelname = 'Model_BiLSTM_CRF_multi3_nerpos_1'
+    modelname = 'Model_BiLSTM_CRF_multi3_1'
 
     print(modelname)
 
-    w2v_file = "./data/w2v/glove.6B.100d.txt"
-    datafile = "./model/data_fix_multi3_nerpos.pkl"
-    # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_4.h5"
-
     resultdir = "./data/result/"
-
     trainfile = "./data/CoNLL2003_NER/eng.train.BIOES.txt"
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
+    w2v_file = "./data/w2v/glove.6B.100d.txt"
+
+    datafile = "./model/data_multi3_(NN_VB_PUNC_PREP).pkl"
+    # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
+    modelfile = "./model/" + modelname + "_(NN_VB_PUNC_PREP)_1.h5"
+
+
 
     batch_size = 32
     retrain = False

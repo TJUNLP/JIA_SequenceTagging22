@@ -16,7 +16,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.callbacks import Callback
 
 
-def Model_BiLSTM_CRF_multi3_nerpos_1(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth,
+def Model_BiLSTM_CRF_multi3_1(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth,
                               output_seq_lenth,
                               hidden_dim, emd_dim,
                               sourcecharsize, character_W, input_word_length, char_emd_dim,targetpossize,

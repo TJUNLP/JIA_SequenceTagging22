@@ -372,9 +372,23 @@ def make_idx_POS_index(file, max_s, target_vob):
             count = 0
             continue
 
-        sent = line.strip('\r\n').rstrip('\n').split(' ')
+        sourc = line.strip('\r\n').rstrip('\n').split(' ')
+        type = 'O'
+        if 'VB' in sourc[1]:
+            type = 'VB'
+
+        elif 'IN' == sourc[1] or 'CC' == sourc[1] or 'TO' == sourc[1]:
+            type = 'PREP'
+
+        elif "," == sourc[1] or ":" == sourc[1] or "(" == sourc[1] or ")" == sourc[1] or \
+                "." == sourc[1] or "\"" == sourc[1]:
+            type = 'PUNC'
+
+        elif "NN" == sourc[1]:
+            type = 'NN'
+
         targetvec = np.zeros(len(target_vob) + 1)
-        targetvec[target_vob[sent[1]]] = 1
+        targetvec[target_vob[type]] = 1
         data_t.append(targetvec)
         count += 1
     f.close()
@@ -498,29 +512,32 @@ def get_pos_label_index(files):
     target_idex_word = {}
     tarcount=1
 
-    num=0
+    # num=0
+    #
+    # if not target_vob.__contains__("O"):
+    #     target_vob["O"] = tarcount
+    #     target_idex_word[tarcount] = "O"
+    #     tarcount += 1
+    #
+    # for testf in files:
+    #     f = open(testf, 'r')
+    #     fr = f.readlines()
+    #     for line in fr:
+    #         if line.__len__() <= 1:
+    #             num = 0
+    #             continue
+    #
+    #         num += 1
+    #         sourc = line.strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
+    #         if not target_vob.__contains__(sourc[1]):
+    #             target_vob[sourc[1]] = tarcount
+    #             target_idex_word[tarcount] = sourc[1]
+    #             tarcount += 1
+    #
+    #     f.close()
 
-    if not target_vob.__contains__("O"):
-        target_vob["O"] = tarcount
-        target_idex_word[tarcount] = "O"
-        tarcount += 1
-
-    for testf in files:
-        f = open(testf, 'r')
-        fr = f.readlines()
-        for line in fr:
-            if line.__len__() <= 1:
-                num = 0
-                continue
-
-            num += 1
-            sourc = line.strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
-            if not target_vob.__contains__(sourc[1]):
-                target_vob[sourc[1]] = tarcount
-                target_idex_word[tarcount] = sourc[1]
-                tarcount += 1
-
-        f.close()
+    target_vob = {'O': 1, 'VB': 2, 'PREP': 3, 'PUNC': 4, 'NN': 5}
+    target_idex_word = {1: 'O', 2: 'VB', 3: 'PREP', 4: 'PUNC', 5: 'NN'}
 
     return target_vob, target_idex_word
 
@@ -726,7 +743,7 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
     print(len(train))
 
     pos_target_vob, pos_target_idex_word = get_pos_label_index([trainfile, devfile, testfile])
-
+    print('pos_target_vob---', pos_target_vob)
     pos_train = make_idx_POS_index(trainfile, max_s, pos_target_vob)
     print(len(pos_train))
     pos_dev = make_idx_POS_index(devfile, max_s, pos_target_vob)
@@ -734,7 +751,7 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
     pos_test = make_idx_POS_index(testfile, max_s, pos_target_vob)
     print(len(pos_test))
 
-    withFix = True
+    withFix = False
 
     if withFix is True:
         source_char, sourc_idex_char, max_c = get_Character_index_withFix({trainfile, devfile, testfile})
