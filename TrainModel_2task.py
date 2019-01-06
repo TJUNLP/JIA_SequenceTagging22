@@ -30,7 +30,7 @@ from keras.callbacks import Callback
 # from keras.losses import my_cross_entropy_withWeight
 from network.BiLSTM_CRF_multi2_alone import BiLSTM_CRF_multi2_alone
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_multi2_order2, BiLSTM_CRF_multi2_order3, BiLSTM_CRF_multi2_order31
-from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_split
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_split, BiLSTM_CRF_multi2_order3_Dense
 
 
 
@@ -183,8 +183,8 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                               char_emd_dim=char_emd_dim,
                                               sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
-    elif modelname is 'BiLSTM_CRF_multi2_order3_split':
-        nn_model = BiLSTM_CRF_multi2_order3_split(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+    elif modelname is 'BiLSTM_CRF_multi2_order3_Dense':
+        nn_model = BiLSTM_CRF_multi2_order3_Dense(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                               source_W=source_W,
                                               input_seq_lenth=input_seq_lenth,
                                               output_seq_lenth=output_seq_lenth,
@@ -374,6 +374,7 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order'
     modelname = 'BiLSTM_CRF_multi2_order2'
     modelname = 'BiLSTM_CRF_multi2_order3'
+    modelname = 'BiLSTM_CRF_multi2_order3_Dense'
 
 
 
@@ -386,9 +387,7 @@ if __name__ == "__main__":
 
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
-    # modelfile = "./data/model/BiLSTM_CnnDecoder_wordFixCharembed_model3.h5"
-    modelfile = "./model/" + modelname + "_finall_1.h5"
-    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "__Type_3.h5"
+    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "__Type_1.h5"
 
     resultdir = "./data/result/"
 
