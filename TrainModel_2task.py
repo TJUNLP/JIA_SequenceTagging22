@@ -280,7 +280,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                epochs=1,
                                validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_Type_val]),#y_Type_val
                                shuffle=True,
-                               # sample_weight =sample_weight,
+                               sample_weight = [None, Type_Class_weight],
                                verbose=1)
 
         # plt.plot(history.history['acc'])
@@ -326,7 +326,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     return nn_model
 
 
-def getClass_weight(x=10):
+def Type_Class_weight(x=4):
     cw = {0: 1, 1: 1}
     for i in range(2, x+1):
         cw[i] = 10
@@ -374,7 +374,7 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order'
     modelname = 'BiLSTM_CRF_multi2_order2'
     modelname = 'BiLSTM_CRF_multi2_order3'
-    modelname = 'BiLSTM_CRF_multi2_order3_Dense'
+    # modelname = 'BiLSTM_CRF_multi2_order3_Dense'
 
 
 
