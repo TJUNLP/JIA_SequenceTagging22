@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/TrainModel_1task.py" afterPath="$PROJECT_DIR$/TrainModel_1task.py" />
       <change beforePath="$PROJECT_DIR$/network/NN_single.py" afterPath="$PROJECT_DIR$/network/NN_single.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -35,17 +34,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NN_single.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NN_single.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/network/NN_single.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-267">
-              <caret line="85" column="34" lean-forward="false" selection-start-line="85" selection-start-column="4" selection-end-line="85" selection-end-column="34" />
+            <state relative-caret-position="287">
+              <caret line="125" column="81" lean-forward="false" selection-start-line="125" selection-start-column="81" selection-end-line="125" selection-end-column="81" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_1task.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="wrappers.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/Library/Python/3.6/lib/python/site-packages/keras/layers/wrappers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="218">
+              <caret line="256" column="48" lean-forward="false" selection-start-line="256" selection-start-column="45" selection-end-line="256" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TrainModel_1task.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="316">
@@ -138,8 +147,8 @@
         <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
         <option value="$PROJECT_DIR$/PrecessData.py" />
         <option value="$PROJECT_DIR$/TrainModel_2task.py" />
-        <option value="$PROJECT_DIR$/network/NN_single.py" />
         <option value="$PROJECT_DIR$/TrainModel_1task.py" />
+        <option value="$PROJECT_DIR$/network/NN_single.py" />
       </list>
     </option>
   </component>
@@ -428,16 +437,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/TrainModel_1task_pos.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4020">
-          <caret line="274" column="52" lean-forward="false" selection-start-line="274" selection-start-column="52" selection-end-line="274" selection-end-column="52" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_multi_nerpos.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11235">
@@ -843,14 +842,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_single.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-267">
-          <caret line="85" column="34" lean-forward="false" selection-start-line="85" selection-start-column="4" selection-end-line="85" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="316">
@@ -858,6 +849,22 @@
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Python/3.6/lib/python/site-packages/keras/layers/wrappers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="218">
+          <caret line="256" column="48" lean-forward="false" selection-start-line="256" selection-start-column="45" selection-end-line="256" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_single.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="125" column="81" lean-forward="false" selection-start-line="125" selection-start-column="81" selection-end-line="125" selection-end-column="81" />
+          <folding />
         </state>
       </provider>
     </entry>

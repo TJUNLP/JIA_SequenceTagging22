@@ -122,8 +122,8 @@ def Model_BiLSTM_parallel_8_64_CRF(sourcevocabsize, targetvocabsize, source_W, i
 
     BiLSTMlist = []
 
-    for i in range(8):
-        BiLSTM_i = Bidirectional(LSTM(64, return_sequences=True), merge_mode='concat')(embedding)
+    for i in range(4):
+        BiLSTM_i = Bidirectional(LSTM(64, return_sequences=True), merge_mode='ave')(embedding)
         BiLSTM_i = Dropout(0.5)(BiLSTM_i)
         BiLSTMlist.append(BiLSTM_i)
 
