@@ -280,7 +280,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                epochs=1,
                                validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_Type_val]),#y_Type_val
                                shuffle=True,
-                               sample_weight = [None, Type_Class_weight],
+                               class_weight=[None, Type_Class_weight],
                                verbose=1)
 
         # plt.plot(history.history['acc'])
@@ -330,6 +330,12 @@ def Type_Class_weight(x=4):
     cw = {0: 1, 1: 1}
     for i in range(2, x+1):
         cw[i] = 10
+    return cw
+
+def BIOES_Class_weight(x=5):
+    cw = {}
+    for i in range(0, x+1):
+        cw[i] = 1
     return cw
 
 def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=200, batch_size=50):
@@ -387,7 +393,7 @@ if __name__ == "__main__":
 
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
-    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "__Type_1.h5"
+    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
 
     resultdir = "./data/result/"
 
