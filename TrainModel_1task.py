@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PrecessData import get_data
 from Evaluate import evaluation_NER
-from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder
+from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder,Model_BiLSTM_parallel_8_64_CRF
 
 
 
@@ -218,6 +218,19 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                                         input_word_length=input_word_length,
                                                         char_emd_dim=char_emd_dim,
                                           sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+    elif modelname is 'Model_BiLSTM_parallel_8_64_CRF':
+        nn_model = Model_BiLSTM_parallel_8_64_CRF(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                    source_W=source_W,
+                                    input_seq_lenth=input_seq_lenth,
+                                    output_seq_lenth=output_seq_lenth,
+                                    hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                    sourcecharsize=sourcecharsize,
+                                    character_W=character_W,
+                                    input_word_length=input_word_length,
+                                    char_emd_dim=char_emd_dim,
+                                    sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+
 
 
     return nn_model
@@ -229,6 +242,7 @@ if __name__ == "__main__":
 
     # modelname = 'Model_BiLSTM_CnnDecoder'
     modelname = 'Model_BiLSTM_CRF'
+    modelname = 'Model_BiLSTM_parallel_8_64_CRF'
 
     print(modelname)
 
@@ -244,7 +258,7 @@ if __name__ == "__main__":
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
-                "__single_3.h5"
+                "__single_1.h5"
 
 
     batch_size = 32
