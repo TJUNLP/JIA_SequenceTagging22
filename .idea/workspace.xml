@@ -4,7 +4,6 @@
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/TrainModel_2task.py" afterPath="$PROJECT_DIR$/TrainModel_2task.py" />
-      <change beforePath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" afterPath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -49,8 +48,8 @@
       <file leaf-file-name="BiLSTM_CRF_multi2_order.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3318">
-              <caret line="448" column="0" lean-forward="true" selection-start-line="448" selection-start-column="0" selection-end-line="448" selection-end-column="0" />
+            <state relative-caret-position="6600">
+              <caret line="448" column="0" lean-forward="false" selection-start-line="448" selection-start-column="0" selection-end-line="448" selection-end-column="0" />
               <folding>
                 <element signature="e#26#72#0" expanded="true" />
               </folding>
@@ -61,8 +60,8 @@
       <file leaf-file-name="TrainModel_2task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="438">
-              <caret line="398" column="26" lean-forward="true" selection-start-line="398" selection-start-column="26" selection-end-line="398" selection-end-column="26" />
+            <state relative-caret-position="241">
+              <caret line="398" column="22" lean-forward="false" selection-start-line="398" selection-start-column="22" selection-end-line="398" selection-end-column="22" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -118,7 +117,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1251" />
     <option name="height" value="732" />
@@ -154,6 +153,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
@@ -182,7 +182,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -359,7 +358,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1251" height="732" extended-state="1" />
+    <frame x="0" y="23" width="1251" height="732" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -368,7 +367,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26881722" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27295285" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -720,7 +719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-495">
           <caret line="1512" column="24" lean-forward="false" selection-start-line="1512" selection-start-column="12" selection-end-line="1512" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -764,8 +762,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3318">
-          <caret line="448" column="0" lean-forward="true" selection-start-line="448" selection-start-column="0" selection-end-line="448" selection-end-column="0" />
+        <state relative-caret-position="6600">
+          <caret line="448" column="0" lean-forward="false" selection-start-line="448" selection-start-column="0" selection-end-line="448" selection-end-column="0" />
           <folding>
             <element signature="e#26#72#0" expanded="true" />
           </folding>
@@ -774,8 +772,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="438">
-          <caret line="398" column="26" lean-forward="true" selection-start-line="398" selection-start-column="26" selection-end-line="398" selection-end-column="26" />
+        <state relative-caret-position="241">
+          <caret line="398" column="22" lean-forward="false" selection-start-line="398" selection-start-column="22" selection-end-line="398" selection-end-column="22" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>

@@ -396,7 +396,7 @@ if __name__ == "__main__":
 
     # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
-        withPos) + "_2.h5"
+        withPos) + "_3.h5"
 
     resultdir = "./data/result/"
 
