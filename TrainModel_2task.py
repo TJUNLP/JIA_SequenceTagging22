@@ -380,8 +380,8 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order'
     modelname = 'BiLSTM_CRF_multi2_order2'
     modelname = 'BiLSTM_CRF_multi2_order3'
-    # modelname = 'BiLSTM_CRF_multi2_order3_Dense'
-    modelname = 'BiLSTM_CRF_multi2_order3_full'
+    modelname = 'BiLSTM_CRF_multi2_order3_Dense'
+    # modelname = 'BiLSTM_CRF_multi2_order3_full'
 
 
 
@@ -396,7 +396,7 @@ if __name__ == "__main__":
 
     # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
-        withPos) + "_1.h5"
+        withPos) + "_2.h5"
 
     resultdir = "./data/result/"
 
