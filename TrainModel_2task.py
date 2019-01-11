@@ -32,6 +32,7 @@ from network.BiLSTM_CRF_multi2_alone import BiLSTM_CRF_multi2_alone
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_multi2_order2, BiLSTM_CRF_multi2_order3
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Dense
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Coor
 
 
 def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
@@ -185,6 +186,18 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
 
     elif modelname is 'BiLSTM_CRF_multi2_order3_Dense':
         nn_model = BiLSTM_CRF_multi2_order3_Dense(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                              source_W=source_W,
+                                              input_seq_lenth=input_seq_lenth,
+                                              output_seq_lenth=output_seq_lenth,
+                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                              sourcecharsize=sourcecharsize,
+                                              character_W=character_W,
+                                              input_word_length=input_word_length,
+                                              char_emd_dim=char_emd_dim,
+                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+    elif modelname is 'BiLSTM_CRF_multi2_order3_Coor':
+        nn_model = BiLSTM_CRF_multi2_order3_Coor(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                               source_W=source_W,
                                               input_seq_lenth=input_seq_lenth,
                                               output_seq_lenth=output_seq_lenth,
@@ -382,6 +395,7 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order3'
     # modelname = 'BiLSTM_CRF_multi2_order3_Dense'
     modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg'
+    modelname = 'BiLSTM_CRF_multi2_order3_Coor'
 
 
 
