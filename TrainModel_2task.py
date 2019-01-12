@@ -395,7 +395,7 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order3'
     # modelname = 'BiLSTM_CRF_multi2_order3_Dense'
     modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg'
-    modelname = 'BiLSTM_CRF_multi2_order3_Coor'
+    # modelname = 'BiLSTM_CRF_multi2_order3_Coor'
 
 
 
