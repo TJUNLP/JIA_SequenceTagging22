@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/TrainModel_2task.py" afterPath="$PROJECT_DIR$/TrainModel_2task.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,8 +37,8 @@
       <file leaf-file-name="BiLSTM_CRF_multi2_order.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="402">
-              <caret line="449" column="36" lean-forward="false" selection-start-line="449" selection-start-column="24" selection-end-line="449" selection-end-column="36" />
+            <state relative-caret-position="372">
+              <caret line="394" column="0" lean-forward="true" selection-start-line="394" selection-start-column="0" selection-end-line="394" selection-end-column="0" />
               <folding>
                 <element signature="e#26#72#0" expanded="true" />
               </folding>
@@ -50,8 +49,8 @@
       <file leaf-file-name="TrainModel_2task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="400" column="0" lean-forward="true" selection-start-line="400" selection-start-column="0" selection-end-line="400" selection-end-column="0" />
+            <state relative-caret-position="310">
+              <caret line="398" column="0" lean-forward="true" selection-start-line="398" selection-start-column="0" selection-end-line="398" selection-end-column="0" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -108,6 +107,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="8" />
     <option name="y" value="23" />
     <option name="width" value="1251" />
     <option name="height" value="732" />
@@ -348,7 +348,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1251" height="732" extended-state="0" />
+    <frame x="8" y="23" width="1251" height="732" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -751,8 +751,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="402">
-          <caret line="449" column="36" lean-forward="false" selection-start-line="449" selection-start-column="24" selection-end-line="449" selection-end-column="36" />
+        <state relative-caret-position="372">
+          <caret line="394" column="0" lean-forward="true" selection-start-line="394" selection-start-column="0" selection-end-line="394" selection-end-column="0" />
           <folding>
             <element signature="e#26#72#0" expanded="true" />
           </folding>
@@ -761,8 +761,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="400" column="0" lean-forward="true" selection-start-line="400" selection-start-column="0" selection-end-line="400" selection-end-column="0" />
+        <state relative-caret-position="310">
+          <caret line="398" column="0" lean-forward="true" selection-start-line="398" selection-start-column="0" selection-end-line="398" selection-end-column="0" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
