@@ -74,8 +74,8 @@
       <file leaf-file-name="TrainModel_1task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="136" column="16" lean-forward="false" selection-start-line="136" selection-start-column="11" selection-end-line="136" selection-end-column="16" />
+            <state relative-caret-position="215">
+              <caret line="260" column="100" lean-forward="false" selection-start-line="260" selection-start-column="100" selection-end-line="260" selection-end-column="100" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -806,8 +806,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="136" column="16" lean-forward="false" selection-start-line="136" selection-start-column="11" selection-end-line="136" selection-end-column="16" />
+        <state relative-caret-position="215">
+          <caret line="260" column="100" lean-forward="false" selection-start-line="260" selection-start-column="100" selection-end-line="260" selection-end-column="100" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>

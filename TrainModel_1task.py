@@ -258,7 +258,7 @@ if __name__ == "__main__":
 
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_nodigit" + ".pkl"
 
-    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
+    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_nodigit" + \
                 "__single_1.h5"
 
 
