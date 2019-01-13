@@ -155,7 +155,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
 
             print(epoch, P, R, F, '  maxF=', maxF)
 
-        if earlystopping >= 10 and epoch > 40:
+        if earlystopping >= 10:
             break
 
     return nn_model
