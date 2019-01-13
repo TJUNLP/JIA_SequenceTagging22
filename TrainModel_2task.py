@@ -333,7 +333,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
 
             print(epoch, P, R, F, '  maxF=', maxF)
 
-        if earlystopping >= 10:
+        if earlystopping >= 10 and epoch > 40:
             break
 
     return nn_model
@@ -394,8 +394,8 @@ if __name__ == "__main__":
     modelname = 'BiLSTM_CRF_multi2_order2'
     modelname = 'BiLSTM_CRF_multi2_order3'
     # modelname = 'BiLSTM_CRF_multi2_order3_Dense'
-    # modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg'
-    modelname = 'BiLSTM_CRF_multi2_order3_Coor'
+    modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg'
+    # modelname = 'BiLSTM_CRF_multi2_order3_Coor'
 
 
 
@@ -410,7 +410,7 @@ if __name__ == "__main__":
 
     # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
-        withPos) + "_1.h5"
+        withPos) + "_2.h5"
 
     resultdir = "./data/result/"
 
