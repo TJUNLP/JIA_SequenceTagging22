@@ -12,9 +12,10 @@ import pickle, datetime, codecs
 import os.path
 import numpy as np
 import matplotlib.pyplot as plt
-from PrecessData import get_data
+# from PrecessData import get_data
+from PrecessData_Nodigit import get_data
 from Evaluate import evaluation_NER
-from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder,Model_BiLSTM_parallel_8_64_CRF
+from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder, Model_BiLSTM_parallel_8_64_CRF
 
 
 
@@ -242,7 +243,7 @@ if __name__ == "__main__":
 
     # modelname = 'Model_BiLSTM_CnnDecoder'
     modelname = 'Model_BiLSTM_CRF'
-    modelname = 'Model_BiLSTM_parallel_8_64_CRF'
+    # modelname = 'Model_BiLSTM_parallel_8_64_CRF'
 
     print(modelname)
 
@@ -255,7 +256,7 @@ if __name__ == "__main__":
     withFix = False
     withPos = False
 
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
+    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_nodigit" + ".pkl"
 
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
                 "__single_1.h5"
