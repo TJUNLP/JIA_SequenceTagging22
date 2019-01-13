@@ -724,7 +724,7 @@ def get_data(trainfile,devfile, testfile,w2v_file,datafile,w2v_k=300,char_emd_di
     print("target vocab size: " + str(target_vob))
     print("target vocab size: " + str(target_idex_word))
 
-    source_w2v2 ,k ,source_W= load_vec_txt(w2v_file,source_vob,k=w2v_k)
+    source_w2v ,k ,source_W= load_vec_txt(w2v_file,source_vob,k=w2v_k)
     # source_w2v, k, source_W, source_vob = load_vec_txt_all(w2v_file,source_vob)
 
     print("word2vec loaded!")
