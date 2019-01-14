@@ -13,7 +13,8 @@ import os.path
 import numpy as np
 import matplotlib.pyplot as plt
 # from PrecessData import get_data
-from PrecessData_Nodigit import get_data
+# from PrecessData_Nodigit import get_data
+from PrecessData_PreC2V import get_data
 from Evaluate import evaluation_NER
 from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder, Model_BiLSTM_parallel_8_64_CRF
 
@@ -248,6 +249,7 @@ if __name__ == "__main__":
     print(modelname)
 
     w2v_file = "./data/w2v/glove.6B.100d.txt"
+    c2v_file = "./data/w2v/C0NLL2003.NER.c2v.txt"
     trainfile = "./data/CoNLL2003_NER/eng.train.BIOES.txt"
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
@@ -256,7 +258,7 @@ if __name__ == "__main__":
     withFix = False
     withPos = False
 
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_nodigit" + ".pkl"
+    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
 
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_nodigit" + \
                 "__single_3.h5"
@@ -268,7 +270,7 @@ if __name__ == "__main__":
 
     if not os.path.exists(datafile):
         print("Precess data....")
-        get_data(trainfile,devfile, testfile, w2v_file, datafile, w2v_k=100, char_emd_dim=25, withFix=withFix, maxlen=maxlen)
+        get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=25, withFix=withFix, maxlen=maxlen)
     if not os.path.exists(modelfile):
         print("Lstm data has extisted: " + datafile)
         print("Training EE model....")
