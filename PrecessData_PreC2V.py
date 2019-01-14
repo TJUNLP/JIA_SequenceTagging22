@@ -83,6 +83,16 @@ def load_vec_txt_all(fname,vocab,k=300):
     return w2v, k, W, vocab
 
 
+def load_vec_pos(vocab_c_inx, k=30):
+
+    W = np.zeros(shape=(vocab_c_inx.__len__()+1, k))
+
+    for i in vocab_c_inx:
+        W[vocab_c_inx[i]] = np.random.uniform(-1*math.sqrt(3/k), math.sqrt(3/k), k)
+
+    return W, k
+
+
 def load_vec_character(c2vfile, vocab_c_inx, k=50):
 
     fi = open(c2vfile, 'r')
@@ -737,7 +747,7 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile,w2v_k=300,
     pos_train = make_idx_POS_index(trainfile, max_s, pos_vob, Poswidth=Poswidth)
     pos_dev = make_idx_POS_index(devfile, max_s, pos_vob, Poswidth=Poswidth)
     pos_test = make_idx_POS_index(testfile, max_s, pos_vob, Poswidth=Poswidth)
-    pos_W, pos_k = load_vec_character(pos_vob, 30)
+    pos_W, pos_k = load_vec_pos(pos_vob, 30)
     # pos_k, pos_W = load_vec_onehot(pos_vob)
 
     # print('entlabel vocab size:'+str(len(entlabel_vob)))
