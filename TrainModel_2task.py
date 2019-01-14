@@ -13,7 +13,8 @@ import os.path
 import numpy as np
 import matplotlib.pyplot as plt
 from keras import backend as K
-from PrecessData import get_data, make_idx_data_index
+# from PrecessData import get_data
+from PrecessData_PreC2V import get_data
 from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
 # from keras.models import Sequential
 # from keras.layers.embeddings import Embedding
@@ -402,15 +403,17 @@ if __name__ == "__main__":
     print(modelname)
 
     w2v_file = "./data/w2v/glove.6B.100d.txt"
+    c2v_file = "./data/w2v/C0NLL2003.NER.c2v.txt"
 
     withFix = False
     withPos = False
 
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
+    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
 
     # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
-        withPos) + "_3.h5"
+        withPos) + "_PreC2V" + "_1.h5"
+
 
     resultdir = "./data/result/"
 
@@ -427,7 +430,12 @@ if __name__ == "__main__":
 
     if not os.path.exists(datafile):
         print("Precess data....")
-        get_data(trainfile,devfile, testfile, w2v_file, datafile, w2v_k=100, char_emd_dim=25, withFix=withFix, maxlen=maxlen)
+        # get_data(trainfile,devfile, testfile, w2v_file, datafile, w2v_k=100, char_emd_dim=25, withFix=withFix, maxlen=maxlen)
+
+        char_emd_dim = 50
+        get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=char_emd_dim,
+             withFix=withFix, maxlen=maxlen)
+
     if not os.path.exists(modelfile):
         print("Lstm data has extisted: " + datafile)
         print("Training EE model....")
