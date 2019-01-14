@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/PrecessData_PreC2V.py" afterPath="$PROJECT_DIR$/PrecessData_PreC2V.py" />
+      <change beforePath="$PROJECT_DIR$/TrainModel_1task.py" afterPath="$PROJECT_DIR$/TrainModel_1task.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -60,31 +60,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrecessData_PreC2V.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PrecessData_PreC2V.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-5105">
-              <caret line="92" column="15" lean-forward="true" selection-start-line="92" selection-start-column="15" selection-end-line="92" selection-end-column="15" />
+            <state relative-caret-position="191">
+              <caret line="766" column="84" lean-forward="false" selection-start-line="766" selection-start-column="72" selection-end-line="766" selection-end-column="84" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrecessData.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PrecessData.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="321">
-              <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="92" selection-end-column="15" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TrainModel_1task.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TrainModel_1task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1462">
-              <caret line="266" column="19" lean-forward="true" selection-start-line="266" selection-start-column="19" selection-end-line="266" selection-end-column="19" />
+            <state relative-caret-position="295">
+              <caret line="273" column="112" lean-forward="false" selection-start-line="273" selection-start-column="112" selection-end-line="273" selection-end-column="112" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -133,8 +123,8 @@
         <option value="$PROJECT_DIR$/PrecessData_Nodigit.py" />
         <option value="$PROJECT_DIR$/TrainModel_2task.py" />
         <option value="$PROJECT_DIR$/Word2vec.py" />
-        <option value="$PROJECT_DIR$/TrainModel_1task.py" />
         <option value="$PROJECT_DIR$/PrecessData_PreC2V.py" />
+        <option value="$PROJECT_DIR$/TrainModel_1task.py" />
       </list>
     </option>
   </component>
@@ -787,16 +777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1462">
-          <caret line="266" column="19" lean-forward="true" selection-start-line="266" selection-start-column="19" selection-end-line="266" selection-end-column="19" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="321">
@@ -807,9 +787,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5105">
-          <caret line="92" column="15" lean-forward="true" selection-start-line="92" selection-start-column="15" selection-end-line="92" selection-end-column="15" />
+        <state relative-caret-position="191">
+          <caret line="766" column="84" lean-forward="false" selection-start-line="766" selection-start-column="72" selection-end-line="766" selection-end-column="84" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="273" column="112" lean-forward="false" selection-start-line="273" selection-start-column="112" selection-end-line="273" selection-end-column="112" />
+          <folding>
+            <element signature="e#298#329#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
