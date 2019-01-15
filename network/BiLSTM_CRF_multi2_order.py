@@ -340,7 +340,9 @@ def BiLSTM_CRF_multi2_order3_DenseAvg(sourcevocabsize, targetvocabsize, source_W
     char_embedding2 = TimeDistributed(char_embedding)(char_input)
     char_cnn = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))(char_embedding2)
     char_macpool = TimeDistributed(GlobalMaxPooling1D())(char_cnn)
-    char_macpool = Dropout(0.5)(char_macpool)
+    # char_macpool = Dropout(0.5)(char_macpool)
+    # !!!!!!!!!!!!!!
+    char_macpool = Dropout(0.25)(char_macpool)
 
     word_embedding = Embedding(input_dim=sourcevocabsize + 1,
                               output_dim=emd_dim,
@@ -366,6 +368,11 @@ def BiLSTM_CRF_multi2_order3_DenseAvg(sourcevocabsize, targetvocabsize, source_W
     output1 = crflayer1(mlp1_hidden3)
 
     input_chunk = TimeDistributed(Dense(100, activation=None))(output1)
+
+    # input_chunk = Dropout(0)(input_chunk)
+    # !!!!!!!!!!!!!!
+    input_chunk = Dropout(0.5)(input_chunk)
+
     embedding2 = concatenate([BiLSTM_dropout, input_chunk], axis=-1)
 
     mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding2)
