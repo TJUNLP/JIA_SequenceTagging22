@@ -261,7 +261,7 @@ if __name__ == "__main__":
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
 
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + \
-                "__single_5.h5"
+                "__single_6.h5"
 
 
     batch_size = 32
