@@ -45,7 +45,9 @@ def Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth
     char_cnn = TimeDistributed(Conv1D(50, 3, activation='relu', padding='same'))(char_embedding2)
 
     char_macpool = TimeDistributed(GlobalMaxPooling1D())(char_cnn)
-    char_macpool = Dropout(0.5)(char_macpool)
+    # char_macpool = Dropout(0.5)(char_macpool)
+    # !!!!!!!!!!!!!!
+    char_macpool = Dropout(0.25)(char_macpool)
 
     word_embedding = Embedding(input_dim=sourcevocabsize + 1,
                               output_dim=emd_dim,
@@ -66,7 +68,8 @@ def Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth
 
     TimeD = TimeDistributed(Dense(targetvocabsize+1))(BiLSTM_dropout)
     # TimeD = TimeDistributed(Dense(int(hidden_dim / 2)))(BiLSTM_dropout)
-    TimeD = Dropout(0.5)(TimeD)
+    # TimeD = Dropout(0.5)(TimeD)
+    # !!!!!!!!!!!!!!!delete dropout
 
     # model = Activation('softmax')(TimeD)
 
