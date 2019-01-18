@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/TrainModel_1task.py" afterPath="$PROJECT_DIR$/TrainModel_1task.py" />
-      <change beforePath="$PROJECT_DIR$/network/NN_single.py" afterPath="$PROJECT_DIR$/network/NN_single.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,10 +38,20 @@
         <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="341">
-              <caret line="263" column="31" lean-forward="true" selection-start-line="263" selection-start-column="31" selection-end-line="263" selection-end-column="31" />
+              <caret line="263" column="27" lean-forward="false" selection-start-line="263" selection-start-column="27" selection-end-line="263" selection-end-column="27" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PrecessData_PreC2V.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7870">
+              <caret line="588" column="9" lean-forward="false" selection-start-line="588" selection-start-column="4" selection-end-line="588" selection-end-column="9" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -110,7 +119,6 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="8" />
     <option name="y" value="23" />
     <option name="width" value="1251" />
     <option name="height" value="732" />
@@ -351,7 +359,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="8" y="23" width="1251" height="732" extended-state="0" />
+    <frame x="0" y="23" width="1251" height="732" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -680,13 +688,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData_Nodigit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7500">
-          <caret line="504" column="21" lean-forward="false" selection-start-line="504" selection-start-column="21" selection-end-line="504" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/Cellar/python3/3.6.1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/gensim/models/word2vec.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -712,14 +713,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="321">
           <caret line="85" column="0" lean-forward="false" selection-start-line="85" selection-start-column="0" selection-end-line="92" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="588" column="9" lean-forward="false" selection-start-line="588" selection-start-column="4" selection-end-line="588" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -759,10 +752,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PrecessData_Nodigit.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2416">
+          <caret line="504" column="21" lean-forward="false" selection-start-line="504" selection-start-column="21" selection-end-line="504" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7870">
+          <caret line="588" column="9" lean-forward="false" selection-start-line="588" selection-start-column="4" selection-end-line="588" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="341">
-          <caret line="263" column="31" lean-forward="true" selection-start-line="263" selection-start-column="31" selection-end-line="263" selection-end-column="31" />
+          <caret line="263" column="27" lean-forward="false" selection-start-line="263" selection-start-column="27" selection-end-line="263" selection-end-column="27" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
