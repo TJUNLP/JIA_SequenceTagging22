@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/TrainModel_1task.py" afterPath="$PROJECT_DIR$/TrainModel_1task.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,11 +37,9 @@
       <file leaf-file-name="TrainModel_1task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="356">
-              <caret line="264" column="0" lean-forward="true" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
-              <folding>
-                <element signature="e#298#329#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="-3822">
+              <caret line="15" column="22" lean-forward="false" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -753,11 +750,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="264" column="0" lean-forward="true" selection-start-line="264" selection-start-column="0" selection-end-line="264" selection-end-column="0" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="-3822">
+          <caret line="15" column="22" lean-forward="false" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
