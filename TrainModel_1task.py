@@ -263,6 +263,8 @@ if __name__ == "__main__":
 
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + \
                 "__single_7.h5"
+    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
+                "__single_5.h5"
 
 
     batch_size = 32
