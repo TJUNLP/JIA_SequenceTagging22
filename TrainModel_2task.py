@@ -471,11 +471,11 @@ if __name__ == "__main__":
                 train_e2e_model(modelname, datafile, modelfile, resultdir,
                                 npochos=100, hidden_dim=200, batch_size=batch_size, retrain=retrain)
 
-    if Test:
-        print("test EE model....")
-        print(datafile)
-        print(modelfile)
-        infer_e2e_model(modelname, datafile, modelfile, resultdir, hidden_dim=200, batch_size=batch_size)
+        if Test:
+            print("test EE model....")
+            print(datafile)
+            print(modelfile)
+            infer_e2e_model(modelname, datafile, modelfile, resultdir, hidden_dim=200, batch_size=batch_size)
 
 
 
