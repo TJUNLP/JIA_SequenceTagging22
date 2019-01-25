@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/TrainModel_2task.py" afterPath="$PROJECT_DIR$/TrainModel_2task.py" />
-      <change beforePath="$PROJECT_DIR$/Word2vec.py" afterPath="$PROJECT_DIR$/Word2vec.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,8 +37,8 @@
       <file leaf-file-name="TrainModel_2task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="409" column="19" lean-forward="true" selection-start-line="409" selection-start-column="19" selection-end-line="409" selection-end-column="19" />
+            <state relative-caret-position="214">
+              <caret line="416" column="35" lean-forward="false" selection-start-line="416" selection-start-column="35" selection-end-line="416" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -767,8 +766,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="409" column="19" lean-forward="true" selection-start-line="409" selection-start-column="19" selection-end-line="409" selection-end-column="19" />
+        <state relative-caret-position="214">
+          <caret line="416" column="35" lean-forward="false" selection-start-line="416" selection-start-column="35" selection-end-line="416" selection-end-column="35" />
           <folding />
         </state>
       </provider>

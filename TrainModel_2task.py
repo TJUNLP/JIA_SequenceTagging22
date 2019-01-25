@@ -414,7 +414,7 @@ if __name__ == "__main__":
 
     # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
-        withPos) + "_PreC2V" + "_7.h5"
+        withPos) + "_PreC2V" + "_11.h5"
 
     # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_4.h5"
 
