@@ -10,20 +10,25 @@ def cut_txt(old_files, cut_file):
 
     for testf in old_files:
         fi = open(testf, 'r')
+        sentence = ''
         for line in fi.readlines():
             if line.__len__() <= 1:
+                sentence = '\EOS1' + sentence + ' ' + '\EOS2'
+                #     .replace('，', '').replace('。', '').replace('？', '').replace('！', '') \
+                # .replace('“', '').replace('”', '').replace('：', '').replace('…', '').replace('（', '').replace('）', '') \
+                # .replace('—', '').replace('《', '').replace('》', '').replace('、', '').replace('‘', '') \
+                # .replace('’', '')  # 去掉标点符号
+                fo = open(cut_file, 'a+', encoding='utf-8')
+                fo.write(sentence + '\n')
+                fo.close()
+                sentence = ''
                 continue
+
             sourc = line.strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
             text = sourc[0]
             new_text = ' '.join(text)
-            new_text = 'EOS1' + ' ' + new_text + ' ' + 'EOS2'
-            #     .replace('，', '').replace('。', '').replace('？', '').replace('！', '') \
-            # .replace('“', '').replace('”', '').replace('：', '').replace('…', '').replace('（', '').replace('）', '') \
-            # .replace('—', '').replace('《', '').replace('》', '').replace('、', '').replace('‘', '') \
-            # .replace('’', '')  # 去掉标点符号
-            fo = open(cut_file, 'a+', encoding='utf-8')
-            fo.write(new_text + '\n')
-            fo.close()
+            sentence = sentence + ' \space ' + new_text
+
         fi.close()
 
     return cut_file
@@ -35,7 +40,7 @@ def model_train(train_file_name, save_model_file):  # model_file_name为训练�
     sentences = word2vec.Text8Corpus(train_file_name)  # 加载语料
 
     # 第一个参数是训练语料，第二个参数是小于该数的单词会被剔除，默认值为5, 第三个参数是神经网络的隐藏层单元数，默认为100
-    model = word2vec.Word2Vec(sentences, min_count=5, size=50, window=3, workers=4, iter=5)
+    model = word2vec.Word2Vec(sentences, min_count=5, size=50, window=4, workers=4, iter=5)
 
     # model.save(save_model_file)
     model.wv.save_word2vec_format(save_model_name, binary=False)   # 以二进制类型保存模型以便重用
@@ -63,7 +68,7 @@ if __name__ == '__main__':
     # 加载已训练好的模型
     # model_1 = word2vec.Word2Vec.load(save_model_name)
     # 计算两个词的相似度/相关程度
-    y1 = model_1.similarity("a", "A")
+    y1 = model_1.similarity("a", ",")
     print(y1)
     print("-------------------------------\n")
 
