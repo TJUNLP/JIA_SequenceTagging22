@@ -34,6 +34,7 @@ from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Dense
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Coor
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg_softmax_softmax
 
 
 def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
@@ -208,6 +209,19 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                               input_word_length=input_word_length,
                                               char_emd_dim=char_emd_dim,
                                               sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+    elif modelname is 'BiLSTM_CRF_multi2_order3_DenseAvg_softmax_softmax':
+        nn_model = BiLSTM_CRF_multi2_order3_DenseAvg_softmax_softmax(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                                 source_W=source_W,
+                                                 input_seq_lenth=input_seq_lenth,
+                                                 output_seq_lenth=output_seq_lenth,
+                                                 hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                                 sourcecharsize=sourcecharsize,
+                                                 character_W=character_W,
+                                                 input_word_length=input_word_length,
+                                                 char_emd_dim=char_emd_dim,
+                                                 sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
 
 
 
@@ -397,6 +411,7 @@ if __name__ == "__main__":
     # modelname = 'BiLSTM_CRF_multi2_order3_Dense'
     modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg'
     # modelname = 'BiLSTM_CRF_multi2_order3_Coor'
+    modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg_softmax_softmax'
 
 
 
@@ -412,12 +427,7 @@ if __name__ == "__main__":
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_2" + ".pkl"
     # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
-    # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
-    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
-        withPos) + "_PreC2V" + "_11.h5"
-
-    # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_4.h5"
-
+    modelfile = "next ...."
 
     resultdir = "./data/result/"
 
@@ -440,17 +450,26 @@ if __name__ == "__main__":
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=char_emd_dim,
              withFix=withFix, maxlen=maxlen)
 
-    if not os.path.exists(modelfile):
-        print("Lstm data has extisted: " + datafile)
-        print("Training EE model....")
-        print(modelfile)
-        train_e2e_model(modelname, datafile, modelfile, resultdir,
-                        npochos=100, hidden_dim=200, batch_size=batch_size, retrain=False)
-    else:
-        if retrain:
-            print("ReTraining EE model....")
+    for inum in range(5):
+
+        # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
+        modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
+            withPos) + "_PreC2V_2" + "_" + str(inum) + ".h5"
+
+        # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_4.h5"
+
+
+        if not os.path.exists(modelfile):
+            print("Lstm data has extisted: " + datafile)
+            print("Training EE model....")
+            print(modelfile)
             train_e2e_model(modelname, datafile, modelfile, resultdir,
-                            npochos=100, hidden_dim=200, batch_size=batch_size, retrain=retrain)
+                            npochos=100, hidden_dim=200, batch_size=batch_size, retrain=False)
+        else:
+            if retrain:
+                print("ReTraining EE model....")
+                train_e2e_model(modelname, datafile, modelfile, resultdir,
+                                npochos=100, hidden_dim=200, batch_size=batch_size, retrain=retrain)
 
     if Test:
         print("test EE model....")
