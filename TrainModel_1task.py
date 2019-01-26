@@ -17,6 +17,7 @@ import matplotlib.pyplot as plt
 from PrecessData_PreC2V import get_data
 from Evaluate import evaluation_NER
 from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder, Model_BiLSTM_parallel_8_64_CRF
+from network.NN_single import Model_BiLSTM_Softmax
 
 
 
@@ -220,6 +221,20 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                                         input_word_length=input_word_length,
                                                         char_emd_dim=char_emd_dim,
                                           sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+    elif modelname is 'Model_BiLSTM_Softmax':
+        nn_model = Model_BiLSTM_Softmax(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                    source_W=source_W,
+                                    input_seq_lenth=input_seq_lenth,
+                                    output_seq_lenth=output_seq_lenth,
+                                    hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                    sourcecharsize=sourcecharsize,
+                                    character_W=character_W,
+                                    input_word_length=input_word_length,
+                                    char_emd_dim=char_emd_dim,
+                                    sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+
     elif modelname is 'Model_BiLSTM_parallel_8_64_CRF':
         nn_model = Model_BiLSTM_parallel_8_64_CRF(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                     source_W=source_W,
@@ -245,6 +260,7 @@ if __name__ == "__main__":
     # modelname = 'Model_BiLSTM_CnnDecoder'
     modelname = 'Model_BiLSTM_CRF'
     # modelname = 'Model_BiLSTM_parallel_8_64_CRF'
+    modelname = 'Model_BiLSTM_Softmax'
 
     print(modelname)
 
@@ -259,10 +275,9 @@ if __name__ == "__main__":
     withPos = False
 
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
+    # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
-    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + \
-                "__single_7.h5"
+    modelfile = "next ...."
     modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
                 "__single_5.h5"
 
@@ -275,23 +290,30 @@ if __name__ == "__main__":
         print("Precess data....")
         char_emd_dim = 50
         get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=char_emd_dim, withFix=withFix, maxlen=maxlen)
-    if not os.path.exists(modelfile):
-        print("Lstm data has extisted: " + datafile)
-        print("Training EE model....")
-        print(modelfile)
-        train_e2e_model(modelname, datafile, modelfile, resultdir,
-                        npochos=100, hidden_dim=200, batch_size=batch_size, retrain=False)
-    else:
-        if retrain:
-            print("ReTraining EE model....")
-            train_e2e_model(modelname, datafile, modelfile, resultdir,
-                            npochos=100, hidden_dim=200, batch_size=batch_size, retrain=retrain)
 
-    if Test:
-        print("test EE model....")
-        print(datafile)
-        print(modelfile)
-        infer_e2e_model(modelname, datafile, modelfile, resultdir, hidden_dim=200, batch_size=batch_size)
+    for inum in range(5):
+
+        modelfile = "./model/" + modelname + "__PreC2V" + "__single_" + str(inum) + ".h5"
+        # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
+        #             "__single_5.h5"
+
+        if not os.path.exists(modelfile):
+            print("Lstm data has extisted: " + datafile)
+            print("Training EE model....")
+            print(modelfile)
+            train_e2e_model(modelname, datafile, modelfile, resultdir,
+                            npochos=100, hidden_dim=200, batch_size=batch_size, retrain=False)
+        else:
+            if retrain:
+                print("ReTraining EE model....")
+                train_e2e_model(modelname, datafile, modelfile, resultdir,
+                                npochos=100, hidden_dim=200, batch_size=batch_size, retrain=retrain)
+
+        if Test:
+            print("test EE model....")
+            print(datafile)
+            print(modelfile)
+            infer_e2e_model(modelname, datafile, modelfile, resultdir, hidden_dim=200, batch_size=batch_size)
 
 
 
