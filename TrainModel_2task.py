@@ -464,7 +464,7 @@ if __name__ == "__main__":
         modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
             withPos) + "_PreC2V_2" + "_" + str(inum) + ".h5"
 
-        modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_11.h5"
+        # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_11.h5"
 
 
         if not os.path.exists(modelfile):
