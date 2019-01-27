@@ -483,7 +483,7 @@ if __name__ == "__main__":
             print("test EE model....")
             print(datafile)
             print(modelfile)
-            resultfile = resultdir + modelfile + '.' + str(datetime.datetime.now()) + '.txt'
+            resultfile = resultdir + modelname + '('+str(inum)+').' + str(datetime.datetime.now()) + '.txt'
             infer_e2e_model(modelname, datafile, modelfile, resultfile, hidden_dim=200, batch_size=batch_size)
 
 
