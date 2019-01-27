@@ -18,6 +18,7 @@ from PrecessData_PreC2V import get_data
 from Evaluate import evaluation_NER
 from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder, Model_BiLSTM_parallel_8_64_CRF
 from network.NN_single import Model_BiLSTM_Softmax
+from network.NN_single import Model_Dense_Softmax
 
 
 
@@ -247,7 +248,17 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                     char_emd_dim=char_emd_dim,
                                     sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
-
+    elif modelname is 'Model_Dense_Softmax':
+        nn_model = Model_Dense_Softmax(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                    source_W=source_W,
+                                    input_seq_lenth=input_seq_lenth,
+                                    output_seq_lenth=output_seq_lenth,
+                                    hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                    sourcecharsize=sourcecharsize,
+                                    character_W=character_W,
+                                    input_word_length=input_word_length,
+                                    char_emd_dim=char_emd_dim,
+                                    sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
 
     return nn_model
@@ -261,6 +272,7 @@ if __name__ == "__main__":
     modelname = 'Model_BiLSTM_CRF'
     # modelname = 'Model_BiLSTM_parallel_8_64_CRF'
     modelname = 'Model_BiLSTM_Softmax'
+    modelname = 'Model_Dense_Softmax'
 
     print(modelname)
 
@@ -278,8 +290,7 @@ if __name__ == "__main__":
     # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
     modelfile = "next ...."
-    modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
-                "__single_5.h5"
+
 
 
     batch_size = 32
