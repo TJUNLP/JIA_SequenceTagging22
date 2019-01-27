@@ -378,7 +378,7 @@ def BIOES_Class_weight(x=5):
         cw[i] = 1
     return cw
 
-def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=200, batch_size=50):
+def infer_e2e_model(modelname, datafile, lstm_modelfile, resultfile ='', hidden_dim=200, batch_size=50):
     # traindata, testdata, source_W, source_vob, sourc_idex_word, target_vob, \
     # target_idex_word, max_s, k \
     #     = pickle.load(open(eelstmfile, 'rb'))
@@ -403,7 +403,6 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
 
     nnmodel.load_weights(lstm_modelfile)
     # nnmodel = load_model(lstm_modelfile)
-    resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
 
     P, R, F, PR_count, P_count, TR_count = test_model(nnmodel, testdata, chartest,pos_test, target_idex_word, resultfile,
                                                       batch_size)
@@ -465,7 +464,7 @@ if __name__ == "__main__":
         modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
             withPos) + "_PreC2V_2" + "_" + str(inum) + ".h5"
 
-        # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_4.h5"
+        modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_11.h5"
 
 
         if not os.path.exists(modelfile):
@@ -484,7 +483,8 @@ if __name__ == "__main__":
             print("test EE model....")
             print(datafile)
             print(modelfile)
-            infer_e2e_model(modelname, datafile, modelfile, resultdir, hidden_dim=200, batch_size=batch_size)
+            resultfile = resultdir + modelfile + '.' + str(datetime.datetime.now()) + '.txt'
+            infer_e2e_model(modelname, datafile, modelfile, resultfile, hidden_dim=200, batch_size=batch_size)
 
 
 
