@@ -40,7 +40,7 @@ from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order4_DenseAvg
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order4_LstmDense
 
 
-def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
+def test_model_divide(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
     index2word[0] = ''
     index2word_BIOES = {0: '', 1: 'B', 2: 'I', 3: 'O', 4: 'E', 5: 'S'}
     index2word_Type = {0: '', 1: 'O', 2: 'LOC', 3: 'ORG', 4: 'PER', 5: 'MISC'}
@@ -114,6 +114,64 @@ def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile=''
         P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult3, resultfile=resultfile)
     else:
         P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile=resultfile+'.Type.txt')
+    print('Type>>>>>>>>>>', P, R, F)
+
+
+    return P, R, F, PR_count, P_count, TR_count
+
+
+def test_model_global(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
+    index2word[0] = ''
+    index2word_BIOES = {0: '', 1: 'B', 2: 'I', 3: 'O', 4: 'E', 5: 'S'}
+    index2word_Type = {0: '', 1: 'O', 2: 'LOC', 3: 'ORG', 4: 'PER', 5: 'MISC'}
+
+    testx = np.asarray(testdata[0], dtype="int32")
+    testy = np.asarray(testdata[1], dtype="int32")
+    testy_BIOES = np.asarray(testdata[3], dtype="int32")
+    testy_Type = np.asarray(testdata[4], dtype="int32")
+    poslabel_test = np.asarray(pos_data, dtype="int32")
+    testchar = np.asarray(chardata, dtype="int32")
+
+    testresult = []
+    testresult2 = []
+    testresult3 = []
+    predictions = nn_model.predict([testx, testchar])
+
+    isfinall = False
+
+    for si in range(0, len(predictions[0])):
+
+        ptag  = []
+        for iw, word in enumerate(predictions[0][si]):
+            next_index = np.argmax(word)
+            next_token = index2word_BIOES[next_index]
+
+            next_index2 = np.argmax(predictions[1][si][iw])
+            next_token2 = index2word_Type[next_index2]
+
+            if next_token == 'O' or next_token == '':
+                ptag.append(next_token)
+            else:
+                ptag.append(next_token + '-' + next_token2)
+
+
+        ttag = []
+        for word in testy[si]:
+            next_index = np.argmax(word)
+            next_token = index2word[next_index]
+            ttag.append(next_token)
+
+
+
+        result3 = []
+        result3.append(ptag)
+        result3.append(ttag)
+        testresult3.append(result3)
+
+
+
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult3, resultfile=resultfile)
+
     print('Type>>>>>>>>>>', P, R, F)
 
 
@@ -369,10 +427,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
             saveepoch += save_inter
             resultfile = ''
             print('the dev result-----------------------')
-            P, R, F, PR_count, P_count, TR_count = test_model(nn_model, devdata, chardev, pos_dev, target_idex_word, resultfile, batch_size)
+            P, R, F, PR_count, P_count, TR_count = test_model_global(nn_model, devdata, chardev, pos_dev, target_idex_word, resultfile, batch_size)
             print(P, R, F)
             print('the test result-----------------------')
-            P, R, F, PR_count, P_count, TR_count = test_model(nn_model, testdata, chartest, pos_test, target_idex_word, resultfile,
+            P, R, F, PR_count, P_count, TR_count = test_model_global(nn_model, testdata, chartest, pos_test, target_idex_word, resultfile,
                                                           batch_size)
 
             if F > maxF:
@@ -429,7 +487,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultfile ='', hidden_
     nnmodel.load_weights(lstm_modelfile)
     # nnmodel = load_model(lstm_modelfile)
 
-    P, R, F, PR_count, P_count, TR_count = test_model(nnmodel, testdata, chartest,pos_test, target_idex_word, resultfile,
+    P, R, F, PR_count, P_count, TR_count = test_model_global(nnmodel, testdata, chartest,pos_test, target_idex_word, resultfile,
                                                       batch_size)
     print('P= ', P, '  R= ', R, '  F= ', F)
 
