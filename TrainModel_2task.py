@@ -37,6 +37,7 @@ from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Coor
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg_softmax_softmax
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order4_DenseAvg
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order4_LstmDense
 
 
 def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
@@ -248,6 +249,19 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                                  char_emd_dim=char_emd_dim,
                                                  sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
+    elif modelname is 'BiLSTM_CRF_multi2_order4_LstmDense':
+        nn_model = BiLSTM_CRF_multi2_order4_LstmDense(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                                 source_W=source_W,
+                                                 input_seq_lenth=input_seq_lenth,
+                                                 output_seq_lenth=output_seq_lenth,
+                                                 hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                                 sourcecharsize=sourcecharsize,
+                                                 character_W=character_W,
+                                                 input_word_length=input_word_length,
+                                                 char_emd_dim=char_emd_dim,
+                                                 sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+
+
     return nn_model
 
 
@@ -434,6 +448,7 @@ if __name__ == "__main__":
     # modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax'
 
     modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
+    modelname = 'BiLSTM_CRF_multi2_order4_LstmDense'
 
 
     print(modelname)
