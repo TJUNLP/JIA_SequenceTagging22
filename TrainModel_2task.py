@@ -505,7 +505,7 @@ if __name__ == "__main__":
     #
     # modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax'
 
-    modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
+    # modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
     # modelname = 'BiLSTM_CRF_multi2_order4_LstmDense'
 
 
@@ -518,8 +518,8 @@ if __name__ == "__main__":
     withFix = False
     withPos = False
 
-    # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_2" + ".pkl"
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
+    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_2" + ".pkl"
+    # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
     # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
     modelfile = "next ...."
@@ -551,7 +551,7 @@ if __name__ == "__main__":
         modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
             withPos) + "_PreC2V" + "_" + str(inum) + ".h5"
 
-        # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_11.h5"
+        modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_11.h5"
 
 
         if not os.path.exists(modelfile):
