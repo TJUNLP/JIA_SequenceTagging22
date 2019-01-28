@@ -36,6 +36,7 @@ from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Coor
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg_softmax_softmax
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order4_DenseAvg
 
 
 def test_model(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
@@ -235,7 +236,17 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                                  char_emd_dim=char_emd_dim,
                                                  sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
-
+    elif modelname is 'BiLSTM_CRF_multi2_order4_DenseAvg':
+        nn_model = BiLSTM_CRF_multi2_order4_DenseAvg(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                                 source_W=source_W,
+                                                 input_seq_lenth=input_seq_lenth,
+                                                 output_seq_lenth=output_seq_lenth,
+                                                 hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                                 sourcecharsize=sourcecharsize,
+                                                 character_W=character_W,
+                                                 input_word_length=input_word_length,
+                                                 char_emd_dim=char_emd_dim,
+                                                 sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
     return nn_model
 
@@ -422,6 +433,8 @@ if __name__ == "__main__":
     #
     # modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax'
 
+    modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
+
 
     print(modelname)
 
@@ -433,7 +446,7 @@ if __name__ == "__main__":
     withPos = False
 
     datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_2" + ".pkl"
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
+    # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
     # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
     modelfile = "next ...."
@@ -459,11 +472,11 @@ if __name__ == "__main__":
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=char_emd_dim,
              withFix=withFix, maxlen=maxlen)
 
-    for inum in range(3):
+    for inum in range(5):
 
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
         modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
-            withPos) + "_PreC2V" + "_" + str(inum) + ".h5"
+            withPos) + "_PreC2V_2" + "_" + str(inum) + ".h5"
 
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_11.h5"
 
