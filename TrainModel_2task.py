@@ -403,7 +403,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                epochs=1,
                                validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_Type_val]),#y_Type_val
                                shuffle=True,
-                               class_weight=None, #[None, Type_Class_weight],
+                               # class_weight=None, #[None, Type_Class_weight],
                                verbose=1)
 
         # plt.plot(history.history['acc'])
@@ -432,6 +432,9 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
             print('the test result-----------------------')
             P, R, F, PR_count, P_count, TR_count = test_model_global(nn_model, testdata, chartest, pos_test, target_idex_word, resultfile,
                                                           batch_size)
+            P, R, F, PR_count, P_count, TR_count = test_model_divide(nn_model, testdata, chartest, pos_test,
+                                                                 target_idex_word, resultfile,
+                                                                 batch_size)
 
             if F > maxF:
                 earlystopping = 0
@@ -489,7 +492,12 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultfile ='', hidden_
 
     P, R, F, PR_count, P_count, TR_count = test_model_global(nnmodel, testdata, chartest,pos_test, target_idex_word, resultfile,
                                                       batch_size)
-    print('P= ', P, '  R= ', R, '  F= ', F)
+    print('global---P= ', P, '  R= ', R, '  F= ', F)
+    P, R, F, PR_count, P_count, TR_count = test_model_divide(nnmodel, testdata, chartest, pos_test, target_idex_word,
+                                                             resultfile,
+                                                             batch_size)
+
+    print('dicide---P= ', P, '  R= ', R, '  F= ', F)
 
 
 if __name__ == "__main__":
