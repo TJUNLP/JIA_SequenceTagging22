@@ -447,10 +447,11 @@ def BiLSTM_CRF_multi2_order4_DenseAvg(sourcevocabsize, targetvocabsize, source_W
     crflayer1 = CRF(5 + 1, sparse_target=False, learn_mode='marginal')
     output1 = crflayer1(mlp1_hidden3)
 
-    input_chunk = TimeDistributed(Dense(100, activation=None))(output1)
-
-    # input_chunk = Dropout(0)(input_chunk)
+    # input_chunk = TimeDistributed(Dense(100, activation=None))(output1)
     # !!!!!!!!!!!!!!
+    input_chunk = Bidirectional(LSTM(50, return_sequences=True), merge_mode='concat')(output1)
+
+
     input_chunk = Dropout(0.5)(input_chunk)
 
     embedding2 = concatenate([BiLSTM_dropout, input_chunk], axis=-1)
@@ -479,7 +480,7 @@ def BiLSTM_CRF_multi2_order4_DenseAvg(sourcevocabsize, targetvocabsize, source_W
     return Models
 
 
-def BiLSTM_CRF_multi2_order4_LstmDense(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth,
+def BiLSTM_CRF_multi2_order5_DenseAvg(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth,
                               output_seq_lenth,
                               hidden_dim, emd_dim,
                               sourcecharsize, character_W, input_word_length, char_emd_dim,
@@ -518,34 +519,42 @@ def BiLSTM_CRF_multi2_order4_LstmDense(sourcevocabsize, targetvocabsize, source_
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
-    mlp1_hidden1 = BiLSTM_dropout
-    mlp1_hidden2 = TimeDistributed(Dense(200, activation='tanh'))(mlp1_hidden1)
+    mlp1_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
+    mlp1_hidden1 = Dropout(0.5)(mlp1_hidden1)
+    mlp1_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp1_hidden1)
     # output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
     mlp1_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp1_hidden2)
-    crflayer1 = CRF(5 + 1, sparse_target=False, learn_mode='marginal', name='BIOES')
+    crflayer1 = CRF(5 + 1, sparse_target=False, learn_mode='marginal')
     output1 = crflayer1(mlp1_hidden3)
 
-    # input_chunk = TimeDistributed(Dense(100, activation=None))(output1)
+    input_chunk = TimeDistributed(Dense(100, activation=None))(output1)
 
-    mlp2_hidden1 = Bidirectional(LSTM(100, return_sequences=True), merge_mode='concat')(output1)
+    # input_chunk = Dropout(0)(input_chunk)
+    # !!!!!!!!!!!!!!
+    input_chunk = Dropout(0.5)(input_chunk)
+
+    embedding2 = concatenate([BiLSTM_dropout, input_chunk], axis=-1)
+
+    mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding2)
     mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1)
-
-    mlp2_hidden2 = concatenate([BiLSTM_dropout, mlp2_hidden1], axis=-1)
-
-    mlp2_hidden3 = TimeDistributed(Dense(200, activation='tanh'))(mlp2_hidden2)
+    mlp2_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden1)
+    mlp2_hidden3 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden2)
     # output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
     mlp2_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp2_hidden3)
-    mlp2_hidden4 = mlp2_hidden3
-    crflayer2 = CRF(5 + 1, sparse_target=False, name='Type', learn_mode='marginal')
-    output2 = crflayer2(mlp2_hidden4)
+
+    output2 = crflayer1(mlp2_hidden3)
 
 
     Models = Model([word_input, char_input], [output1, output2])
+    # Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
+    #                loss={'finall': crflayer.loss_function, 'BIOES': 'categorical_crossentropy', 'Type': 'categorical_crossentropy'},
+    #                loss_weights={'finall': 1., 'BIOES': 1., 'Type': 1.},
+    #                metrics={'finall': [crflayer.accuracy], 'BIOES': ['acc'], 'Type': ['acc']})
 
     Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
-                   loss={'BIOES': crflayer1.loss_function, 'Type': crflayer2.loss_function},
-                   loss_weights={'BIOES': 1., 'Type': 1.},
-                   metrics={'BIOES': [crflayer2.accuracy], 'Type': [crflayer2.accuracy]})
+                   loss=[crflayer1.loss_function, crflayer1.loss_function],
+                   loss_weights=[1., 1.],
+                   metrics=[crflayer1.accuracy])
 
     return Models
 

@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_2task.py" afterPath="$PROJECT_DIR$/TrainModel_2task.py" />
       <change beforePath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" afterPath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -27,21 +26,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BiLSTM_CRF_multi2_order.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="BiLSTM_CRF_multi2_order.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="59">
-              <caret line="445" column="78" lean-forward="false" selection-start-line="445" selection-start-column="66" selection-end-line="445" selection-end-column="78" />
+            <state relative-caret-position="848">
+              <caret line="450" column="20" lean-forward="false" selection-start-line="450" selection-start-column="20" selection-end-line="450" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_2task.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TrainModel_2task.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="50">
-              <caret line="494" column="26" lean-forward="true" selection-start-line="494" selection-start-column="26" selection-end-line="494" selection-end-column="26" />
+            <state relative-caret-position="5236">
+              <caret line="497" column="0" lean-forward="false" selection-start-line="497" selection-start-column="0" selection-end-line="497" selection-end-column="0" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -66,7 +65,7 @@
       <file leaf-file-name="Evaluate.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Evaluate.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
+            <state relative-caret-position="5790">
               <caret line="650" column="25" lean-forward="false" selection-start-line="650" selection-start-column="25" selection-end-line="650" selection-end-column="25" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
@@ -79,7 +78,7 @@
       <file leaf-file-name="TrainModel_1task.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3954">
+            <state relative-caret-position="4290">
               <caret line="296" column="19" lean-forward="false" selection-start-line="296" selection-start-column="19" selection-end-line="296" selection-end-column="19" />
               <folding />
             </state>
@@ -201,8 +200,8 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -388,7 +387,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22084367" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22415219" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -725,21 +724,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_single.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="130" column="18" lean-forward="false" selection-start-line="130" selection-start-column="4" selection-end-line="130" selection-end-column="18" />
-          <folding>
-            <element signature="e#1443#3828#0" expanded="false" />
-            <element signature="e#6977#9241#0" expanded="false" />
-            <element signature="e#9704#12762#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_1task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3954">
+        <state relative-caret-position="4290">
           <caret line="296" column="19" lean-forward="false" selection-start-line="296" selection-start-column="19" selection-end-line="296" selection-end-column="19" />
           <folding />
         </state>
@@ -747,7 +734,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
+        <state relative-caret-position="5790">
           <caret line="650" column="25" lean-forward="false" selection-start-line="650" selection-start-column="25" selection-end-line="650" selection-end-column="25" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
@@ -772,21 +759,33 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="59">
-          <caret line="445" column="78" lean-forward="false" selection-start-line="445" selection-start-column="66" selection-end-line="445" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="50">
-          <caret line="494" column="26" lean-forward="true" selection-start-line="494" selection-start-column="26" selection-end-line="494" selection-end-column="26" />
+        <state relative-caret-position="5236">
+          <caret line="497" column="0" lean-forward="false" selection-start-line="497" selection-start-column="0" selection-end-line="497" selection-end-column="0" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_single.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="130" column="18" lean-forward="false" selection-start-line="130" selection-start-column="4" selection-end-line="130" selection-end-column="18" />
+          <folding>
+            <element signature="e#1443#3828#0" expanded="false" />
+            <element signature="e#6977#9241#0" expanded="false" />
+            <element signature="e#9704#12762#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="848">
+          <caret line="450" column="20" lean-forward="false" selection-start-line="450" selection-start-column="20" selection-end-line="450" selection-end-column="20" />
+          <folding />
         </state>
       </provider>
     </entry>
