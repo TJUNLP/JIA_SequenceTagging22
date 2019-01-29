@@ -519,11 +519,8 @@ def BiLSTM_CRF_multi2_order5_DenseAvg(sourcevocabsize, targetvocabsize, source_W
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
-    mlp1_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(BiLSTM_dropout)
-    mlp1_hidden1 = Dropout(0.5)(mlp1_hidden1)
-    mlp1_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp1_hidden1)
     # output1 = TimeDistributed(Dense(5+1, activation='softmax'), name='BIOES')(decodelayer1)
-    mlp1_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp1_hidden2)
+    mlp1_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(BiLSTM_dropout)
     crflayer1 = CRF(5 + 1, sparse_target=False, learn_mode='marginal')
     output1 = crflayer1(mlp1_hidden3)
 
@@ -536,11 +533,10 @@ def BiLSTM_CRF_multi2_order5_DenseAvg(sourcevocabsize, targetvocabsize, source_W
     embedding2 = concatenate([BiLSTM_dropout, input_chunk], axis=-1)
 
     mlp2_hidden1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding2)
-    mlp2_hidden1 = Dropout(0.5)(mlp2_hidden1)
-    mlp2_hidden2 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden1)
-    mlp2_hidden3 = TimeDistributed(Dense(100, activation='tanh'))(mlp2_hidden2)
+    mlp2_hidden2 = Dropout(0.5)(mlp2_hidden1)
+
     # output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
-    mlp2_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp2_hidden3)
+    mlp2_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp2_hidden2)
 
     output2 = crflayer1(mlp2_hidden3)
 
