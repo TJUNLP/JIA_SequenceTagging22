@@ -141,19 +141,23 @@ def test_model_global(nn_model, testdata, chardata, pos_data, index2word, result
 
     for si in range(0, len(predictions[0])):
 
-        ptag  = []
-        for iw, word in enumerate(predictions[0][si]):
+        ptag_BIOES = []
+        for word in predictions[0][si]:
             next_index = np.argmax(word)
             next_token = index2word_BIOES[next_index]
+            ptag_BIOES.append(next_token)
 
-            next_index2 = np.argmax(predictions[1][si][iw])
-            next_token2 = index2word_Type[next_index2]
+        ptag  = []
+        for word in predictions[1][si]:
+            next_index = np.argmax(word)
+            next_token = index2word[next_index]
+            ptag.append(next_token)
 
-            if next_token == 'O' or next_token == '':
-                ptag.append(next_token)
-            else:
-                ptag.append(next_token + '-' + next_token2)
-
+        ttag_BIOES = []
+        for word in testy_BIOES[si]:
+            next_index = np.argmax(word)
+            next_token = index2word_BIOES[next_index]
+            ttag_BIOES.append(next_token)
 
         ttag = []
         for word in testy[si]:
@@ -168,7 +172,14 @@ def test_model_global(nn_model, testdata, chardata, pos_data, index2word, result
         result3.append(ttag)
         testresult3.append(result3)
 
+        result2 = []
+        result2.append(ptag_BIOES)
+        result2.append(ttag_BIOES)
+        testresult2.append(result2)
 
+
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile=resultfile+'.BIORS.txt')
+    print('BIOES>>>>>>>>>>', P, R, F)
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult3, resultfile=resultfile)
 
@@ -398,10 +409,10 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
         #                                           len(target_vob), target_idex_word,
         #                                     sample_weight_value=30,
         #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char], [y_BIOES, y_Type],#y_Type
+        history = nn_model.fit([x_word, input_char], [y_BIOES, y],#y_Type
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_Type_val]),#y_Type_val
+                               validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_val]),#y_Type_val
                                shuffle=True,
                                class_weight=None, #[None, Type_Class_weight],
                                verbose=1)
@@ -449,17 +460,17 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     return nn_model
 
 
-# def Type_Class_weight(x=4):
-#     cw = {0: 1, 1: 1}
-#     for i in range(2, x+1):
-#         cw[i] = 10
-#     return cw
-#
-# def BIOES_Class_weight(x=5):
-#     cw = {}
-#     for i in range(0, x+1):
-#         cw[i] = 1
-#     return cw
+def Type_Class_weight(x=4):
+    cw = {0: 1, 1: 1}
+    for i in range(2, x+1):
+        cw[i] = 10
+    return cw
+
+def BIOES_Class_weight(x=5):
+    cw = {}
+    for i in range(0, x+1):
+        cw[i] = 1
+    return cw
 
 def infer_e2e_model(modelname, datafile, lstm_modelfile, resultfile ='', hidden_dim=200, batch_size=50):
     # traindata, testdata, source_W, source_vob, sourc_idex_word, target_vob, \

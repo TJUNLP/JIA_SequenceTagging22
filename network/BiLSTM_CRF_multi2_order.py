@@ -554,6 +554,66 @@ def BiLSTM_CRF_multi2_order5_DenseAvg(sourcevocabsize, targetvocabsize, source_W
 
     return Models
 
+def BiLSTM_CRF_multi2_order6_Double(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth,
+                              output_seq_lenth,
+                              hidden_dim, emd_dim,
+                              sourcecharsize, character_W, input_word_length, char_emd_dim,
+                              sourcepossize, pos_W,pos_emd_dim, batch_size=32,
+                              loss='categorical_crossentropy', optimizer='rmsprop'):
+
+    word_input = Input(shape=(input_seq_lenth,), dtype='int32')
+
+    char_input = Input(shape=(input_seq_lenth, input_word_length,), dtype='int32')
+
+    char_embedding = Embedding(input_dim= sourcecharsize,
+                               output_dim=char_emd_dim,
+                               batch_input_shape=(batch_size, input_seq_lenth, input_word_length),
+                               mask_zero=False,
+                               trainable=True,
+                               weights=[character_W])
+
+    char_embedding2 = TimeDistributed(char_embedding)(char_input)
+
+    char_cnn = TimeDistributed(Conv1D(50, 3, activation='relu', padding='same'))(char_embedding2)
+
+    char_macpool = TimeDistributed(GlobalMaxPooling1D())(char_cnn)
+    # char_macpool = Dropout(0.5)(char_macpool)
+    # !!!!!!!!!!!!!!
+    char_macpool = Dropout(0.25)(char_macpool)
+
+    word_embedding = Embedding(input_dim=sourcevocabsize + 1,
+                              output_dim=emd_dim,
+                              input_length=input_seq_lenth,
+                              mask_zero=False,
+                              trainable=True,
+                              weights=[source_W])(word_input)
+
+
+    word_embedding_dropout = Dropout(0.5)(word_embedding)
+
+    embedding = concatenate([word_embedding_dropout, char_macpool], axis=-1)
+
+    BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode = 'concat')(embedding)
+    # BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True))(word_embedding_dropout)
+    BiLSTM = BatchNormalization(axis=1)(BiLSTM)
+    BiLSTM_dropout = Dropout(0.5)(BiLSTM)
+
+    TimeD = TimeDistributed(Dense(targetvocabsize+1))(BiLSTM_dropout)
+
+    # model = Activation('softmax')(TimeD)
+
+    crflayer = CRF(targetvocabsize+1, sparse_target=False)
+    model = crflayer(TimeD)#0.8746633147782367
+    # # model = crf(BiLSTM_dropout)#0.870420501714492
+
+    Models = Model([word_input, char_input], [model])
+
+    # Models.compile(loss=loss, optimizer='adam', metrics=['acc'])
+    # Models.compile(loss=crflayer.loss_function, optimizer='adam', metrics=[crflayer.accuracy])
+    Models.compile(loss=crflayer.loss_function, optimizer=optimizers.RMSprop(lr=0.001), metrics=[crflayer.accuracy])
+
+    return Models
+
 
 def BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth,
                               output_seq_lenth,
