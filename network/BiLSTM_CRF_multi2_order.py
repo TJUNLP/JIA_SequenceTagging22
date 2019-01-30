@@ -382,7 +382,7 @@ def BiLSTM_CRF_multi2_order3_DenseAvg(sourcevocabsize, targetvocabsize, source_W
     # output2 = TimeDistributed(Dense(5+1, activation='softmax'), name='Type')(decodelayer2)
     mlp2_hidden3 = TimeDistributed(Dense(5 + 1, activation=None))(mlp2_hidden3)
     mlp2_hidden4 = average([mlp1_hidden3, mlp2_hidden3])
-    crflayer2 = CRF(5 + 1, sparse_target=False, name='Type', learn_mode='marginal')
+    crflayer2 = CRF(targetvocabsize + 1, sparse_target=False, name='Type', learn_mode='marginal')
     output2 = crflayer2(mlp2_hidden4)
 
 

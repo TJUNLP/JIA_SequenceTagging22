@@ -516,7 +516,7 @@ if __name__ == "__main__":
     #
     # modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax'
 
-    modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
+    # modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
     # modelname = 'BiLSTM_CRF_multi2_order5_DenseAvg'
 
 
