@@ -800,7 +800,7 @@ def evaluation_NER_BIOES(testresult, resultfile):
                 while j < len(ptag):
                     if ptag[j].__contains__('I'):
                         j +=1
-                        if j == len(ptag) - 1:
+                        if j == len(ptag):#if j == len(ptag) - 1
                             i += 1
                     elif ptag[j].__contains__('E'):
                         total_predict += 1

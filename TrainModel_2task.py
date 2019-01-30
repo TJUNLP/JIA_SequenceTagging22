@@ -29,7 +29,7 @@ from keras import optimizers
 from keras.layers.normalization import BatchNormalization
 from keras.callbacks import Callback
 # from keras.losses import my_cross_entropy_withWeight
-from network.BiLSTM_CRF_multi2_alone import BiLSTM_CRF_multi2_alone
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order7_Serial
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_multi2_order2, BiLSTM_CRF_multi2_order3
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Dense
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg
@@ -188,8 +188,8 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                      loss='categorical_crossentropy', optimizer='rmsprop'):
     nn_model = None
 
-    if modelname is 'BiLSTM_CRF_multi2_alone':
-        nn_model = BiLSTM_CRF_multi2_alone(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+    if modelname is 'BiLSTM_CRF_multi2_order7_Serial':
+        nn_model = BiLSTM_CRF_multi2_order7_Serial(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                               source_W=source_W,
                                               input_seq_lenth=input_seq_lenth,
                                               output_seq_lenth=output_seq_lenth,
@@ -515,6 +515,7 @@ if __name__ == "__main__":
 
     # modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
     # modelname = 'BiLSTM_CRF_multi2_order5_DenseAvg'
+    modelname = 'BiLSTM_CRF_multi2_order7_Serial'
 
 
     print(modelname)
