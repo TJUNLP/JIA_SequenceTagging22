@@ -657,9 +657,8 @@ def BiLSTM_CRF_multi2_order7_Serial(sourcevocabsize, targetvocabsize, source_W, 
 
     output1 = TimeDistributed(Dense(5 + 1, activation='softmax'), name='BIOES')(BiLSTM1_dropout)
 
-    chunk_cnn = TimeDistributed(Conv1D(50, 3, activation='relu', padding='same'))(output1)
-    chunk_macpool = TimeDistributed(GlobalMaxPooling1D())(chunk_cnn)
-    input_chunk = Dropout(0.25)(chunk_macpool)
+    input_chunk = TimeDistributed(Dense(50, activation=None))(output1)
+    input_chunk = Dropout(0.25)(input_chunk)
 
     embedding2 = concatenate([word_embedding_dropout, char_macpool, input_chunk], axis=-1)
 
