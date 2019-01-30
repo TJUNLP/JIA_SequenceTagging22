@@ -680,6 +680,67 @@ def BiLSTM_CRF_multi2_order7_Serial(sourcevocabsize, targetvocabsize, source_W, 
     return Models
 
 
+def BiLSTM_CRF_multi2_order7_Serial_Softmax(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth,
+                                    output_seq_lenth,
+                                    hidden_dim, emd_dim,
+                                    sourcecharsize, character_W, input_word_length, char_emd_dim,
+                                    sourcepossize, pos_W, pos_emd_dim, batch_size=32,
+                                    loss='categorical_crossentropy', optimizer='rmsprop'):
+
+    word_input = Input(shape=(input_seq_lenth,), dtype='int32')
+    char_input = Input(shape=(input_seq_lenth, input_word_length,), dtype='int32')
+
+    char_embedding = Embedding(input_dim=sourcecharsize,
+                               output_dim=char_emd_dim,
+                               batch_input_shape=(batch_size, input_seq_lenth, input_word_length),
+                               mask_zero=False,
+                               trainable=True,
+                               weights=[character_W])
+
+    char_embedding2 = TimeDistributed(char_embedding)(char_input)
+
+    char_cnn = TimeDistributed(Conv1D(50, 3, activation='relu', padding='same'))(char_embedding2)
+
+    char_macpool = TimeDistributed(GlobalMaxPooling1D())(char_cnn)
+
+    char_macpool = Dropout(0.25)(char_macpool)
+
+    word_embedding = Embedding(input_dim=sourcevocabsize + 1,
+                               output_dim=emd_dim,
+                               input_length=input_seq_lenth,
+                               mask_zero=False,
+                               trainable=True,
+                               weights=[source_W])(word_input)
+
+    word_embedding_dropout = Dropout(0.5)(word_embedding)
+
+    embedding1 = concatenate([word_embedding_dropout, char_macpool], axis=-1)
+
+    BiLSTM1 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding1)
+    BiLSTM1 = BatchNormalization(axis=1)(BiLSTM1)
+    BiLSTM1_dropout = Dropout(0.5)(BiLSTM1)
+
+    output1 = TimeDistributed(Dense(5 + 1, activation='softmax'), name='BIOES')(BiLSTM1_dropout)
+
+
+    embedding2 = concatenate([word_embedding_dropout, char_macpool, BiLSTM1_dropout], axis=-1)
+
+    BiLSTM2 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding2)
+    BiLSTM2 = BatchNormalization(axis=1)(BiLSTM2)
+    BiLSTM2_dropout = Dropout(0.5)(BiLSTM2)
+
+    output2 = TimeDistributed(Dense(5 + 1, activation='softmax'), name='Type')(BiLSTM2_dropout)
+
+    Models = Model([word_input, char_input], [output1, output2])
+
+    # Models.compile(loss=crflayer.loss_function, optimizer=optimizers.RMSprop(lr=0.001), metrics=[crflayer.accuracy])
+    Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
+                   loss={'Type': 'categorical_crossentropy', 'BIOES': 'categorical_crossentropy'},
+                   loss_weights={'BIOES': 1., 'Type': 1.},
+                   metrics={'BIOES': ['acc'], 'Type': ['acc']})
+    return Models
+
+
 def BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth,
                               output_seq_lenth,
                               hidden_dim, emd_dim,

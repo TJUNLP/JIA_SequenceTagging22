@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/TrainModel_2task.py" afterPath="$PROJECT_DIR$/TrainModel_2task.py" />
       <change beforePath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" afterPath="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BiLSTM_CRF_multi2_order.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="BiLSTM_CRF_multi2_order.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="387">
-              <caret line="660" column="15" lean-forward="false" selection-start-line="660" selection-start-column="4" selection-end-line="660" selection-end-column="15" />
+            <state relative-caret-position="140">
+              <caret line="682" column="43" lean-forward="false" selection-start-line="682" selection-start-column="4" selection-end-line="682" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -47,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_2task.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TrainModel_2task.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="545" column="17" lean-forward="true" selection-start-line="545" selection-start-column="17" selection-end-line="545" selection-end-column="17" />
+            <state relative-caret-position="316">
+              <caret line="524" column="0" lean-forward="true" selection-start-line="524" selection-start-column="0" selection-end-line="524" selection-end-column="0" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -137,8 +138,8 @@
         <option value="$PROJECT_DIR$/PrecessData_PreC2V.py" />
         <option value="$PROJECT_DIR$/TrainModel_2task_all.py" />
         <option value="$PROJECT_DIR$/Evaluate.py" />
-        <option value="$PROJECT_DIR$/TrainModel_2task.py" />
         <option value="$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py" />
+        <option value="$PROJECT_DIR$/TrainModel_2task.py" />
       </list>
     </option>
   </component>
@@ -793,21 +794,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
+    <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="545" column="17" lean-forward="true" selection-start-line="545" selection-start-column="17" selection-end-line="545" selection-end-column="17" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="140">
+          <caret line="682" column="43" lean-forward="false" selection-start-line="682" selection-start-column="4" selection-end-line="682" selection-end-column="43" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi2_order.py">
+    <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="387">
-          <caret line="660" column="15" lean-forward="false" selection-start-line="660" selection-start-column="4" selection-end-line="660" selection-end-column="15" />
-          <folding />
+        <state relative-caret-position="316">
+          <caret line="524" column="0" lean-forward="true" selection-start-line="524" selection-start-column="0" selection-end-line="524" selection-end-column="0" />
+          <folding>
+            <element signature="e#298#329#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

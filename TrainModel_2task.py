@@ -30,7 +30,7 @@ from keras.layers.normalization import BatchNormalization
 from keras.callbacks import Callback
 # from keras.losses import my_cross_entropy_withWeight
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order7_Serial
-from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order, BiLSTM_CRF_multi2_order2, BiLSTM_CRF_multi2_order3
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order7_Serial_Softmax
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Dense
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Coor
@@ -109,12 +109,12 @@ def test_model_divide(nn_model, testdata, chardata, pos_data, index2word, result
 
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile=resultfile+'.BIORS.txt')
-    print('BIOES>>>>>>>>>>', P, R, F)
+    print('divide---BIOES>>>>>>>>>>', P, R, F)
     if isfinall:
         P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult3, resultfile=resultfile)
     else:
         P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile=resultfile+'.Type.txt')
-    print('Type>>>>>>>>>>', P, R, F)
+    print('divide---Type>>>>>>>>>>', P, R, F)
 
 
     return P, R, F, PR_count, P_count, TR_count
@@ -172,7 +172,7 @@ def test_model_global(nn_model, testdata, chardata, pos_data, index2word, result
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult3, resultfile=resultfile)
 
-    print('Type>>>>>>>>>>', P, R, F)
+    print('global---Type>>>>>>>>>>', P, R, F)
 
 
     return P, R, F, PR_count, P_count, TR_count
@@ -199,32 +199,8 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                               input_word_length=input_word_length,
                                               char_emd_dim=char_emd_dim,
                                               sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-    elif modelname is 'BiLSTM_CRF_multi2_order':
-        nn_model = BiLSTM_CRF_multi2_order(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                              source_W=source_W,
-                                              input_seq_lenth=input_seq_lenth,
-                                              output_seq_lenth=output_seq_lenth,
-                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                              sourcecharsize=sourcecharsize,
-                                              character_W=character_W,
-                                              input_word_length=input_word_length,
-                                              char_emd_dim=char_emd_dim,
-                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-
-    elif modelname is 'BiLSTM_CRF_multi2_order2':
-        nn_model = BiLSTM_CRF_multi2_order2(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                              source_W=source_W,
-                                              input_seq_lenth=input_seq_lenth,
-                                              output_seq_lenth=output_seq_lenth,
-                                              hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                              sourcecharsize=sourcecharsize,
-                                              character_W=character_W,
-                                              input_word_length=input_word_length,
-                                              char_emd_dim=char_emd_dim,
-                                              sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-
-    elif modelname is 'BiLSTM_CRF_multi2_order3':
-        nn_model = BiLSTM_CRF_multi2_order3(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+    elif modelname is 'BiLSTM_CRF_multi2_order7_Serial_Softmax':
+        nn_model = BiLSTM_CRF_multi2_order7_Serial_Softmax(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                               source_W=source_W,
                                               input_seq_lenth=input_seq_lenth,
                                               output_seq_lenth=output_seq_lenth,
@@ -516,6 +492,7 @@ if __name__ == "__main__":
     # modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
     # modelname = 'BiLSTM_CRF_multi2_order5_DenseAvg'
     modelname = 'BiLSTM_CRF_multi2_order7_Serial'
+    modelname = 'BiLSTM_CRF_multi2_order7_Serial_Softmax'
 
 
     print(modelname)
