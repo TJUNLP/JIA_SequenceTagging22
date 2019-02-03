@@ -541,7 +541,7 @@ if __name__ == "__main__":
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    batch_size = 32
+    batch_size = 64 #32
     retrain = False
     Test = True
     valid = False
@@ -556,7 +556,7 @@ if __name__ == "__main__":
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=char_emd_dim,
              withFix=withFix, maxlen=maxlen)
 
-    for inum in range(3):
+    for inum in range(3, 6):
 
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
         modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
