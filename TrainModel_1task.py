@@ -271,8 +271,8 @@ if __name__ == "__main__":
     # modelname = 'Model_BiLSTM_CnnDecoder'
     modelname = 'Model_BiLSTM_CRF'
     # modelname = 'Model_BiLSTM_parallel_8_64_CRF'
-    modelname = 'Model_BiLSTM_Softmax'
-    modelname = 'Model_Dense_Softmax'
+    # modelname = 'Model_BiLSTM_Softmax'
+    # modelname = 'Model_Dense_Softmax'
 
     print(modelname)
 
@@ -302,7 +302,7 @@ if __name__ == "__main__":
         char_emd_dim = 50
         get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=char_emd_dim, withFix=withFix, maxlen=maxlen)
 
-    for inum in range(5):
+    for inum in range(11,15):
 
         modelfile = "./model/" + modelname + "__PreC2V" + "__single_" + str(inum) + ".h5"
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
