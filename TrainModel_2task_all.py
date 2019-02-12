@@ -38,7 +38,7 @@ from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg_so
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order4_DenseAvg
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order7_Serial_All
-
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order7_Serial_All_2
 
 def test_model_divide(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
     index2word[0] = ''
@@ -318,8 +318,8 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                                  char_emd_dim=char_emd_dim,
                                                  sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
-    elif modelname is 'BiLSTM_CRF_multi2_order7_Serial_All':
-        nn_model = BiLSTM_CRF_multi2_order7_Serial_All(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+    elif modelname is 'BiLSTM_CRF_multi2_order7_Serial_All_2':
+        nn_model = BiLSTM_CRF_multi2_order7_Serial_All_2(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
                                                  source_W=source_W,
                                                  input_seq_lenth=input_seq_lenth,
                                                  output_seq_lenth=output_seq_lenth,
@@ -517,7 +517,7 @@ if __name__ == "__main__":
     # modelname = 'BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax'
 
     # modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
-    modelname = 'BiLSTM_CRF_multi2_order7_Serial_All'
+    modelname = 'BiLSTM_CRF_multi2_order7_Serial_All_2'
 
 
     print(modelname)
@@ -541,7 +541,7 @@ if __name__ == "__main__":
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    batch_size = 64 #32
+    batch_size = 32
     retrain = False
     Test = True
     valid = False
@@ -556,7 +556,7 @@ if __name__ == "__main__":
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=char_emd_dim,
              withFix=withFix, maxlen=maxlen)
 
-    for inum in range(3, 6):
+    for inum in range(3):
 
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
         modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
