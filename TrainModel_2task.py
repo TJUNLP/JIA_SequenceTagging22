@@ -492,7 +492,7 @@ if __name__ == "__main__":
     # modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
     # modelname = 'BiLSTM_CRF_multi2_order5_DenseAvg'
     modelname = 'BiLSTM_CRF_multi2_order7_Serial'
-    modelname = 'BiLSTM_CRF_multi2_order7_Serial_Softmax'
+    # modelname = 'BiLSTM_CRF_multi2_order7_Serial_Softmax'
 
 
     print(modelname)
@@ -505,7 +505,7 @@ if __name__ == "__main__":
     withPos = False
 
     # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_2" + ".pkl"
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
+    datafile = "./model_data/data" + "_PreC2V" + ".pkl"
     # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
 
     modelfile = "next ...."
@@ -534,8 +534,7 @@ if __name__ == "__main__":
     for inum in range(3):
 
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
-        modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
-            withPos) + "_PreC2V" + "_" + str(inum) + ".h5"
+        modelfile = "./model/" + modelname + "_" + "_PreC2V" + "_" + str(inum) + ".h5"
 
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_11.h5"
 
