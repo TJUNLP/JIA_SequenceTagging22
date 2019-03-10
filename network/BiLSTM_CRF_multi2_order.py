@@ -666,14 +666,14 @@ def BiLSTM_CRF_multi2_order7_Serial(sourcevocabsize, targetvocabsize, source_W, 
     BiLSTM2 = BatchNormalization(axis=1)(BiLSTM2)
     BiLSTM2_dropout = Dropout(0.5)(BiLSTM2)
 
-    hiddenlayer2_1 = TimeDistributed(Dense(targetvocabsize + 1))(BiLSTM2_dropout)
+    hiddenlayer2_1 = TimeDistributed(Dense(5 + 1))(BiLSTM2_dropout)
     crflayer = CRF(5 + 1, sparse_target=False, name='Type')
     output2 = crflayer(hiddenlayer2_1)
 
     Models = Model([word_input, char_input], [output1, output2])
 
     # Models.compile(loss=crflayer.loss_function, optimizer=optimizers.RMSprop(lr=0.001), metrics=[crflayer.accuracy])
-    Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
+    Models.compile(optimizer=optimizers.SGD(lr=0.015, momentum=0.9, decay=0.05, clipnorm=5.0),
                    loss={'Type': crflayer.loss_function, 'BIOES': 'categorical_crossentropy'},
                    loss_weights={'BIOES': 1., 'Type': 1.},
                    metrics={'BIOES': ['acc'], 'Type': [crflayer.accuracy]})

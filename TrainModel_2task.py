@@ -531,7 +531,7 @@ if __name__ == "__main__":
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=char_emd_dim,
              withFix=withFix, maxlen=maxlen)
 
-    for inum in range(3):
+    for inum in range(3,6):
 
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
         modelfile = "./model/" + modelname + "_" + "_PreC2V" + "_" + str(inum) + ".h5"
