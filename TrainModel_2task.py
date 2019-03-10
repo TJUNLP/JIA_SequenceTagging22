@@ -345,13 +345,13 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     early_stopping = EarlyStopping(monitor='val_loss', patience=8)
     checkpointer = ModelCheckpoint(filepath=modelfile + ".best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
     # reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.0001)
-    nn_model.fit(x_word, y,
+    nn_model.fit([x_word, input_char], [y_BIOES, y_Type],
                  batch_size=batch_size,
                  epochs=npochos,
                  verbose=1,
                  shuffle=True,
                  # validation_split=0.2,
-                 validation_data=(x_word_val, y_val),
+                 validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_Type_val]),
                  callbacks=[checkpointer, early_stopping])
 
 
