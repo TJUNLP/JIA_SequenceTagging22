@@ -342,20 +342,22 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
 
 
 
-    # early_stopping = EarlyStopping(monitor='val_loss', patience=8)
-    # checkpointer = ModelCheckpoint(filepath="./data/model/best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
+    early_stopping = EarlyStopping(monitor='val_loss', patience=8)
+    checkpointer = ModelCheckpoint(filepath=modelfile + ".best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
     # reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.0001)
-    # nn_model.fit(x_word, y,
-    #              batch_size=batch_size,
-    #              epochs=npochos,
-    #              verbose=1,
-    #              shuffle=True,
-    #              # validation_split=0.2,
-    #              validation_data=(x_word_val, y_val),
-    #              callbacks=[reduce_lr, checkpointer, early_stopping])
-    #
-    # save_model(nn_model, modelfile)
-    # # nn_model.save(modelfile, overwrite=True)
+    nn_model.fit(x_word, y,
+                 batch_size=batch_size,
+                 epochs=npochos,
+                 verbose=1,
+                 shuffle=True,
+                 # validation_split=0.2,
+                 validation_data=(x_word_val, y_val),
+                 callbacks=[checkpointer, early_stopping])
+
+
+    nn_model.save_weights(modelfile, overwrite=True)
+
+    '''
     epoch = 0
     save_inter = 1
     saveepoch = save_inter
@@ -365,15 +367,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     while (epoch < npochos):
         epoch = epoch + 1
         i += 1
-        # for x_word, y, x_word_val, y_val, input_char, input_char_val,x_pos_train, x_pos_dev,sample_weight \
-        #         in get_training_xy_otherset(i, x_train, y_train,
-        #                                           x_dev, y_dev,
-        #                                           max_s,max_c,
-        #                                           chartrain, chardev,
-        #                                           pos_train, pos_dev,
-        #                                           len(target_vob), target_idex_word,
-        #                                     sample_weight_value=30,
-        #                                     shuffle=True):
+
         history = nn_model.fit([x_word, input_char], [y_BIOES, y_Type],#y_Type
                                batch_size=batch_size,
                                epochs=1,
@@ -381,22 +375,6 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                shuffle=True,
                                # class_weight=None, #[None, Type_Class_weight],
                                verbose=1)
-
-        # plt.plot(history.history['acc'])
-        # plt.plot(history.history['val_acc'])
-        # plt.title('model accuracy')
-        # plt.ylabel('accuracy')
-        # plt.xlabel('epoch')
-        # plt.legend(['train', 'test'], loc='upper left')
-        # plt.show()
-        # # summarize history for loss
-        # plt.plot(history.history['loss'])
-        # plt.plot(history.history['val_loss'])
-        # plt.title('model loss')
-        # plt.ylabel('loss')
-        # plt.xlabel('epoch')
-        # plt.legend(['train', 'test'], loc='upper left')
-        # plt.show()
 
         if epoch >= saveepoch:
         # if epoch >=0:
@@ -424,7 +402,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
 
         if earlystopping >= 10 and epoch > 40:
             break
-
+    '''
     return nn_model
 
 
