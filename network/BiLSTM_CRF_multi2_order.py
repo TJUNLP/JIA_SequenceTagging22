@@ -699,7 +699,7 @@ def BiLSTM_CRF_multi2_order7_Serial2(sourcevocabsize, targetvocabsize, source_W,
 
     char_embedding2 = TimeDistributed(char_embedding)(char_input)
 
-    char_cnn = Conv1D(50, 3, activation='relu', padding='same')(char_embedding2)
+    char_cnn = TimeDistributed(Conv1D(50, 3, activation='relu', padding='same'))(char_embedding2)
 
     char_macpool = TimeDistributed(GlobalMaxPooling1D())(char_cnn)
 
@@ -732,7 +732,7 @@ def BiLSTM_CRF_multi2_order7_Serial2(sourcevocabsize, targetvocabsize, source_W,
 
     embedding2 = concatenate([BiLSTM2_dropout, input_chunk], axis=-1)
 
-    output_cnn = TimeDistributed(Conv1D(100, 3, activation='relu', padding='same'))(embedding2)
+    output_cnn = Conv1D(100, 3, activation='relu', padding='same')(embedding2)
 
     hiddenlayer2_1 = TimeDistributed(Dense(5 + 1))(output_cnn)
     crflayer = CRF(5 + 1, sparse_target=False, name='Type')
