@@ -699,7 +699,7 @@ def BiLSTM_CRF_multi2_order7_Serial2(sourcevocabsize, targetvocabsize, source_W,
 
     char_embedding2 = TimeDistributed(char_embedding)(char_input)
 
-    char_cnn = TimeDistributed(Conv1D(50, 3, activation='relu', padding='same'))(char_embedding2)
+    char_cnn = Conv1D(50, 3, activation='relu', padding='same')(char_embedding2)
 
     char_macpool = TimeDistributed(GlobalMaxPooling1D())(char_cnn)
 
