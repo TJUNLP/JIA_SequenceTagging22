@@ -341,7 +341,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     nn_model.summary()
 
 
-
+    '''
     early_stopping = EarlyStopping(monitor='val_loss', patience=8)
     checkpointer = ModelCheckpoint(filepath=modelfile + ".best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
     # reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.0001)
@@ -402,7 +402,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
 
         if earlystopping >= 10 and epoch > 40:
             break
-    '''
+
     return nn_model
 
 
@@ -494,7 +494,7 @@ if __name__ == "__main__":
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    batch_size = 32
+    batch_size = 16
     retrain = False
     Test = True
     valid = False
