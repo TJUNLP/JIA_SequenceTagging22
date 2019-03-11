@@ -494,7 +494,7 @@ if __name__ == "__main__":
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-    batch_size = 16
+    batch_size = 32
     retrain = False
     Test = True
     valid = False
