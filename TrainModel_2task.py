@@ -470,7 +470,7 @@ if __name__ == "__main__":
     # modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
     # modelname = 'BiLSTM_CRF_multi2_order5_DenseAvg'
     modelname = 'BiLSTM_CRF_multi2_order7_Serial'
-    modelname = 'BiLSTM_CRF_multi2_order7_Serial2'
+    # modelname = 'BiLSTM_CRF_multi2_order7_Serial2'
 
 
     print(modelname)
