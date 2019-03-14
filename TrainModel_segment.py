@@ -23,7 +23,7 @@ from network.NN_single import Model_Dense_Softmax
 def test_model_segment(nn_model, testdata, chardata, index2word, resultfile='', batch_size=50):
 
     index2word[0] = ''
-    index2word_BIOES = {0: '', 1: 'B', 2: 'I', 3: 'O', 4: 'E', 5: 'S'}
+
 
     testx = np.asarray(testdata[0], dtype="int32")
     testy_BIOES = np.asarray(testdata[1], dtype="int32")
@@ -37,13 +37,13 @@ def test_model_segment(nn_model, testdata, chardata, index2word, resultfile='', 
         ptag_BIOES = []
         for word in predictions[si]:
             next_index = np.argmax(word)
-            next_token = index2word_BIOES[next_index]
+            next_token = index2word[next_index]
             ptag_BIOES.append(next_token)
 
         ttag_BIOES = []
         for word in testy_BIOES[si]:
             next_index = np.argmax(word)
-            next_token = index2word_BIOES[next_index]
+            next_token = index2word[next_index]
             ttag_BIOES.append(next_token)
 
         testresult2.append([ptag_BIOES, ttag_BIOES])
