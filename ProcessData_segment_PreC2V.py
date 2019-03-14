@@ -388,7 +388,7 @@ def get_word_index(train, test):
         count+=1
 
     target_idex_word = {1: 'O', 2: 'I', 3: 'B', 4: 'E', 5: 'S'}
-    target_vob = { 'O': 1, 'I': 2, 'B': 3, 'E': 4, 'S': 5}
+    target_vob = {'O': 1, 'I': 2, 'B': 3, 'E': 4, 'S': 5}
 
     return source_vob, sourc_idex_word, target_vob, target_idex_word, max_s
 
