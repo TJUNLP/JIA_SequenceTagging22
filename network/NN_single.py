@@ -26,8 +26,7 @@ def Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth
                               output_seq_lenth,
                               hidden_dim, emd_dim,
                               sourcecharsize, character_W, input_word_length, char_emd_dim,
-                              sourcepossize, pos_W,pos_emd_dim, batch_size=32,
-                              loss='categorical_crossentropy', optimizer='rmsprop'):
+                              batch_size=32, loss='categorical_crossentropy', optimizer='rmsprop'):
 
     word_input = Input(shape=(input_seq_lenth,), dtype='int32')
 
@@ -52,7 +51,7 @@ def Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth
     word_embedding = Embedding(input_dim=sourcevocabsize + 1,
                               output_dim=emd_dim,
                               input_length=input_seq_lenth,
-                              mask_zero=False,
+                              mask_zero=True,
                               trainable=True,
                               weights=[source_W])(word_input)
 
@@ -62,7 +61,6 @@ def Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth
     embedding = concatenate([word_embedding_dropout, char_macpool], axis=-1)
 
     BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode = 'concat')(embedding)
-    # BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True))(word_embedding_dropout)
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
