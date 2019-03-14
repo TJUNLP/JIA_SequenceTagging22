@@ -121,7 +121,8 @@ def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fra
 
 
 if __name__ == '__main__':
-    print([[8]*2] * 3)
-
+    ss = [[123], [234]]
+    ss = ss + ([1] + [0] * 5) * max(0, 3)
+    print(ss)
 
 

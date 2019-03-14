@@ -137,7 +137,7 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
         if line.__len__() <= 1:
 
             data_s = data_s + [0] * max(0, max_s - count)
-            data_tBIOES = data_tBIOES + ([1] + [0] * 5) * max(0, max_s - count)
+            data_tBIOES = data_tBIOES + [[1] + [0] * 5] * max(0, max_s - count)
 
             data_s_all.append(data_s)
 

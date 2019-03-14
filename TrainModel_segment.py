@@ -214,7 +214,7 @@ if __name__ == "__main__":
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     resultdir = "./data/result/"
 
-    datafile = "./model/data_segment_BIOES_PreC2V.1" + ".pkl"
+    datafile = "./model_data/data_segment_BIOES_PreC2V.1" + ".pkl"
 
     modelfile = "next ...."
 
