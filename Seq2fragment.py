@@ -22,10 +22,6 @@ def Seq2frag(file, source_vob, target_vob, target_idex_word, max_context=0, max_
     return fragment_list, max_context, max_fragment
 
 
-def ReadSeqs():
-
-    pass
-
 
 def ReadfromTXT(file, source_vob, target_vob):
 
@@ -46,6 +42,7 @@ def ReadfromTXT(file, source_vob, target_vob):
             tag2list_all.append(tag2list)
             sen2list = []
             tag2list = []
+
             continue
 
         sent = line.strip('\r\n').rstrip('\n').split(' ')
@@ -57,11 +54,6 @@ def ReadfromTXT(file, source_vob, target_vob):
 
         tag2list.append(target_vob[sent[4]])
 
-        if 'S-' in sent[4] or 'E-' in sent[4]:
-            ner_count += 1
-
-    print(file + ', there count of ner >>>>>>>>>>>>.', ner_count)
-
     f.close()
 
     return sen2list_all, tag2list_all
@@ -70,12 +62,14 @@ def ReadfromTXT(file, source_vob, target_vob):
 def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment):
     fragment_list = []
 
+
     for id, tag2list in enumerate(tag2list_all):
 
         target_left = 0
         fragtuples_list = []
         for index, tag in enumerate(tag2list):
-            if target_idex_word[tag].__contains__('O'):
+
+            if target_idex_word[tag] == 'O':
                 target_left = index
                 continue
 

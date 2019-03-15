@@ -65,7 +65,6 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
 
 
 
-
 def get_word_index(files):
 
     source_vob = {}
@@ -304,3 +303,27 @@ def load_vec_character(c2vfile, vocab_c_inx, k=50):
             W[vocab_c_inx[i]] = c2v[i]
 
     return W, k
+
+
+if __name__ == '__main__':
+
+    w2v_file = "./data/w2v/glove.6B.100d.txt"
+    c2v_file = "./data/w2v/C0NLL2003.NER.c2v_2.txt"
+    trainfile = "./data/CoNLL2003_NER/eng.train.BIOES.txt"
+    devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
+    testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
+    resultdir = "./data/result/"
+
+    word_vob, word_idex_word, target_vob, target_idex_word, max_s = get_word_index([trainfile, devfile, testfile])
+    print("source vocab size: " + str(len(word_vob)))
+    print("target vocab size: " + str(len(target_vob)))
+    print("target vocab size: " + str(target_vob))
+    print("target vocab size: " + str(target_idex_word))
+
+
+    max_context = 0
+    max_fragment = 1
+    test_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(testfile, word_vob, target_vob,
+                                                                          target_idex_word, max_context, max_fragment)
+    print('max_context--', max_context, 'max_fragment--', max_fragment)
+    print('len(test_fragment_list)---', len(test_fragment_list))
