@@ -3,15 +3,63 @@ __author__ = 'JIA'
 import numpy as np
 import pickle
 import json, math
-import re
-import os
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing.sequence import pad_sequences
-from keras.utils import to_categorical
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.decomposition import LatentDirichletAllocation
-from sklearn.feature_extraction.text import TfidfTransformer, TfidfVectorizer
 import Seq2fragment
+
+
+
+def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50):
+
+    # 数据处理的入口函数
+
+    word_vob, word_idex_word, target_vob, target_idex_word, max_s = get_word_index([trainfile, devfile, testfile])
+    print("source vocab size: " + str(len(word_vob)))
+    print("target vocab size: " + str(len(target_vob)))
+    print("target vocab size: " + str(target_vob))
+    print("target vocab size: " + str(target_idex_word))
+
+    word_W, word_k= load_vec_txt(w2v_file, word_vob, k=w2v_k)
+    print("word2vec loaded!")
+    print("all vocab size: " + str(len(word_vob)))
+    print("source_W  size: " + str(len(word_W)))
+
+    char_vob, char_idex_char, max_c = get_Character_index({trainfile, devfile, testfile})
+    print("source char size: ", char_vob.__len__())
+    print("max_c: ", max_c)
+    print("source char: " + str(char_idex_char))
+
+    character_W, character_k = load_vec_character(c2v_file, char_vob, c2v_k)
+    print('character_W shape:',character_W.shape)
+
+    max_context = 0
+    max_fragment = 1
+    train_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
+    dev_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
+    test_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
+
+    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
+    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
+
+    train = make_idx_word_index(train_fragment_list, max_context, max_fragment)
+    dev = make_idx_word_index(dev_fragment_list, max_context, max_fragment)
+    test = make_idx_word_index(test_fragment_list, max_context, max_fragment)
+
+    chartrain = make_idx_char_index(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    chardev = make_idx_char_index(dev_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    chartest = make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+
+
+    print ("dataset created!")
+    out = open(datafile,'wb')
+    pickle.dump([train, dev, test,
+                 chartrain, chardev, chartest,
+                 word_vob, word_idex_word,
+                 Type_vob, Type_idex_word,
+                 char_vob, char_idex_char,
+                 word_W, word_k,
+                 character_W, character_k,
+                 max_context, max_fragment, max_c], out, 0)
+    out.close()
+
 
 
 
@@ -64,59 +112,6 @@ def get_word_index(files):
 
     return source_vob, sourc_idex_word, target_vob, target_idex_word, max_s
 
-
-
-def get_dataget_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile,w2v_k=300,char_emd_dim=25, maxlen = 50):
-
-    # 数据处理的入口函数
-
-    word_vob, word_idex_word, target_vob, target_idex_word, max_s = get_word_index([trainfile, devfile, testfile])
-    print("source vocab size: " + str(len(word_vob)))
-    print("target vocab size: " + str(len(target_vob)))
-    print("target vocab size: " + str(target_vob))
-    print("target vocab size: " + str(target_idex_word))
-
-    word_W, word_k= load_vec_txt(w2v_file, word_vob, k=w2v_k)
-    print("word2vec loaded!")
-    print("all vocab size: " + str(len(word_vob)))
-    print("source_W  size: " + str(len(word_W)))
-
-    char_vob, char_idex_char, max_c = get_Character_index({trainfile, devfile, testfile})
-    print("source char size: ", char_vob.__len__())
-    print("max_c: ", max_c)
-    print("source char: " + str(char_idex_char))
-
-    character_W, character_k = load_vec_character(c2v_file, char_vob,char_emd_dim)
-    print('character_W shape:',character_W.shape)
-
-    max_context = 0
-    max_fragment = 1
-    train_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
-    dev_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
-    test_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
-
-
-
-    train = make_idx_word_index(train_fragment_list, max_context, max_fragment)
-    dev = make_idx_word_index(dev_fragment_list, max_context, max_fragment)
-    test = make_idx_word_index(test_fragment_list, max_context, max_fragment)
-
-    chartrain = make_idx_char_index(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
-    chardev = make_idx_char_index(dev_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
-    chartest = make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
-
-
-    print ("dataset created!")
-    out = open(datafile,'wb')
-    pickle.dump([train, dev, test,
-                 chartrain, chardev, chartest,
-                 word_vob, word_idex_word,
-                 target_vob, target_idex_word,
-                 char_vob, char_idex_char,
-                 word_W, word_k,
-                 character_W, character_k,
-                 max_context, max_fragment, max_c], out, 0)
-    out.close()
 
 
 def make_idx_char_index(fraglist, max_context, max_fragment, max_c, char_vob, word_idex_word):
@@ -196,8 +191,8 @@ def make_idx_word_index(fraglist, max_context, max_fragment):
     data_rightcontext_all = []
     data_t_all = []
 
-    index2word_Type = {0: '', 1: 'O', 2: 'LOC', 3: 'ORG', 4: 'PER', 5: 'MISC'}
-    word2index_Type = {'': 0, 'O': 1, 'LOC': 2, 'ORG': 3, 'PER': 4, 'MISC': 5}
+    index2word_Type = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
+    word2index_Type = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
     for line in fraglist:
 

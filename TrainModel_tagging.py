@@ -11,14 +11,10 @@
 import pickle, datetime, codecs
 import os.path
 import numpy as np
-import matplotlib.pyplot as plt
-# from PrecessData import get_data
-# from PrecessData_Nodigit import get_data
-from PrecessData_PreC2V import get_data
+from ProcessData_S2F import get_data
 from Evaluate import evaluation_NER
-from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder, Model_BiLSTM_parallel_8_64_CRF
-from network.NN_single import Model_BiLSTM_Softmax
-from network.NN_single import Model_Dense_Softmax
+
+from network.NN_tagging import Model_LSTM_BiLSTM_LSTM
 
 
 
@@ -67,32 +63,53 @@ def test_model_segment(nn_model, testdata, chardata, index2word, resultfile='', 
     return P, R, F, PR_count, P_count, TR_count
 
 
-def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidden_dim=200, batch_size=50, retrain=False):
+def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidden_dim=200, batch_size=50, retrain=False):
     # load training data and test data
 
-    traindata, devdata, testdata, source_W, source_vob, sourc_idex_word, \
-    target_vob, target_idex_word, max_s, k, \
-    chartrain, chardev, chartest, source_char, character_W, max_c, char_emd_dim, \
-            pos_train, pos_dev, pos_test, pos_vob, pos_idex_word, pos_W, pos_k \
-                = pickle.load(open(datafile, 'rb'))
+    traindata, devdata, testdata,\
+    chartrain, chardev, chartest,\
+    word_vob, word_idex_word,\
+    Type_vob, Type_idex_word,\
+    char_vob, char_idex_char,\
+    word_W, word_k,\
+    character_W, character_k,\
+    max_context, max_fragment, max_c = pickle.load(open(datafile, 'rb'))
 
-    # train model
-    x_word = np.asarray(traindata[0], dtype="int32")
-    y = np.asarray(traindata[1], dtype="int32")
-    input_char = np.asarray(chartrain, dtype="int32")
-    x_word_val = np.asarray(devdata[0], dtype="int32")
-    y_val = np.asarray(devdata[1], dtype="int32")
-    input_char_val = np.asarray(chardev, dtype="int32")
+    trainx_fragment = np.asarray(traindata[0], dtype="int32")
+    trainx_leftcontext = np.asarray(traindata[1], dtype="int32")
+    trainx_rightcontext = np.asarray(traindata[2], dtype="int32")
+    trainy = np.asarray(traindata[3], dtype="int32")
+    trainchar_fragment = np.asarray(chartrain[0], dtype="int32")
+    trainchar_leftcontext = np.asarray(chartrain[1], dtype="int32")
+    trainchar_rightcontext = np.asarray(chartrain[2], dtype="int32")
 
-    nn_model = SelectModel(Modelname, sourcevocabsize=len(source_vob), targetvocabsize=len(target_vob),
-                                     source_W=source_W,
-                                     input_seq_lenth=max_s,
-                                     output_seq_lenth=max_s,
-                                     hidden_dim=hidden_dim, emd_dim=k,
-                           sourcecharsize=len(source_char),
-                           character_W=character_W,
-                           input_word_length=max_c, char_emd_dim=char_emd_dim,
-                           sourcepossize=len(pos_vob),pos_W=pos_W,pos_emd_dim=pos_k)
+    devx_fragment = np.asarray(devdata[0], dtype="int32")
+    devx_leftcontext = np.asarray(devdata[1], dtype="int32")
+    devx_rightcontext = np.asarray(devdata[2], dtype="int32")
+    devy = np.asarray(devdata[3], dtype="int32")
+    devchar_fragment = np.asarray(chardev[0], dtype="int32")
+    devchar_leftcontext = np.asarray(chardev[1], dtype="int32")
+    devchar_rightcontext = np.asarray(chardev[2], dtype="int32")
+
+    testx_fragment = np.asarray(testdata[0], dtype="int32")
+    testx_leftcontext = np.asarray(testdata[1], dtype="int32")
+    testx_rightcontext = np.asarray(testdata[2], dtype="int32")
+    testy = np.asarray(testdata[3], dtype="int32")
+    testchar_fragment = np.asarray(chartest[0], dtype="int32")
+    testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
+    testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
+
+    nn_model = SelectModel(modelname,
+                          wordvocabsize=len(word_vob),
+                          targetvocabsize=len(Type_vob),
+                          charvobsize=len(char_vob),
+                          word_W=word_W, char_W=character_W,
+                          input_fragment_lenth=max_fragment,
+                          input_leftcontext_lenth=max_context,
+                          input_rightcontext_lenth=max_context,
+                          input_maxword_length=max_c,
+                          w2v_k=word_k, c2v_k=character_k,
+                          hidden_dim=hidden_dim, batch_size=batch_size)
 
     if retrain:
         nn_model.load_weights(modelfile)
@@ -124,45 +141,40 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     while (epoch < npochos):
         epoch = epoch + 1
         i += 1
-        # for x_word, y, x_word_val, y_val, input_char, input_char_val,x_pos_train, x_pos_dev,sample_weight \
-        #         in get_training_xy_otherset(i, x_train, y_train,
-        #                                           x_dev, y_dev,
-        #                                           max_s,max_c,
-        #                                           chartrain, chardev,
-        #                                           pos_train, pos_dev,
-        #                                           len(target_vob), target_idex_word,
-        #                                     sample_weight_value=30,
-        #                                     shuffle=True):
-        #, y_BIOES, y_Type   , y_BIOES_val, y_Type_val
-        history = nn_model.fit([x_word, input_char], [y],
+        history = nn_model.fit([trainx_fragment, trainx_leftcontext, trainx_rightcontext,
+                                trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext],
+                               [trainy],
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_val]),
+                               validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
+                                                 devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
                                shuffle=True,
                                # sample_weight =sample_weight,
                                verbose=1)
 
 
         if epoch >= saveepoch:
-        # if epoch >=0:
             saveepoch += save_inter
             resultfile = ''
-            print('the dev result-----------------------')
-            P, R, F, PR_count, P_count, TR_count = test_model(nn_model, devdata, chardev, pos_dev, target_idex_word, resultfile, batch_size)
-            print(P, R, F)
-            print('the test result-----------------------')
-            P, R, F, PR_count, P_count, TR_count = test_model(nn_model, testdata, chartest, pos_test, target_idex_word, resultfile,
-                                                          batch_size)
 
-            if F > maxF:
+            print('the test result-----------------------')
+            loss, acc = nn_model.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
+                                           testchar_fragment, testchar_leftcontext, testchar_rightcontext],
+                                          [testy],
+                                          verbose=0,
+                                          batch_size=32)
+
+            print('\n test_test score:', loss, acc)
+
+            if acc > maxF:
                 earlystopping = 0
-                maxF=F
+                maxF=acc
                 nn_model.save_weights(modelfile, overwrite=True)
 
             else:
                 earlystopping += 1
 
-            print(epoch, P, R, F, '  maxF=', maxF)
+            print(epoch, loss, acc, '  maxF=', maxF)
 
         if earlystopping >= 10:
             break
@@ -170,102 +182,68 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     return nn_model
 
 
-def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=200, batch_size=50):
+def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=200, batch_size=32):
 
-    traindata, devdata, testdata, source_W, source_vob, sourc_idex_word, \
-    target_vob, target_idex_word, max_s, k, \
-    chartrain, chardev, chartest, source_char, character_W, max_c, char_emd_dim, \
-            pos_train, pos_dev, pos_test, pos_vob, pos_idex_word, pos_W, pos_k \
-                = pickle.load(open(datafile, 'rb'))
+    traindata, devdata, testdata,\
+    chartrain, chardev, chartest,\
+    word_vob, word_idex_word,\
+    Type_vob, Type_idex_word,\
+    char_vob, char_idex_char,\
+    word_W, word_k,\
+    character_W, character_k,\
+    max_context, max_fragment, max_c = pickle.load(open(datafile, 'rb'))
 
-    nnmodel = SelectModel(modelname, sourcevocabsize=len(source_vob), targetvocabsize=len(target_vob),
-                                     source_W=source_W,
-                                     input_seq_lenth=max_s,
-                                     output_seq_lenth=max_s,
-                                     hidden_dim=hidden_dim, emd_dim=k,
-                           sourcecharsize=len(source_char),
-                           character_W=character_W,
-                           input_word_length=max_c, char_emd_dim=char_emd_dim,
-                           sourcepossize=len(pos_vob),pos_W=pos_W, pos_emd_dim=pos_k)
+    testx_fragment = np.asarray(testdata[0], dtype="int32")
+    testx_leftcontext = np.asarray(testdata[1], dtype="int32")
+    testx_rightcontext = np.asarray(testdata[2], dtype="int32")
+    testy = np.asarray(testdata[3], dtype="int32")
+    testchar_fragment = np.asarray(chartest[0], dtype="int32")
+    testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
+    testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
+
+    nnmodel = SelectModel(modelname,
+                          wordvocabsize=len(word_vob),
+                          targetvocabsize=len(Type_vob),
+                          charvobsize=len(char_vob),
+                          word_W=word_W, char_W=character_W,
+                          input_fragment_lenth=max_fragment,
+                          input_leftcontext_lenth=max_context,
+                          input_rightcontext_lenth=max_context,
+                          input_maxword_length=max_c,
+                          w2v_k=word_k, c2v_k=character_k,
+                          hidden_dim=hidden_dim, batch_size=batch_size)
 
     nnmodel.load_weights(lstm_modelfile)
     # nnmodel = load_model(lstm_modelfile)
+
     resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
 
-    P, R, F, PR_count, P_count, TR_count = test_model(nnmodel, testdata, chartest,pos_test, target_idex_word, resultfile,
-                                                      batch_size)
-    print('P= ', P, '  R= ', R, '  F= ', F)
+    loss, acc = nnmodel.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
+                                   testchar_fragment, testchar_leftcontext, testchar_rightcontext], [testy], verbose=0,
+                                  batch_size=10)
+
+    print('\n test_test score:', loss, acc)
 
 
-def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
-                             input_seq_lenth,
-                             output_seq_lenth,
-                             hidden_dim, emd_dim,
-                     sourcecharsize,character_W,input_word_length,char_emd_dim,
-                        sourcepossize, pos_W,pos_emd_dim,
-                     loss='categorical_crossentropy', optimizer='rmsprop'):
+def SelectModel(modelname, wordvocabsize, targetvocabsize, charvobsize,
+                word_W, char_W,
+                input_fragment_lenth, input_leftcontext_lenth,
+                input_rightcontext_lenth, input_maxword_length,
+                w2v_k, c2v_k,
+                hidden_dim=200, batch_size=32):
     nn_model = None
-    if modelname is 'Model_BiLSTM_CnnDecoder':
-        nn_model = Model_BiLSTM_CnnDecoder(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                                       source_W=source_W,
-                                                       input_seq_lenth=input_seq_lenth,
-                                                       output_seq_lenth=output_seq_lenth,
-                                                       hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                                        sourcecharsize=sourcecharsize,
-                                                        character_W=character_W,
-                                                        input_word_length=input_word_length,
-                                                        char_emd_dim=char_emd_dim,
-                                                 sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
 
-    elif modelname is 'Model_BiLSTM_CRF':
-        nn_model = Model_BiLSTM_CRF(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                                       source_W=source_W,
-                                                       input_seq_lenth=input_seq_lenth,
-                                                       output_seq_lenth=output_seq_lenth,
-                                                       hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                                        sourcecharsize=sourcecharsize,
-                                                        character_W=character_W,
-                                                        input_word_length=input_word_length,
-                                                        char_emd_dim=char_emd_dim,
-                                          sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-
-    elif modelname is 'Model_BiLSTM_Softmax':
-        nn_model = Model_BiLSTM_Softmax(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                    source_W=source_W,
-                                    input_seq_lenth=input_seq_lenth,
-                                    output_seq_lenth=output_seq_lenth,
-                                    hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                    sourcecharsize=sourcecharsize,
-                                    character_W=character_W,
-                                    input_word_length=input_word_length,
-                                    char_emd_dim=char_emd_dim,
-                                    sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-
-
-    elif modelname is 'Model_BiLSTM_parallel_8_64_CRF':
-        nn_model = Model_BiLSTM_parallel_8_64_CRF(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                    source_W=source_W,
-                                    input_seq_lenth=input_seq_lenth,
-                                    output_seq_lenth=output_seq_lenth,
-                                    hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                    sourcecharsize=sourcecharsize,
-                                    character_W=character_W,
-                                    input_word_length=input_word_length,
-                                    char_emd_dim=char_emd_dim,
-                                    sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-
-    elif modelname is 'Model_Dense_Softmax':
-        nn_model = Model_Dense_Softmax(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
-                                    source_W=source_W,
-                                    input_seq_lenth=input_seq_lenth,
-                                    output_seq_lenth=output_seq_lenth,
-                                    hidden_dim=hidden_dim, emd_dim=emd_dim,
-                                    sourcecharsize=sourcecharsize,
-                                    character_W=character_W,
-                                    input_word_length=input_word_length,
-                                    char_emd_dim=char_emd_dim,
-                                    sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
-
+    if modelname is 'Model_LSTM_BiLSTM_LSTM':
+        nn_model = Model_LSTM_BiLSTM_LSTM(wordvocabsize=wordvocabsize,
+                                          targetvocabsize=targetvocabsize,
+                                          charvobsize=charvobsize,
+                                          word_W=word_W, char_W=char_W,
+                                          input_fragment_lenth=input_fragment_lenth,
+                                          input_leftcontext_lenth=input_leftcontext_lenth,
+                                          input_rightcontext_lenth=input_rightcontext_lenth,
+                                          input_maxword_length=input_maxword_length,
+                                          w2v_k=w2v_k, c2v_k=c2v_k,
+                                          hidden_dim=hidden_dim, batch_size=batch_size)
 
     return nn_model
 
@@ -274,11 +252,8 @@ if __name__ == "__main__":
 
     maxlen = 50
 
-    # modelname = 'Model_BiLSTM_CnnDecoder'
-    modelname = 'Model_BiLSTM_CRF'
-    # modelname = 'Model_BiLSTM_parallel_8_64_CRF'
-    # modelname = 'Model_BiLSTM_Softmax'
-    # modelname = 'Model_Dense_Softmax'
+    modelname = 'Model_LSTM_BiLSTM_LSTM'
+
 
     print(modelname)
 
@@ -289,15 +264,10 @@ if __name__ == "__main__":
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     resultdir = "./data/result/"
 
-    withFix = False
-    withPos = False
-
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
-    # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
+    datafname = 'data_tagging_4type_PreC2V.1'
+    datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
-
-
 
     batch_size = 32
     retrain = False
@@ -305,14 +275,12 @@ if __name__ == "__main__":
 
     if not os.path.exists(datafile):
         print("Precess data....")
-        char_emd_dim = 50
-        get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, char_emd_dim=char_emd_dim, withFix=withFix, maxlen=maxlen)
 
-    for inum in range(11,15):
+        get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, c2v_k=50)
 
-        modelfile = "./model/" + modelname + "__PreC2V" + "__single_" + str(inum) + ".h5"
-        # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + \
-        #             "__single_5.h5"
+    for inum in range(0, 3):
+
+        modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 
         if not os.path.exists(modelfile):
             print("Lstm data has extisted: " + datafile)
