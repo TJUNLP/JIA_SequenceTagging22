@@ -10,19 +10,16 @@ import math
 
 
 def Seq2frag(file, source_vob, target_vob, target_idex_word, max_context=0, max_fragment = 1):
-    '''
-        main
-        :param file:
-        :param source_vob:
-        :param target_vob:
-        :param target_idex_word:
-        :return:
-    '''
+
 
     sen2list_all, tag2list_all = ReadfromTXT(file, source_vob, target_vob)
-    fragment_list, max_context, max_fragment = Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
+    print('sen2list_all len = ', len(sen2list_all))
+    print('tag2list_all len = ', len(tag2list_all))
 
-    return fragment_list, max_context
+    fragment_list, max_context, max_fragment = Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
+    print('len(fragment_list) = ', len(fragment_list))
+
+    return fragment_list, max_context, max_fragment
 
 
 def ReadSeqs():
