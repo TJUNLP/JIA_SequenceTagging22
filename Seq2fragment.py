@@ -77,7 +77,7 @@ def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fra
                     target_left = index
 
                 elif target_idex_word[tag].__contains__('I-'):
-                    pass
+                    continue
 
                 elif target_idex_word[tag].__contains__('S-'):
 
