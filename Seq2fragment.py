@@ -42,7 +42,8 @@ def ReadfromTXT(file, source_vob, target_vob):
 
             sen2list_all.append(sen2list)
             tag2list_all.append(tag2list)
-
+            sen2list = []
+            tag2list = []
             continue
 
         sent = line.strip('\r\n').rstrip('\n').split(' ')
