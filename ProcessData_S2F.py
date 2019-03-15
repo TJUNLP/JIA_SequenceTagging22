@@ -28,13 +28,15 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
     print("source char: " + str(char_idex_char))
 
     character_W, character_k = load_vec_character(c2v_file, char_vob, c2v_k)
-    print('character_W shape:',character_W.shape)
+    print('character_W shape:', character_W.shape)
 
     max_context = 0
     max_fragment = 1
     train_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
     dev_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
     test_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
+    print('max_context--', max_context, 'max_fragment--', max_fragment)
+    print('len(test_fragment_list)---', len(test_fragment_list))
 
     Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
     Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
@@ -42,11 +44,12 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
     train = make_idx_word_index(train_fragment_list, max_context, max_fragment)
     dev = make_idx_word_index(dev_fragment_list, max_context, max_fragment)
     test = make_idx_word_index(test_fragment_list, max_context, max_fragment)
+    print(len(train), len(dev), len(test))
 
     chartrain = make_idx_char_index(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
     chardev = make_idx_char_index(dev_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
     chartest = make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
-
+    print(len(chartrain), len(chardev), len(chartest))
 
     print ("dataset created!")
     out = open(datafile,'wb')
