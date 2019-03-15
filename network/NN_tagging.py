@@ -32,9 +32,8 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
                                trainable=True,
                                weights=[char_W]))(char_input_fragment)
 
-    char_cnn = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))
-
-    char_embedding_fragment = char_cnn(char_embedding_fragment)
+    char_cnn_fragment = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))
+    char_embedding_fragment = char_cnn_fragment(char_embedding_fragment)
     char_embedding_fragment = TimeDistributed(GlobalMaxPooling1D())(char_embedding_fragment)
     char_embedding_fragment = Dropout(0.25)(char_embedding_fragment)
 
@@ -56,7 +55,10 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
                                                         mask_zero=False,
                                                         trainable=True,
                                                         weights=[char_W]))(char_input_leftcontext)
-    char_embedding_leftcontext = char_cnn(char_embedding_leftcontext)
+
+    char_cnn_context = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))
+
+    char_embedding_leftcontext = char_cnn_context(char_embedding_leftcontext)
     char_embedding_leftcontext = TimeDistributed(GlobalMaxPooling1D())(char_embedding_leftcontext)
     char_embedding_leftcontext = Dropout(0.25)(char_embedding_leftcontext)
 

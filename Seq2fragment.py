@@ -64,7 +64,6 @@ def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fra
     fragment_list = []
 
     for id, tag2list in enumerate(tag2list_all):
-        print(id)
 
         target_left = 0
         fragtuples_list = []
