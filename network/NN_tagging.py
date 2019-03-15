@@ -93,7 +93,7 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
 
     LSTM_rightcontext = LSTM(hidden_dim, go_backwards=True, activation='tanh')(embedding_rightcontext)
 
-    BiLSTM_fragment = Bidirectional(LSTM(hidden_dim / 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
+    BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
 
     concat = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext], axis=-1)
     concat = Dropout(0.5)(concat)
