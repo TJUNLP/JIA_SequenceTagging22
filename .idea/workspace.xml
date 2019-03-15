@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/Seq2fragment.py" afterPath="$PROJECT_DIR$/Seq2fragment.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -51,20 +50,10 @@
         <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="231">
-              <caret line="34" column="68" lean-forward="true" selection-start-line="34" selection-start-column="66" selection-end-line="34" selection-end-column="74" />
+              <caret line="34" column="69" lean-forward="false" selection-start-line="34" selection-start-column="66" selection-end-line="34" selection-end-column="74" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PrecessData_PreC2V.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-76">
-              <caret line="122" column="14" lean-forward="false" selection-start-line="122" selection-start-column="4" selection-end-line="122" selection-end-column="14" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -108,8 +97,8 @@
       <file leaf-file-name="Seq2fragment.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="62" column="52" lean-forward="false" selection-start-line="62" selection-start-column="52" selection-end-line="62" selection-end-column="52" />
+            <state relative-caret-position="96">
+              <caret line="59" column="32" lean-forward="false" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
               <folding>
                 <element signature="e#35#53#0" expanded="true" />
               </folding>
@@ -748,13 +737,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/CoNLL2003_NER/eng.testa.BIOES.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="191">
@@ -836,9 +818,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/data/CoNLL2003_NER/eng.testa.BIOES.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-58">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-76">
+        <state relative-caret-position="1174">
           <caret line="122" column="14" lean-forward="false" selection-start-line="122" selection-start-column="4" selection-end-line="122" selection-end-column="14" />
           <folding />
         </state>
@@ -847,7 +837,7 @@
     <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
-          <caret line="34" column="68" lean-forward="true" selection-start-line="34" selection-start-column="66" selection-end-line="34" selection-end-column="74" />
+          <caret line="34" column="69" lean-forward="false" selection-start-line="34" selection-start-column="66" selection-end-line="34" selection-end-column="74" />
           <folding>
             <element signature="e#33#51#0" expanded="true" />
           </folding>
@@ -856,8 +846,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="62" column="52" lean-forward="false" selection-start-line="62" selection-start-column="52" selection-end-line="62" selection-end-column="52" />
+        <state relative-caret-position="96">
+          <caret line="59" column="32" lean-forward="false" selection-start-line="59" selection-start-column="32" selection-end-line="59" selection-end-column="32" />
           <folding>
             <element signature="e#35#53#0" expanded="true" />
           </folding>

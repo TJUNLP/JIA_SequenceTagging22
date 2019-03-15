@@ -57,7 +57,7 @@ def ReadfromTXT(file, source_vob, target_vob):
 
         tag2list.append(target_vob[sent[4]])
 
-        if 'S-' in sent[4] or 'B-' in sent[4]:
+        if 'S-' in sent[4] or 'E-' in sent[4]:
             ner_count += 1
 
     print(file + ', there count of ner >>>>>>>>>>>>.', ner_count)
