@@ -205,7 +205,9 @@ def make_idx_word_index(fraglist, max_context, max_fragment):
         context_right = line[3]
 
         data_fragment = fragment + [0] * max(0, max_fragment-len(fragment))
-        data_t = word2index_Type[fragment_tag]
+        data_t = np.zeros(4)
+        data_t[word2index_Type[fragment_tag]] = 1
+
         data_leftcontext = [0] * max(0, max_context-len(context_left)) + context_left
         data_rightcontext = context_right + [0] * max(0, max_context-len(context_right))
 
