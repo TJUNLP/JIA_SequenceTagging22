@@ -29,6 +29,8 @@ def ReadSeqs():
 
 def ReadfromTXT(file, source_vob, target_vob):
 
+    ner_count = 0
+
     sen2list = []
     tag2list = []
     sen2list_all = []
@@ -54,6 +56,11 @@ def ReadfromTXT(file, source_vob, target_vob):
             sen2list.append(source_vob[sent[0]])
 
         tag2list.append(target_vob[sent[4]])
+
+        if 'S-' in sent[4] or 'B-' in sent[4]:
+            ner_count += 1
+
+    print(file + ', there count of ner >>>>>>>>>>>>.', ner_count)
 
     f.close()
 
@@ -119,8 +126,5 @@ def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fra
 
 
 if __name__ == '__main__':
-    ss = [[123], [234]]
-    ss = ss + ([1] + [0] * 5) * max(0, 3)
-    print(ss)
-
+    pass
 
