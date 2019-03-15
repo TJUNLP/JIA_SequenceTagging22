@@ -80,7 +80,7 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
                                                         mask_zero=False,
                                                         trainable=True,
                                                         weights=[char_W]))(char_input_rightcontext)
-    char_embedding_rightcontext = char_cnn(char_embedding_rightcontext)
+    char_embedding_rightcontext = char_cnn_context(char_embedding_rightcontext)
     char_embedding_rightcontext = TimeDistributed(GlobalMaxPooling1D())(char_embedding_rightcontext)
     char_embedding_rightcontext = Dropout(0.25)(char_embedding_rightcontext)
 

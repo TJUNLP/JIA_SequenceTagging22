@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/Seq2fragment.py" afterPath="$PROJECT_DIR$/Seq2fragment.py" />
       <change beforePath="$PROJECT_DIR$/network/NN_tagging.py" afterPath="$PROJECT_DIR$/network/NN_tagging.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -86,8 +85,8 @@
       <file leaf-file-name="NN_tagging.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="60" column="49" lean-forward="false" selection-start-line="60" selection-start-column="49" selection-end-line="60" selection-end-column="49" />
+            <state relative-caret-position="192">
+              <caret line="82" column="50" lean-forward="false" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
               <folding>
                 <element signature="e#16#53#0" expanded="true" />
               </folding>
@@ -846,8 +845,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="60" column="49" lean-forward="false" selection-start-line="60" selection-start-column="49" selection-end-line="60" selection-end-column="49" />
+        <state relative-caret-position="192">
+          <caret line="82" column="50" lean-forward="false" selection-start-line="82" selection-start-column="50" selection-end-line="82" selection-end-column="50" />
           <folding>
             <element signature="e#16#53#0" expanded="true" />
           </folding>
