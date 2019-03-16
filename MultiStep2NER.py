@@ -92,12 +92,13 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
         if ptag == ttag:
             predict_right += 1
 
-        P = predict_right / predict
-        R = predict_right / target
-        F = 2 * P * R / (P + R)
-        print('P= ', P)
-        print('R= ', R)
-        print('F= ', F)
+    P = predict_right / predict
+    R = predict_right / target
+    F = 2 * P * R / (P + R)
+    print('predict_right =, predict =, target =, len(predictions) =', predict_right, predict, target, len(predictions))
+    print('P= ', P)
+    print('R= ', R)
+    print('F= ', F)
 
 
 if __name__ == '__main__':
