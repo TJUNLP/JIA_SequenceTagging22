@@ -16,7 +16,7 @@ from ProcessData_segment_PreC2V import get_data
 from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
 from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder, Model_BiLSTM_parallel_8_64_CRF
 from network.NN_single import Model_BiLSTM_Softmax
-from network.NN_single import Model_Dense_Softmax
+from network.NN_single import Model_BiLSTM_X2_CRF
 
 
 
@@ -203,7 +203,7 @@ if __name__ == "__main__":
     modelname = 'Model_BiLSTM_CRF'
     # modelname = 'Model_BiLSTM_parallel_8_64_CRF'
     # modelname = 'Model_BiLSTM_Softmax'
-    # modelname = 'Model_Dense_Softmax'
+    modelname = 'Model_BiLSTM_X2_CRF'
 
     print(modelname)
 

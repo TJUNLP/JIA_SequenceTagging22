@@ -1,0 +1,48 @@
+Model_LSTM_BiLSTM_LSTM
+Precess data....
+source vocab size: 30291
+target vocab size: 17
+target vocab size: {'O': 1, 'S-ORG': 2, 'S-MISC': 3, 'B-PER': 4, 'E-PER': 5, 'S-LOC': 6, 'B-ORG': 7, 'E-ORG': 8, 'I-PER': 9, 'S-PER': 10, 'B-MISC': 11, 'I-MISC': 12, 'E-MISC': 13, 'I-ORG': 14, 'B-LOC': 15, 'E-LOC': 16, 'I-LOC': 17}
+target vocab size: {1: 'O', 2: 'S-ORG', 3: 'S-MISC', 4: 'B-PER', 5: 'E-PER', 6: 'S-LOC', 7: 'B-ORG', 8: 'E-ORG', 9: 'I-PER', 10: 'S-PER', 11: 'B-MISC', 12: 'I-MISC', 13: 'E-MISC', 14: 'I-ORG', 15: 'B-LOC', 16: 'E-LOC', 17: 'I-LOC'}
+UnKnown tokens in w2v 3948
+word2vec loaded!
+all vocab size: 30291
+source_W  size: 30292
+source char size:  87
+max_c:  18
+source char: {1: 'S', 2: 'O', 3: 'C', 4: 'E', 5: 'R', 6: '-', 7: 'J', 8: 'A', 9: 'P', 10: 'N', 11: 'G', 12: 'T', 13: 'L', 14: 'U', 15: 'K', 16: 'Y', 17: 'W', 18: 'I', 19: ',', 20: 'H', 21: 'D', 22: 'F', 23: '.', 24: 'a', 25: 'd', 26: 'i', 27: 'm', 28: 'k', 29: 'n', 30: 't', 31: 'e', 32: 'r', 33: 'b', 34: 's', 35: '1', 36: '9', 37: '6', 38: '2', 39: '0', 40: 'p', 41: 'g', 42: 'h', 43: 'f', 44: 'c', 45: 'o', 46: 'u', 47: 'l', 48: 'w', 49: 'y', 50: 'B', 51: 'z', 52: 'v', 53: '7', 54: '8', 55: 'j', 56: 'x', 57: '4', 58: "'", 59: ':', 60: 'M', 61: '3', 62: 'q', 63: '5', 64: '"', 65: 'V', 66: '(', 67: ')', 68: ';', 69: 'Z', 70: '[', 71: ']', 72: '$', 73: 'Q', 74: 'X', 75: '/', 76: '?', 77: '*', 78: '+', 79: '@', 80: '#', 81: '=', 82: '&', 83: '%', 84: '`', 85: '!', 0: '**PAD**', 86: '**UNK**'}
+character_W shape: (88, 50)
+sen2list_all len =  14986
+tag2list_all len =  14986
+len(fragment_list) =  23499
+sen2list_all len =  3466
+tag2list_all len =  3466
+len(fragment_list) =  5942
+sen2list_all len =  3683
+tag2list_all len =  3683
+len(fragment_list) =  5648
+max_context-- 124 max_fragment-- 10
+len(test_fragment_list)--- 5648
+4 4 4
+3 3 3
+dataset created!
+
+
+Model_BiLSTM_CRF
+Precess data....
+token 204567
+source vocab size:  30291
+target vocab size:  5
+target vocab size: {'O': 1, 'I': 2, 'B': 3, 'E': 4, 'S': 5}
+target vocab size: {1: 'O', 2: 'I', 3: 'B', 4: 'E', 5: 'S'}
+max soure sent lenth is 124
+UnKnown tokens in w2v 3948
+word2vec loaded!
+all vocab size: 30291
+source_W  size: 30292
+num words in source word2vec: 403948
+source char size:  87
+max_c:  18
+source char: {1: 'S', 2: 'O', 3: 'C', 4: 'E', 5: 'R', 6: '-', 7: 'J', 8: 'A', 9: 'P', 10: 'N', 11: 'G', 12: 'T', 13: 'L', 14: 'U', 15: 'K', 16: 'Y', 17: 'W', 18: 'I', 19: ',', 20: 'H', 21: 'D', 22: 'F', 23: '.', 24: 'a', 25: 'd', 26: 'i', 27: 'm', 28: 'k', 29: 'n', 30: 't', 31: 'e', 32: 'r', 33: 'b', 34: 's', 35: '1', 36: '9', 37: '6', 38: '2', 39: '0', 40: 'p', 41: 'g', 42: 'h', 43: 'f', 44: 'c', 45: 'o', 46: 'u', 47: 'l', 48: 'w', 49: 'y', 50: 'B', 51: 'z', 52: 'v', 53: '7', 54: '8', 55: 'j', 56: 'x', 57: '4', 58: "'", 59: ':', 60: 'M', 61: '3', 62: 'q', 63: '5', 64: '"', 65: 'V', 66: '(', 67: ')', 68: ';', 69: 'Z', 70: '[', 71: ']', 72: '$', 73: 'Q', 74: 'X', 75: '/', 76: '?', 77: '*', 78: '+', 79: '@', 80: '#', 81: '=', 82: '&', 83: '%', 84: '`', 85: '!', 0: '**PAD**', 86: '**UNK**'}
+character_W shape: (88, 50)
+./model_data/data_segment_BIOES_PreC2V.1.pkl dataset created!
