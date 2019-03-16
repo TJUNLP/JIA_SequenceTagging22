@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/MultiStep2NER.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ProcessData_S2F.py" afterPath="$PROJECT_DIR$/ProcessData_S2F.py" />
+      <change beforePath="$PROJECT_DIR$/MultiStep2NER.py" afterPath="$PROJECT_DIR$/MultiStep2NER.py" />
       <change beforePath="$PROJECT_DIR$/Seq2fragment.py" afterPath="$PROJECT_DIR$/Seq2fragment.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_segment.py" afterPath="$PROJECT_DIR$/TrainModel_segment.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_tagging.py" afterPath="$PROJECT_DIR$/TrainModel_tagging.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,8 +51,8 @@
       <file leaf-file-name="ProcessData_S2F.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="191">
-              <caret line="189" column="4" lean-forward="false" selection-start-line="189" selection-start-column="4" selection-end-line="189" selection-end-column="4" />
+            <state relative-caret-position="1020">
+              <caret line="68" column="4" lean-forward="false" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="4" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
               </folding>
@@ -76,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MultiStep2NER.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MultiStep2NER.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MultiStep2NER.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1528">
-              <caret line="190" column="83" lean-forward="false" selection-start-line="190" selection-start-column="71" selection-end-line="190" selection-end-column="83" />
+            <state relative-caret-position="15">
+              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="11" selection-end-column="21" />
               <folding>
                 <element signature="e#25#43#0" expanded="true" />
               </folding>
@@ -88,11 +84,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Seq2fragment.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Seq2fragment.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="218">
-              <caret line="31" column="34" lean-forward="false" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="34" />
+            <state relative-caret-position="768">
+              <caret line="127" column="43" lean-forward="false" selection-start-line="127" selection-start-column="40" selection-end-line="127" selection-end-column="43" />
               <folding>
                 <element signature="e#35#53#0" expanded="true" />
                 <element signature="e#205#618#0" expanded="false" />
@@ -161,10 +157,10 @@
         <option value="$PROJECT_DIR$/ProcessData_segment_PreC2V.py" />
         <option value="$PROJECT_DIR$/network/NN_tagging.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment.py" />
-        <option value="$PROJECT_DIR$/Seq2fragment.py" />
         <option value="$PROJECT_DIR$/ProcessData_S2F.py" />
         <option value="$PROJECT_DIR$/TrainModel_tagging.py" />
         <option value="$PROJECT_DIR$/MultiStep2NER.py" />
+        <option value="$PROJECT_DIR$/Seq2fragment.py" />
       </list>
     </option>
   </component>
@@ -809,28 +805,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="218">
-          <caret line="31" column="34" lean-forward="false" selection-start-line="31" selection-start-column="20" selection-end-line="31" selection-end-column="34" />
-          <folding>
-            <element signature="e#35#53#0" expanded="true" />
-            <element signature="e#205#618#0" expanded="false" />
-            <element signature="e#1130#1807#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="191">
-          <caret line="189" column="4" lean-forward="false" selection-start-line="189" selection-start-column="4" selection-end-line="189" selection-end-column="4" />
-          <folding>
-            <element signature="e#33#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="335">
@@ -841,12 +815,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1020">
+          <caret line="68" column="4" lean-forward="false" selection-start-line="68" selection-start-column="4" selection-end-line="68" selection-end-column="4" />
+          <folding>
+            <element signature="e#33#51#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/MultiStep2NER.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1528">
-          <caret line="190" column="83" lean-forward="false" selection-start-line="190" selection-start-column="71" selection-end-line="190" selection-end-column="83" />
+        <state relative-caret-position="15">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="11" selection-end-column="21" />
           <folding>
             <element signature="e#25#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="768">
+          <caret line="127" column="43" lean-forward="false" selection-start-line="127" selection-start-column="40" selection-end-line="127" selection-end-column="43" />
+          <folding>
+            <element signature="e#35#53#0" expanded="true" />
+            <element signature="e#205#618#0" expanded="false" />
+            <element signature="e#1130#1807#0" expanded="false" />
           </folding>
         </state>
       </provider>

@@ -15,10 +15,6 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
     testy_BIOES = np.asarray(testdata[1], dtype="int32")
     testchar = np.asarray(chartest, dtype="int32")
 
-    in_file = "./model_data/Step1_output_segment_BIOES.txt"
-    if os.path.exists(in_file):
-        os.remove(in_file)
-    fre = open(in_file, 'a+')
 
     predictions = nn_model.predict([testx, testchar])
     testresult_1Step = []

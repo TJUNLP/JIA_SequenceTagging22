@@ -125,9 +125,9 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
                 continue
 
         for tup in fragtuples_list:
-            context_left = sen2list_all[id][tup[0]:tup[1]]
-            fragment = sen2list_all[id][tup[2]:tup[3]]
-            context_right = sen2list_all[id][tup[4]:tup[5]]
+            context_left = sen2list_all[pid][tup[0]:tup[1]]
+            fragment = sen2list_all[pid][tup[2]:tup[3]]
+            context_right = sen2list_all[pid][tup[4]:tup[5]]
             fragment_tag = tup[6]
             fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
