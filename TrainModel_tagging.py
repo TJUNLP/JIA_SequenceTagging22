@@ -222,7 +222,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
 
     loss, acc = nnmodel.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext], [testy], verbose=0,
-                                  batch_size=64)
+                                  batch_size=6)
 
     print('\n test_test score:', loss, acc)
 
