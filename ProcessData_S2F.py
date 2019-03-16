@@ -56,6 +56,7 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
     pickle.dump([train, dev, test,
                  chartrain, chardev, chartest,
                  word_vob, word_idex_word,
+                 target_vob, target_idex_word,
                  Type_vob, Type_idex_word,
                  char_vob, char_idex_char,
                  word_W, word_k,

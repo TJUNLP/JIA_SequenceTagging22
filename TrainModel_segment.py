@@ -78,7 +78,7 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                      hidden_dim=hidden_dim, emd_dim=w2v_k,
                            sourcecharsize=len(source_char),
                            character_W=character_W,
-                           input_word_length=max_c, char_emd_dim=c2v_k)
+                           input_word_length=max_c, char_emd_dim=c2v_k, batch_size=batch_size)
 
     if retrain:
         nn_model.load_weights(modelfile)
@@ -161,7 +161,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
                                      hidden_dim=hidden_dim, emd_dim=w2v_k,
                            sourcecharsize=len(source_char),
                            character_W=character_W,
-                           input_word_length=max_c, char_emd_dim=c2v_k)
+                           input_word_length=max_c, char_emd_dim=c2v_k, batch_size=batch_size)
 
     nnmodel.load_weights(lstm_modelfile)
     # nnmodel = load_model(lstm_modelfile)
@@ -176,7 +176,7 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                              input_seq_lenth,
                              output_seq_lenth,
                              hidden_dim, emd_dim,
-                     sourcecharsize,character_W,input_word_length,char_emd_dim,
+                     sourcecharsize,character_W,input_word_length,char_emd_dim, batch_size=32,
                      loss='categorical_crossentropy', optimizer='rmsprop'):
     nn_model = None
 
@@ -189,7 +189,7 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                                         sourcecharsize=sourcecharsize,
                                                         character_W=character_W,
                                                         input_word_length=input_word_length,
-                                                        char_emd_dim=char_emd_dim)
+                                                        char_emd_dim=char_emd_dim, batch_size=batch_size)
 
 
     return nn_model

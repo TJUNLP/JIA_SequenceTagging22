@@ -68,7 +68,8 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
 
     traindata, devdata, testdata,\
     chartrain, chardev, chartest,\
-    word_vob, word_idex_word,\
+    word_vob, word_idex_word, \
+    target_vob, target_idex_word, \
     Type_vob, Type_idex_word,\
     char_vob, char_idex_char,\
     word_W, word_k,\
@@ -186,7 +187,8 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
 
     traindata, devdata, testdata,\
     chartrain, chardev, chartest,\
-    word_vob, word_idex_word,\
+    word_vob, word_idex_word, \
+    target_vob, target_idex_word, \
     Type_vob, Type_idex_word,\
     char_vob, char_idex_char,\
     word_W, word_k,\
