@@ -45,9 +45,9 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
         Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
         Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
-    train = make_idx_word_index(train_fragment_list, Type_vob, max_context, max_fragment)
-    dev = make_idx_word_index(dev_fragment_list, Type_vob, max_context, max_fragment)
-    test = make_idx_word_index(test_fragment_list, Type_vob, max_context, max_fragment)
+    train = make_idx_word_index(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
+    dev = make_idx_word_index(dev_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
+    test = make_idx_word_index(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
     print(len(train), len(dev), len(test))
 
     chartrain = make_idx_char_index(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
@@ -191,7 +191,7 @@ def make_idx_char_index(fraglist, max_context, max_fragment, max_c, char_vob, wo
 
 
 
-def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment):
+def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment, hasNeg=True):
 
     data_fragment_all = []
     data_leftcontext_all = []
@@ -206,7 +206,11 @@ def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment):
         context_right = line[3]
 
         data_fragment = fragment + [0] * max(0, max_fragment-len(fragment))
-        data_t = np.zeros(4)
+        if hasNeg:
+            data_t = np.zeros(5)
+        else:
+            data_t = np.zeros(4)
+
         if fragment_tag in word2index_Type.keys():
             data_t[word2index_Type[fragment_tag]] = 1
 

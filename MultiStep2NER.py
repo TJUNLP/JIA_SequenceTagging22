@@ -50,13 +50,13 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
 
 def test_model_taggiing(model_2Step, testresult_1Step, testfile,
                         word_vob, word_idex_word, char_vob,
-                        target_idex_word, Type_vob, index2type, max_context, max_fragment):
+                        target_idex_word, Type_vob, index2type, max_context, max_fragment, hasNeg):
 
 
     test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
     print('len(test_fragment_list)---', len(test_fragment_list))
 
-    test_2Step = ProcessData_S2F.make_idx_word_index(test_fragment_list, Type_vob, max_context, max_fragment)
+    test_2Step = ProcessData_S2F.make_idx_word_index(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
     print(len(test_2Step))
 
     chartest_2Step = ProcessData_S2F.make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
@@ -136,8 +136,11 @@ if __name__ == '__main__':
 
     testresult_1Step = test_model_segment(model_1Step, testdata, chartest, index2tag)
 
+    hasNeg = True
 
     datafname = 'data_tagging_4type_PreC2V.1'
+    if hasNeg:
+        datafname = 'data_tagging_5type_PreC2V.1'
     datafile_2Step = "./model_data/" + datafname + ".pkl"
     modelname_2Step = 'Model_LSTM_BiLSTM_LSTM'
     inum = 0
@@ -188,7 +191,7 @@ if __name__ == '__main__':
 
     test_model_taggiing(model_2Step, testresult_1Step, testfile,
                         word_vob, word_idex_word, char_vob,
-                        target_idex_word, Type_vob, Type_idex_word, max_context, max_fragment)
+                        target_idex_word, Type_vob, Type_idex_word, max_context, max_fragment, hasNeg=hasNeg)
 
 
 
