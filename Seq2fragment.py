@@ -182,6 +182,12 @@ def Lists2Set_neg(sen2list_all, tag2list_all, target_idex_word, max_context, max
 
                     neg_left = random.choice([-2, -1, 1, 2]) + target_left
                     neg_right = random.choice([-2, -1, 1, 2]) + target_right
+
+                    if neg_left < 0:
+                        neg_left = random.choice([0, 1, 2]) + target_left
+                    if neg_right > len(tag2list):
+                        neg_right = random.choice([0, -1, -2]) + target_left
+
                     if neg_left >= 0 and neg_right <= len(tag2list):
                         if neg_right > neg_left:
                             tuple = (0, neg_right, neg_left, neg_right, neg_left, len(tag2list), 'NULL')
@@ -193,6 +199,8 @@ def Lists2Set_neg(sen2list_all, tag2list_all, target_idex_word, max_context, max
                             elif neg_left - 3 >= 0:
                                 tuple = (0, neg_right, neg_left, neg_right, neg_left, len(tag2list), 'NULL')
                                 fragtuples_list.append(tuple)
+
+
 
         for tup in fragtuples_list:
             context_left = sen2list_all[id][tup[0]:tup[1]]

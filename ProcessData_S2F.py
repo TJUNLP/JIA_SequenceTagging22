@@ -205,7 +205,7 @@ def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment, ha
         context_left = line[2]
         context_right = line[3]
 
-        data_fragment = fragment + [0] * max(0, max_fragment-len(fragment))
+        data_fragment = fragment[0:min(len(fragment), max_fragment)] + [0] * max(0, max_fragment-len(fragment))
         if hasNeg:
             data_t = np.zeros(5)
         else:
