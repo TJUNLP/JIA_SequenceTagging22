@@ -54,19 +54,19 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
     test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
     print('len(test_fragment_list)---', len(test_fragment_list))
 
-    test = ProcessData_S2F.make_idx_word_index(test_fragment_list, max_context, max_fragment)
-    print(len(test))
+    test_2Step = ProcessData_S2F.make_idx_word_index(test_fragment_list, max_context, max_fragment)
+    print(len(test_2Step))
 
-    chartest = ProcessData_S2F.make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    chartest_2Step = ProcessData_S2F.make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
     print(len(chartest))
 
-    testx_fragment = np.asarray(testdata[0], dtype="int32")
-    testx_leftcontext = np.asarray(testdata[1], dtype="int32")
-    testx_rightcontext = np.asarray(testdata[2], dtype="int32")
-    testy = np.asarray(testdata[3], dtype="int32")
-    testchar_fragment = np.asarray(chartest[0], dtype="int32")
-    testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
-    testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
+    testx_fragment = np.asarray(test_2Step[0], dtype="int32")
+    testx_leftcontext = np.asarray(test_2Step[1], dtype="int32")
+    testx_rightcontext = np.asarray(test_2Step[2], dtype="int32")
+    testy = np.asarray(test_2Step[3], dtype="int32")
+    testchar_fragment = np.asarray(chartest_2Step[0], dtype="int32")
+    testchar_leftcontext = np.asarray(chartest_2Step[1], dtype="int32")
+    testchar_rightcontext = np.asarray(chartest_2Step[2], dtype="int32")
     predictions = model_2Step.predict([testx_fragment, testx_leftcontext, testx_rightcontext,
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext],
                                       verbose=0)
