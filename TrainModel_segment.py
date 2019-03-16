@@ -191,6 +191,16 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                                         input_word_length=input_word_length,
                                                         char_emd_dim=char_emd_dim, batch_size=batch_size)
 
+    elif modelname is 'Model_BiLSTM_X2_CRF':
+        nn_model = Model_BiLSTM_X2_CRF(sourcevocabsize=sourcevocabsize, targetvocabsize=targetvocabsize,
+                                                       source_W=source_W,
+                                                       input_seq_lenth=input_seq_lenth,
+                                                       output_seq_lenth=output_seq_lenth,
+                                                       hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                                        sourcecharsize=sourcecharsize,
+                                                        character_W=character_W,
+                                                        input_word_length=input_word_length,
+                                                        char_emd_dim=char_emd_dim, batch_size=batch_size)
 
     return nn_model
 
