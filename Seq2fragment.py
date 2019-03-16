@@ -197,5 +197,13 @@ def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fra
 
 
 if __name__ == '__main__':
-    pass
+    list = [0]*4
+    print(list)
+    print(all(list))
+    print(any(list))
+    list = list + [1]
+    print(list)
+    print(all(list))
+    print(any(list))
+
 

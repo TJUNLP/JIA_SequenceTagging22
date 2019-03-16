@@ -82,7 +82,7 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
         next_index = np.argmax(ptagindex)
         ptag = index2type[next_index]
 
-        if testy[num] == [0]*4:
+        if not any(testy[num]):
             ttag = 'NULL'
 
         else:
