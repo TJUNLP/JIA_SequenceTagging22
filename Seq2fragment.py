@@ -26,11 +26,11 @@ def Seq2frag4test(testresult_1Step, testfile, source_vob, target_vob, target_ide
 
 
     sen2list_all, tag2list_all = ReadfromTXT(testfile, source_vob, target_vob)
-    print('sen2list_all len = ', len(sen2list_all))
-    print('tag2list_all len = ', len(tag2list_all))
+    print('sen2list_all len test = ', len(sen2list_all))
+    print('tag2list_all len test = ', len(tag2list_all))
 
     fragment_list = Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_word)
-    print('len(fragment_list) = ', len(fragment_list))
+    print('len(fragment_list) test = ', len(fragment_list))
 
     return fragment_list
 
