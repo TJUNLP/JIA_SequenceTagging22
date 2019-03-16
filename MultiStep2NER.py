@@ -73,7 +73,7 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
 
     predict_right = 0
     predict = 0
-    target = 0
+    target = 5648
 
     for num, ptagindex in enumerate(predictions):
 
@@ -87,7 +87,7 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
 
         else:
             ttag = index2type[np.argmax(testy[num])]
-            target += 1
+
 
         if ptag == ttag:
             predict_right += 1
