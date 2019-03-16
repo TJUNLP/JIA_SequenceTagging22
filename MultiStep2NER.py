@@ -68,7 +68,8 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
     testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
     testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
     predictions = model_2Step.predict([testx_fragment, testx_leftcontext, testx_rightcontext,
-                                   testchar_fragment, testchar_leftcontext, testchar_rightcontext], [testy])
+                                   testchar_fragment, testchar_leftcontext, testchar_rightcontext],
+                                      verbose=0)
 
     predict_right = 0
     predict = 0
