@@ -93,8 +93,8 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     LSTM_leftcontext = LSTM(hidden_dim, go_backwards=False, activation='tanh')(embedding_leftcontext)
     LSTM_rightcontext = LSTM(hidden_dim, go_backwards=True, activation='tanh')(embedding_rightcontext)
 
-    LSTM_leftcontext_Re = Reshape((1, hidden_dim))(LSTM_leftcontext)
-    LSTM_rightcontext_Re = Reshape((1, hidden_dim))(LSTM_rightcontext)
+    LSTM_leftcontext_Re = Reshape((-1, hidden_dim))(LSTM_leftcontext)
+    LSTM_rightcontext_Re = Reshape((-1, hidden_dim))(LSTM_rightcontext)
 
 
     embedding_fragment = concatenate([word_embedding_fragment, char_embedding_fragment], axis=-1)
