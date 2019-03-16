@@ -6,7 +6,7 @@ from keras.layers import TimeDistributed, Input, Bidirectional, Dense, Embedding
 from keras.models import Model
 from keras import optimizers
 from keras.layers.normalization import BatchNormalization
-from keras.layers import Reshape
+from keras.layers import RepeatVector
 
 
 def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
@@ -93,8 +93,8 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     LSTM_leftcontext = LSTM(hidden_dim, go_backwards=False, activation='tanh')(embedding_leftcontext)
     LSTM_rightcontext = LSTM(hidden_dim, go_backwards=True, activation='tanh')(embedding_rightcontext)
 
-    LSTM_leftcontext_Re = Reshape((-1, hidden_dim))(LSTM_leftcontext)
-    LSTM_rightcontext_Re = Reshape((-1, hidden_dim))(LSTM_rightcontext)
+    LSTM_leftcontext_Re = RepeatVector(1)(LSTM_leftcontext)
+    LSTM_rightcontext_Re = RepeatVector(1)(LSTM_rightcontext)
 
 
     embedding_fragment = concatenate([word_embedding_fragment, char_embedding_fragment], axis=-1)
