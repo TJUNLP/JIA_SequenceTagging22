@@ -6,7 +6,6 @@ from keras.layers import TimeDistributed, Input, Bidirectional, Dense, Embedding
 from keras.models import Model
 from keras import optimizers
 from keras.layers.normalization import BatchNormalization
-from keras.layers import RepeatVector
 
 
 def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
@@ -33,10 +32,10 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
                                trainable=True,
                                weights=[char_W]))(char_input_fragment)
 
-    char_cnn_fragment = TimeDistributed(Conv1D(100, 3, activation='relu', padding='valid'))
+    char_cnn_fragment = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))
     char_embedding_fragment = char_cnn_fragment(char_embedding_fragment)
     char_embedding_fragment = TimeDistributed(GlobalMaxPooling1D())(char_embedding_fragment)
-    char_embedding_fragment = Dropout(0.5)(char_embedding_fragment)
+    char_embedding_fragment = Dropout(0.25)(char_embedding_fragment)
 
 
     word_input_leftcontext = Input(shape=(input_leftcontext_lenth,), dtype='int32')
@@ -86,21 +85,15 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     char_embedding_rightcontext = Dropout(0.25)(char_embedding_rightcontext)
 
 
-
+    embedding_fragment = concatenate([word_embedding_fragment, char_embedding_fragment], axis=-1)
     embedding_leftcontext = concatenate([word_embedding_leftcontext, char_embedding_leftcontext], axis=-1)
     embedding_rightcontext = concatenate([word_embedding_rightcontext, char_embedding_rightcontext], axis=-1)
 
     LSTM_leftcontext = LSTM(hidden_dim, go_backwards=False, activation='tanh')(embedding_leftcontext)
+
     LSTM_rightcontext = LSTM(hidden_dim, go_backwards=True, activation='tanh')(embedding_rightcontext)
 
-    LSTM_leftcontext_Re = RepeatVector(7)(LSTM_leftcontext)
-    LSTM_rightcontext_Re = RepeatVector(7)(LSTM_rightcontext)
-
-
-    embedding_fragment = concatenate([word_embedding_fragment, char_embedding_fragment], axis=-1)
-    embedding_fragment_all = concatenate([LSTM_leftcontext_Re, embedding_fragment, LSTM_rightcontext_Re], axis=1)
-
-    BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment_all)
+    BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
 
     concat = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext], axis=-1)
     concat = Dropout(0.5)(concat)
