@@ -7,7 +7,7 @@ import Seq2fragment
 
 
 
-def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50):
+def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg = True):
 
     # 数据处理的入口函数
 
@@ -32,18 +32,22 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
 
     max_context = 0
     max_fragment = 1
-    train_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
-    dev_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
-    test_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment)
+    train_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+    dev_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+    test_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
     print('max_context--', max_context, 'max_fragment--', max_fragment)
     print('len(test_fragment_list)---', len(test_fragment_list))
 
-    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
-    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
+    if hasNeg:
+        Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
+        Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
+    else:
+        Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
+        Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
-    train = make_idx_word_index(train_fragment_list, max_context, max_fragment)
-    dev = make_idx_word_index(dev_fragment_list, max_context, max_fragment)
-    test = make_idx_word_index(test_fragment_list, max_context, max_fragment)
+    train = make_idx_word_index(train_fragment_list, Type_vob, max_context, max_fragment)
+    dev = make_idx_word_index(dev_fragment_list, Type_vob, max_context, max_fragment)
+    test = make_idx_word_index(test_fragment_list, Type_vob, max_context, max_fragment)
     print(len(train), len(dev), len(test))
 
     chartrain = make_idx_char_index(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
@@ -187,15 +191,12 @@ def make_idx_char_index(fraglist, max_context, max_fragment, max_c, char_vob, wo
 
 
 
-def make_idx_word_index(fraglist, max_context, max_fragment):
+def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment):
 
     data_fragment_all = []
     data_leftcontext_all = []
     data_rightcontext_all = []
     data_t_all = []
-
-    index2word_Type = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
-    word2index_Type = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
     for line in fraglist:
 

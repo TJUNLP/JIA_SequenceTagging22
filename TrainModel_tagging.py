@@ -254,8 +254,9 @@ if __name__ == "__main__":
 
     maxlen = 50
 
-    modelname = 'Model_LSTM_BiLSTM_LSTM'
+    hasNeg = True
 
+    modelname = 'Model_LSTM_BiLSTM_LSTM'
 
     print(modelname)
 
@@ -267,6 +268,9 @@ if __name__ == "__main__":
     resultdir = "./data/result/"
 
     datafname = 'data_tagging_4type_PreC2V.1'
+
+    if hasNeg:
+        datafname = 'data_tagging_5type_PreC2V.1'
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
@@ -278,7 +282,8 @@ if __name__ == "__main__":
     if not os.path.exists(datafile):
         print("Precess data....")
 
-        get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, c2v_k=50)
+        get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile,
+                 w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=hasNeg)
 
     for inum in range(0, 3):
 

@@ -50,13 +50,13 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
 
 def test_model_taggiing(model_2Step, testresult_1Step, testfile,
                         word_vob, word_idex_word, char_vob,
-                        target_idex_word, index2type, max_context, max_fragment):
+                        target_idex_word, Type_vob, index2type, max_context, max_fragment):
 
 
     test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
     print('len(test_fragment_list)---', len(test_fragment_list))
 
-    test_2Step = ProcessData_S2F.make_idx_word_index(test_fragment_list, max_context, max_fragment)
+    test_2Step = ProcessData_S2F.make_idx_word_index(test_fragment_list, Type_vob, max_context, max_fragment)
     print(len(test_2Step))
 
     chartest_2Step = ProcessData_S2F.make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
@@ -79,10 +79,11 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
 
     for num, ptagindex in enumerate(predictions):
 
-        predict += 1
-
         next_index = np.argmax(ptagindex)
         ptag = index2type[next_index]
+
+        if ptag != 'NULL':
+            predict += 1
 
         if not any(testy[num]):
             ttag = 'NULL'
@@ -90,8 +91,7 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
         else:
             ttag = index2type[np.argmax(testy[num])]
 
-
-        if ptag == ttag:
+        if ptag == ttag  and ttag != 'NULL':
             predict_right += 1
 
     P = predict_right / predict
@@ -188,7 +188,7 @@ if __name__ == '__main__':
 
     test_model_taggiing(model_2Step, testresult_1Step, testfile,
                         word_vob, word_idex_word, char_vob,
-                        target_idex_word, Type_idex_word, max_context, max_fragment)
+                        target_idex_word, Type_vob, Type_idex_word, max_context, max_fragment)
 
 
 
