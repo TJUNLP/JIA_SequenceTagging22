@@ -56,8 +56,8 @@
       <file leaf-file-name="NN_tagging.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="96" column="42" lean-forward="false" selection-start-line="96" selection-start-column="42" selection-end-line="96" selection-end-column="42" />
+            <state relative-caret-position="335">
+              <caret line="100" column="112" lean-forward="false" selection-start-line="100" selection-start-column="112" selection-end-line="100" selection-end-column="112" />
               <folding>
                 <element signature="e#16#53#0" expanded="true" />
               </folding>
@@ -810,8 +810,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="96" column="42" lean-forward="false" selection-start-line="96" selection-start-column="42" selection-end-line="96" selection-end-column="42" />
+        <state relative-caret-position="335">
+          <caret line="100" column="112" lean-forward="false" selection-start-line="100" selection-start-column="112" selection-end-line="100" selection-end-column="112" />
           <folding>
             <element signature="e#16#53#0" expanded="true" />
           </folding>
