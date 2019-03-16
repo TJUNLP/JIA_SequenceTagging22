@@ -134,7 +134,7 @@ def make_idx_char_index(fraglist, max_context, max_fragment, max_c, char_vob, wo
         context_right = line[3]
 
         data_fragment = []
-        for wordindex in fragment:
+        for wordindex in fragment[0 : min(len(fragment), max_fragment)]:
 
             word = word_idex_word[wordindex]
             data_c = []
