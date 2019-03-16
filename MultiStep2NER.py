@@ -24,6 +24,7 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
         ptag_BIOES = []
         ptag_1Step = []
         for word in predictions[si]:
+            print('ptag pro-----', str(word))
             next_index = np.argmax(word)
             next_token = index2tag[next_index]
             ptag_BIOES.append(next_token)
@@ -32,6 +33,7 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
 
         ttag_BIOES = []
         for word in testy_BIOES[si]:
+            print('ttag pro-----', str(word))
             next_index = np.argmax(word)
             next_token = index2tag[next_index]
             ttag_BIOES.append(next_token)
