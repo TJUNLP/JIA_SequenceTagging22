@@ -146,7 +146,7 @@ def Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word):
 
         fragtuples_list = []
 
-        maxlen = 4
+        maxlen = 3
 
         for start in range(0, len(tag2list)):
 
