@@ -18,10 +18,7 @@ from network.NN_tagging import Model_LSTM_BiLSTM_LSTM
 
 
 
-def test_model_segment(nn_model, testdata, chardata, index2word, resultfile='', batch_size=50):
-
-    index2word_Type = {0: '', 1: 'O', 2: 'LOC', 3: 'ORG', 4: 'PER', 5: 'MISC'}
-    word2index_Type = {'': 0, 'O': 1, 'LOC': 2, 'ORG': 3, 'PER': 4, 'MISC': 5}
+def test_model_tagging(nn_model, testdata, chardata, index2type):
 
     testx_fragment = np.asarray(testdata[0], dtype="int32")
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
@@ -34,33 +31,40 @@ def test_model_segment(nn_model, testdata, chardata, index2word, resultfile='', 
     testresult = []
 
     predictions = nn_model.predict([testx_fragment, testx_leftcontext, testx_rightcontext,
-                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext])
+                                   testchar_fragment, testchar_leftcontext, testchar_rightcontext],
+                                      verbose=0)
 
-    for si in range(0, len(predictions)):
+    predict_right = 0
+    predict = 0
+    target = 5648
 
-        sent = predictions[si]
-        ptag = []
-        for word in sent:
-            next_index = np.argmax(word)
-            next_token = index2word[next_index]
-            ptag.append(next_token)
-        # print('next_token--ptag--',str(ptag))
+    for num, ptagindex in enumerate(predictions):
 
-        senty = testy[si]
-        ttag = []
-        for word in senty:
-            next_index = np.argmax(word)
-            next_token = index2word[next_index]
-            ttag.append(next_token)
+        next_index = np.argmax(ptagindex)
+        ptag = index2type[next_index]
 
-        result = []
-        result.append(ptag)
-        result.append(ttag)
-        testresult.append(result)
+        if ptag != 'NULL':
+            predict += 1
 
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult, resultfile)
+        if not any(testy[num]):
+            ttag = 'NULL'
 
-    return P, R, F, PR_count, P_count, TR_count
+        else:
+            ttag = index2type[np.argmax(testy[num])]
+
+        if ptag == ttag  and ttag != 'NULL':
+            predict_right += 1
+
+    P = predict_right / predict
+    R = predict_right / target
+    F = 2 * P * R / (P + R)
+    print('predict_right =, predict =, target =, len(predictions) =', predict_right, predict, target, len(predictions))
+    print('P= ', P)
+    print('R= ', R)
+    print('F= ', F)
+
+
+    return P, R, F
 
 
 def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidden_dim=200, batch_size=50, retrain=False):
@@ -164,18 +168,18 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                           [testy],
                                           verbose=0,
                                           batch_size=32)
-
             print('\n test_test score:', loss, acc)
+            P, R, F = test_model_tagging(nn_model, testdata, chartest, Type_idex_word)
 
-            if acc > maxF:
+            if F > maxF:
                 earlystopping = 0
-                maxF=acc
+                maxF=F
                 nn_model.save_weights(modelfile, overwrite=True)
 
             else:
                 earlystopping += 1
 
-            print(epoch, loss, acc, '  maxF=', maxF)
+            print(epoch, loss, acc, P, R, F, '  maxF=', maxF)
 
         if earlystopping >= 10:
             break
@@ -223,8 +227,8 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
     loss, acc = nnmodel.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext], [testy], verbose=0,
                                   batch_size=6)
-
     print('\n test_test score:', loss, acc)
+    test_model_tagging(nnmodel, testdata, chartest, Type_idex_word)
 
 
 def SelectModel(modelname, wordvocabsize, targetvocabsize, charvobsize,
