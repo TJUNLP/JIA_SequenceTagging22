@@ -150,7 +150,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                 trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext],
                                [trainy],
                                batch_size=batch_size,
-                               epochs=5,
+                               epochs=1,
                                validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
                                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
                                shuffle=True,
@@ -201,7 +201,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
 
             print(epoch, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>maxF=', maxF)
 
-        if earlystopping >= 2:
+        if earlystopping >= 10:
             break
 
     return nn_model
@@ -299,7 +299,7 @@ if __name__ == "__main__":
 
     modelfile = "next ...."
 
-    batch_size = 128
+    batch_size = 256
     retrain = False
     Test = True
 
