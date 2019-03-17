@@ -189,9 +189,10 @@ def Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word):
 
 def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment):
     fragment_list = []
-    hasinStart = []
+
 
     for id, tag2list in enumerate(tag2list_all):
+        hasinStart = []
 
         target_left = 0
         fragtuples_list = []
