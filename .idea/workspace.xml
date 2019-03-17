@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/Seq2fragment.py" afterPath="$PROJECT_DIR$/Seq2fragment.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_tagging.py" afterPath="$PROJECT_DIR$/TrainModel_tagging.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -54,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Seq2fragment.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Seq2fragment.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+            <state relative-caret-position="1029">
+              <caret line="231" column="30" lean-forward="true" selection-start-line="231" selection-start-column="30" selection-end-line="231" selection-end-column="30" />
               <folding>
                 <element signature="e#35#53#0" expanded="true" />
                 <element signature="e#1429#2106#0" expanded="false" />
@@ -79,7 +78,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="18">
@@ -140,8 +139,8 @@
         <option value="$PROJECT_DIR$/network/NN_tagging.py" />
         <option value="$PROJECT_DIR$/ProcessData_S2F.py" />
         <option value="$PROJECT_DIR$/MultiStep2NER.py" />
-        <option value="$PROJECT_DIR$/Seq2fragment.py" />
         <option value="$PROJECT_DIR$/TrainModel_tagging.py" />
+        <option value="$PROJECT_DIR$/Seq2fragment.py" />
       </list>
     </option>
   </component>
@@ -783,17 +782,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="17" column="0" lean-forward="true" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding>
-            <element signature="e#35#53#0" expanded="true" />
-            <element signature="e#1429#2106#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/MultiStep2NER.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="223">
@@ -810,6 +798,17 @@
           <caret line="311" column="26" lean-forward="false" selection-start-line="311" selection-start-column="26" selection-end-line="311" selection-end-column="26" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1029">
+          <caret line="231" column="30" lean-forward="true" selection-start-line="231" selection-start-column="30" selection-end-line="231" selection-end-column="30" />
+          <folding>
+            <element signature="e#35#53#0" expanded="true" />
+            <element signature="e#1429#2106#0" expanded="false" />
           </folding>
         </state>
       </provider>

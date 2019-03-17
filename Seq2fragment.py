@@ -231,7 +231,7 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
 
                     maxlen = 4
 
-                    for start in range(min(0, target_left-maxlen), max(len(tag2list),target_right+maxlen)):
+                    for start in range(max(0, target_left-maxlen), min(len(tag2list),target_right+maxlen)):
 
                         for width in range(1, maxlen + 1):
 
