@@ -154,6 +154,9 @@ def Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word):
 
                 end = start + width
 
+                if end > len(tag2list):
+                    break
+
                 if end - start == 1:
                     tag = tag2list[start]
                     if target_idex_word[tag].__contains__('S-'):
