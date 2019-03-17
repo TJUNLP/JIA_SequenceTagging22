@@ -136,7 +136,7 @@ if __name__ == '__main__':
 
     testresult_1Step = test_model_segment(model_1Step, testdata, chartest, index2tag)
 
-    hasNeg = True
+    hasNeg = False
 
     datafname = 'data_tagging_4type_PreC2V.1'
     if hasNeg:
