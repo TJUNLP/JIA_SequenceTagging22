@@ -31,7 +31,10 @@ def Seq2frag4test(testresult_1Step, testfile, source_vob, target_vob, target_ide
     print('sen2list_all len test = ', len(sen2list_all))
     print('tag2list_all len test = ', len(tag2list_all))
 
-    fragment_list = Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_word)
+    # fragment_list = Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_word)
+
+    fragment_list = Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word)
+
     print('len(fragment_list) test = ', len(fragment_list))
 
     return fragment_list
@@ -134,6 +137,52 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
             fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
     return fragment_list
+
+
+def Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word):
+    fragment_list = []
+
+    for id, tag2list in enumerate(tag2list_all):
+
+        fragtuples_list = []
+
+        maxlen = 4
+
+        for start in range(0, len(tag2list)):
+
+            for width in range(1, maxlen+1):
+
+                end = start + width
+
+                if end - start == 1:
+                    tag = tag2list[start]
+                    if target_idex_word[tag].__contains__('S-'):
+                        reltag = target_idex_word[tag][2:]
+                    else:
+                        reltag = 'NULL'
+
+                else:
+                    starttag = tag2list[start]
+                    endtag = tag2list[end-1]
+                    if target_idex_word[starttag].__contains__('B-') and \
+                            target_idex_word[endtag].__contains__('E-'):
+                        reltag = target_idex_word[starttag][2:]
+                    else:
+                        reltag = 'NULL'
+
+                tuple = (0, end, start, end, start, len(tag2list), reltag)
+                fragtuples_list.append(tuple)
+
+
+        for tup in fragtuples_list:
+            context_left = sen2list_all[id][tup[0]:tup[1]]
+            fragment = sen2list_all[id][tup[2]:tup[3]]
+            context_right = sen2list_all[id][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
+    return fragment_list
+
 
 
 
