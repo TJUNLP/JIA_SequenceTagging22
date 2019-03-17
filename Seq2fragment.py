@@ -17,7 +17,7 @@ def Seq2frag(file, source_vob, target_vob, target_idex_word, max_context=0, max_
     print('tag2list_all len = ', len(tag2list_all))
 
     if hasNeg:
-        fragment_list, max_context, max_fragment = Lists2Set_neg(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
+        fragment_list, max_context, max_fragment = Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
     else:
         fragment_list, max_context, max_fragment = Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
     print('len(fragment_list) = ', len(fragment_list))
@@ -146,7 +146,7 @@ def Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word):
 
         fragtuples_list = []
 
-        maxlen = 5
+        maxlen = 4
 
         for start in range(0, len(tag2list)):
 
@@ -187,6 +187,86 @@ def Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word):
     return fragment_list
 
 
+def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment):
+    fragment_list = []
+
+
+    for id, tag2list in enumerate(tag2list_all):
+
+        target_left = 0
+        fragtuples_list = []
+        for index, tag in enumerate(tag2list):
+
+            if target_idex_word[tag] == 'O':
+                target_left = index
+                continue
+
+            else:
+                if target_idex_word[tag].__contains__('B-'):
+                    target_left = index
+
+                elif target_idex_word[tag].__contains__('I-'):
+                    continue
+
+                else:
+
+                    if target_idex_word[tag].__contains__('S-'):
+
+                        target_left = index
+                        target_right = index + 1
+
+                    elif target_idex_word[tag].__contains__('E-'):
+
+                        target_right = index + 1
+
+                    reltag = target_idex_word[tag][2:]
+                    tuple = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
+                    fragtuples_list.append(tuple)
+
+                    flens = max(index + 1, len(tag2list) - target_left)
+                    if flens > max_context:
+                        max_context = flens
+                    max_fragment = max(max_fragment, target_right - target_left)
+
+
+                    maxlen = 4
+
+                    for start in range(min(0, target_left-maxlen), max(len(tag2list),target_right+maxlen)):
+
+                        for width in range(1, maxlen + 1):
+
+                            end = start + width
+
+                            if end > len(tag2list):
+                                break
+
+                            if end - start == 1:
+                                tag = tag2list[start]
+                                if target_idex_word[tag].__contains__('S-'):
+                                    reltag = target_idex_word[tag][2:]
+                                else:
+                                    reltag = 'NULL'
+
+                            else:
+                                starttag = tag2list[start]
+                                endtag = tag2list[end - 1]
+                                if target_idex_word[starttag].__contains__('B-') and \
+                                        target_idex_word[endtag].__contains__('E-'):
+                                    reltag = target_idex_word[starttag][2:]
+                                else:
+                                    reltag = 'NULL'
+
+                            tuple = (0, end, start, end, start, len(tag2list), reltag)
+                            fragtuples_list.append(tuple)
+
+        for tup in fragtuples_list:
+            context_left = sen2list_all[id][tup[0]:tup[1]]
+            fragment = sen2list_all[id][tup[2]:tup[3]]
+            context_right = sen2list_all[id][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
+    return fragment_list, max_context, max_fragment
 
 
 

@@ -13,7 +13,7 @@ import os.path
 import numpy as np
 from ProcessData_S2F import get_data
 from Evaluate import evaluation_NER
-
+from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from network.NN_tagging import Model_LSTM_BiLSTM_LSTM
 
 
@@ -28,7 +28,6 @@ def test_model_tagging(nn_model, testdata, chardata, index2type):
     testchar_leftcontext = np.asarray(chardata[1], dtype="int32")
     testchar_rightcontext = np.asarray(chardata[2], dtype="int32")
 
-    testresult = []
 
     predictions = nn_model.predict([testx_fragment, testx_leftcontext, testx_rightcontext,
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext],
@@ -146,16 +145,18 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     while (epoch < npochos):
         epoch = epoch + 1
         i += 1
+        checkpointer = ModelCheckpoint(filepath=modelfile + ".best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
         history = nn_model.fit([trainx_fragment, trainx_leftcontext, trainx_rightcontext,
                                 trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext],
                                [trainy],
                                batch_size=batch_size,
-                               epochs=1,
+                               epochs=5,
                                validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
                                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
                                shuffle=True,
                                # sample_weight =sample_weight,
-                               verbose=1)
+                               verbose=1,
+                               callbacks=[checkpointer])
 
 
         if epoch >= saveepoch:
@@ -167,21 +168,40 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                            testchar_fragment, testchar_leftcontext, testchar_rightcontext],
                                           [testy],
                                           verbose=0,
-                                          batch_size=32)
+                                          batch_size=128)
             print('\n test_test score:', loss, acc)
             P, R, F = test_model_tagging(nn_model, testdata, chartest, Type_idex_word)
+
+            nn_best_model = SelectModel(modelname,
+                          wordvocabsize=len(word_vob),
+                          targetvocabsize=len(Type_vob),
+                          charvobsize=len(char_vob),
+                          word_W=word_W, char_W=character_W,
+                          input_fragment_lenth=max_fragment,
+                          input_leftcontext_lenth=max_context,
+                          input_rightcontext_lenth=max_context,
+                          input_maxword_length=max_c,
+                          w2v_k=word_k, c2v_k=character_k,
+                          hidden_dim=hidden_dim, batch_size=batch_size)
+
+            nn_best_model.load_weights(modelfile + ".best_model.h5")
+            P_bm, R_bm, F_bm = test_model_tagging(nn_best_model, testdata, chartest, Type_idex_word)
 
             if F > maxF:
                 earlystopping = 0
                 maxF=F
                 nn_model.save_weights(modelfile, overwrite=True)
+            elif F_bm > maxF:
+                earlystopping = 0
+                maxF = F_bm
+                nn_best_model.save_weights(modelfile, overwrite=True)
 
             else:
                 earlystopping += 1
 
-            print(epoch, loss, acc, P, R, F, '  maxF=', maxF)
+            print(epoch, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>maxF=', maxF)
 
-        if earlystopping >= 10:
+        if earlystopping >= 2:
             break
 
     return nn_model
@@ -226,7 +246,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
 
     loss, acc = nnmodel.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext], [testy], verbose=0,
-                                  batch_size=6)
+                                  batch_size=128)
     print('\n test_test score:', loss, acc)
     test_model_tagging(nnmodel, testdata, chartest, Type_idex_word)
 
@@ -274,12 +294,12 @@ if __name__ == "__main__":
     datafname = 'data_tagging_4type_PreC2V.1'
 
     if hasNeg:
-        datafname = 'data_tagging_5type_PreC2V.1'
+        datafname = 'data_tagging_5type_PreC2V.PartErgodic.1'
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
 
-    batch_size = 32
+    batch_size = 128
     retrain = False
     Test = True
 
