@@ -189,7 +189,7 @@ def Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word):
 
 def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment):
     fragment_list = []
-
+    hasinStart = []
 
     for id, tag2list in enumerate(tag2list_all):
 
@@ -233,6 +233,11 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
 
                     for start in range(max(0, target_left-maxlen), min(len(tag2list),target_right+maxlen)):
 
+                        if start in hasinStart:
+                            continue
+                        else:
+                            hasinStart.append(start)
+
                         for width in range(1, maxlen + 1):
 
                             end = start + width
@@ -244,6 +249,7 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
                                 tag = tag2list[start]
                                 if target_idex_word[tag].__contains__('S-'):
                                     reltag = target_idex_word[tag][2:]
+                                    continue
                                 else:
                                     reltag = 'NULL'
 
@@ -253,6 +259,7 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
                                 if target_idex_word[starttag].__contains__('B-') and \
                                         target_idex_word[endtag].__contains__('E-'):
                                     reltag = target_idex_word[starttag][2:]
+                                    continue
                                 else:
                                     reltag = 'NULL'
 
