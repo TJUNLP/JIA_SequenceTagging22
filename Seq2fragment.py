@@ -33,9 +33,9 @@ def Seq2frag4test(testresult_1Step, testfile, source_vob, target_vob, target_ide
     print('sen2list_all len test = ', len(sen2list_all))
     print('tag2list_all len test = ', len(tag2list_all))
 
-    # fragment_list = Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_word)
+    fragment_list = Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_word)
 
-    fragment_list = Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word)
+    # fragment_list = Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word)
 
     print('len(fragment_list) test = ', len(fragment_list))
 
