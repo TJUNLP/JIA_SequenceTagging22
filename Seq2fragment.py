@@ -33,8 +33,8 @@ def Seq2frag4test(testresult_1Step, testfile, source_vob, target_vob, target_ide
     print('sen2list_all len test = ', len(sen2list_all))
     print('tag2list_all len test = ', len(tag2list_all))
 
-    fragment_list = Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_word)
-
+    # fragment_list = Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_word)
+    fragment_list = Lists2Set4test_PartErgodic(testresult_1Step, sen2list_all, tag2list_all, target_idex_word)
     # fragment_list = Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word)
 
     print('len(fragment_list) test = ', len(fragment_list))
@@ -129,6 +129,153 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
                 tuple = (0, index + 1, index, index + 1, index, len(ptag2list), reltag)
                 fragtuples_list.append(tuple)
                 index += 1
+                continue
+
+        for tup in fragtuples_list:
+            context_left = sen2list_all[pid][tup[0]:tup[1]]
+            fragment = sen2list_all[pid][tup[2]:tup[3]]
+            context_right = sen2list_all[pid][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
+    return fragment_list
+
+
+def Lists2Set4test_PartErgodic(testresult_1Step, sen2list_all, tag2list_all, target_idex_word):
+    fragment_list = []
+
+    if len(testresult_1Step) != len(sen2list_all) or len(testresult_1Step) != len(tag2list_all):
+        while(1):
+            print('error1')
+
+    for pid, ptag2list in enumerate(testresult_1Step):
+
+        if len(ptag2list) != len(sen2list_all[pid]) or len(ptag2list) != len(tag2list_all[pid]):
+            while (1):
+                print('error2')
+
+        fragtuples_list = []
+        hasinStart = []
+        index = 0
+        while index < len(ptag2list):
+
+            if ptag2list[index] == 'O' or ptag2list[index] == '':
+                index += 1
+                continue
+            elif ptag2list[index] == 'B':
+                    target_left = index
+                    index += 1
+                    while index < len(ptag2list):
+                        if ptag2list[index] == 'I':
+                            index += 1
+                            continue
+                        elif ptag2list[index] == 'E':
+
+                            reltag = 'NULL'
+                            if 'B-' in target_idex_word[tag2list_all[pid][target_left]] and \
+                                'E-' in target_idex_word[tag2list_all[pid][index]]:
+                                reltag = target_idex_word[tag2list_all[pid][index]][2:]
+
+                            tuple = (0, index + 1, target_left, index + 1, target_left, len(ptag2list), reltag)
+                            if tuple not in fragtuples_list:
+                                fragtuples_list.append(tuple)
+                            index += 1
+
+                            maxlen = 4
+                            target_right = index + 1
+                            for start in range(max(0, target_left - maxlen), min(len(ptag2list), target_right + maxlen)):
+
+                                if start in hasinStart:
+                                    continue
+                                else:
+                                    hasinStart.append(start)
+
+                                for width in range(1, maxlen + 1):
+
+                                    end = start + width
+
+                                    if end > len(ptag2list):
+                                        break
+
+                                    if end - start == 1:
+                                        tag = tag2list_all[pid][start]
+                                        if target_idex_word[tag].__contains__('S-'):
+                                            reltag = target_idex_word[tag][2:]
+
+                                        else:
+                                            reltag = 'NULL'
+
+                                    else:
+                                        starttag = tag2list_all[pid][start]
+                                        endtag = tag2list_all[pid][end - 1]
+                                        if target_idex_word[starttag].__contains__('B-') and \
+                                                target_idex_word[endtag].__contains__('E-'):
+                                            reltag = target_idex_word[starttag][2:]
+
+                                        else:
+                                            reltag = 'NULL'
+
+                                    tuple = (0, end, start, end, start, len(ptag2list), reltag)
+                                    if tuple not in fragtuples_list:
+                                        fragtuples_list.append(tuple)
+
+
+                            break
+                        else:
+
+                            break
+
+            elif ptag2list[index] == 'S':
+
+                reltag = 'NULL'
+                if 'S-' in target_idex_word[tag2list_all[pid][index]]:
+                    reltag = target_idex_word[tag2list_all[pid][index]][2:]
+
+                tuple = (0, index + 1, index, index + 1, index, len(ptag2list), reltag)
+                if tuple not in fragtuples_list:
+                    fragtuples_list.append(tuple)
+                index += 1
+
+                maxlen = 4
+                target_left = index
+                target_right = index + 1
+                for start in range(max(0, target_left - maxlen), min(len(ptag2list), target_right + maxlen)):
+
+                    if start in hasinStart:
+                        continue
+                    else:
+                        hasinStart.append(start)
+
+                    for width in range(1, maxlen + 1):
+
+                        end = start + width
+
+                        if end > len(ptag2list):
+                            break
+
+                        if end - start == 1:
+                            tag = tag2list_all[pid][start]
+                            if target_idex_word[tag].__contains__('S-'):
+                                reltag = target_idex_word[tag][2:]
+
+                            else:
+                                reltag = 'NULL'
+
+                        else:
+                            starttag = tag2list_all[pid][start]
+                            endtag = tag2list_all[pid][end - 1]
+                            if target_idex_word[starttag].__contains__('B-') and \
+                                    target_idex_word[endtag].__contains__('E-'):
+                                reltag = target_idex_word[starttag][2:]
+
+                            else:
+                                reltag = 'NULL'
+
+                        tuple = (0, end, start, end, start, len(ptag2list), reltag)
+                        if tuple not in fragtuples_list:
+                            fragtuples_list.append(tuple)
+
+
                 continue
 
         for tup in fragtuples_list:
