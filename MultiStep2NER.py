@@ -140,7 +140,7 @@ if __name__ == '__main__':
 
     datafname = 'data_tagging_4type_PreC2V.1'
     if hasNeg:
-        datafname = 'data_tagging_5type_PreC2V.1'
+        datafname = 'data_tagging_5type_PreC2V.PartErgodic.2' #'data_tagging_5type_PreC2V.1'
     datafile_2Step = "./model_data/" + datafname + ".pkl"
     modelname_2Step = 'Model_LSTM_BiLSTM_LSTM'
     inum = 0
@@ -156,7 +156,7 @@ if __name__ == '__main__':
     character_W, character_k,\
     max_context, max_fragment, max_c = pickle.load(open(datafile_2Step, 'rb'))
 
-    batch_size_2Step =32
+    batch_size_2Step =256 #32
 
     testx_fragment = np.asarray(testdata[0], dtype="int32")
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
