@@ -183,13 +183,13 @@ if __name__ == '__main__':
     model_2Step.load_weights(modelfile_2Step)
 
 
-    loss, acc = model_2Step.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
-                                      testchar_fragment, testchar_leftcontext, testchar_rightcontext],
-                                     [testy],
-                                     verbose=0,
-                                     batch_size=10)
-
-    print('\n test_test score:', loss, acc)
+    # loss, acc = model_2Step.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
+    #                                   testchar_fragment, testchar_leftcontext, testchar_rightcontext],
+    #                                  [testy],
+    #                                  verbose=0,
+    #                                  batch_size=10)
+    #
+    # print('\n test_test score:', loss, acc)
 
     test_model_taggiing(model_2Step, testresult_1Step, testfile,
                         word_vob, word_idex_word, char_vob,
