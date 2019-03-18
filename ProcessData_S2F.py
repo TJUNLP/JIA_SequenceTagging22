@@ -4,8 +4,8 @@ import numpy as np
 import pickle
 import json, math
 import Seq2fragment
-import MultiStep2NER,TrainModel_segment
-
+import TrainModel_segment
+from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
 
 def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg = True):
 
@@ -63,7 +63,7 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
 
     model_1Step.load_weights(modelfile_1Step)
 
-    testresult_1Step = MultiStep2NER.test_model_segment(model_1Step, testdata, chartest, index2tag)
+    testresult_1Step = test_model_segment(model_1Step, testdata, chartest, index2tag)
 
     test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
     print('len(test_fragment_list)---', len(test_fragment_list))
@@ -344,6 +344,47 @@ def load_vec_character(c2vfile, vocab_c_inx, k=50):
             W[vocab_c_inx[i]] = c2v[i]
 
     return W, k
+
+
+def test_model_segment(nn_model, testdata, chartest, index2tag):
+
+    index2tag[0] = ''
+
+    testx = np.asarray(testdata[0], dtype="int32")
+    testy_BIOES = np.asarray(testdata[1], dtype="int32")
+    testchar = np.asarray(chartest, dtype="int32")
+
+
+    predictions = nn_model.predict([testx, testchar])
+    testresult_1Step = []
+    testresult2 = []
+    for si in range(0, len(predictions)):
+
+        ptag_BIOES = []
+        ptag_1Step = []
+        for word in predictions[si]:
+
+            next_index = np.argmax(word)
+            next_token = index2tag[next_index]
+            ptag_BIOES.append(next_token)
+            if next_token != '':
+                ptag_1Step.append(next_token)
+
+        ttag_BIOES = []
+        for word in testy_BIOES[si]:
+
+            next_index = np.argmax(word)
+            next_token = index2tag[next_index]
+            ttag_BIOES.append(next_token)
+
+        testresult2.append([ptag_BIOES, ttag_BIOES])
+        testresult_1Step.append(ptag_1Step)
+
+
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
+    print('divide---BIOES>>>>>>>>>>', P, R, F)
+
+    return testresult_1Step
 
 
 if __name__ == '__main__':
