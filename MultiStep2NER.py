@@ -154,7 +154,9 @@ if __name__ == '__main__':
     char_vob, char_idex_char,\
     word_W, word_k,\
     character_W, character_k,\
-    max_context, max_fragment, max_c = pickle.load(open(datafile_2Step, 'rb'))
+    max_context, max_fragment, max_c, test_target_count = pickle.load(open(datafile_2Step, 'rb'))
+
+
 
     batch_size_2Step =256 #32
 

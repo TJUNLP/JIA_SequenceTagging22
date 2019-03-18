@@ -69,8 +69,8 @@
       <file leaf-file-name="MultiStep2NER.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MultiStep2NER.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="825">
-              <caret line="158" column="20" lean-forward="false" selection-start-line="158" selection-start-column="4" selection-end-line="158" selection-end-column="20" />
+            <state relative-caret-position="-465">
+              <caret line="50" column="4" lean-forward="false" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
               <folding>
                 <element signature="e#25#43#0" expanded="true" />
               </folding>
@@ -81,8 +81,8 @@
       <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="296" column="61" lean-forward="true" selection-start-line="296" selection-start-column="20" selection-end-line="296" selection-end-column="61" />
+            <state relative-caret-position="288">
+              <caret line="211" column="0" lean-forward="false" selection-start-line="211" selection-start-column="0" selection-end-line="219" selection-end-column="91" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -795,8 +795,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="296" column="61" lean-forward="true" selection-start-line="296" selection-start-column="20" selection-end-line="296" selection-end-column="61" />
+        <state relative-caret-position="288">
+          <caret line="211" column="0" lean-forward="false" selection-start-line="211" selection-start-column="0" selection-end-line="219" selection-end-column="91" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
@@ -805,8 +805,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MultiStep2NER.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="825">
-          <caret line="158" column="20" lean-forward="false" selection-start-line="158" selection-start-column="4" selection-end-line="158" selection-end-column="20" />
+        <state relative-caret-position="-465">
+          <caret line="50" column="4" lean-forward="false" selection-start-line="50" selection-start-column="4" selection-end-line="50" selection-end-column="4" />
           <folding>
             <element signature="e#25#43#0" expanded="true" />
           </folding>
