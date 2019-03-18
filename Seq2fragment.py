@@ -221,8 +221,8 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
                         target_right = index + 1
 
                     reltag = target_idex_word[tag][2:]
-                    tuple = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
-                    fragtuples_list.append(tuple)
+                    tuple_posi = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
+                    fragtuples_list.append(tuple_posi)
 
                     flens = max(index + 1, len(tag2list) - target_left)
                     if flens > max_context:
@@ -250,7 +250,7 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
                                 tag = tag2list[start]
                                 if target_idex_word[tag].__contains__('S-'):
                                     reltag = target_idex_word[tag][2:]
-                                    continue
+
                                 else:
                                     reltag = 'NULL'
 
@@ -260,12 +260,15 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
                                 if target_idex_word[starttag].__contains__('B-') and \
                                         target_idex_word[endtag].__contains__('E-'):
                                     reltag = target_idex_word[starttag][2:]
-                                    continue
+
                                 else:
                                     reltag = 'NULL'
 
                             tuple = (0, end, start, end, start, len(tag2list), reltag)
                             fragtuples_list.append(tuple)
+                            if reltag == 'NULL':
+                                fragtuples_list.append(tuple_posi)
+
 
         for tup in fragtuples_list:
             context_left = sen2list_all[id][tup[0]:tup[1]]
