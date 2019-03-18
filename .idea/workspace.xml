@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/ProcessData_S2F.py" afterPath="$PROJECT_DIR$/ProcessData_S2F.py" />
-      <change beforePath="$PROJECT_DIR$/Seq2fragment.py" afterPath="$PROJECT_DIR$/Seq2fragment.py" />
-      <change beforePath="$PROJECT_DIR$/testdemo.py" afterPath="$PROJECT_DIR$/testdemo.py" />
+      <change beforePath="$PROJECT_DIR$/TrainModel_tagging.py" afterPath="$PROJECT_DIR$/TrainModel_tagging.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,14 +30,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="ProcessData_S2F.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ProcessData_S2F.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="67" column="22" lean-forward="false" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="22" />
-              <folding>
-                <element signature="e#33#51#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="90">
+              <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -91,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="208" column="0" lean-forward="true" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
+            <state relative-caret-position="198">
+              <caret line="296" column="60" lean-forward="false" selection-start-line="296" selection-start-column="60" selection-end-line="296" selection-end-column="60" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -149,11 +146,11 @@
         <option value="$PROJECT_DIR$/network/NN_single.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment.py" />
         <option value="$PROJECT_DIR$/network/NN_tagging.py" />
-        <option value="$PROJECT_DIR$/TrainModel_tagging.py" />
         <option value="$PROJECT_DIR$/MultiStep2NER.py" />
         <option value="$PROJECT_DIR$/testdemo.py" />
         <option value="$PROJECT_DIR$/Seq2fragment.py" />
         <option value="$PROJECT_DIR$/ProcessData_S2F.py" />
+        <option value="$PROJECT_DIR$/TrainModel_tagging.py" />
       </list>
     </option>
   </component>
@@ -788,16 +785,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="208" column="0" lean-forward="true" selection-start-line="208" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-6802">
@@ -822,10 +809,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80">
-          <caret line="67" column="22" lean-forward="false" selection-start-line="67" selection-start-column="4" selection-end-line="67" selection-end-column="22" />
+        <state relative-caret-position="90">
+          <caret line="6" column="20" lean-forward="true" selection-start-line="6" selection-start-column="20" selection-end-line="6" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="296" column="60" lean-forward="false" selection-start-line="296" selection-start-column="60" selection-end-line="296" selection-end-column="60" />
           <folding>
-            <element signature="e#33#51#0" expanded="true" />
+            <element signature="e#298#329#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -4,7 +4,7 @@ import numpy as np
 import pickle
 import json, math
 import Seq2fragment
-import MultiStep2NER ,TrainModel_segment
+import MultiStep2NER,TrainModel_segment
 
 
 def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg = True):
