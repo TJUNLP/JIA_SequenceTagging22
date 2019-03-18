@@ -18,7 +18,7 @@ from network.NN_tagging import Model_LSTM_BiLSTM_LSTM
 
 
 
-def test_model_tagging(nn_model, testdata, chardata, index2type):
+def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_count):
 
     testx_fragment = np.asarray(testdata[0], dtype="int32")
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
@@ -35,7 +35,7 @@ def test_model_tagging(nn_model, testdata, chardata, index2type):
 
     predict_right = 0
     predict = 0
-    target = 5648
+    target = test_target_count
 
     for num, ptagindex in enumerate(predictions):
 
@@ -77,7 +77,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     char_vob, char_idex_char,\
     word_W, word_k,\
     character_W, character_k,\
-    max_context, max_fragment, max_c = pickle.load(open(datafile, 'rb'))
+    max_context, max_fragment, max_c, test_target_count = pickle.load(open(datafile, 'rb'))
 
     trainx_fragment = np.asarray(traindata[0], dtype="int32")
     trainx_leftcontext = np.asarray(traindata[1], dtype="int32")
@@ -170,7 +170,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                           verbose=0,
                                           batch_size=128)
             print('\n test_test score:', loss, acc)
-            P, R, F = test_model_tagging(nn_model, testdata, chartest, Type_idex_word)
+            P, R, F = test_model_tagging(nn_model, testdata, chartest, Type_idex_word, test_target_count)
 
             nn_best_model = SelectModel(modelname,
                           wordvocabsize=len(word_vob),
@@ -185,7 +185,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                           hidden_dim=hidden_dim, batch_size=batch_size)
 
             nn_best_model.load_weights(modelfile + ".best_model.h5")
-            P_bm, R_bm, F_bm = test_model_tagging(nn_best_model, testdata, chartest, Type_idex_word)
+            P_bm, R_bm, F_bm = test_model_tagging(nn_best_model, testdata, chartest, Type_idex_word, test_target_count)
 
             if F > maxF:
                 earlystopping = 0
@@ -217,7 +217,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
     char_vob, char_idex_char,\
     word_W, word_k,\
     character_W, character_k,\
-    max_context, max_fragment, max_c = pickle.load(open(datafile, 'rb'))
+    max_context, max_fragment, max_c, test_target_count = pickle.load(open(datafile, 'rb'))
 
     testx_fragment = np.asarray(testdata[0], dtype="int32")
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
@@ -248,7 +248,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext], [testy], verbose=0,
                                   batch_size=128)
     print('\n test_test score:', loss, acc)
-    test_model_tagging(nnmodel, testdata, chartest, Type_idex_word)
+    test_model_tagging(nnmodel, testdata, chartest, Type_idex_word, test_target_count)
 
 
 def SelectModel(modelname, wordvocabsize, targetvocabsize, charvobsize,

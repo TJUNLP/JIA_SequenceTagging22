@@ -32,11 +32,12 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
 
     max_context = 0
     max_fragment = 1
-    train_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-    dev_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-    test_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+    train_fragment_list, max_context, max_fragment, target_count = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+    dev_fragment_list, max_context, max_fragment, target_count = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+    test_fragment_list, max_context, max_fragment, test_target_count = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
     print('max_context--', max_context, 'max_fragment--', max_fragment)
     print('len(test_fragment_list)---', len(test_fragment_list))
+    print('test_target_count--- ', test_target_count)
 
     if hasNeg:
         Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
@@ -65,7 +66,7 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
                  char_vob, char_idex_char,
                  word_W, word_k,
                  character_W, character_k,
-                 max_context, max_fragment, max_c], out, 0)
+                 max_context, max_fragment, max_c, test_target_count], out, 0)
     out.close()
 
 

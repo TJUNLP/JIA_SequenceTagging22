@@ -16,13 +16,15 @@ def Seq2frag(file, source_vob, target_vob, target_idex_word, max_context=0, max_
     print('sen2list_all len = ', len(sen2list_all))
     print('tag2list_all len = ', len(tag2list_all))
 
+    target_count = 5648
+
     if hasNeg:
-        fragment_list, max_context, max_fragment = Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
+        fragment_list, max_context, max_fragment, target_count = Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
     else:
         fragment_list, max_context, max_fragment = Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
     print('len(fragment_list) = ', len(fragment_list))
 
-    return fragment_list, max_context, max_fragment
+    return fragment_list, max_context, max_fragment, target_count
 
 
 def Seq2frag4test(testresult_1Step, testfile, source_vob, target_vob, target_idex_word):
@@ -189,7 +191,7 @@ def Lists2Set4test_ergodic(sen2list_all, tag2list_all, target_idex_word):
 
 def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment):
     fragment_list = []
-
+    target_count = 0
 
     for id, tag2list in enumerate(tag2list_all):
         hasinStart = []
@@ -228,6 +230,8 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
                     if flens > max_context:
                         max_context = flens
                     max_fragment = max(max_fragment, target_right - target_left)
+
+                    target_count += 1
 
 
                     maxlen = 4
@@ -268,6 +272,7 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
                             fragtuples_list.append(tuple)
                             if reltag == 'NULL':
                                 fragtuples_list.append(tuple_posi)
+                            target_count += 1
 
 
         for tup in fragtuples_list:
@@ -277,7 +282,7 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
             fragment_tag = tup[6]
             fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
-    return fragment_list, max_context, max_fragment
+    return fragment_list, max_context, max_fragment, target_count
 
 
 
