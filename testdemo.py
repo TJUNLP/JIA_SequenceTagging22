@@ -183,6 +183,43 @@ def SyntaxAwareTag(files):
         fw.close()
 
 
+def testPOSofNE(files):
+    allword = 0
+    allVB = 0
+    POS_NE = {}
+    for testf in files:
+
+        f = open(testf, 'r')
+        fr = f.readlines()
+
+        for id, line in enumerate(fr):
+            if line.__len__() <= 1:
+
+                continue
+
+            sourc = line.strip('\r\n').rstrip('\n').rstrip('\r').split(' ')
+
+            if '-' in sourc[4]:
+                if sourc[1] in POS_NE.keys():
+                    POS_NE[sourc[1]] += 1
+                else:
+                    POS_NE[sourc[1]] = 1
+
+            allword += 1
+            if 'VB' in sourc[1]:
+                allVB += 1
+
+        f.close()
+
+    after2 = sorted(POS_NE.items(), key=lambda d: d[1], reverse=True)
+    for k in after2:
+
+        print(k)
+
+    print('allword', allword)
+    print('allVB', allVB)
+
+
 
 
 
@@ -195,4 +232,5 @@ if __name__ == '__main__':
 
     # testNumberofTAG([trainfile, devfile, testfile])
     #
-    SyntaxAwareTag([trainfile, devfile, testfile])
+    # SyntaxAwareTag([trainfile, devfile, testfile])
+    testPOSofNE([testfile])

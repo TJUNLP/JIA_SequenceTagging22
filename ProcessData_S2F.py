@@ -4,7 +4,7 @@ import numpy as np
 import pickle
 import json, math
 import Seq2fragment
-
+import MultiStep2NER ,TrainModel_segment
 
 
 def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg = True):
@@ -35,6 +35,39 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
     train_fragment_list, max_context, max_fragment, target_count = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
     dev_fragment_list, max_context, max_fragment, target_count = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
     test_fragment_list, max_context, max_fragment, test_target_count = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+
+
+    datafile_1Step = "./model_data/data_segment_BIOES_PreC2V.1" + ".pkl"
+
+    modelname_1Step = 'Model_BiLSTM_CRF'
+    inum = 0
+    modelfile_1Step = "./model/" + modelname_1Step + "__PreC2V" + "__segment_" + str(inum) + ".h5"
+
+    traindata, devdata, testdata, chartrain, chardev, chartest,\
+    source_W, character_W,\
+    source_vob, index2word, target_vob, index2tag, source_char,\
+    max_s, w2v_k, max_c, c2v_k = pickle.load(open(datafile_1Step, 'rb'))
+
+    batch_size_1Step =32
+
+    model_1Step = TrainModel_segment.SelectModel(modelname_1Step,
+                                             sourcevocabsize=len(source_vob),
+                                             targetvocabsize=len(target_vob),
+                          source_W=source_W,
+                          input_seq_lenth=max_s,
+                          output_seq_lenth=max_s,
+                          hidden_dim=200, emd_dim=w2v_k,
+                          sourcecharsize=len(source_char),
+                          character_W=character_W,
+                          input_word_length=max_c, char_emd_dim=c2v_k, batch_size=batch_size_1Step)
+
+    model_1Step.load_weights(modelfile_1Step)
+
+    testresult_1Step = MultiStep2NER.test_model_segment(model_1Step, testdata, chartest, index2tag)
+
+    test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
+    print('len(test_fragment_list)---', len(test_fragment_list))
+
     print('max_context--', max_context, 'max_fragment--', max_fragment)
     print('len(test_fragment_list)---', len(test_fragment_list))
     print('test_target_count--- ', test_target_count)

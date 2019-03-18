@@ -27,6 +27,7 @@ def Seq2frag(file, source_vob, target_vob, target_idex_word, max_context=0, max_
     return fragment_list, max_context, max_fragment, target_count
 
 
+
 def Seq2frag4test(testresult_1Step, testfile, source_vob, target_vob, target_idex_word):
 
     sen2list_all, tag2list_all = ReadfromTXT(testfile, source_vob, target_vob)
