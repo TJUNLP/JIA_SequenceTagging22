@@ -63,7 +63,6 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
     print('R= ', R)
     print('F= ', F)
 
-
     return P, R, F
 
 
@@ -159,7 +158,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
                                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
                                shuffle=True,
-                               # sample_weight =sample_weight,
+                               class_weight={0: 50, 1: 50, 2: 50, 3: 50, 4: 1},
                                verbose=1,
                                callbacks=[checkpointer])
 
