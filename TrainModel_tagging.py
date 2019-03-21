@@ -227,6 +227,14 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
     testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
     testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
 
+    devx_fragment = np.asarray(devdata[0], dtype="int32")
+    devx_leftcontext = np.asarray(devdata[1], dtype="int32")
+    devx_rightcontext = np.asarray(devdata[2], dtype="int32")
+    devy = np.asarray(devdata[3], dtype="int32")
+    devchar_fragment = np.asarray(chardev[0], dtype="int32")
+    devchar_leftcontext = np.asarray(chardev[1], dtype="int32")
+    devchar_rightcontext = np.asarray(chardev[2], dtype="int32")
+
     nnmodel = SelectModel(modelname,
                           wordvocabsize=len(word_vob),
                           targetvocabsize=len(Type_vob),
@@ -243,6 +251,12 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
     # nnmodel = load_model(lstm_modelfile)
 
     resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
+
+    loss, acc = nnmodel.evaluate([devx_fragment, devx_leftcontext, devx_rightcontext,
+                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy], verbose=0,
+                                  batch_size=128)
+    print('\n test_test score:', loss, acc)
+    test_model_tagging(nnmodel, devdata, chardev, Type_idex_word, test_target_count)
 
     loss, acc = nnmodel.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext], [testy], verbose=0,
