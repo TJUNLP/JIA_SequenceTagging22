@@ -32,44 +32,44 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
 
     max_context = 0
     max_fragment = 1
-    train_fragment_list, max_context, max_fragment, target_count = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-    dev_fragment_list, max_context, max_fragment, target_count = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+    train_fragment_list, max_context, max_fragment, train_target_count = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+    dev_fragment_list, max_context, max_fragment, dev_target_count = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
     test_fragment_list, max_context, max_fragment, test_target_count = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
 
 
-    datafile_1Step = "./model_data/data_segment_BIOES_PreC2V.1" + ".pkl"
-    modelname_1Step = 'Model_BiLSTM_CRF'
-    inum = 0
-    modelfile_1Step = "./model/" + modelname_1Step + "__PreC2V" + "__segment_" + str(inum) + ".h5"
-
-    traindata1, devdata1, testdata1, chartrain1, chardev1, chartest1,\
-    source_W1, character_W1,\
-    source_vob1, index2word1, target_vob1, index2tag1, source_char1,\
-    max_s1, w2v_k1, max_c1, c2v_k1 = pickle.load(open(datafile_1Step, 'rb'))
-
-    batch_size_1Step =32
-
-    model_1Step = TrainModel_segment.SelectModel(modelname_1Step,
-                                             sourcevocabsize=len(source_vob1),
-                                             targetvocabsize=len(target_vob1),
-                          source_W=source_W1,
-                          input_seq_lenth=max_s1,
-                          output_seq_lenth=max_s1,
-                          hidden_dim=200, emd_dim=w2v_k1,
-                          sourcecharsize=len(source_char1),
-                          character_W=character_W1,
-                          input_word_length=max_c1, char_emd_dim=c2v_k1, batch_size=batch_size_1Step)
-
-    model_1Step.load_weights(modelfile_1Step)
-
-    testresult_1Step = test_model_segment(model_1Step, testdata1, chartest1, index2tag1)
-
-    test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
-    print('len(test_fragment_list)---', len(test_fragment_list))
-
-    print('max_context--', max_context, 'max_fragment--', max_fragment)
-    print('len(test_fragment_list)---', len(test_fragment_list))
-    print('test_target_count--- ', test_target_count)
+    # datafile_1Step = "./model_data/data_segment_BIOES_PreC2V.1" + ".pkl"
+    # modelname_1Step = 'Model_BiLSTM_CRF'
+    # inum = 0
+    # modelfile_1Step = "./model/" + modelname_1Step + "__PreC2V" + "__segment_" + str(inum) + ".h5"
+    #
+    # traindata1, devdata1, testdata1, chartrain1, chardev1, chartest1,\
+    # source_W1, character_W1,\
+    # source_vob1, index2word1, target_vob1, index2tag1, source_char1,\
+    # max_s1, w2v_k1, max_c1, c2v_k1 = pickle.load(open(datafile_1Step, 'rb'))
+    #
+    # batch_size_1Step =32
+    #
+    # model_1Step = TrainModel_segment.SelectModel(modelname_1Step,
+    #                                          sourcevocabsize=len(source_vob1),
+    #                                          targetvocabsize=len(target_vob1),
+    #                       source_W=source_W1,
+    #                       input_seq_lenth=max_s1,
+    #                       output_seq_lenth=max_s1,
+    #                       hidden_dim=200, emd_dim=w2v_k1,
+    #                       sourcecharsize=len(source_char1),
+    #                       character_W=character_W1,
+    #                       input_word_length=max_c1, char_emd_dim=c2v_k1, batch_size=batch_size_1Step)
+    #
+    # model_1Step.load_weights(modelfile_1Step)
+    #
+    # testresult_1Step = test_model_segment(model_1Step, testdata1, chartest1, index2tag1)
+    #
+    # test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
+    # print('len(test_fragment_list)---', len(test_fragment_list))
+    #
+    # print('max_context--', max_context, 'max_fragment--', max_fragment)
+    # print('len(test_fragment_list)---', len(test_fragment_list))
+    # print('test_target_count--- ', test_target_count)
 
     if hasNeg:
         Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
@@ -98,7 +98,8 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
                  char_vob, char_idex_char,
                  word_W, word_k,
                  character_W, character_k,
-                 max_context, max_fragment, max_c, test_target_count], out, 0)
+                 max_context, max_fragment, max_c,
+                 train_target_count, dev_target_count, test_target_count], out, 0)
     out.close()
 
 

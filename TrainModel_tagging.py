@@ -51,7 +51,7 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
         else:
             ttag = index2type[np.argmax(testy[num])]
 
-        if ptag == ttag  and ttag != 'NULL':
+        if ptag == ttag and ttag != 'NULL':
             predict_right += 1
 
     P = predict_right / predict
@@ -77,7 +77,8 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     char_vob, char_idex_char,\
     word_W, word_k,\
     character_W, character_k,\
-    max_context, max_fragment, max_c, test_target_count = pickle.load(open(datafile, 'rb'))
+    max_context, max_fragment, max_c, \
+    train_target_count, dev_target_count, test_target_count = pickle.load(open(datafile, 'rb'))
 
     trainx_fragment = np.asarray(traindata[0], dtype="int32")
     trainx_leftcontext = np.asarray(traindata[1], dtype="int32")
@@ -163,6 +164,9 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
             saveepoch += save_inter
             resultfile = ''
 
+            print('the dev result-----------------------')
+            P, R, F = test_model_tagging(nn_model, devdata, chardev, Type_idex_word, dev_target_count)
+
             print('the test result-----------------------')
             loss, acc = nn_model.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
                                            testchar_fragment, testchar_leftcontext, testchar_rightcontext],
@@ -170,6 +174,8 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                           verbose=0,
                                           batch_size=128)
             print('\n test_test score:', loss, acc)
+
+
             P, R, F = test_model_tagging(nn_model, testdata, chartest, Type_idex_word, test_target_count)
 
             # nn_best_model = SelectModel(modelname,
@@ -217,7 +223,8 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
     char_vob, char_idex_char,\
     word_W, word_k,\
     character_W, character_k,\
-    max_context, max_fragment, max_c, test_target_count = pickle.load(open(datafile, 'rb'))
+    max_context, max_fragment, max_c, \
+    train_target_count, dev_target_count, test_target_count = pickle.load(open(datafile, 'rb'))
 
     testx_fragment = np.asarray(testdata[0], dtype="int32")
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
@@ -308,12 +315,12 @@ if __name__ == "__main__":
     datafname = 'data_tagging_4type_PreC2V.1'
 
     if hasNeg:
-        datafname = 'data_tagging_5type_PreC2V.PartErgodic.3'
+        datafname = 'data_tagging_5type_PreC2V.Ergodic.1'
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
 
-    batch_size = 256
+    batch_size = 512
     retrain = False
     Test = True
 
