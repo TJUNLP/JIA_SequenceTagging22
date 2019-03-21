@@ -146,8 +146,8 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     while (epoch < npochos):
         epoch = epoch + 1
         i += 1
-
-        nn_model.load_weights(modelfile)
+        if os.path.exists(modelfile):
+            nn_model.load_weights(modelfile)
 
         checkpointer = ModelCheckpoint(filepath=modelfile + ".best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
         history = nn_model.fit([trainx_fragment, trainx_leftcontext, trainx_rightcontext,
