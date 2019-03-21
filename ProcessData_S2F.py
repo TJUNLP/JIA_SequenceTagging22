@@ -35,7 +35,7 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
     train_fragment_list, max_context, max_fragment, train_target_count = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
     dev_fragment_list, max_context, max_fragment, dev_target_count = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
     test_fragment_list, max_context, max_fragment, test_target_count = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-
+    test_target_count = 5648
 
     # datafile_1Step = "./model_data/data_segment_BIOES_PreC2V.1" + ".pkl"
     # modelname_1Step = 'Model_BiLSTM_CRF'
@@ -402,10 +402,13 @@ if __name__ == '__main__':
     print("target vocab size: " + str(target_vob))
     print("target vocab size: " + str(target_idex_word))
 
-
+    hasNeg = True
     max_context = 0
     max_fragment = 1
-    test_fragment_list, max_context, max_fragment = Seq2fragment.Seq2frag(testfile, word_vob, target_vob,
-                                                                          target_idex_word, max_context, max_fragment)
+    train_fragment_list, max_context, max_fragment, train_target_count = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+    dev_fragment_list, max_context, max_fragment, dev_target_count = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+    test_fragment_list, max_context, max_fragment, test_target_count = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+
+
     print('max_context--', max_context, 'max_fragment--', max_fragment)
     print('len(test_fragment_list)---', len(test_fragment_list))

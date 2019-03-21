@@ -184,7 +184,7 @@ def SyntaxAwareTag(files):
 
 
 def testPOSofNE(files):
-
+    NEcount = 0
     allword = 0
     allVB = 0
     POS_NE = {}
@@ -208,7 +208,10 @@ def testPOSofNE(files):
                 allword += 1
                 if 'VB' in sourc[1]:
                     allVB += 1
-                    print(id)
+
+                if 'B-' in sourc[4] or 'S-' in sourc[4]:
+                    NEcount += 1
+
 
         f.close()
 
@@ -219,6 +222,7 @@ def testPOSofNE(files):
 
     print('allword', allword)
     print('allVB', allVB)
+    print('NEcount', NEcount)
 
 
 
