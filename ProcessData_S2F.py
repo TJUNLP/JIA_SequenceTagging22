@@ -67,9 +67,9 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
     # test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
     # print('len(test_fragment_list)---', len(test_fragment_list))
     #
-    # print('max_context--', max_context, 'max_fragment--', max_fragment)
-    # print('len(test_fragment_list)---', len(test_fragment_list))
-    # print('test_target_count--- ', test_target_count)
+    print('max_context--', max_context, 'max_fragment--', max_fragment)
+    print('len(test_fragment_list)---', len(test_fragment_list))
+    print('test_target_count--- ', test_target_count)
 
     if hasNeg:
         Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
