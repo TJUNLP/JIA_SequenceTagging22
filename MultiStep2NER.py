@@ -111,7 +111,7 @@ if __name__ == '__main__':
     datafile_1Step = "./model_data/data_segment_BIOES_PreC2V.1" + ".pkl"
 
     modelname_1Step = 'Model_BiLSTM_CRF'
-    inum = 0
+    inum = 2
     modelfile_1Step = "./model/" + modelname_1Step + "__PreC2V" + "__segment_" + str(inum) + ".h5"
 
     traindata, devdata, testdata, chartrain, chardev, chartest,\
@@ -138,12 +138,12 @@ if __name__ == '__main__':
 
     hasNeg = True
 
-    datafname = 'data_tagging_4type_PreC2V.1'
+    datafname = 'data_tagging_4type_PreC2V.PartErgodic.3'
     if hasNeg:
         datafname = 'data_tagging_5type_PreC2V.PartErgodic.2' #'data_tagging_5type_PreC2V.1'
     datafile_2Step = "./model_data/" + datafname + ".pkl"
     modelname_2Step = 'Model_LSTM_BiLSTM_LSTM'
-    inum = 0
+    inum = 3
     modelfile_2Step = "./model/" + modelname_2Step + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 
     traindata, devdata, testdata,\
