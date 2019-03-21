@@ -485,7 +485,7 @@ def Lists2Set_neg_Ergodic(sen2list_all, tag2list_all, target_idex_word, max_cont
                     target_count += 1
 
                 max_fragment = max(max_fragment, end - start)
-                max_context = len(tag2list)
+                max_context = max(max_context, len(tag2list),)
 
 
         for tup in fragtuples_list:
