@@ -138,9 +138,9 @@ if __name__ == '__main__':
 
     hasNeg = True
 
-    datafname = 'data_tagging_4type_PreC2V.PartErgodic.3'
+    datafname = 'data_tagging_4type_PreC2V.1'
     if hasNeg:
-        datafname = 'data_tagging_5type_PreC2V.PartErgodic.2' #'data_tagging_5type_PreC2V.1'
+        datafname = 'data_tagging_5type_PreC2V.PartErgodic.3' #'data_tagging_5type_PreC2V.1'
     datafile_2Step = "./model_data/" + datafname + ".pkl"
     modelname_2Step = 'Model_LSTM_BiLSTM_LSTM'
     inum = 2
