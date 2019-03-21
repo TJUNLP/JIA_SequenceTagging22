@@ -143,7 +143,7 @@ if __name__ == '__main__':
         datafname = 'data_tagging_5type_PreC2V.PartErgodic.3' #'data_tagging_5type_PreC2V.1'
     datafile_2Step = "./model_data/" + datafname + ".pkl"
     modelname_2Step = 'Model_LSTM_BiLSTM_LSTM'
-    inum = 2
+    inum = 0
     modelfile_2Step = "./model/" + modelname_2Step + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 
     traindata, devdata, testdata,\
