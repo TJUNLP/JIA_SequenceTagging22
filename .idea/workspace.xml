@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/TrainModel_segment_2t.py" afterPath="$PROJECT_DIR$/TrainModel_segment_2t.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_tagging.py" afterPath="$PROJECT_DIR$/TrainModel_tagging.py" />
-    </list>
+    <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,8 +57,8 @@
       <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-155">
-              <caret line="386" column="23" lean-forward="false" selection-start-line="386" selection-start-column="23" selection-end-line="386" selection-end-column="23" />
+            <state relative-caret-position="153">
+              <caret line="362" column="0" lean-forward="true" selection-start-line="362" selection-start-column="0" selection-end-line="362" selection-end-column="0" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -72,8 +69,8 @@
       <file leaf-file-name="TrainModel_segment_2t.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1017">
-              <caret line="332" column="20" lean-forward="true" selection-start-line="332" selection-start-column="20" selection-end-line="332" selection-end-column="20" />
+            <state relative-caret-position="78">
+              <caret line="236" column="35" lean-forward="true" selection-start-line="236" selection-start-column="35" selection-end-line="236" selection-end-column="35" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -793,8 +790,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-155">
-          <caret line="386" column="23" lean-forward="false" selection-start-line="386" selection-start-column="23" selection-end-line="386" selection-end-column="23" />
+        <state relative-caret-position="153">
+          <caret line="362" column="0" lean-forward="true" selection-start-line="362" selection-start-column="0" selection-end-line="362" selection-end-column="0" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
@@ -803,8 +800,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1017">
-          <caret line="332" column="20" lean-forward="true" selection-start-line="332" selection-start-column="20" selection-end-line="332" selection-end-column="20" />
+        <state relative-caret-position="78">
+          <caret line="236" column="35" lean-forward="true" selection-start-line="236" selection-start-column="35" selection-end-line="236" selection-end-column="35" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
