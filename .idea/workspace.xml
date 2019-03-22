@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/TrainModel_segment_2t.py" afterPath="$PROJECT_DIR$/TrainModel_segment_2t.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel_tagging.py" afterPath="$PROJECT_DIR$/TrainModel_tagging.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,11 +56,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1278">
-              <caret line="201" column="1" lean-forward="false" selection-start-line="201" selection-start-column="1" selection-end-line="201" selection-end-column="1" />
+            <state relative-caret-position="108">
+              <caret line="316" column="0" lean-forward="true" selection-start-line="316" selection-start-column="0" selection-end-line="316" selection-end-column="0" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -69,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_segment_2t.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TrainModel_segment_2t.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="363" column="0" lean-forward="true" selection-start-line="363" selection-start-column="0" selection-end-line="363" selection-end-column="0" />
+            <state relative-caret-position="4283">
+              <caret line="349" column="70" lean-forward="true" selection-start-line="349" selection-start-column="70" selection-end-line="349" selection-end-column="70" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -142,8 +141,8 @@
         <option value="$PROJECT_DIR$/testdemo.py" />
         <option value="$PROJECT_DIR$/Seq2fragment.py" />
         <option value="$PROJECT_DIR$/ProcessData_S2F.py" />
-        <option value="$PROJECT_DIR$/TrainModel_tagging.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment_2t.py" />
+        <option value="$PROJECT_DIR$/TrainModel_tagging.py" />
       </list>
     </option>
   </component>
@@ -747,7 +746,7 @@
         <state relative-caret-position="255">
           <caret line="22" column="12" lean-forward="false" selection-start-line="22" selection-start-column="12" selection-end-line="22" selection-end-column="12" />
           <folding>
-            <element signature="e#16#53#0" expanded="true" />
+            <element signature="e#16#53#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -791,20 +790,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
+    <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1278">
-          <caret line="201" column="1" lean-forward="false" selection-start-line="201" selection-start-column="1" selection-end-line="201" selection-end-column="1" />
+        <state relative-caret-position="4283">
+          <caret line="349" column="70" lean-forward="true" selection-start-line="349" selection-start-column="70" selection-end-line="349" selection-end-column="70" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
+    <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="363" column="0" lean-forward="true" selection-start-line="363" selection-start-column="0" selection-end-line="363" selection-end-column="0" />
+        <state relative-caret-position="108">
+          <caret line="316" column="0" lean-forward="true" selection-start-line="316" selection-start-column="0" selection-end-line="316" selection-end-column="0" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
