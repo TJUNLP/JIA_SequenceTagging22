@@ -14,20 +14,21 @@ import numpy as np
 from ProcessData_S2F import get_data
 from Evaluate import evaluation_NER
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from network.NN_tagging import Model_LSTM_BiLSTM_LSTM
+from network.NN_classifer import Model_LSTM_BiLSTM_LSTM
 
 
-
-def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_count):
+def test_model_segment_2t(nn_model, testdata, chardata, index2type, test_target_count):
 
     testx_fragment = np.asarray(testdata[0], dtype="int32")
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
     testx_rightcontext = np.asarray(testdata[2], dtype="int32")
-    testy = np.asarray(testdata[3], dtype="int32")
+    testy = np.asarray(testdata[4], dtype="int32")
     testchar_fragment = np.asarray(chardata[0], dtype="int32")
     testchar_leftcontext = np.asarray(chardata[1], dtype="int32")
     testchar_rightcontext = np.asarray(chardata[2], dtype="int32")
 
+    index2type = {0: 'NULL', 1: 'NE'}
+    Type_vob = {'NULL': 0, 'NE': 1}
 
     predictions = nn_model.predict([testx_fragment, testx_leftcontext, testx_rightcontext,
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext],
@@ -80,10 +81,13 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     max_context, max_fragment, max_c, \
     train_target_count, dev_target_count, test_target_count = pickle.load(open(datafile, 'rb'))
 
+    Type_idex_word = {0: 'NULL', 1: 'NE'}
+    Type_vob = {'NULL': 0, 'NE': 1}
+
     trainx_fragment = np.asarray(traindata[0], dtype="int32")
     trainx_leftcontext = np.asarray(traindata[1], dtype="int32")
     trainx_rightcontext = np.asarray(traindata[2], dtype="int32")
-    trainy = np.asarray(traindata[3], dtype="int32")
+    trainy = np.asarray(traindata[4], dtype="int32")
     trainchar_fragment = np.asarray(chartrain[0], dtype="int32")
     trainchar_leftcontext = np.asarray(chartrain[1], dtype="int32")
     trainchar_rightcontext = np.asarray(chartrain[2], dtype="int32")
@@ -91,7 +95,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     devx_fragment = np.asarray(devdata[0], dtype="int32")
     devx_leftcontext = np.asarray(devdata[1], dtype="int32")
     devx_rightcontext = np.asarray(devdata[2], dtype="int32")
-    devy = np.asarray(devdata[3], dtype="int32")
+    devy = np.asarray(devdata[4], dtype="int32")
     devchar_fragment = np.asarray(chardev[0], dtype="int32")
     devchar_leftcontext = np.asarray(chardev[1], dtype="int32")
     devchar_rightcontext = np.asarray(chardev[2], dtype="int32")
@@ -99,7 +103,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     testx_fragment = np.asarray(testdata[0], dtype="int32")
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
     testx_rightcontext = np.asarray(testdata[2], dtype="int32")
-    testy = np.asarray(testdata[3], dtype="int32")
+    testy = np.asarray(testdata[4], dtype="int32")
     testchar_fragment = np.asarray(chartest[0], dtype="int32")
     testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
     testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
@@ -158,7 +162,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
                                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
                                shuffle=True,
-                               class_weight={0: 50, 1: 50, 2: 50, 3: 50, 4: 1},
+                               # class_weight={0: 50, 1: 50, 2: 50, 3: 50, 4: 1},
                                verbose=1,
                                callbacks=[checkpointer])
 
@@ -168,7 +172,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
             resultfile = ''
 
             print('the dev result-----------------------')
-            P, R, F = test_model_tagging(nn_model, devdata, chardev, Type_idex_word, dev_target_count)
+            P, R, F = test_model_segment_2t(nn_model, devdata, chardev, Type_idex_word, dev_target_count)
 
             print('the test result-----------------------')
             loss, acc = nn_model.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
@@ -178,7 +182,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                           batch_size=512)
             print('\n test_test score:', loss, acc)
 
-            P, R, F = test_model_tagging(nn_model, testdata, chartest, Type_idex_word, test_target_count)
+            P, R, F = test_model_segment_2t(nn_model, testdata, chartest, Type_idex_word, test_target_count)
 
             nn_best_model = SelectModel(modelname,
                           wordvocabsize=len(word_vob),
@@ -193,7 +197,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                           hidden_dim=hidden_dim, batch_size=batch_size)
 
             nn_best_model.load_weights(modelfile + ".best_model.h5")
-            P_bm, R_bm, F_bm = test_model_tagging(nn_best_model, testdata, chartest, Type_idex_word, test_target_count)
+            P_bm, R_bm, F_bm = test_model_segment_2t(nn_best_model, testdata, chartest, Type_idex_word, test_target_count)
 
             if F > maxF:
                 earlystopping = 0
@@ -228,10 +232,13 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
     max_context, max_fragment, max_c, \
     train_target_count, dev_target_count, test_target_count = pickle.load(open(datafile, 'rb'))
 
+    Type_idex_word = {0: 'NULL', 1: 'NE'}
+    Type_vob = {'NULL': 0, 'NE': 1}
+
     testx_fragment = np.asarray(testdata[0], dtype="int32")
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
     testx_rightcontext = np.asarray(testdata[2], dtype="int32")
-    testy = np.asarray(testdata[3], dtype="int32")
+    testy = np.asarray(testdata[4], dtype="int32")
     testchar_fragment = np.asarray(chartest[0], dtype="int32")
     testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
     testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
@@ -239,7 +246,7 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
     devx_fragment = np.asarray(devdata[0], dtype="int32")
     devx_leftcontext = np.asarray(devdata[1], dtype="int32")
     devx_rightcontext = np.asarray(devdata[2], dtype="int32")
-    devy = np.asarray(devdata[3], dtype="int32")
+    devy = np.asarray(devdata[4], dtype="int32")
     devchar_fragment = np.asarray(chardev[0], dtype="int32")
     devchar_leftcontext = np.asarray(chardev[1], dtype="int32")
     devchar_rightcontext = np.asarray(chardev[2], dtype="int32")
@@ -265,13 +272,13 @@ def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=2
                                   devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy], verbose=0,
                                   batch_size=512)
     print('\n test_dev score:', loss, acc)
-    test_model_tagging(nnmodel, devdata, chardev, Type_idex_word, dev_target_count)
+    test_model_segment_2t(nnmodel, devdata, chardev, Type_idex_word, dev_target_count)
 
     loss, acc = nnmodel.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext], [testy], verbose=0,
                                   batch_size=512)
     print('\n test_test score:', loss, acc)
-    test_model_tagging(nnmodel, testdata, chartest, Type_idex_word, test_target_count)
+    test_model_segment_2t(nnmodel, testdata, chartest, Type_idex_word, test_target_count)
 
 
 def SelectModel(modelname, wordvocabsize, targetvocabsize, charvobsize,
@@ -317,7 +324,7 @@ if __name__ == "__main__":
     datafname = 'data_tagging_4type_PreC2V.1'
 
     if hasNeg:
-        datafname = 'data_tagging_5type_PreC2V.Ergodic.1'
+        datafname = 'data_tagging_5type_2type_PreC2V.Ergodic.1'
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
