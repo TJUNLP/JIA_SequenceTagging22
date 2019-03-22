@@ -12,9 +12,10 @@ import random
 def Seq2frag(file, source_vob, target_vob, target_idex_word, max_context=0, max_fragment=1, hasNeg=True):
 
 
-    sen2list_all, tag2list_all = ReadfromTXT(file, source_vob, target_vob)
+    sen2list_all, tag2list_all, POS2list_all = ReadfromTXT(file, source_vob, target_vob)
     print('sen2list_all len = ', len(sen2list_all))
     print('tag2list_all len = ', len(tag2list_all))
+    print('POS2list_all len = ', len(POS2list_all))
 
     target_count = 5648
 
@@ -22,7 +23,7 @@ def Seq2frag(file, source_vob, target_vob, target_idex_word, max_context=0, max_
         # fragment_list, max_context, max_fragment, target_count = Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
         fragment_list, max_context, max_fragment, target_count = Lists2Set_neg_Ergodic(sen2list_all, tag2list_all,
                                                                                            target_idex_word,
-                                                                                           max_context, max_fragment)
+                                                                                           max_context, max_fragment, POS2list_all=POS2list_all)
 
     else:
         fragment_list, max_context, max_fragment = Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
@@ -35,7 +36,7 @@ def Seq2frag(file, source_vob, target_vob, target_idex_word, max_context=0, max_
 
 def Seq2frag4test(testresult_1Step, testfile, source_vob, target_vob, target_idex_word):
 
-    sen2list_all, tag2list_all = ReadfromTXT(testfile, source_vob, target_vob)
+    sen2list_all, tag2list_all, POS2list_all = ReadfromTXT(testfile, source_vob, target_vob)
     print('sen2list_all len test = ', len(sen2list_all))
     print('tag2list_all len test = ', len(tag2list_all))
 
@@ -54,8 +55,10 @@ def ReadfromTXT(file, source_vob, target_vob):
 
     sen2list = []
     tag2list = []
+    POS2list = []
     sen2list_all = []
     tag2list_all = []
+    POS2list_all = []
 
     f = open(file, 'r')
     fr = f.readlines()
@@ -65,8 +68,10 @@ def ReadfromTXT(file, source_vob, target_vob):
 
             sen2list_all.append(sen2list)
             tag2list_all.append(tag2list)
+            POS2list_all.append(POS2list)
             sen2list = []
             tag2list = []
+            POS2list = []
 
             continue
 
@@ -78,10 +83,14 @@ def ReadfromTXT(file, source_vob, target_vob):
             sen2list.append(source_vob[sent[0]])
 
         tag2list.append(target_vob[sent[4]])
+        if 'VB' in sent[1]:
+            POS2list.append('VB')
+        else:
+            POS2list.append(sent[1])
 
     f.close()
 
-    return sen2list_all, tag2list_all
+    return sen2list_all, tag2list_all, POS2list_all
 
 
 def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_word):
@@ -438,7 +447,7 @@ def Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_
     return fragment_list, max_context, max_fragment, target_count
 
 
-def Lists2Set_neg_Ergodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment):
+def Lists2Set_neg_Ergodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment, POS2list_all=None):
     fragment_list = []
     target_count = 0
 
@@ -458,6 +467,11 @@ def Lists2Set_neg_Ergodic(sen2list_all, tag2list_all, target_idex_word, max_cont
 
                 if end > len(tag2list):
                     break
+
+                # if 'VB' in POS2list_all[id][start : end]:
+                #     print(POS2list_all[id][start:end])
+                    # continue
+
 
                 if end - start == 1:
                     tag = tag2list[start]

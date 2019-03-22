@@ -158,7 +158,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
                                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
                                shuffle=True,
-                               # class_weight={0: 50, 1: 50, 2: 50, 3: 50, 4: 1},
+                               class_weight={0: 50, 1: 50, 2: 50, 3: 50, 4: 1},
                                verbose=1,
                                callbacks=[checkpointer])
 
@@ -332,7 +332,7 @@ if __name__ == "__main__":
         get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile,
                  w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=hasNeg)
 
-    for inum in range(3, 6):
+    for inum in range(0, 3):
 
         modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 

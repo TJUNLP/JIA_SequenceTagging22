@@ -231,6 +231,7 @@ def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment, ha
     data_leftcontext_all = []
     data_rightcontext_all = []
     data_t_all = []
+    data_t_2tpye_all = []
 
     for line in fraglist:
 
@@ -247,6 +248,11 @@ def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment, ha
 
         if fragment_tag in word2index_Type.keys():
             data_t[word2index_Type[fragment_tag]] = 1
+        data_t_2tp = np.zeros(2)
+        if fragment_tag == 'NULL':
+            data_t_2tp[0] = 1
+        else:
+            data_t_2tp[1] = 1
 
         data_leftcontext = [0] * max(0, max_context-len(context_left)) + context_left
         data_rightcontext = context_right + [0] * max(0, max_context-len(context_right))
@@ -255,8 +261,9 @@ def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment, ha
         data_leftcontext_all.append(data_leftcontext)
         data_rightcontext_all.append(data_rightcontext)
         data_t_all.append(data_t)
+        data_t_2tpye_all.append(data_t_2tp)
 
-    return [data_fragment_all, data_leftcontext_all, data_rightcontext_all, data_t_all]
+    return [data_fragment_all, data_leftcontext_all, data_rightcontext_all, data_t_all, data_t_2tpye_all]
 
 
 
@@ -412,3 +419,15 @@ if __name__ == '__main__':
 
     print('max_context--', max_context, 'max_fragment--', max_fragment)
     print('len(test_fragment_list)---', len(test_fragment_list))
+
+    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
+    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
+
+    test = make_idx_word_index(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
+
+    ttcount = 0
+    for tt in test[4]:
+        if tt[1] == 1:
+            ttcount += 1
+            print(tt)
+    print(ttcount)
