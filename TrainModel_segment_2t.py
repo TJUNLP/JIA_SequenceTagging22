@@ -158,7 +158,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                 trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext],
                                [trainy],
                                batch_size=batch_size,
-                               epochs=5,
+                               epochs=1,
                                validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
                                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
                                shuffle=True,
@@ -184,29 +184,29 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
 
             P, R, F = test_model_segment_2t(nn_model, testdata, chartest, Type_idex_word, test_target_count)
 
-            nn_best_model = SelectModel(modelname,
-                          wordvocabsize=len(word_vob),
-                          targetvocabsize=len(Type_vob),
-                          charvobsize=len(char_vob),
-                          word_W=word_W, char_W=character_W,
-                          input_fragment_lenth=max_fragment,
-                          input_leftcontext_lenth=max_context,
-                          input_rightcontext_lenth=max_context,
-                          input_maxword_length=max_c,
-                          w2v_k=word_k, c2v_k=character_k,
-                          hidden_dim=hidden_dim, batch_size=batch_size)
-
-            nn_best_model.load_weights(modelfile + ".best_model.h5")
-            P_bm, R_bm, F_bm = test_model_segment_2t(nn_best_model, testdata, chartest, Type_idex_word, test_target_count)
+            # nn_best_model = SelectModel(modelname,
+            #               wordvocabsize=len(word_vob),
+            #               targetvocabsize=len(Type_vob),
+            #               charvobsize=len(char_vob),
+            #               word_W=word_W, char_W=character_W,
+            #               input_fragment_lenth=max_fragment,
+            #               input_leftcontext_lenth=max_context,
+            #               input_rightcontext_lenth=max_context,
+            #               input_maxword_length=max_c,
+            #               w2v_k=word_k, c2v_k=character_k,
+            #               hidden_dim=hidden_dim, batch_size=batch_size)
+            #
+            # nn_best_model.load_weights(modelfile + ".best_model.h5")
+            # P_bm, R_bm, F_bm = test_model_segment_2t(nn_best_model, testdata, chartest, Type_idex_word, test_target_count)
 
             if F > maxF:
                 earlystopping = 0
                 maxF = F
                 nn_model.save_weights(modelfile, overwrite=True)
-            elif F_bm > maxF:
-                earlystopping = 0
-                maxF = F_bm
-                nn_model.save_weights(modelfile, overwrite=True)
+            # if F_bm > maxF:
+            #     earlystopping = 0
+            #     maxF = F_bm
+            #     nn_best_model.save_weights(modelfile, overwrite=True)
 
             else:
                 earlystopping += 1

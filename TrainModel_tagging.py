@@ -199,10 +199,10 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                 earlystopping = 0
                 maxF = F
                 nn_model.save_weights(modelfile, overwrite=True)
-            elif F_bm > maxF:
+            if F_bm > maxF:
                 earlystopping = 0
                 maxF = F_bm
-                nn_model.save_weights(modelfile, overwrite=True)
+                nn_best_model.save_weights(modelfile, overwrite=True)
 
             else:
                 earlystopping += 1
