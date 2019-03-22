@@ -147,8 +147,9 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     maxF = 0
     earlystopping =0
     i = 0
+    epochlen = 1
     while (epoch < npochos):
-        epoch = epoch + 1
+        epoch = epoch + epochlen
         i += 1
         # if os.path.exists(modelfile):
         #     nn_model.load_weights(modelfile)
@@ -158,11 +159,11 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                 trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext],
                                [trainy],
                                batch_size=batch_size,
-                               epochs=1,
+                               epochs=epochlen,
                                validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
                                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
                                shuffle=True,
-                               # class_weight={0: 50, 1: 50, 2: 50, 3: 50, 4: 1},
+                               class_weight={0: 1, 1: 100},
                                verbose=1,
                                callbacks=[checkpointer])
 
@@ -209,11 +210,11 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
             #     nn_best_model.save_weights(modelfile, overwrite=True)
 
             else:
-                earlystopping += 1
+                earlystopping += epochlen
 
             print(epoch, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>maxF=', maxF)
 
-        if earlystopping >= 2:
+        if earlystopping >= 10:
             break
 
     return nn_model

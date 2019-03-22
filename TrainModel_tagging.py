@@ -17,6 +17,54 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from network.NN_tagging import Model_LSTM_BiLSTM_LSTM
 
 
+def tagging4SecondTraining(nn_model, testdata, chardata, index2type):
+
+    testx_fragment = np.asarray(testdata[0], dtype="int32")
+    testx_leftcontext = np.asarray(testdata[1], dtype="int32")
+    testx_rightcontext = np.asarray(testdata[2], dtype="int32")
+    testy = np.asarray(testdata[3], dtype="int32")
+    testchar_fragment = np.asarray(chardata[0], dtype="int32")
+    testchar_leftcontext = np.asarray(chardata[1], dtype="int32")
+    testchar_rightcontext = np.asarray(chardata[2], dtype="int32")
+
+
+    predictions = nn_model.predict([testx_fragment, testx_leftcontext, testx_rightcontext,
+                                   testchar_fragment, testchar_leftcontext, testchar_rightcontext],
+                                   batch_size=512,
+                                      verbose=0)
+
+    data_fragment_all = []
+    data_leftcontext_all = []
+    data_rightcontext_all = []
+    data_t_all = []
+
+    char_fragment_all = []
+    char_leftcontext_all = []
+    char_rightcontext_all = []
+
+    for num, ptagindex in enumerate(predictions):
+
+        next_index = np.argmax(ptagindex)
+        ptag = index2type[next_index]
+
+
+        ttag = index2type[np.argmax(testy[num])]
+
+        if (ttag != 'NULL') or (ptag != 'NULL' and ttag == 'NULL'):
+            data_fragment_all.append(testdata[0][num])
+            data_leftcontext_all.append(testdata[1][num])
+            data_rightcontext_all.append(testdata[2][num])
+            data_t_all.append(testdata[3][num])
+            char_fragment_all.append(chardata[0][num])
+            char_leftcontext_all.append(chardata[1][num])
+            char_rightcontext_all.append(chardata[2][num])
+
+    SecondTrain_data = [data_fragment_all, data_leftcontext_all, data_rightcontext_all, data_t_all]
+    SecondTrain_chardata = [char_fragment_all, char_leftcontext_all, char_rightcontext_all]
+
+    return SecondTrain_data, SecondTrain_chardata
+
+
 
 def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_count):
 
@@ -66,62 +114,17 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
     return P, R, F
 
 
-def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidden_dim=200, batch_size=50, retrain=False):
-    # load training data and test data
-
-    traindata, devdata, testdata,\
-    chartrain, chardev, chartest,\
-    word_vob, word_idex_word, \
-    target_vob, target_idex_word, \
-    Type_vob, Type_idex_word,\
-    char_vob, char_idex_char,\
-    word_W, word_k,\
-    character_W, character_k,\
-    max_context, max_fragment, max_c, \
-    train_target_count, dev_target_count, test_target_count = pickle.load(open(datafile, 'rb'))
-
-    trainx_fragment = np.asarray(traindata[0], dtype="int32")
-    trainx_leftcontext = np.asarray(traindata[1], dtype="int32")
-    trainx_rightcontext = np.asarray(traindata[2], dtype="int32")
-    trainy = np.asarray(traindata[3], dtype="int32")
-    trainchar_fragment = np.asarray(chartrain[0], dtype="int32")
-    trainchar_leftcontext = np.asarray(chartrain[1], dtype="int32")
-    trainchar_rightcontext = np.asarray(chartrain[2], dtype="int32")
-
-    devx_fragment = np.asarray(devdata[0], dtype="int32")
-    devx_leftcontext = np.asarray(devdata[1], dtype="int32")
-    devx_rightcontext = np.asarray(devdata[2], dtype="int32")
-    devy = np.asarray(devdata[3], dtype="int32")
-    devchar_fragment = np.asarray(chardev[0], dtype="int32")
-    devchar_leftcontext = np.asarray(chardev[1], dtype="int32")
-    devchar_rightcontext = np.asarray(chardev[2], dtype="int32")
-
-    testx_fragment = np.asarray(testdata[0], dtype="int32")
-    testx_leftcontext = np.asarray(testdata[1], dtype="int32")
-    testx_rightcontext = np.asarray(testdata[2], dtype="int32")
-    testy = np.asarray(testdata[3], dtype="int32")
-    testchar_fragment = np.asarray(chartest[0], dtype="int32")
-    testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
-    testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
-
-    nn_model = SelectModel(modelname,
-                          wordvocabsize=len(word_vob),
-                          targetvocabsize=len(Type_vob),
-                          charvobsize=len(char_vob),
-                          word_W=word_W, char_W=character_W,
-                          input_fragment_lenth=max_fragment,
-                          input_leftcontext_lenth=max_context,
-                          input_rightcontext_lenth=max_context,
-                          input_maxword_length=max_c,
-                          w2v_k=word_k, c2v_k=character_k,
-                          hidden_dim=hidden_dim, batch_size=batch_size)
-
+def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
+                    inputs_dev_x, inputs_dev_y, inputs_test_x, inputs_test_y,
+                    devdata, chardev, Type_idex_word, dev_target_count,
+                    testdata, chartest, test_target_count,
+                    resultdir, npochos=100, batch_size=50, retrain=False):
+    class_weight = {0: 30, 1: 30, 2: 30, 3: 30, 4: 1}
     if retrain:
         nn_model.load_weights(modelfile)
+        class_weight = {0: 1, 1: 1, 2: 1, 3: 1, 4: 1}
 
     nn_model.summary()
-
-
 
     # early_stopping = EarlyStopping(monitor='val_loss', patience=8)
     # checkpointer = ModelCheckpoint(filepath="./data/model/best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
@@ -143,22 +146,21 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     maxF = 0
     earlystopping =0
     i = 0
+    epochlen = 1
     while (epoch < npochos):
-        epoch = epoch + 1
+        epoch = epoch + epochlen
         i += 1
         # if os.path.exists(modelfile):
         #     nn_model.load_weights(modelfile)
 
         checkpointer = ModelCheckpoint(filepath=modelfile + ".best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
-        history = nn_model.fit([trainx_fragment, trainx_leftcontext, trainx_rightcontext,
-                                trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext],
-                               [trainy],
+        history = nn_model.fit(inputs_train_x,
+                               inputs_train_y,
                                batch_size=batch_size,
-                               epochs=5,
-                               validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
-                                                 devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
+                               epochs=epochlen,
+                               validation_data=(inputs_dev_x, inputs_dev_y),
                                shuffle=True,
-                               class_weight={0: 30, 1: 30, 2: 30, 3: 30, 4: 1},
+                               class_weight=class_weight,
                                verbose=1,
                                # callbacks=[checkpointer]
                                )
@@ -172,9 +174,8 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
             P, R, F = test_model_tagging(nn_model, devdata, chardev, Type_idex_word, dev_target_count)
 
             print('the test result-----------------------')
-            loss, acc = nn_model.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
-                                           testchar_fragment, testchar_leftcontext, testchar_rightcontext],
-                                          [testy],
+            loss, acc = nn_model.evaluate(inputs_test_x,
+                                          inputs_test_y,
                                           verbose=1,
                                           batch_size=512)
             print('\n test_test score:', loss, acc)
@@ -206,7 +207,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
             #     nn_best_model.save_weights(modelfile, overwrite=True)
 
             else:
-                earlystopping += 1
+                earlystopping += epochlen
 
             print(epoch, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>maxF=', maxF)
 
@@ -216,60 +217,24 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
     return nn_model
 
 
-def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=200, batch_size=32):
+def infer_e2e_model(nnmodel, modelfile,
+                    inputs_dev_x, inputs_dev_y, inputs_test_x, inputs_test_y,
+                    devdata, chardev, Type_idex_word, dev_target_count,
+                    testdata, chartest, test_target_count,
+                    resultdir, batch_size=32):
 
-    traindata, devdata, testdata,\
-    chartrain, chardev, chartest,\
-    word_vob, word_idex_word, \
-    target_vob, target_idex_word, \
-    Type_vob, Type_idex_word,\
-    char_vob, char_idex_char,\
-    word_W, word_k,\
-    character_W, character_k,\
-    max_context, max_fragment, max_c, \
-    train_target_count, dev_target_count, test_target_count = pickle.load(open(datafile, 'rb'))
 
-    testx_fragment = np.asarray(testdata[0], dtype="int32")
-    testx_leftcontext = np.asarray(testdata[1], dtype="int32")
-    testx_rightcontext = np.asarray(testdata[2], dtype="int32")
-    testy = np.asarray(testdata[3], dtype="int32")
-    testchar_fragment = np.asarray(chartest[0], dtype="int32")
-    testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
-    testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
-
-    devx_fragment = np.asarray(devdata[0], dtype="int32")
-    devx_leftcontext = np.asarray(devdata[1], dtype="int32")
-    devx_rightcontext = np.asarray(devdata[2], dtype="int32")
-    devy = np.asarray(devdata[3], dtype="int32")
-    devchar_fragment = np.asarray(chardev[0], dtype="int32")
-    devchar_leftcontext = np.asarray(chardev[1], dtype="int32")
-    devchar_rightcontext = np.asarray(chardev[2], dtype="int32")
-
-    nnmodel = SelectModel(modelname,
-                          wordvocabsize=len(word_vob),
-                          targetvocabsize=len(Type_vob),
-                          charvobsize=len(char_vob),
-                          word_W=word_W, char_W=character_W,
-                          input_fragment_lenth=max_fragment,
-                          input_leftcontext_lenth=max_context,
-                          input_rightcontext_lenth=max_context,
-                          input_maxword_length=max_c,
-                          w2v_k=word_k, c2v_k=character_k,
-                          hidden_dim=hidden_dim, batch_size=batch_size)
-
-    nnmodel.load_weights(lstm_modelfile)
+    nnmodel.load_weights(modelfile)
     # nnmodel = load_model(lstm_modelfile)
 
     resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
 
-    loss, acc = nnmodel.evaluate([devx_fragment, devx_leftcontext, devx_rightcontext,
-                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy], verbose=0,
+    loss, acc = nnmodel.evaluate(inputs_dev_x, inputs_dev_y, verbose=0,
                                   batch_size=512)
     print('\n test_dev score:', loss, acc)
     test_model_tagging(nnmodel, devdata, chardev, Type_idex_word, dev_target_count)
 
-    loss, acc = nnmodel.evaluate([testx_fragment, testx_leftcontext, testx_rightcontext,
-                                   testchar_fragment, testchar_leftcontext, testchar_rightcontext], [testy], verbose=0,
+    loss, acc = nnmodel.evaluate(inputs_test_x, inputs_test_y, verbose=0,
                                   batch_size=512)
     print('\n test_test score:', loss, acc)
     test_model_tagging(nnmodel, testdata, chartest, Type_idex_word, test_target_count)
@@ -324,6 +289,8 @@ if __name__ == "__main__":
     modelfile = "next ...."
 
     batch_size = 512
+    hidden_dim = 200
+    SecondTrain = True
     retrain = False
     Test = True
 
@@ -333,6 +300,67 @@ if __name__ == "__main__":
         get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile,
                  w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=hasNeg)
 
+    traindata, devdata, testdata,\
+    chartrain, chardev, chartest,\
+    word_vob, word_idex_word, \
+    target_vob, target_idex_word, \
+    Type_vob, Type_idex_word,\
+    char_vob, char_idex_char,\
+    word_W, word_k,\
+    character_W, character_k,\
+    max_context, max_fragment, max_c, \
+    train_target_count, dev_target_count, test_target_count = pickle.load(open(datafile, 'rb'))
+
+    trainx_fragment = np.asarray(traindata[0], dtype="int32")
+    trainx_leftcontext = np.asarray(traindata[1], dtype="int32")
+    trainx_rightcontext = np.asarray(traindata[2], dtype="int32")
+    trainy = np.asarray(traindata[3], dtype="int32")
+    trainchar_fragment = np.asarray(chartrain[0], dtype="int32")
+    trainchar_leftcontext = np.asarray(chartrain[1], dtype="int32")
+    trainchar_rightcontext = np.asarray(chartrain[2], dtype="int32")
+
+    devx_fragment = np.asarray(devdata[0], dtype="int32")
+    devx_leftcontext = np.asarray(devdata[1], dtype="int32")
+    devx_rightcontext = np.asarray(devdata[2], dtype="int32")
+    devy = np.asarray(devdata[3], dtype="int32")
+    devchar_fragment = np.asarray(chardev[0], dtype="int32")
+    devchar_leftcontext = np.asarray(chardev[1], dtype="int32")
+    devchar_rightcontext = np.asarray(chardev[2], dtype="int32")
+
+    testx_fragment = np.asarray(testdata[0], dtype="int32")
+    testx_leftcontext = np.asarray(testdata[1], dtype="int32")
+    testx_rightcontext = np.asarray(testdata[2], dtype="int32")
+    testy = np.asarray(testdata[3], dtype="int32")
+    testchar_fragment = np.asarray(chartest[0], dtype="int32")
+    testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
+    testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
+
+    nn_model = SelectModel(modelname,
+                          wordvocabsize=len(word_vob),
+                          targetvocabsize=len(Type_vob),
+                          charvobsize=len(char_vob),
+                          word_W=word_W, char_W=character_W,
+                          input_fragment_lenth=max_fragment,
+                          input_leftcontext_lenth=max_context,
+                          input_rightcontext_lenth=max_context,
+                          input_maxword_length=max_c,
+                          w2v_k=word_k, c2v_k=character_k,
+                          hidden_dim=hidden_dim, batch_size=batch_size)
+
+    inputs_train_x = [trainx_fragment, trainx_leftcontext, trainx_rightcontext,
+                    trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext]
+    inputs_train_y = [trainy]
+
+    inputs_dev_x = [devx_fragment, devx_leftcontext, devx_rightcontext,
+                    devchar_fragment, devchar_leftcontext, devchar_rightcontext]
+    inputs_dev_y = [devy]
+
+    inputs_test_x = [testx_fragment, testx_leftcontext, testx_rightcontext,
+                     testchar_fragment, testchar_leftcontext, testchar_rightcontext]
+    inputs_test_y = [testy]
+
+
+
     for inum in range(6, 9):
 
         modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
@@ -341,20 +369,89 @@ if __name__ == "__main__":
             print("Lstm data has extisted: " + datafile)
             print("Training EE model....")
             print(modelfile)
-            train_e2e_model(modelname, datafile, modelfile, resultdir,
-                            npochos=100, hidden_dim=200, batch_size=batch_size, retrain=False)
+            train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
+                            inputs_dev_x, inputs_dev_y, inputs_test_x, inputs_test_y,
+                            devdata, chardev, Type_idex_word, dev_target_count,
+                            testdata, chartest, test_target_count,
+                            resultdir, npochos=100, batch_size=batch_size, retrain=False)
+
         else:
             if retrain:
                 print("ReTraining EE model....")
-                train_e2e_model(modelname, datafile, modelfile, resultdir,
-                                npochos=100, hidden_dim=200, batch_size=batch_size, retrain=retrain)
+                train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
+                            inputs_dev_x, inputs_dev_y, inputs_test_x, inputs_test_y,
+                            devdata, chardev, Type_idex_word, dev_target_count,
+                            testdata, chartest, test_target_count,
+                            resultdir, npochos=100, batch_size=batch_size, retrain=False)
+
+        if SecondTrain:
+
+            Train_2ndT_data, Train_2ndT_chardata = tagging4SecondTraining(nn_model, traindata, chartrain, Type_idex_word)
+            Dev_2ndT_data, Dev_2ndT_chardata = tagging4SecondTraining(nn_model, devdata, chardev, Type_idex_word)
+            Test_2ndT_data, Test_2ndT_chardata = tagging4SecondTraining(nn_model, testdata, chartest, Type_idex_word)
+
+            train2ndx_fragment = np.asarray(Train_2ndT_data[0], dtype="int32")
+            train2ndx_leftcontext = np.asarray(Train_2ndT_data[1], dtype="int32")
+            train2ndx_rightcontext = np.asarray(Train_2ndT_data[2], dtype="int32")
+            train2ndy = np.asarray(Train_2ndT_data[3], dtype="int32")
+            train2ndchar_fragment = np.asarray(Train_2ndT_chardata[0], dtype="int32")
+            train2ndchar_leftcontext = np.asarray(Train_2ndT_chardata[1], dtype="int32")
+            train2ndchar_rightcontext = np.asarray(Train_2ndT_chardata[2], dtype="int32")
+
+            dev2ndx_fragment = np.asarray(Dev_2ndT_data[0], dtype="int32")
+            dev2ndx_leftcontext = np.asarray(Dev_2ndT_data[1], dtype="int32")
+            dev2ndx_rightcontext = np.asarray(Dev_2ndT_data[2], dtype="int32")
+            dev2ndy = np.asarray(Dev_2ndT_data[3], dtype="int32")
+            dev2ndchar_fragment = np.asarray(Dev_2ndT_chardata[0], dtype="int32")
+            dev2ndchar_leftcontext = np.asarray(Dev_2ndT_chardata[1], dtype="int32")
+            dev2ndchar_rightcontext = np.asarray(Dev_2ndT_chardata[2], dtype="int32")
+
+            test2ndx_fragment = np.asarray(Test_2ndT_data[0], dtype="int32")
+            test2ndx_leftcontext = np.asarray(Test_2ndT_data[1], dtype="int32")
+            test2ndx_rightcontext = np.asarray(Test_2ndT_data[2], dtype="int32")
+            test2ndy = np.asarray(Test_2ndT_data[3], dtype="int32")
+            test2ndchar_fragment = np.asarray(Test_2ndT_chardata[0], dtype="int32")
+            test2ndchar_leftcontext = np.asarray(Test_2ndT_chardata[1], dtype="int32")
+            test2ndchar_rightcontext = np.asarray(Test_2ndT_chardata[2], dtype="int32")
+
+            inputs_train2nd_x = [train2ndx_fragment, train2ndx_leftcontext, train2ndx_rightcontext,
+                              train2ndchar_fragment, train2ndchar_leftcontext, train2ndchar_rightcontext]
+            inputs_train2nd_y = [train2ndy]
+
+            inputs_dev2nd_x = [dev2ndx_fragment, dev2ndx_leftcontext, dev2ndx_rightcontext,
+                            dev2ndchar_fragment, dev2ndchar_leftcontext, dev2ndchar_rightcontext]
+            inputs_dev2nd_y = [dev2ndy]
+
+            inputs_test2nd_x = [test2ndx_fragment, test2ndx_leftcontext, test2ndx_rightcontext,
+                             test2ndchar_fragment, test2ndchar_leftcontext, test2ndchar_rightcontext]
+            inputs_test2nd_y = [test2ndy]
+
+            if not os.path.exists(modelfile + '.2nd.h5'):
+                print("2nd Training EE model....")
+
+                train_e2e_model(nn_model, modelfile + '.2nd.h5', inputs_train2nd_x, inputs_train2nd_y,
+                                inputs_dev2nd_x, inputs_dev2nd_y, inputs_test2nd_x, inputs_test2nd_y,
+                                Dev_2ndT_data, Dev_2ndT_chardata, Type_idex_word, dev_target_count,
+                                Test_2ndT_data, Test_2ndT_chardata, test_target_count,
+                                resultdir, npochos=100, batch_size=batch_size, retrain=SecondTrain)
+
+            if Test:
+                print("2nd test EE model....")
+                print(datafile)
+                print(modelfile+ '.2nd.h5')
+                infer_e2e_model(nn_model, modelfile+ '.2nd.h5',
+                                inputs_dev2nd_x, inputs_dev2nd_y, inputs_test2nd_x, inputs_test2nd_y,
+                                Dev_2ndT_data, Dev_2ndT_chardata, Type_idex_word, dev_target_count,
+                                Test_2ndT_data, Test_2ndT_chardata, test_target_count, resultdir, batch_size=batch_size)
 
         if Test:
             print("test EE model....")
             print(datafile)
             print(modelfile)
-            infer_e2e_model(modelname, datafile, modelfile, resultdir, hidden_dim=200, batch_size=batch_size)
-
+            infer_e2e_model(nn_model, modelfile,
+                            inputs_dev_x, inputs_dev_y, inputs_test_x, inputs_test_y,
+                            devdata, chardev, Type_idex_word, dev_target_count,
+                            testdata, chartest, test_target_count, resultdir, batch_size=batch_size)
 
 
     # import tensorflow as tf
