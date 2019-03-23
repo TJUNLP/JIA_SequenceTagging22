@@ -440,7 +440,7 @@ if __name__ == "__main__":
                                 inputs_dev2nd_x, inputs_dev2nd_y, inputs_test2nd_x, inputs_test2nd_y,
                                 Dev_2ndT_data, Dev_2ndT_chardata, Type_idex_word, dev_target_count,
                                 Test_2ndT_data, Test_2ndT_chardata, test_target_count,
-                                resultdir, npochos=100, batch_size=batch_size, retrain=SecondTrain)
+                                resultdir, npochos=100, batch_size=32, retrain=SecondTrain)
 
             if Test:
                 print("2nd test EE model....")

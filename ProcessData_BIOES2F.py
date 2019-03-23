@@ -7,11 +7,10 @@ import Seq2fragment
 import TrainModel_segment
 from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
 
-def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg = True):
 
-    # 数据处理的入口函数
+def get_data_4segment_BIOES(trainfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50):
 
-    word_vob, word_idex_word, target_vob, target_idex_word, max_s = get_word_index([trainfile, devfile, testfile])
+    word_vob, word_idex_word, target_vob, target_idex_word, max_s = get_word_index([trainfile, testfile])
     print("source vocab size: " + str(len(word_vob)))
     print("target vocab size: " + str(len(target_vob)))
     print("target vocab size: " + str(target_vob))
@@ -22,7 +21,43 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
     print("all vocab size: " + str(len(word_vob)))
     print("source_W  size: " + str(len(word_W)))
 
-    char_vob, char_idex_char, max_c = get_Character_index({trainfile, devfile, testfile})
+    char_vob, char_idex_char, max_c = get_Character_index({trainfile, testfile})
+    print("source char size: ", char_vob.__len__())
+    print("max_c: ", max_c)
+    print("source char: " + str(char_idex_char))
+
+    character_W, character_k = load_vec_character(c2v_file, char_vob, c2v_k)
+    print('character_W shape:', character_W.shape)
+
+    train_all, train_target_all = Data2Index_4segment_BIOES(trainfile, max_s, word_vob, target_vob)
+    test_all, test_target_all = Data2Index_4segment_BIOES(testfile, max_s, word_vob, target_vob)
+
+    print('train_all size', len(train_all), 'target_all', len(train_target_all))
+    print('test_all size', len(test_all))
+
+
+
+
+
+
+
+
+def get_data_4classifer(trainfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg = True):
+
+    # 数据处理的入口函数
+
+    word_vob, word_idex_word, target_vob, target_idex_word, max_s = get_word_index([trainfile, testfile])
+    print("source vocab size: " + str(len(word_vob)))
+    print("target vocab size: " + str(len(target_vob)))
+    print("target vocab size: " + str(target_vob))
+    print("target vocab size: " + str(target_idex_word))
+
+    word_W, word_k= load_vec_txt(w2v_file, word_vob, k=w2v_k)
+    print("word2vec loaded!")
+    print("all vocab size: " + str(len(word_vob)))
+    print("source_W  size: " + str(len(word_W)))
+
+    char_vob, char_idex_char, max_c = get_Character_index({trainfile, testfile})
     print("source char size: ", char_vob.__len__())
     print("max_c: ", max_c)
     print("source char: " + str(char_idex_char))
@@ -224,6 +259,50 @@ def make_idx_char_index(fraglist, max_context, max_fragment, max_c, char_vob, wo
     return [char_fragment_all, char_leftcontext_all, char_rightcontext_all]
 
 
+def Data2Index_4segment_BIOES(file, max_s, source_vob, target_vob):
+
+    data_s_all=[]
+    data_tBIOES_all = []
+
+    f = open(file, 'r')
+    fr = f.readlines()
+
+    count = 0
+
+    data_tBIOES = []
+    data_s = []
+    for line in fr:
+
+        if line.__len__() <= 1:
+
+            data_s = data_s + [0] * max(0, max_s - count)
+            data_tBIOES = data_tBIOES + [[1] + [0] * 5] * max(0, max_s - count)
+
+            data_s_all.append(data_s)
+
+            data_tBIOES_all.append(data_tBIOES)
+
+            data_tBIOES = []
+            data_s = []
+            count = 0
+            continue
+
+        sent = line.strip('\r\n').rstrip('\n').split(' ')
+        if not source_vob.__contains__(sent[0]):
+            data_s.append(source_vob["**UNK**"])
+        else:
+            data_s.append(source_vob[sent[0]])
+
+
+        targetvecBIOES = np.zeros(5 + 1)
+        targetvecBIOES[target_vob[sent[4][0]]] = 1
+        data_tBIOES.append(targetvecBIOES)
+
+        count += 1
+
+    f.close()
+    return data_s_all, data_tBIOES_all
+
 
 def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment, hasNeg=True):
 
@@ -396,38 +475,5 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
 
 if __name__ == '__main__':
 
-    w2v_file = "./data/w2v/glove.6B.100d.txt"
-    c2v_file = "./data/w2v/C0NLL2003.NER.c2v_2.txt"
-    trainfile = "./data/CoNLL2003_NER/eng.train.BIOES.txt"
-    devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
-    testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     resultdir = "./data/result/"
 
-    word_vob, word_idex_word, target_vob, target_idex_word, max_s = get_word_index([trainfile, devfile, testfile])
-    print("source vocab size: " + str(len(word_vob)))
-    print("target vocab size: " + str(len(target_vob)))
-    print("target vocab size: " + str(target_vob))
-    print("target vocab size: " + str(target_idex_word))
-
-    hasNeg = True
-    max_context = 0
-    max_fragment = 1
-    train_fragment_list, max_context, max_fragment, train_target_count = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-    dev_fragment_list, max_context, max_fragment, dev_target_count = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-    test_fragment_list, max_context, max_fragment, test_target_count = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-
-
-    print('max_context--', max_context, 'max_fragment--', max_fragment)
-    print('len(test_fragment_list)---', len(test_fragment_list))
-
-    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
-    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
-
-    test = make_idx_word_index(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
-
-    ttcount = 0
-    for tt in test[4]:
-        if tt[1] == 1:
-            ttcount += 1
-            print(tt)
-    print(ttcount)
