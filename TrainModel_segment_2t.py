@@ -163,7 +163,7 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                validation_data=([devx_fragment, devx_leftcontext, devx_rightcontext,
                                                  devchar_fragment, devchar_leftcontext, devchar_rightcontext], [devy]),
                                shuffle=True,
-                               class_weight={0: 1, 1: 100},
+                               class_weight={0: 1, 1: 60},
                                verbose=1,
                                callbacks=[checkpointer])
 
