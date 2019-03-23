@@ -31,7 +31,7 @@ def tagging4SecondTraining(nn_model, testdata, chardata, index2type):
     predictions = nn_model.predict([testx_fragment, testx_leftcontext, testx_rightcontext,
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext],
                                    batch_size=512,
-                                      verbose=0)
+                                      verbose=1)
 
     data_fragment_all = []
     data_leftcontext_all = []
@@ -61,6 +61,8 @@ def tagging4SecondTraining(nn_model, testdata, chardata, index2type):
 
     SecondTrain_data = [data_fragment_all, data_leftcontext_all, data_rightcontext_all, data_t_all]
     SecondTrain_chardata = [char_fragment_all, char_leftcontext_all, char_rightcontext_all]
+
+    print('count of 2nd data', len(char_fragment_all))
 
     return SecondTrain_data, SecondTrain_chardata
 
