@@ -119,7 +119,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     devdata, chardev, Type_idex_word, dev_target_count,
                     testdata, chartest, test_target_count,
                     resultdir, npochos=100, batch_size=50, retrain=False):
-    class_weight = {0: 30, 1: 30, 2: 30, 3: 30, 4: 1}
+    class_weight = {0: 50, 1: 50, 2: 50, 3: 50, 4: 1}
     if retrain:
         nn_model.load_weights(modelfile)
         class_weight = {0: 1, 1: 1, 2: 1, 3: 1, 4: 1}
@@ -290,7 +290,7 @@ if __name__ == "__main__":
 
     batch_size = 512
     hidden_dim = 200
-    SecondTrain = True
+    SecondTrain = False
     retrain = False
     Test = True
 
