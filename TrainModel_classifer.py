@@ -121,11 +121,10 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     devdata, chardev, Type_idex_word, dev_target_count,
                     testdata, chartest, test_target_count,
                     resultdir, npochos=100, batch_size=50, retrain=False):
-    class_weight = {0: 50, 1: 50, 2: 50, 3: 50, 4: 1}
+
     if retrain:
         nn_model.load_weights(modelfile)
-        modelfile = modelfile + '.2nd.h5'
-        class_weight = {0: 1, 1: 1, 2: 1, 3: 1, 4: 1}
+
 
     nn_model.summary()
 
@@ -163,7 +162,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                epochs=epochlen,
                                validation_data=(inputs_dev_x, inputs_dev_y),
                                shuffle=True,
-                               class_weight=class_weight,
+                               # class_weight=class_weight,
                                verbose=1,
                                # callbacks=[checkpointer]
                                )
@@ -208,9 +207,6 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
         if earlystopping >= 10:
             break
 
-        if P_dev >= 0.45 and R_dev >= 0.95:
-            nn_model.save_weights(modelfile, overwrite=True)
-            break
 
     return nn_model
 
@@ -223,7 +219,7 @@ def infer_e2e_model(nnmodel, modelfile,
 
 
     nnmodel.load_weights(modelfile)
-    # nnmodel = load_model(lstm_modelfile)
+
 
     resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
 
@@ -281,7 +277,7 @@ if __name__ == "__main__":
     datafname = 'data_tagging_4type_PreC2V.1'
 
     if hasNeg:
-        datafname = 'data_tagging_5type_PreC2V.Ergodic.1'
+        datafname = 'data_tagging_5type_PreC2V.afterBIOES.1'
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
@@ -298,6 +294,7 @@ if __name__ == "__main__":
         get_data(trainfile,devfile, testfile, w2v_file, c2v_file, datafile,
                  w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=hasNeg)
 
+    print('Loading data ...')
     traindata, devdata, testdata,\
     chartrain, chardev, chartest,\
     word_vob, word_idex_word, \
@@ -359,7 +356,7 @@ if __name__ == "__main__":
 
 
 
-    for inum in range(6, 9):
+    for inum in range(0, 3):
 
         modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 
@@ -390,68 +387,6 @@ if __name__ == "__main__":
                             inputs_dev_x, inputs_dev_y, inputs_test_x, inputs_test_y,
                             devdata, chardev, Type_idex_word, dev_target_count,
                             testdata, chartest, test_target_count, resultdir, batch_size=batch_size)
-
-        if SecondTrain:
-
-            Train_2ndT_data, Train_2ndT_chardata = tagging4SecondTraining(nn_model, traindata, chartrain, Type_idex_word)
-            Dev_2ndT_data, Dev_2ndT_chardata = tagging4SecondTraining(nn_model, devdata, chardev, Type_idex_word)
-            Test_2ndT_data, Test_2ndT_chardata = tagging4SecondTraining(nn_model, testdata, chartest, Type_idex_word)
-
-            train2ndx_fragment = np.asarray(Train_2ndT_data[0], dtype="int32")
-            train2ndx_leftcontext = np.asarray(Train_2ndT_data[1], dtype="int32")
-            train2ndx_rightcontext = np.asarray(Train_2ndT_data[2], dtype="int32")
-            train2ndy = np.asarray(Train_2ndT_data[3], dtype="int32")
-            train2ndchar_fragment = np.asarray(Train_2ndT_chardata[0], dtype="int32")
-            train2ndchar_leftcontext = np.asarray(Train_2ndT_chardata[1], dtype="int32")
-            train2ndchar_rightcontext = np.asarray(Train_2ndT_chardata[2], dtype="int32")
-
-            dev2ndx_fragment = np.asarray(Dev_2ndT_data[0], dtype="int32")
-            dev2ndx_leftcontext = np.asarray(Dev_2ndT_data[1], dtype="int32")
-            dev2ndx_rightcontext = np.asarray(Dev_2ndT_data[2], dtype="int32")
-            dev2ndy = np.asarray(Dev_2ndT_data[3], dtype="int32")
-            dev2ndchar_fragment = np.asarray(Dev_2ndT_chardata[0], dtype="int32")
-            dev2ndchar_leftcontext = np.asarray(Dev_2ndT_chardata[1], dtype="int32")
-            dev2ndchar_rightcontext = np.asarray(Dev_2ndT_chardata[2], dtype="int32")
-
-            test2ndx_fragment = np.asarray(Test_2ndT_data[0], dtype="int32")
-            test2ndx_leftcontext = np.asarray(Test_2ndT_data[1], dtype="int32")
-            test2ndx_rightcontext = np.asarray(Test_2ndT_data[2], dtype="int32")
-            test2ndy = np.asarray(Test_2ndT_data[3], dtype="int32")
-            test2ndchar_fragment = np.asarray(Test_2ndT_chardata[0], dtype="int32")
-            test2ndchar_leftcontext = np.asarray(Test_2ndT_chardata[1], dtype="int32")
-            test2ndchar_rightcontext = np.asarray(Test_2ndT_chardata[2], dtype="int32")
-
-            inputs_train2nd_x = [train2ndx_fragment, train2ndx_leftcontext, train2ndx_rightcontext,
-                              train2ndchar_fragment, train2ndchar_leftcontext, train2ndchar_rightcontext]
-            inputs_train2nd_y = [train2ndy]
-
-            inputs_dev2nd_x = [dev2ndx_fragment, dev2ndx_leftcontext, dev2ndx_rightcontext,
-                            dev2ndchar_fragment, dev2ndchar_leftcontext, dev2ndchar_rightcontext]
-            inputs_dev2nd_y = [dev2ndy]
-
-            inputs_test2nd_x = [test2ndx_fragment, test2ndx_leftcontext, test2ndx_rightcontext,
-                             test2ndchar_fragment, test2ndchar_leftcontext, test2ndchar_rightcontext]
-            inputs_test2nd_y = [test2ndy]
-
-            if not os.path.exists(modelfile + '.2nd.h5'):
-                print("2nd Training EE model....")
-
-                train_e2e_model(nn_model, modelfile, inputs_train2nd_x, inputs_train2nd_y,
-                                inputs_dev2nd_x, inputs_dev2nd_y, inputs_test2nd_x, inputs_test2nd_y,
-                                Dev_2ndT_data, Dev_2ndT_chardata, Type_idex_word, dev_target_count,
-                                Test_2ndT_data, Test_2ndT_chardata, test_target_count,
-                                resultdir, npochos=100, batch_size=batch_size, retrain=SecondTrain)
-
-            if Test:
-                print("2nd test EE model....")
-                print(datafile)
-                print(modelfile+ '.2nd.h5')
-                infer_e2e_model(nn_model, modelfile+ '.2nd.h5',
-                                inputs_dev2nd_x, inputs_dev2nd_y, inputs_test2nd_x, inputs_test2nd_y,
-                                Dev_2ndT_data, Dev_2ndT_chardata, Type_idex_word, dev_target_count,
-                                Test_2ndT_data, Test_2ndT_chardata, test_target_count, resultdir, batch_size=batch_size)
-
-
 
 
     # import tensorflow as tf
