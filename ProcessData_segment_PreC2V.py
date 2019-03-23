@@ -520,11 +520,21 @@ if __name__=="__main__":
     trainfile = "./data/CoNLL2003_NER/eng.train.BIOES.txt"
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
-    w2v_file = "./data/w2v/glove.6B.300d.txt"
+    w2v_file = "./data/w2v/glove.6B.100d.txt"
     datafile = "./data/model/data.pkl"
     modelfile = "./data/model/model.pkl"
     resultdir = "./data/result/"
 
+    source_vob, sourc_idex_word, target_vob, target_idex_word, max_s = get_word_index(trainfile, {devfile, testfile})
+    print("source vocab size: ", str(len(source_vob)))
+    print("target vocab size: ", str(len(target_vob)))
+    print("target vocab size: " + str(target_vob))
+    print("target vocab size: " + str(target_idex_word))
+    print ('max soure sent lenth is ' + str(max_s))
 
 
+    train = make_idx_data_index(trainfile,max_s,source_vob,target_vob)
+    dev = make_idx_data_index(devfile,max_s,source_vob,target_vob)
+    test = make_idx_data_index(testfile, max_s, source_vob, target_vob)
+    print(len(train[0]), len(dev[0]), len(test[0]))
 

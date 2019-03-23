@@ -206,12 +206,10 @@ def Train41stsegment(datafname, datafile, trainfile, testfile, w2v_file, c2v_fil
     trainx_word = np.asarray(train_A_4segment_BIOES[0], dtype="int32")
     trainx_char = np.asarray(train_A_4segment_BIOES[2], dtype="int32")
     trainy = np.asarray(train_A_4segment_BIOES[1], dtype="int32")
-    traint = np.asarray(train_A_4segment_BIOES[3], dtype="int32")
 
     testx_word = np.asarray(test_4segment_BIOES[0], dtype="int32")
     testx_char = np.asarray(test_4segment_BIOES[2], dtype="int32")
     testy = np.asarray(test_4segment_BIOES[1], dtype="int32")
-    testt = np.asarray(test_4segment_BIOES[3], dtype="int32")
 
     model_segment = TrainModel_segment.SelectModel(modelname=model1name,
                                                    sourcevocabsize=len(word_vob),
