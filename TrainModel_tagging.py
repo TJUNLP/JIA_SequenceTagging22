@@ -165,53 +165,48 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                # callbacks=[checkpointer]
                                )
 
+        print('the dev result-----------------------')
+        P_dev, R_dev, F_dev = test_model_tagging(nn_model, devdata, chardev, Type_idex_word, dev_target_count)
 
-        if epoch >= saveepoch:
-            saveepoch += save_inter
-            resultfile = ''
+        print('the test result-----------------------')
+        loss, acc = nn_model.evaluate(inputs_test_x, inputs_test_y, verbose=1, batch_size=512)
+        print('\n test_test score:', loss, acc)
+        P, R, F = test_model_tagging(nn_model, testdata, chartest, Type_idex_word, test_target_count)
 
-            print('the dev result-----------------------')
-            P, R, F = test_model_tagging(nn_model, devdata, chardev, Type_idex_word, dev_target_count)
+        # nn_best_model = SelectModel(modelname,
+        #               wordvocabsize=len(word_vob),
+        #               targetvocabsize=len(Type_vob),
+        #               charvobsize=len(char_vob),
+        #               word_W=word_W, char_W=character_W,
+        #               input_fragment_lenth=max_fragment,
+        #               input_leftcontext_lenth=max_context,
+        #               input_rightcontext_lenth=max_context,
+        #               input_maxword_length=max_c,
+        #               w2v_k=word_k, c2v_k=character_k,
+        #               hidden_dim=hidden_dim, batch_size=batch_size)
+        #
+        # nn_best_model.load_weights(modelfile + ".best_model.h5")
+        # P_bm, R_bm, F_bm = test_model_tagging(nn_best_model, testdata, chartest, Type_idex_word, test_target_count)
 
-            print('the test result-----------------------')
-            loss, acc = nn_model.evaluate(inputs_test_x,
-                                          inputs_test_y,
-                                          verbose=1,
-                                          batch_size=512)
-            print('\n test_test score:', loss, acc)
+        if F > maxF:
+            earlystopping = 0
+            maxF = F
+            nn_model.save_weights(modelfile, overwrite=True)
+        # if F_bm > maxF:
+        #     earlystopping = 0
+        #     maxF = F_bm
+        #     nn_best_model.save_weights(modelfile, overwrite=True)
 
-            P, R, F = test_model_tagging(nn_model, testdata, chartest, Type_idex_word, test_target_count)
+        else:
+            earlystopping += epochlen
 
-            # nn_best_model = SelectModel(modelname,
-            #               wordvocabsize=len(word_vob),
-            #               targetvocabsize=len(Type_vob),
-            #               charvobsize=len(char_vob),
-            #               word_W=word_W, char_W=character_W,
-            #               input_fragment_lenth=max_fragment,
-            #               input_leftcontext_lenth=max_context,
-            #               input_rightcontext_lenth=max_context,
-            #               input_maxword_length=max_c,
-            #               w2v_k=word_k, c2v_k=character_k,
-            #               hidden_dim=hidden_dim, batch_size=batch_size)
-            #
-            # nn_best_model.load_weights(modelfile + ".best_model.h5")
-            # P_bm, R_bm, F_bm = test_model_tagging(nn_best_model, testdata, chartest, Type_idex_word, test_target_count)
-
-            if F > maxF:
-                earlystopping = 0
-                maxF = F
-                nn_model.save_weights(modelfile, overwrite=True)
-            # if F_bm > maxF:
-            #     earlystopping = 0
-            #     maxF = F_bm
-            #     nn_best_model.save_weights(modelfile, overwrite=True)
-
-            else:
-                earlystopping += epochlen
-
-            print(epoch, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>maxF=', maxF)
+        print(epoch, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>maxF=', maxF)
 
         if earlystopping >= 10:
+            break
+
+        if P_dev >= 0.45 and R_dev >= 0.95:
+            nn_model.save_weights(modelfile, overwrite=True)
             break
 
     return nn_model
@@ -290,7 +285,7 @@ if __name__ == "__main__":
 
     batch_size = 512
     hidden_dim = 200
-    SecondTrain = False
+    SecondTrain = True
     retrain = False
     Test = True
 
