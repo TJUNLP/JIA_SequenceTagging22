@@ -165,7 +165,8 @@ def train_e2e_model(modelname, datafile, modelfile, resultdir, npochos=100,hidde
                                shuffle=True,
                                class_weight={0: 1, 1: 60},
                                verbose=1,
-                               callbacks=[checkpointer])
+                               # callbacks=[checkpointer]
+                                )
 
 
         if epoch >= saveepoch:
