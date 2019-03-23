@@ -121,7 +121,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     resultdir, npochos=100, batch_size=50, retrain=False):
     class_weight = {0: 50, 1: 50, 2: 50, 3: 50, 4: 1}
     if retrain:
-        nn_model.load_weights(modelfile)
+        nn_model.load_weights(modelfile + '.2nd.h5')
         class_weight = {0: 1, 1: 1, 2: 1, 3: 1, 4: 1}
 
     nn_model.summary()
