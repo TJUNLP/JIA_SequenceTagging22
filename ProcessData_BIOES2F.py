@@ -29,114 +29,82 @@ def get_data_4segment_BIOES(trainfile, testfile, w2v_file, c2v_file, datafile, w
     character_W, character_k = load_vec_character(c2v_file, char_vob, c2v_k)
     print('character_W shape:', character_W.shape)
 
-    train_all, train_target_all = Data2Index_4segment_BIOES(trainfile, max_s, word_vob, target_vob)
-    test_all, test_target_all = Data2Index_4segment_BIOES(testfile, max_s, word_vob, target_vob)
+    target1_idex_word = {1: 'O', 2: 'I', 3: 'B', 4: 'E', 5: 'S'}
+    target1_vob = {'O': 1, 'I': 2, 'B': 3, 'E': 4, 'S': 5}
 
-    print('train_all size', len(train_all), 'target_all', len(train_target_all))
-    print('test_all size', len(test_all))
+    train_word_all, train_target_all, train_t_all = Data2Index_4segment_BIOES(trainfile, max_s, word_vob, target_vob, target1_vob)
+    test_word_all, test_target_all, test_t_all = Data2Index_4segment_BIOES(testfile, max_s, word_vob, target_vob, target1_vob)
+    print('train_all size', len(train_word_all), 'target_all', len(train_target_all))
+    print('test_all size', len(test_word_all))
+    train_char_all = Char2Index_4segment_BIOES(trainfile, max_s, max_c, char_vob)
+    test_char_all = Char2Index_4segment_BIOES(testfile, max_s, max_c, char_vob)
 
+    # indices = np.arange(len(train_word_all))
+    # np.random.shuffle(indices)
+    train_split = int(len(train_word_all) // 2)
 
+    train_A_word = train_word_all[:train_split]
+    train_A_target = train_target_all[:train_split]
+    train_A_t = train_t_all[:train_split]
+    train_B_word = train_word_all[train_split:]
+    train_B_target = train_target_all[train_split:]
+    train_B_t = train_t_all[train_split:]
+    train_A_char = train_char_all[:train_split]
+    train_B_char = train_char_all[train_split:]
 
+    train_A_4segment_BIOES = [train_A_word, train_A_target, train_A_char, train_A_t]
+    train_B_4segment_BIOES = [train_B_word, train_B_target, train_B_char, train_B_t]
+    test_4segment_BIOES = [test_word_all, test_target_all, test_char_all, test_t_all]
 
-
-
-
-
-def get_data_4classifer(trainfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg = True):
-
-    # 数据处理的入口函数
-
-    word_vob, word_idex_word, target_vob, target_idex_word, max_s = get_word_index([trainfile, testfile])
-    print("source vocab size: " + str(len(word_vob)))
-    print("target vocab size: " + str(len(target_vob)))
-    print("target vocab size: " + str(target_vob))
-    print("target vocab size: " + str(target_idex_word))
-
-    word_W, word_k= load_vec_txt(w2v_file, word_vob, k=w2v_k)
-    print("word2vec loaded!")
-    print("all vocab size: " + str(len(word_vob)))
-    print("source_W  size: " + str(len(word_W)))
-
-    char_vob, char_idex_char, max_c = get_Character_index({trainfile, testfile})
-    print("source char size: ", char_vob.__len__())
-    print("max_c: ", max_c)
-    print("source char: " + str(char_idex_char))
-
-    character_W, character_k = load_vec_character(c2v_file, char_vob, c2v_k)
-    print('character_W shape:', character_W.shape)
-
-    max_context = 0
-    max_fragment = 1
-    train_fragment_list, max_context, max_fragment, train_target_count = Seq2fragment.Seq2frag(trainfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-    dev_fragment_list, max_context, max_fragment, dev_target_count = Seq2fragment.Seq2frag(devfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-    test_fragment_list, max_context, max_fragment, test_target_count = Seq2fragment.Seq2frag(testfile, word_vob, target_vob, target_idex_word, max_context, max_fragment, hasNeg=hasNeg)
-    test_target_count = 5648
-
-    # datafile_1Step = "./model_data/data_segment_BIOES_PreC2V.1" + ".pkl"
-    # modelname_1Step = 'Model_BiLSTM_CRF'
-    # inum = 0
-    # modelfile_1Step = "./model/" + modelname_1Step + "__PreC2V" + "__segment_" + str(inum) + ".h5"
-    #
-    # traindata1, devdata1, testdata1, chartrain1, chardev1, chartest1,\
-    # source_W1, character_W1,\
-    # source_vob1, index2word1, target_vob1, index2tag1, source_char1,\
-    # max_s1, w2v_k1, max_c1, c2v_k1 = pickle.load(open(datafile_1Step, 'rb'))
-    #
-    # batch_size_1Step =32
-    #
-    # model_1Step = TrainModel_segment.SelectModel(modelname_1Step,
-    #                                          sourcevocabsize=len(source_vob1),
-    #                                          targetvocabsize=len(target_vob1),
-    #                       source_W=source_W1,
-    #                       input_seq_lenth=max_s1,
-    #                       output_seq_lenth=max_s1,
-    #                       hidden_dim=200, emd_dim=w2v_k1,
-    #                       sourcecharsize=len(source_char1),
-    #                       character_W=character_W1,
-    #                       input_word_length=max_c1, char_emd_dim=c2v_k1, batch_size=batch_size_1Step)
-    #
-    # model_1Step.load_weights(modelfile_1Step)
-    #
-    # testresult_1Step = test_model_segment(model_1Step, testdata1, chartest1, index2tag1)
-    #
-    # test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
-    # print('len(test_fragment_list)---', len(test_fragment_list))
-    #
-    print('max_context--', max_context, 'max_fragment--', max_fragment)
-    print('len(test_fragment_list)---', len(test_fragment_list))
-    print('test_target_count--- ', test_target_count)
-
-    if hasNeg:
-        Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
-        Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
-    else:
-        Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
-        Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
-
-    train = make_idx_word_index(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
-    dev = make_idx_word_index(dev_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
-    test = make_idx_word_index(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
-    print(len(train), len(dev), len(test))
-
-    chartrain = make_idx_char_index(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
-    chardev = make_idx_char_index(dev_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
-    chartest = make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
-    print(len(chartrain), len(chardev), len(chartest))
-
-    print ("dataset created!")
-    out = open(datafile,'wb')
-    pickle.dump([train, dev, test,
-                 chartrain, chardev, chartest,
-                 word_vob, word_idex_word,
-                 target_vob, target_idex_word,
-                 Type_vob, Type_idex_word,
-                 char_vob, char_idex_char,
-                 word_W, word_k,
-                 character_W, character_k,
-                 max_context, max_fragment, max_c,
-                 train_target_count, dev_target_count, test_target_count], out, 0)
+    print(datafile, "dataset created!")
+    out = open(datafile, 'wb')#
+    pickle.dump([train_A_4segment_BIOES, train_B_4segment_BIOES, test_4segment_BIOES,
+                 word_W, character_W,
+                 word_vob, word_idex_word, target_vob, target_idex_word, char_vob,
+                 max_s, w2v_k, max_c, c2v_k], out, 0)
     out.close()
 
+
+
+
+
+
+def get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target0_idex_word, target1_idex_word,
+                        max_c, char_vob, word_idex_word, batch_size):
+
+
+    train_fragment_list, max_context, max_fragment, train_target_right = get_data_42ndTraining(model_segment,
+                                                                                   train_B_4segment_BIOES,
+                                                                                   target0_idex_word=target0_idex_word,
+                                                                                   index2BIOES=target1_idex_word,
+                                                                                   batch_size=batch_size, Istest=False)
+    test_fragment_list, max_context, max_fragment, test_target_right = get_data_42ndTraining(model_segment, test_4segment_BIOES,
+                                                                                   target0_idex_word=target0_idex_word,
+                                                                                   index2BIOES=target1_idex_word,
+                                                                                   batch_size=batch_size,
+                                                                                   Istest=True)
+    test_target_count = 5648
+
+    print('max_context--', max_context, 'max_fragment--', max_fragment)
+    print('len(test_fragment_list)---', len(test_fragment_list))
+    print('test_target_right--- ', test_target_right)
+
+
+    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
+    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
+
+    train = Data2Index_42ndclassifer(train_fragment_list, Type_vob, max_context, max_fragment)
+    test = Data2Index_42ndclassifer(test_fragment_list, Type_vob, max_context, max_fragment)
+    print(len(train), len(test))
+
+    chartrain = make_idx_char_index(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+
+    chartest = make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    print(len(chartrain), len(chartest))
+
+    print ("dataset created!")
+
+    return train, test, chartrain, chartest, Type_vob, Type_idex_word, max_fragment, max_context, test_target_count
 
 
 def get_word_index(files):
@@ -259,10 +227,57 @@ def make_idx_char_index(fraglist, max_context, max_fragment, max_c, char_vob, wo
     return [char_fragment_all, char_leftcontext_all, char_rightcontext_all]
 
 
-def Data2Index_4segment_BIOES(file, max_s, source_vob, target_vob):
+def Char2Index_4segment_BIOES(file, max_s, max_c, source_vob):
+
+    data_s_all=[]
+    count = 0
+    f = open(file,'r')
+    fr = f.readlines()
+
+    data_w = []
+    for line in fr:
+
+        if line.__len__() <= 1:
+            num = max_s - count
+            # print('num ', num, 'max_s', max_s, 'count', count)
+
+            for inum in range(0, num):
+                data_tmp = []
+                for i in range(0, max_c):
+                    data_tmp.append(0)
+                data_w.append(data_tmp)
+            # print(data_s)
+            # print(data_t)
+            data_s_all.append(data_w)
+
+            data_w = []
+            count =0
+            continue
+
+        data_c = []
+        word = line.strip('\r\n').rstrip('\n').split(' ')[0]
+
+        for chr in range(0, min(word.__len__(), max_c)):
+            if not source_vob.__contains__(word[chr]):
+                data_c.append(source_vob["**UNK**"])
+            else:
+                data_c.append(source_vob[word[chr]])
+
+        num = max_c - word.__len__()
+        for i in range(0, max(num, 0)):
+            data_c.append(0)
+        count += 1
+        data_w.append(data_c)
+
+    f.close()
+    return data_s_all
+
+
+def Data2Index_4segment_BIOES(file, max_s, source_vob, target_vob, target1_vob):
 
     data_s_all=[]
     data_tBIOES_all = []
+    data_t_all = []
 
     f = open(file, 'r')
     fr = f.readlines()
@@ -270,6 +285,7 @@ def Data2Index_4segment_BIOES(file, max_s, source_vob, target_vob):
     count = 0
 
     data_tBIOES = []
+    data_t = []
     data_s = []
     for line in fr:
 
@@ -279,10 +295,11 @@ def Data2Index_4segment_BIOES(file, max_s, source_vob, target_vob):
             data_tBIOES = data_tBIOES + [[1] + [0] * 5] * max(0, max_s - count)
 
             data_s_all.append(data_s)
-
+            data_t_all.append(data_t)
             data_tBIOES_all.append(data_tBIOES)
 
             data_tBIOES = []
+            data_t = []
             data_s = []
             count = 0
             continue
@@ -294,17 +311,21 @@ def Data2Index_4segment_BIOES(file, max_s, source_vob, target_vob):
             data_s.append(source_vob[sent[0]])
 
 
-        targetvecBIOES = np.zeros(5 + 1)
-        targetvecBIOES[target_vob[sent[4][0]]] = 1
+        targetvecBIOES = np.zeros(len(target1_vob) + 1)
+        targetvecBIOES[target1_vob[sent[4][0]]] = 1
         data_tBIOES.append(targetvecBIOES)
+
+        targetvec = np.zeros(len(target_vob) + 1)
+        targetvec[target_vob[sent[4]]] = 1
+        data_t.append(targetvec)
 
         count += 1
 
     f.close()
-    return data_s_all, data_tBIOES_all
+    return data_s_all, data_tBIOES_all, data_t_all
 
 
-def make_idx_word_index(fraglist, word2index_Type, max_context, max_fragment, hasNeg=True):
+def Data2Index_42ndclassifer(fraglist, word2index_Type, max_context, max_fragment, hasNeg=True):
 
     data_fragment_all = []
     data_leftcontext_all = []
@@ -471,6 +492,190 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
     print('divide---BIOES>>>>>>>>>>', P, R, F)
 
     return testresult_1Step
+
+
+def get_data_42ndTraining(nn_model, test_4segment_BIOES, target0_idex_word, index2BIOES, batch_size=256, Istest=False):
+
+    index2BIOES[0] = ''
+
+    testx_word = np.asarray(test_4segment_BIOES[0], dtype="int32")
+    testx_char = np.asarray(test_4segment_BIOES[2], dtype="int32")
+    testy = np.asarray(test_4segment_BIOES[1], dtype="int32")
+    testt = np.asarray(test_4segment_BIOES[3], dtype="int32")
+
+    predictions = nn_model.predict([testx_word, testx_char], batch_size=batch_size, verbose=1)
+
+    ptag_BIOES_all = []
+    for si in range(0, len(predictions)):
+
+        ptag_BIOES = []
+        for word in predictions[si]:
+            next_index = np.argmax(word)
+            next_token = index2BIOES[next_index]
+            if next_token == '':
+                break
+            ptag_BIOES.append(next_token)
+
+        ptag_BIOES_all.append(ptag_BIOES)
+
+    max_context = 0
+    max_fragment = 1
+    print('is test ? ', Istest)
+    if not Istest:
+        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, target0_idex_word, max_context, max_fragment)
+    else:
+        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, target0_idex_word, max_context, max_fragment)
+
+    print('len(fragment_list) = ', len(fragment_list))
+    print('the count right target is ', target_right)
+
+    return fragment_list, max_context, max_fragment, target_right
+
+
+def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, target0_idex_word, max_context, max_fragment):
+    target_right = 0
+    fragment_list = []
+
+    for id, ptag2list in enumerate(ptag_BIOES_all):
+        fragtuples_list = []
+        index = 0
+        while index < len(ptag2list):
+            if ptag2list[index] == 'O' or ptag2list[index] == '':
+                index += 1
+                continue
+            elif ptag2list[index] == 'B':
+                target_left = index
+                index += 1
+                while index < len(ptag2list):
+                    if ptag2list[index] == 'I':
+                        index += 1
+                        continue
+                    elif ptag2list[index] == 'E':
+                        target_right = index + 1
+                        reltag = 'NULL'
+                        if 'B-' in target0_idex_word[testt[id][target_left]] and \
+                                'E-' in target0_idex_word[testt[id][index]]:
+                            reltag = target0_idex_word[testt[id][target_left]][2:]
+                            target_right += 1
+
+                        tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), reltag)
+                        fragtuples_list.append(tuple)
+                        index += 1
+                        break
+                    else:
+                        break
+
+            if ptag2list[index] == 'S':
+                target_left = index
+                target_right = index + 1
+                reltag = 'NULL'
+                if 'S-' not in target0_idex_word[testt[id][index]]:
+                    reltag = target0_idex_word[testt[id][target_left]][2:]
+                    target_right += 1
+
+                tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), reltag)
+                fragtuples_list.append(tuple)
+                index += 1
+
+        for tup in fragtuples_list:
+            context_left = testx_word[id][tup[0]:tup[1]]
+            fragment = testx_word[id][tup[2]:tup[3]]
+            context_right = testx_word[id][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
+    return fragment_list, max_context, max_fragment, target_right
+
+
+def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, target0_idex_word, max_context, max_fragment):
+    target_right = 0
+    fragment_list = []
+
+    for id, tag2list in enumerate(testt):
+
+        target_left = 0
+        fragtuples_list = []
+        for index, tag in enumerate(tag2list):
+
+            if tag == 'O':
+                target_left = index
+                continue
+
+            else:
+                if target0_idex_word[tag].__contains__('B-'):
+                    target_left = index
+
+                elif target0_idex_word[tag].__contains__('I-'):
+                    continue
+
+                else:
+                    if target0_idex_word[tag].__contains__('S-'):
+
+                        target_left = index
+                        target_right = index + 1
+
+                    elif target0_idex_word[tag].__contains__('E-'):
+
+                        target_right = index + 1
+
+                    reltag = target0_idex_word[tag][2:]
+                    tuple_posi = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
+                    fragtuples_list.append(tuple_posi)
+                    target_right += 1
+                    flens = max(index + 1, len(tag2list) - target_left)
+                    if flens > max_context:
+                        max_context = flens
+                    max_fragment = max(max_fragment, target_right - target_left)
+
+        for tup in fragtuples_list:
+            context_left = testx_word[id][tup[0]:tup[1]]
+            fragment = testx_word[id][tup[2]:tup[3]]
+            context_right = testx_word[id][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
+    for id, ptag2list in enumerate(ptag_BIOES_all):
+        fragtuples_list = []
+        index = 0
+        while index < len(ptag2list):
+            if ptag2list[index] == 'O' or ptag2list[index] == '':
+                index += 1
+                continue
+            elif ptag2list[index] == 'B':
+                target_left = index
+                index += 1
+                while index < len(ptag2list):
+                    if ptag2list[index] == 'I':
+                        index += 1
+                        continue
+                    elif ptag2list[index] == 'E':
+                        target_right = index + 1
+
+                        if 'B-' in target0_idex_word[testt[id][target_left]] and \
+                                'E-' in target0_idex_word[testt[id][index]]:
+                            break
+
+                        tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), 'NULL')
+                        fragtuples_list.append(tuple)
+                        index += 1
+                        break
+                    else:
+                        break
+
+            if ptag2list[index] == 'S' and 'S-' not in target0_idex_word[testt[id][index]]:
+                target_left = index
+                target_right = index + 1
+                tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), 'NULL')
+                fragtuples_list.append(tuple)
+                index += 1
+        for tup in fragtuples_list:
+            context_left = testx_word[id][tup[0]:tup[1]]
+            fragment = testx_word[id][tup[2]:tup[3]]
+            context_right = testx_word[id][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
+    return fragment_list, max_context, max_fragment, target_right
 
 
 if __name__ == '__main__':

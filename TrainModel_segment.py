@@ -12,7 +12,7 @@ import pickle, datetime, codecs
 import os.path
 import numpy as np
 
-from ProcessData_segment_PreC2V import get_data
+from ProcessData_BIOES2F import get_data_4segment_BIOES
 from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
 from network.NN_single import Model_BiLSTM_CRF, Model_BiLSTM_CnnDecoder, Model_BiLSTM_parallel_8_64_CRF
 from network.NN_single import Model_BiLSTM_Softmax
@@ -20,17 +20,12 @@ from network.NN_single import Model_BiLSTM_X2_CRF
 
 
 
-def test_model_segment(nn_model, testdata, chardata, index2word, resultfile='', batch_size=50):
+def test_model_segment(model, inputs_test_x, inputs_test_y, index2word, resultfile='', batch_size=256):
 
     index2word[0] = ''
 
-
-    testx = np.asarray(testdata[0], dtype="int32")
-    testy_BIOES = np.asarray(testdata[1], dtype="int32")
-    testchar = np.asarray(chardata, dtype="int32")
-
     testresult2 = []
-    predictions = nn_model.predict([testx, testchar])
+    predictions = model.predict(inputs_test_x, batch_size=batch_size)
 
     for si in range(0, len(predictions)):
 
@@ -41,7 +36,7 @@ def test_model_segment(nn_model, testdata, chardata, index2word, resultfile='', 
             ptag_BIOES.append(next_token)
 
         ttag_BIOES = []
-        for word in testy_BIOES[si]:
+        for word in inputs_test_y[0][si]:
             next_index = np.argmax(word)
             next_token = index2word[next_index]
             ttag_BIOES.append(next_token)
@@ -55,37 +50,17 @@ def test_model_segment(nn_model, testdata, chardata, index2word, resultfile='', 
     return P, R, F, PR_count, P_count, TR_count
 
 
-def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidden_dim=200, batch_size=50, retrain=False):
-    # load training data and test data
+def train_e2e_model(model, modelfile, inputs, target_idex_word, resultdir, npochos=100, batch_size=50, retrain=False):
 
-    traindata, devdata, testdata, chartrain, chardev, chartest,\
-    source_W, character_W,\
-    source_vob, sourc_idex_word, target_vob, target_idex_word, source_char,\
-    max_s, w2v_k, max_c, c2v_k = pickle.load(open(datafile, 'rb'))
-
-    # train model
-    x_word = np.asarray(traindata[0], dtype="int32")
-    y = np.asarray(traindata[1], dtype="int32")
-    input_char = np.asarray(chartrain, dtype="int32")
-    x_word_val = np.asarray(devdata[0], dtype="int32")
-    y_val = np.asarray(devdata[1], dtype="int32")
-    input_char_val = np.asarray(chardev, dtype="int32")
-
-    nn_model = SelectModel(Modelname, sourcevocabsize=len(source_vob), targetvocabsize=len(target_vob),
-                                     source_W=source_W,
-                                     input_seq_lenth=max_s,
-                                     output_seq_lenth=max_s,
-                                     hidden_dim=hidden_dim, emd_dim=w2v_k,
-                           sourcecharsize=len(source_char),
-                           character_W=character_W,
-                           input_word_length=max_c, char_emd_dim=c2v_k, batch_size=batch_size)
+    inputs_train_x = inputs[0]
+    inputs_train_y = inputs[1]
+    inputs_test_x = inputs[2]
+    inputs_test_y = inputs[3]
 
     if retrain:
-        nn_model.load_weights(modelfile)
+        model.load_weights(modelfile)
 
-    nn_model.summary()
-
-
+    model.summary()
 
     # early_stopping = EarlyStopping(monitor='val_loss', patience=8)
     # checkpointer = ModelCheckpoint(filepath="./data/model/best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
@@ -103,71 +78,54 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     # # nn_model.save(modelfile, overwrite=True)
     epoch = 0
     save_inter = 1
-    saveepoch = save_inter
+
     maxF = 0
     earlystopping =0
-    i = 0
+
     while (epoch < npochos):
-        epoch = epoch + 1
-        i += 1
+        epoch = epoch + save_inter
 
-        history = nn_model.fit([x_word, input_char], [y],
-                               batch_size=batch_size,
-                               epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_val]),
-                               shuffle=True,
-                               # sample_weight =sample_weight,
-                               verbose=1)
+        history = model.fit(inputs_train_x, inputs_train_y,
+                            batch_size=batch_size,
+                            epochs=save_inter,
+                            validation_split=0.2,
+                            shuffle=True,
+                            # sample_weight =sample_weight,
+                            verbose=1)
 
 
-        if epoch >= saveepoch:
-        # if epoch >=0:
-            saveepoch += save_inter
-            resultfile = ''
-            print('the dev result-----------------------')
-            P, R, F, PR_count, P_count, TR_count = test_model_segment(nn_model, devdata, chardev, target_idex_word, resultfile, batch_size)
-            print(P, R, F)
-            print('the test result-----------------------')
-            P, R, F, PR_count, P_count, TR_count = test_model_segment(nn_model, testdata, chartest, target_idex_word, resultfile,
-                                                          batch_size)
 
-            if F > maxF:
-                earlystopping = 0
-                maxF=F
-                nn_model.save_weights(modelfile, overwrite=True)
+        resultfile = ''
 
-            else:
-                earlystopping += 1
+        print('the test result-----------------------')
+        P, R, F, PR_count, P_count, TR_count = test_model_segment(model, inputs_test_x, inputs_test_y, target_idex_word, resultfile,
+                                                      batch_size)
 
-            print(epoch, P, R, F, '  maxF=', maxF)
+        if F > maxF:
+            earlystopping = 0
+            maxF=F
+            model.save_weights(modelfile, overwrite=True)
+
+        else:
+            earlystopping += save_inter
+
+        print(epoch, P, R, F, '  maxF=', maxF)
 
         if earlystopping >= 10:
             break
 
-    return nn_model
+    return model
 
 
-def infer_e2e_model(modelname, datafile, lstm_modelfile, resultdir, hidden_dim=200, batch_size=50):
+def infer_e2e_model(model, modelfile, inputs, target_idex_word, resultdir, batch_size=50):
+    inputs_test_x = inputs[0]
+    inputs_test_y = inputs[1]
 
-    traindata, devdata, testdata, chartrain, chardev, chartest,\
-    source_W, character_W,\
-    source_vob, sourc_idex_word, target_vob, target_idex_word, source_char,\
-    max_s, w2v_k, max_c, c2v_k = pickle.load(open(datafile, 'rb'))
-
-    nnmodel = SelectModel(modelname, sourcevocabsize=len(source_vob), targetvocabsize=len(target_vob),
-                                     source_W=source_W,
-                                     input_seq_lenth=max_s,
-                                     output_seq_lenth=max_s,
-                                     hidden_dim=hidden_dim, emd_dim=w2v_k,
-                           sourcecharsize=len(source_char),
-                           character_W=character_W,
-                           input_word_length=max_c, char_emd_dim=c2v_k, batch_size=batch_size)
-
-    nnmodel.load_weights(lstm_modelfile)
-    # nnmodel = load_model(lstm_modelfile)
     resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
 
-    P, R, F, PR_count, P_count, TR_count = test_model_segment(nnmodel, testdata, chartest, target_idex_word, resultfile,
+    model.load_weights(modelfile)
+
+    P, R, F, PR_count, P_count, TR_count = test_model_segment(model, inputs_test_x, inputs_test_y, target_idex_word, resultfile,
                                                       batch_size)
     print('P= ', P, '  R= ', R, '  F= ', F)
 
@@ -213,14 +171,15 @@ if __name__ == "__main__":
     modelname = 'Model_BiLSTM_CRF'
     # modelname = 'Model_BiLSTM_parallel_8_64_CRF'
     # modelname = 'Model_BiLSTM_Softmax'
-    modelname = 'Model_BiLSTM_X2_CRF'
+    # modelname = 'Model_BiLSTM_X2_CRF'
 
     print(modelname)
 
     w2v_file = "./data/w2v/glove.6B.100d.txt"
     c2v_file = "./data/w2v/C0NLL2003.NER.c2v.txt"
-    trainfile = "./data/CoNLL2003_NER/eng.train.BIOES.txt"
-    devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
+    # trainfile = "./data/CoNLL2003_NER/eng.train.BIOES.txt"
+    # devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
+    trainfile = "./data/CoNLL2003_NER/eng.train.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     resultdir = "./data/result/"
 
@@ -234,8 +193,7 @@ if __name__ == "__main__":
 
     if not os.path.exists(datafile):
         print("Precess data....")
-
-        get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, c2v_k=50, maxlen=maxlen)
+        get_data_4segment_BIOES(trainfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, c2v_k=50, maxlen=maxlen)
 
     for inum in range(0,3):
 
