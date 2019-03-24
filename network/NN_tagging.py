@@ -239,12 +239,12 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     embedding_rightcontext = word_embedding_rightcontext
 
     LSTM_leftcontext = LSTM(hidden_dim, go_backwards=False, activation='tanh')(embedding_leftcontext)
-    Rep_LSTM_leftcontext = Reshape((1, hidden_dim))(LSTM_leftcontext)
+    Rep_LSTM_leftcontext = RepeatVector(1)(LSTM_leftcontext)
     LSTM_rightcontext = LSTM(hidden_dim, go_backwards=True, activation='tanh')(embedding_rightcontext)
-    Rep_LSTM_rightcontext = Reshape((1, hidden_dim))(LSTM_rightcontext)
+    Rep_LSTM_rightcontext = RepeatVector(1)(LSTM_rightcontext)
     BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
-
-    concat = concatenate([Rep_LSTM_leftcontext, embedding_fragment, Rep_LSTM_rightcontext], axis=1)
+    tmp = Dense(99)(Rep_LSTM_leftcontext)
+    concat = concatenate([LSTM_leftcontext, tmp, LSTM_rightcontext], axis=1)
     concat = Dropout(0.2)(concat)
     concat_1 = Dense(hidden_dim, activation='tanh')(concat)
 
