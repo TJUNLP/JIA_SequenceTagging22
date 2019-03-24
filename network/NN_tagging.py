@@ -146,19 +146,8 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
                                weights=[word_W])(word_input_leftcontext)
     word_embedding_leftcontext = Dropout(0.5)(word_embedding_leftcontext)
 
-    char_input_leftcontext = Input(shape=(input_leftcontext_lenth, input_maxword_length,), dtype='int32')
-    char_embedding_leftcontext = TimeDistributed(Embedding(input_dim=charvobsize,
-                                                        output_dim=c2v_k,
-                                                        batch_input_shape=(
-                                                        batch_size, input_leftcontext_lenth, input_maxword_length),
-                                                        mask_zero=True,
-                                                        trainable=True,
-                                                        weights=[char_W]))(char_input_leftcontext)
-
-
-    char_embedding_leftcontext = TimeDistributed(char_bilstm)(char_embedding_leftcontext)
-    char_embedding_leftcontext = Dropout(0.25)(char_embedding_leftcontext)
-
+    char_input_leftcontext = Input(shape=(input_rightcontext_lenth, input_maxword_length,), dtype='int32')
+    char_input_rightcontext = Input(shape=(input_rightcontext_lenth, input_maxword_length,), dtype='int32')
 
     word_input_rightcontext = Input(shape=(input_rightcontext_lenth,), dtype='int32')
     word_embedding_rightcontext = Embedding(input_dim=wordvocabsize + 1,
@@ -169,22 +158,10 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
                                weights=[word_W])(word_input_rightcontext)
     word_embedding_rightcontext = Dropout(0.5)(word_embedding_rightcontext)
 
-    char_input_rightcontext = Input(shape=(input_rightcontext_lenth, input_maxword_length,), dtype='int32')
-    char_embedding_rightcontext = TimeDistributed(Embedding(input_dim=charvobsize,
-                                                        output_dim=c2v_k,
-                                                        batch_input_shape=(
-                                                        batch_size, input_rightcontext_lenth, input_maxword_length),
-                                                        mask_zero=True,
-                                                        trainable=True,
-                                                        weights=[char_W]))(char_input_rightcontext)
-
-    char_embedding_rightcontext = TimeDistributed(char_bilstm)(char_embedding_rightcontext)
-    char_embedding_rightcontext = Dropout(0.25)(char_embedding_rightcontext)
-
 
     embedding_fragment = concatenate([word_embedding_fragment, char_embedding_fragment], axis=-1)
-    embedding_leftcontext = concatenate([word_embedding_leftcontext, char_embedding_leftcontext], axis=-1)
-    embedding_rightcontext = concatenate([word_embedding_rightcontext, char_embedding_rightcontext], axis=-1)
+    embedding_leftcontext = word_embedding_leftcontext
+    embedding_rightcontext = word_embedding_rightcontext
 
     LSTM_leftcontext = LSTM(hidden_dim, go_backwards=False, activation='tanh')(embedding_leftcontext)
 
