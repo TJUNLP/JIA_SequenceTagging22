@@ -521,9 +521,9 @@ def get_data_42ndTraining(nn_model, test_4segment_BIOES, index2BIOES, batch_size
     max_fragment = 1
     print('is test ? ', Istest)
     if not Istest:
-        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_fragment)
+        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTraining(ptag_BIOES_all, test_4segment_BIOES[0], testt, max_context, max_fragment)
     else:
-        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragment)
+        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTest(ptag_BIOES_all, test_4segment_BIOES[0], testt, max_context, max_fragment)
 
     print('len(fragment_list) = ', len(fragment_list))
     print('the count right target is ', target_right)
@@ -570,7 +570,7 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
                 target_left = index
                 target_right = index + 1
                 reltag = 'NULL'
-                if 'S-' not in testt[id][index]:
+                if 'S-' in testt[id][index]:
                     reltag = testt[id][target_left][2:]
                     reall_right += 1
                 predict += 1
