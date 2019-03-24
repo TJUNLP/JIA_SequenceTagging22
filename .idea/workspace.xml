@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_MultiSteps.py" afterPath="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_segment.py" afterPath="$PROJECT_DIR$/TrainModel_segment.py" />
+      <change beforePath="$PROJECT_DIR$/ProcessData_BIOES2F.py" afterPath="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -99,11 +97,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TrainModel_MultiSteps.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TrainModel_MultiSteps.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
-              <caret line="254" column="88" lean-forward="false" selection-start-line="254" selection-start-column="78" selection-end-line="254" selection-end-column="88" />
+            <state relative-caret-position="112">
+              <caret line="260" column="0" lean-forward="true" selection-start-line="260" selection-start-column="0" selection-end-line="260" selection-end-column="0" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -111,11 +109,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProcessData_BIOES2F.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ProcessData_BIOES2F.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1515">
-              <caret line="106" column="115" lean-forward="false" selection-start-line="106" selection-start-column="115" selection-end-line="106" selection-end-column="115" />
+            <state relative-caret-position="323">
+              <caret line="504" column="4" lean-forward="false" selection-start-line="504" selection-start-column="4" selection-end-line="504" selection-end-column="4" />
               <folding>
                 <element signature="e#6763#9042#0" expanded="false" />
               </folding>
@@ -206,11 +204,11 @@
         <option value="$PROJECT_DIR$/ProcessData_S2F.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment_2t.py" />
         <option value="$PROJECT_DIR$/TrainModel_tagging.py" />
-        <option value="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
         <option value="$PROJECT_DIR$/TrainModel_classifer.py" />
         <option value="$PROJECT_DIR$/ProcessData_segment_PreC2V.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment.py" />
         <option value="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
+        <option value="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
       </list>
     </option>
   </component>
@@ -221,7 +219,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="14" />
+    <option name="x" value="-12" />
     <option name="y" value="23" />
     <option name="width" value="1251" />
     <option name="height" value="732" />
@@ -460,7 +458,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="14" y="23" width="1251" height="732" extended-state="0" />
+    <frame x="-12" y="23" width="1251" height="732" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -802,16 +800,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1515">
-          <caret line="106" column="115" lean-forward="false" selection-start-line="106" selection-start-column="115" selection-end-line="106" selection-end-column="115" />
-          <folding>
-            <element signature="e#6763#9042#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4426">
@@ -867,10 +855,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="254" column="88" lean-forward="false" selection-start-line="254" selection-start-column="78" selection-end-line="254" selection-end-column="88" />
+        <state relative-caret-position="112">
+          <caret line="260" column="0" lean-forward="true" selection-start-line="260" selection-start-column="0" selection-end-line="260" selection-end-column="0" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="504" column="4" lean-forward="false" selection-start-line="504" selection-start-column="4" selection-end-line="504" selection-end-column="4" />
+          <folding>
+            <element signature="e#6763#9042#0" expanded="false" />
           </folding>
         </state>
       </provider>

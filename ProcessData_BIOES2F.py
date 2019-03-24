@@ -501,8 +501,8 @@ def get_data_42ndTraining(nn_model, test_4segment_BIOES, target0_idex_word, inde
     testx_word = np.asarray(test_4segment_BIOES[0], dtype="int32")
     testx_char = np.asarray(test_4segment_BIOES[2], dtype="int32")
     testy = np.asarray(test_4segment_BIOES[1], dtype="int32")
-    testt = np.asarray(test_4segment_BIOES[3], dtype="int32")
-
+    testt = test_4segment_BIOES[3]
+    
     predictions = nn_model.predict([testx_word, testx_char], batch_size=batch_size, verbose=1)
 
     ptag_BIOES_all = []
