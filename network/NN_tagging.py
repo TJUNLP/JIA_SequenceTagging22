@@ -146,7 +146,7 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
                                weights=[word_W])(word_input_leftcontext)
     word_embedding_leftcontext = Dropout(0.5)(word_embedding_leftcontext)
 
-    char_input_leftcontext = Input(shape=(input_rightcontext_lenth, input_maxword_length,), dtype='int32')
+    char_input_leftcontext = Input(shape=(input_leftcontext_lenth, input_maxword_length,), dtype='int32')
     char_input_rightcontext = Input(shape=(input_rightcontext_lenth, input_maxword_length,), dtype='int32')
 
     word_input_rightcontext = Input(shape=(input_rightcontext_lenth,), dtype='int32')
