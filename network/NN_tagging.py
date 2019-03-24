@@ -234,18 +234,24 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     word_embedding_rightcontext = Dropout(0.5)(word_embedding_rightcontext)
 
 
-    embedding_fragment = concatenate([word_embedding_fragment, char_embedding_fragment], axis=1)
+
     embedding_leftcontext = word_embedding_leftcontext
     embedding_rightcontext = word_embedding_rightcontext
 
     LSTM_leftcontext = LSTM(hidden_dim, go_backwards=False, activation='tanh')(embedding_leftcontext)
-    Rep_LSTM_leftcontext = RepeatVector(1)(LSTM_leftcontext)
+    Rep_LSTM_leftcontext = RepeatVector(input_fragment_lenth)(LSTM_leftcontext)
     LSTM_rightcontext = LSTM(hidden_dim, go_backwards=True, activation='tanh')(embedding_rightcontext)
-    Rep_LSTM_rightcontext = RepeatVector(1)(LSTM_rightcontext)
+    Rep_LSTM_rightcontext = RepeatVector(input_fragment_lenth)(LSTM_rightcontext)
+
+    embedding_fragment = concatenate([Rep_LSTM_leftcontext,
+                                      word_embedding_fragment,
+                                      char_embedding_fragment,
+                                      Rep_LSTM_rightcontext], axis=-1)
+
     BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
-    tmp = Dense(100)(Rep_LSTM_leftcontext)
-    concat = concatenate([embedding_fragment, tmp, ], axis=0)
-    concat = Dropout(0.2)(concat)
+
+    concat = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext], axis=-1)
+    concat = Dropout(0.3)(concat)
     concat_1 = Dense(hidden_dim, activation='tanh')(concat)
 
     output = Dense(targetvocabsize, activation='softmax')(concat_1)
