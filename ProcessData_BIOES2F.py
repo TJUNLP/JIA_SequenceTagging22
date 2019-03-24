@@ -72,13 +72,16 @@ def get_data_4segment_BIOES(trainfile, testfile, w2v_file, c2v_file, datafile, w
 def get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
                         max_c, char_vob, word_idex_word, batch_size):
 
-
+    max_context = 0
+    max_fragment = 1
     train_fragment_list, max_context, max_fragment, train_target_right = get_data_42ndTraining(model_segment,
                                                                                    train_B_4segment_BIOES,
+                                                                                   max_context, max_fragment,
                                                                                    index2BIOES=target1_idex_word,
                                                                                    batch_size=batch_size, Istest=False)
     test_fragment_list, max_context, max_fragment, test_target_right = get_data_42ndTraining(model_segment,
                                                                                    test_4segment_BIOES,
+                                                                                   max_context, max_fragment,
                                                                                    index2BIOES=target1_idex_word,
                                                                                    batch_size=batch_size,
                                                                                    Istest=True)
@@ -493,7 +496,7 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
     return testresult_1Step
 
 
-def get_data_42ndTraining(nn_model, test_4segment_BIOES, index2BIOES, batch_size=256, Istest=False):
+def get_data_42ndTraining(nn_model, test_4segment_BIOES, max_context, max_fragment, index2BIOES, batch_size=256, Istest=False):
 
     index2BIOES[0] = ''
 
@@ -517,8 +520,7 @@ def get_data_42ndTraining(nn_model, test_4segment_BIOES, index2BIOES, batch_size
 
         ptag_BIOES_all.append(ptag_BIOES)
 
-    max_context = 0
-    max_fragment = 1
+
     print('is test ? ', Istest)
     if not Istest:
         fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTraining(ptag_BIOES_all, test_4segment_BIOES[0], testt, max_context, max_fragment)
@@ -586,6 +588,9 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
             context_right = testx_word[id][tup[4]:tup[5]]
             fragment_tag = tup[6]
             fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
+            max_context = max(max_context, len(context_left), len(context_right))
+            max_fragment = max(max_fragment, len(fragment))
 
     P = reall_right / predict
     R = reall_right / 5648.0
@@ -695,6 +700,9 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
             context_right = testx_word[id][tup[4]:tup[5]]
             fragment_tag = tup[6]
             fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
+            max_context = max(max_context, len(context_left), len(context_right))
+            max_fragment = max(max_fragment, len(fragment))
 
 
     P = predict_right / predict
