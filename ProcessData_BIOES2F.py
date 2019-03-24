@@ -96,9 +96,9 @@ def get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIO
     test = Data2Index_42ndclassifer(test_fragment_list, Type_vob, max_context, max_fragment)
     print(len(train), len(test))
 
-    chartrain = make_idx_char_index(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    chartrain = Char2Index_42ndclassifer(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
 
-    chartest = make_idx_char_index(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    chartest = Char2Index_42ndclassifer(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
     print(len(chartrain), len(chartest))
 
     print ("dataset created!")
@@ -157,7 +157,7 @@ def get_word_index(files):
 
 
 
-def make_idx_char_index(fraglist, max_context, max_fragment, max_c, char_vob, word_idex_word):
+def Char2Index_42ndclassifer(fraglist, max_context, max_fragment, max_c, char_vob, word_idex_word):
 
     char_fragment_all = []
     char_leftcontext_all = []
@@ -535,11 +535,11 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
     reall_right = 0
     predict = 0
     fragment_list = []
-    fragtuples_list = []
+
 
     print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
-
+        fragtuples_list = []
         index = 0
         while index < len(ptag2list):
             if ptag2list[index] == 'O' or ptag2list[index] == '':
@@ -580,13 +580,12 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
             else:
                 index += 1
 
-    print('fragtuples_list is OK ...')
-    for tup in fragtuples_list:
-        context_left = testx_word[id][tup[0]:tup[1]]
-        fragment = testx_word[id][tup[2]:tup[3]]
-        context_right = testx_word[id][tup[4]:tup[5]]
-        fragment_tag = tup[6]
-        fragment_list.append((fragment, fragment_tag, context_left, context_right))
+        for tup in fragtuples_list:
+            context_left = testx_word[id][tup[0]:tup[1]]
+            fragment = testx_word[id][tup[2]:tup[3]]
+            context_right = testx_word[id][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
     P = reall_right / predict
     R = reall_right / 5648.0
@@ -601,11 +600,11 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
     predict_right = 0
     predict = 0
     fragment_list = []
-    fragtuples_list = []
+
 
     print('start processing testt ...')
     for id, tag2list in enumerate(testt):
-
+        fragtuples_list = []
         target_left = 0
 
         for index, tag in enumerate(tag2list):
@@ -639,9 +638,16 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
                         max_context = flens
                     max_fragment = max(max_fragment, target_right - target_left)
 
+        for tup in fragtuples_list:
+            context_left = testx_word[id][tup[0]:tup[1]]
+            fragment = testx_word[id][tup[2]:tup[3]]
+            context_right = testx_word[id][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
     print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
-
+        fragtuples_list = []
         index = 0
         while index < len(ptag2list):
 
@@ -683,13 +689,13 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
             else:
                 index += 1
 
-    print('fragtuples_list is OK .....')
-    for tup in fragtuples_list:
-        context_left = testx_word[id][tup[0]:tup[1]]
-        fragment = testx_word[id][tup[2]:tup[3]]
-        context_right = testx_word[id][tup[4]:tup[5]]
-        fragment_tag = tup[6]
-        fragment_list.append((fragment, fragment_tag, context_left, context_right))
+        for tup in fragtuples_list:
+            context_left = testx_word[id][tup[0]:tup[1]]
+            fragment = testx_word[id][tup[2]:tup[3]]
+            context_right = testx_word[id][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
 
     P = predict_right / predict
     R = predict_right / reall_right
