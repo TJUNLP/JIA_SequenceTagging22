@@ -639,9 +639,11 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
 
     print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
+        print('id', id)
 
         index = 0
         while index < len(ptag2list):
+            print('index', index, ptag2list[index])
             if ptag2list[index] == 'O' or ptag2list[index] == '':
                 index += 1
                 continue
@@ -667,7 +669,7 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
                     else:
                         break
 
-            if ptag2list[index] == 'S':
+            elif ptag2list[index] == 'S':
                 predict += 1
                 if 'S-' not in testt[id][index]:
                     target_left = index
