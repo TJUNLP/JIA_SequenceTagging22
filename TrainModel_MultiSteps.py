@@ -195,7 +195,7 @@ def Train41stsegment(datafname, datafile, trainfile, testfile, w2v_file, c2v_fil
     print('Loading data ...')
     train_A_4segment_BIOES, train_B_4segment_BIOES, test_4segment_BIOES,\
     word_W, character_W,\
-    word_vob, word_idex_word, target0_vob, target0_idex_word, char_vob,\
+    word_vob, word_idex_word, char_vob,\
     max_s, w2v_k, max_c, c2v_k = pickle.load(open(datafile, 'rb'))
     print("data has extisted: " + datafile)
 
@@ -261,20 +261,20 @@ def Train41stsegment(datafname, datafile, trainfile, testfile, w2v_file, c2v_fil
 
         Train42ndclassifer(model2name,
                            model_segment, train_B_4segment_BIOES, test_4segment_BIOES,
-                           target0_idex_word, target1_idex_word,
+                           target1_idex_word,
                            word_vob, word_W, character_W, w2v_k, c2v_k,
                            max_c, char_vob, word_idex_word, resultdir, batch_size)
 
 
 def Train42ndclassifer(model2name,
                        model_segment, train_B_4segment_BIOES, test_4segment_BIOES,
-                       target0_idex_word, target1_idex_word,
+                       target1_idex_word,
                        word_vob, word_W, character_W, word_k, character_k,
                         max_c, char_vob, word_idex_word, resultdir, batch_size):
 
     traindata, testdata, chartrain, chartest, \
     Type_vob, Type_idex_word, max_fragment, max_context, \
-    test_target_count = get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target0_idex_word, target1_idex_word,
+    test_target_count = get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
                         max_c, char_vob, word_idex_word, batch_size)
 
     trainx_fragment = np.asarray(traindata[0], dtype="int32")

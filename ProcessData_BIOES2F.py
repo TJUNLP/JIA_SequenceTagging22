@@ -60,7 +60,7 @@ def get_data_4segment_BIOES(trainfile, testfile, w2v_file, c2v_file, datafile, w
     out = open(datafile, 'wb')#
     pickle.dump([train_A_4segment_BIOES, train_B_4segment_BIOES, test_4segment_BIOES,
                  word_W, character_W,
-                 word_vob, word_idex_word, target_vob, target_idex_word, char_vob,
+                 word_vob, word_idex_word, char_vob,
                  max_s, w2v_k, max_c, c2v_k], out, 0)
     out.close()
 
@@ -69,17 +69,16 @@ def get_data_4segment_BIOES(trainfile, testfile, w2v_file, c2v_file, datafile, w
 
 
 
-def get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target0_idex_word, target1_idex_word,
+def get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
                         max_c, char_vob, word_idex_word, batch_size):
 
 
     train_fragment_list, max_context, max_fragment, train_target_right = get_data_42ndTraining(model_segment,
                                                                                    train_B_4segment_BIOES,
-                                                                                   target0_idex_word=target0_idex_word,
                                                                                    index2BIOES=target1_idex_word,
                                                                                    batch_size=batch_size, Istest=False)
-    test_fragment_list, max_context, max_fragment, test_target_right = get_data_42ndTraining(model_segment, test_4segment_BIOES,
-                                                                                   target0_idex_word=target0_idex_word,
+    test_fragment_list, max_context, max_fragment, test_target_right = get_data_42ndTraining(model_segment,
+                                                                                   test_4segment_BIOES,
                                                                                    index2BIOES=target1_idex_word,
                                                                                    batch_size=batch_size,
                                                                                    Istest=True)
@@ -315,9 +314,9 @@ def Data2Index_4segment_BIOES(file, max_s, source_vob, target_vob, target1_vob):
         targetvecBIOES[target1_vob[sent[4][0]]] = 1
         data_tBIOES.append(targetvecBIOES)
 
-        targetvec = np.zeros(len(target_vob) + 1)
-        targetvec[target_vob[sent[4]]] = 1
-        data_t.append(targetvec)
+        # targetvec = np.zeros(len(target_vob) + 1)
+        # targetvec[target_vob[sent[4]]] = 1
+        data_t.append(sent[4])
 
         count += 1
 
@@ -494,7 +493,7 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
     return testresult_1Step
 
 
-def get_data_42ndTraining(nn_model, test_4segment_BIOES, target0_idex_word, index2BIOES, batch_size=256, Istest=False):
+def get_data_42ndTraining(nn_model, test_4segment_BIOES, index2BIOES, batch_size=256, Istest=False):
 
     index2BIOES[0] = ''
 
@@ -502,7 +501,7 @@ def get_data_42ndTraining(nn_model, test_4segment_BIOES, target0_idex_word, inde
     testx_char = np.asarray(test_4segment_BIOES[2], dtype="int32")
     testy = np.asarray(test_4segment_BIOES[1], dtype="int32")
     testt = test_4segment_BIOES[3]
-    
+
     predictions = nn_model.predict([testx_word, testx_char], batch_size=batch_size, verbose=1)
 
     ptag_BIOES_all = []
@@ -522,9 +521,9 @@ def get_data_42ndTraining(nn_model, test_4segment_BIOES, target0_idex_word, inde
     max_fragment = 1
     print('is test ? ', Istest)
     if not Istest:
-        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, target0_idex_word, max_context, max_fragment)
+        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_fragment)
     else:
-        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, target0_idex_word, max_context, max_fragment)
+        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragment)
 
     print('len(fragment_list) = ', len(fragment_list))
     print('the count right target is ', target_right)
@@ -532,7 +531,7 @@ def get_data_42ndTraining(nn_model, test_4segment_BIOES, target0_idex_word, inde
     return fragment_list, max_context, max_fragment, target_right
 
 
-def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, target0_idex_word, max_context, max_fragment):
+def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragment):
     target_right = 0
     fragment_list = []
 
@@ -553,9 +552,8 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, target0_idex_word, max
                     elif ptag2list[index] == 'E':
                         target_right = index + 1
                         reltag = 'NULL'
-                        if 'B-' in target0_idex_word[testt[id][target_left]] and \
-                                'E-' in target0_idex_word[testt[id][index]]:
-                            reltag = target0_idex_word[testt[id][target_left]][2:]
+                        if 'B-' in testt[id][target_left] and 'E-' in testt[id][index]:
+                            reltag = testt[id][target_left][2:]
                             target_right += 1
 
                         tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), reltag)
@@ -569,8 +567,8 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, target0_idex_word, max
                 target_left = index
                 target_right = index + 1
                 reltag = 'NULL'
-                if 'S-' not in target0_idex_word[testt[id][index]]:
-                    reltag = target0_idex_word[testt[id][target_left]][2:]
+                if 'S-' not in testt[id][index]:
+                    reltag = testt[id][target_left][2:]
                     target_right += 1
 
                 tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), reltag)
@@ -587,7 +585,7 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, target0_idex_word, max
     return fragment_list, max_context, max_fragment, target_right
 
 
-def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, target0_idex_word, max_context, max_fragment):
+def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_fragment):
     target_right = 0
     fragment_list = []
 
@@ -602,23 +600,23 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, target0_idex_word,
                 continue
 
             else:
-                if target0_idex_word[tag].__contains__('B-'):
+                if tag.__contains__('B-'):
                     target_left = index
 
-                elif target0_idex_word[tag].__contains__('I-'):
+                elif tag.__contains__('I-'):
                     continue
 
                 else:
-                    if target0_idex_word[tag].__contains__('S-'):
+                    if tag.__contains__('S-'):
 
                         target_left = index
                         target_right = index + 1
 
-                    elif target0_idex_word[tag].__contains__('E-'):
+                    elif tag.__contains__('E-'):
 
                         target_right = index + 1
 
-                    reltag = target0_idex_word[tag][2:]
+                    reltag = tag[2:]
                     tuple_posi = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
                     fragtuples_list.append(tuple_posi)
                     target_right += 1
@@ -651,8 +649,8 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, target0_idex_word,
                     elif ptag2list[index] == 'E':
                         target_right = index + 1
 
-                        if 'B-' in target0_idex_word[testt[id][target_left]] and \
-                                'E-' in target0_idex_word[testt[id][index]]:
+                        if 'B-' in testt[id][target_left] and \
+                                'E-' in testt[id][index]:
                             break
 
                         tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), 'NULL')
@@ -662,7 +660,7 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, target0_idex_word,
                     else:
                         break
 
-            if ptag2list[index] == 'S' and 'S-' not in target0_idex_word[testt[id][index]]:
+            if ptag2list[index] == 'S' and 'S-' not in testt[id][index]:
                 target_left = index
                 target_right = index + 1
                 tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), 'NULL')
