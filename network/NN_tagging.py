@@ -1,7 +1,7 @@
 # coding:utf-8
 
 from keras.layers.core import Dropout,RepeatVector, Reshape
-from keras.layers.merge import concatenate
+from keras.layers.merge import concatenate, add, subtract, average, maximum
 from keras.layers import TimeDistributed, Input, Bidirectional, Dense, Embedding, LSTM, Conv1D, GlobalMaxPooling1D
 from keras.models import Model
 from keras import optimizers
@@ -194,7 +194,7 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     word_embedding_fragment = Embedding(input_dim=wordvocabsize + 1,
                                output_dim=w2v_k,
                                input_length=input_fragment_lenth,
-                               mask_zero=True,
+                               mask_zero=False,
                                trainable=True,
                                weights=[word_W])(word_input_fragment)
     word_embedding_fragment = Dropout(0.5)(word_embedding_fragment)
@@ -203,12 +203,13 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     char_embedding_fragment = TimeDistributed(Embedding(input_dim=charvobsize,
                                output_dim=c2v_k,
                                batch_input_shape=(batch_size, input_fragment_lenth, input_maxword_length),
-                               mask_zero=True,
+                               mask_zero=False,
                                trainable=True,
                                weights=[char_W]))(char_input_fragment)
 
-    char_bilstm = Bidirectional(LSTM(50, activation='tanh'), merge_mode='concat')
-    char_embedding_fragment = TimeDistributed(char_bilstm)(char_embedding_fragment)
+    char_cnn_fragment = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))
+    char_embedding_fragment = char_cnn_fragment(char_embedding_fragment)
+    char_embedding_fragment = TimeDistributed(GlobalMaxPooling1D())(char_embedding_fragment)
     char_embedding_fragment = Dropout(0.25)(char_embedding_fragment)
 
 
@@ -233,8 +234,7 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
                                weights=[word_W])(word_input_rightcontext)
     word_embedding_rightcontext = Dropout(0.5)(word_embedding_rightcontext)
 
-
-
+    embedding_fragment = concatenate([word_embedding_fragment, char_embedding_fragment], axis=-1)
     embedding_leftcontext = word_embedding_leftcontext
     embedding_rightcontext = word_embedding_rightcontext
 
@@ -243,14 +243,28 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     LSTM_rightcontext = LSTM(hidden_dim, go_backwards=True, activation='tanh')(embedding_rightcontext)
     Rep_LSTM_rightcontext = RepeatVector(input_fragment_lenth)(LSTM_rightcontext)
 
-    embedding_fragment = concatenate([Rep_LSTM_leftcontext,
-                                      word_embedding_fragment,
-                                      char_embedding_fragment,
-                                      Rep_LSTM_rightcontext], axis=-1)
 
-    BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
 
-    concat = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext], axis=-1)
+    # BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
+
+    decoderlayer1 = Conv1D(25, 1, activation='relu', strides=1, padding='same')(embedding_fragment)
+    decoderlayer2 = Conv1D(25, 2, activation='relu', strides=1, padding='same')(embedding_fragment)
+    decoderlayer3 = Conv1D(25, 3, activation='relu', strides=1, padding='same')(embedding_fragment)
+    decoderlayer4 = Conv1D(25, 4, activation='relu', strides=1, padding='same')(embedding_fragment)
+
+    CNNs_fragment = concatenate([decoderlayer1, decoderlayer2, decoderlayer3, decoderlayer4], axis=-1)
+    CNNs_fragment = Dropout(0.5)(CNNs_fragment)
+
+    context_ADD = add([LSTM_leftcontext, CNNs_fragment, LSTM_rightcontext])
+    context_subtract_l = subtract([CNNs_fragment, LSTM_leftcontext])
+    context_subtract_r = subtract([CNNs_fragment, LSTM_rightcontext])
+    context_average = average([LSTM_leftcontext, CNNs_fragment, LSTM_rightcontext])
+    context_maximum = maximum([LSTM_leftcontext, CNNs_fragment, LSTM_rightcontext])
+
+
+    concat = concatenate([LSTM_leftcontext, CNNs_fragment, LSTM_rightcontext,
+                          context_ADD, context_subtract_l, context_subtract_r,
+                          context_average, context_maximum], axis=-1)
     concat = Dropout(0.3)(concat)
     concat_1 = Dense(hidden_dim, activation='tanh')(concat)
 
