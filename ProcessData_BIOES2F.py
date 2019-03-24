@@ -566,7 +566,7 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
                     else:
                         break
 
-            if ptag2list[index] == 'S':
+            elif ptag2list[index] == 'S':
                 target_left = index
                 target_right = index + 1
                 reltag = 'NULL'
@@ -576,6 +576,8 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
                 predict += 1
                 tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), reltag)
                 fragtuples_list.append(tuple)
+                index += 1
+            else:
                 index += 1
 
     print('fragtuples_list is OK ...')
