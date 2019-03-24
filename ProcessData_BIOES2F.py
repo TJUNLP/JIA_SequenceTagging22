@@ -532,7 +532,8 @@ def get_data_42ndTraining(nn_model, test_4segment_BIOES, index2BIOES, batch_size
 
 
 def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragment):
-    target_right = 0
+    reall_right = 0
+    predict = 0
     fragment_list = []
 
     for id, ptag2list in enumerate(ptag_BIOES_all):
@@ -554,8 +555,8 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
                         reltag = 'NULL'
                         if 'B-' in testt[id][target_left] and 'E-' in testt[id][index]:
                             reltag = testt[id][target_left][2:]
-                            target_right += 1
-
+                            reall_right += 1
+                        predict += 1
                         tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), reltag)
                         fragtuples_list.append(tuple)
                         index += 1
@@ -569,8 +570,8 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
                 reltag = 'NULL'
                 if 'S-' not in testt[id][index]:
                     reltag = testt[id][target_left][2:]
-                    target_right += 1
-
+                    reall_right += 1
+                predict += 1
                 tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), reltag)
                 fragtuples_list.append(tuple)
                 index += 1
@@ -582,11 +583,18 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
             fragment_tag = tup[6]
             fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
-    return fragment_list, max_context, max_fragment, target_right
+    P = reall_right / predict
+    R = reall_right / 5648.0
+    F = 2 * P * R / (P + R)
+    print('Lists2Set_42ndTest----', 'P=', P, 'R=', R, 'F=', F)
+
+    return fragment_list, max_context, max_fragment, reall_right
 
 
 def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_fragment):
-    target_right = 0
+    reall_right = 0
+    predict_right = 0
+    predict = 0
     fragment_list = []
 
     for id, tag2list in enumerate(testt):
@@ -596,7 +604,6 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
         for index, tag in enumerate(tag2list):
 
             if tag == 'O':
-                target_left = index
                 continue
 
             else:
@@ -619,7 +626,7 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
                     reltag = tag[2:]
                     tuple_posi = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
                     fragtuples_list.append(tuple_posi)
-                    target_right += 1
+                    reall_right += 1
                     flens = max(index + 1, len(tag2list) - target_left)
                     if flens > max_context:
                         max_context = flens
@@ -648,9 +655,10 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
                         continue
                     elif ptag2list[index] == 'E':
                         target_right = index + 1
-
+                        predict += 1
                         if 'B-' in testt[id][target_left] and \
                                 'E-' in testt[id][index]:
+                            predict_right += 1
                             break
 
                         tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), 'NULL')
@@ -660,12 +668,17 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
                     else:
                         break
 
-            if ptag2list[index] == 'S' and 'S-' not in testt[id][index]:
-                target_left = index
-                target_right = index + 1
-                tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), 'NULL')
-                fragtuples_list.append(tuple)
+            if ptag2list[index] == 'S':
+                predict += 1
+                if 'S-' not in testt[id][index]:
+                    target_left = index
+                    target_right = index + 1
+                    tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), 'NULL')
+                    fragtuples_list.append(tuple)
+                else:
+                    predict_right += 1
                 index += 1
+
         for tup in fragtuples_list:
             context_left = testx_word[id][tup[0]:tup[1]]
             fragment = testx_word[id][tup[2]:tup[3]]
@@ -673,7 +686,12 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
             fragment_tag = tup[6]
             fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
-    return fragment_list, max_context, max_fragment, target_right
+    P = predict_right / predict
+    R = predict_right / reall_right
+    F = 2 * P * R / (P + R)
+    print('Lists2Set_42ndTraining----', 'P=', P, 'R=', R, 'F=', F)
+
+    return fragment_list, max_context, max_fragment, reall_right
 
 
 if __name__ == '__main__':
