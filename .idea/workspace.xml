@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ProcessData_segment_PreC2V.py" afterPath="$PROJECT_DIR$/ProcessData_segment_PreC2V.py" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/TrainModel_MultiSteps.py" afterPath="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
+      <change beforePath="$PROJECT_DIR$/TrainModel_segment.py" afterPath="$PROJECT_DIR$/TrainModel_segment.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,18 +35,18 @@
     <window id="1">
       <content type="file-editors">
         <state>
-          <leaf>
-            <file leaf-file-name="ProcessData_segment_PreC2V.py" pinned="false" current-in-tab="true">
+          <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+            <file leaf-file-name="ProcessData_segment_PreC2V.py" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/ProcessData_segment_PreC2V.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="757">
+                  <state relative-caret-position="779">
                     <caret line="538" column="48" lean-forward="false" selection-start-line="538" selection-start-column="48" selection-end-line="538" selection-end-column="48" />
                     <folding />
                   </state>
                 </provider>
               </entry>
             </file>
-            <file leaf-file-name="TrainModel_segment.py" pinned="false" current-in-tab="false">
+            <file leaf-file-name="TrainModel_segment.py" pinned="false" current-in-tab="true">
               <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="292">
@@ -60,8 +61,8 @@
             <file leaf-file-name="Evaluate.py" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/Evaluate.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="506">
-                    <caret line="793" column="22" lean-forward="true" selection-start-line="793" selection-start-column="22" selection-end-line="793" selection-end-column="22" />
+                  <state relative-caret-position="7920">
+                    <caret line="793" column="22" lean-forward="false" selection-start-line="793" selection-start-column="22" selection-end-line="793" selection-end-column="22" />
                     <folding>
                       <element signature="e#104#10060#0" expanded="false" />
                     </folding>
@@ -73,7 +74,7 @@
               <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
                 <provider selected="true" editor-type-id="text-editor">
                   <state relative-caret-position="105">
-                    <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+                    <caret line="7" column="9" lean-forward="false" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
                     <folding>
                       <element signature="e#18591#21442#0" expanded="false" />
                     </folding>
@@ -84,7 +85,7 @@
             <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="false">
               <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
                 <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="463">
+                  <state relative-caret-position="6480">
                     <caret line="438" column="70" lean-forward="false" selection-start-line="438" selection-start-column="53" selection-end-line="438" selection-end-column="70" />
                     <folding />
                   </state>
@@ -101,8 +102,8 @@
       <file leaf-file-name="TrainModel_MultiSteps.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-23">
-              <caret line="211" column="61" lean-forward="false" selection-start-line="211" selection-start-column="61" selection-end-line="211" selection-end-column="61" />
+            <state relative-caret-position="22">
+              <caret line="254" column="88" lean-forward="false" selection-start-line="254" selection-start-column="78" selection-end-line="254" selection-end-column="88" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -125,7 +126,7 @@
       <file leaf-file-name="PrecessData_PreC2V.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="232">
+            <state relative-caret-position="2655">
               <caret line="181" column="0" lean-forward="false" selection-start-line="181" selection-start-column="0" selection-end-line="183" selection-end-column="32" />
               <folding />
             </state>
@@ -135,7 +136,7 @@
       <file leaf-file-name="TrainModel_segment_2t.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
+            <state relative-caret-position="4965">
               <caret line="337" column="36" lean-forward="false" selection-start-line="337" selection-start-column="36" selection-end-line="337" selection-end-column="36" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
@@ -205,10 +206,10 @@
         <option value="$PROJECT_DIR$/ProcessData_S2F.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment_2t.py" />
         <option value="$PROJECT_DIR$/TrainModel_tagging.py" />
-        <option value="$PROJECT_DIR$/TrainModel_segment.py" />
         <option value="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
         <option value="$PROJECT_DIR$/TrainModel_classifer.py" />
         <option value="$PROJECT_DIR$/ProcessData_segment_PreC2V.py" />
+        <option value="$PROJECT_DIR$/TrainModel_segment.py" />
         <option value="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
       </list>
     </option>
@@ -220,7 +221,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="52" />
+    <option name="x" value="14" />
     <option name="y" value="23" />
     <option name="width" value="1251" />
     <option name="height" value="732" />
@@ -256,7 +257,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -274,6 +274,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -459,7 +460,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="52" y="23" width="1251" height="732" extended-state="0" />
+    <frame x="14" y="23" width="1251" height="732" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -468,7 +469,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21505377" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21836229" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -778,7 +779,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="141">
+        <state relative-caret-position="4965">
           <caret line="337" column="36" lean-forward="false" selection-start-line="337" selection-start-column="36" selection-end-line="337" selection-end-column="36" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
@@ -790,53 +791,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
           <caret line="575" column="28" lean-forward="false" selection-start-line="575" selection-start-column="12" selection-end-line="575" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="232">
+        <state relative-caret-position="2655">
           <caret line="181" column="0" lean-forward="false" selection-start-line="181" selection-start-column="0" selection-end-line="183" selection-end-column="32" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Evaluate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="793" column="22" lean-forward="true" selection-start-line="793" selection-start-column="22" selection-end-line="793" selection-end-column="22" />
-          <folding>
-            <element signature="e#104#10060#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
-          <folding>
-            <element signature="e#18591#21442#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="438" column="70" lean-forward="false" selection-start-line="438" selection-start-column="53" selection-end-line="438" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="119" column="38" lean-forward="false" selection-start-line="119" selection-start-column="38" selection-end-line="119" selection-end-column="38" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -854,24 +816,59 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4426">
           <caret line="85" column="115" lean-forward="false" selection-start-line="85" selection-start-column="101" selection-end-line="85" selection-end-column="115" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Evaluate.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7920">
+          <caret line="793" column="22" lean-forward="false" selection-start-line="793" selection-start-column="22" selection-end-line="793" selection-end-column="22" />
           <folding>
-            <element signature="e#33#51#0" expanded="true" />
+            <element signature="e#104#10060#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="9" lean-forward="false" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+          <folding>
+            <element signature="e#18591#21442#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6480">
+          <caret line="438" column="70" lean-forward="false" selection-start-line="438" selection-start-column="53" selection-end-line="438" selection-end-column="70" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ProcessData_segment_PreC2V.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="757">
+        <state relative-caret-position="779">
           <caret line="538" column="48" lean-forward="false" selection-start-line="538" selection-start-column="48" selection-end-line="538" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="119" column="38" lean-forward="false" selection-start-line="119" selection-start-column="38" selection-end-line="119" selection-end-column="38" />
+          <folding>
+            <element signature="e#298#329#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-23">
-          <caret line="211" column="61" lean-forward="false" selection-start-line="211" selection-start-column="61" selection-end-line="211" selection-end-column="61" />
+        <state relative-caret-position="22">
+          <caret line="254" column="88" lean-forward="false" selection-start-line="254" selection-start-column="78" selection-end-line="254" selection-end-column="88" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>

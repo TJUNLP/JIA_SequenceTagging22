@@ -252,7 +252,8 @@ def Train41stsegment(datafname, datafile, trainfile, testfile, w2v_file, c2v_fil
             print("test model_segment ....")
             print(datafile)
             print(model1file)
-            TrainModel_segment.infer_e2e_model(model=model_segment, modelfile=model1file,
+            TrainModel_segment.infer_e2e_model(model=model_segment, modelname=model1name,
+                                               modelfile=model1file,
                                                inputs=[inputs_test_x, inputs_test_y],
                                                target_idex_word=target1_idex_word,
                                                resultdir=resultdir,

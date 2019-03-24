@@ -117,7 +117,7 @@ def train_e2e_model(model, modelfile, inputs, target_idex_word, resultdir, npoch
     return model
 
 
-def infer_e2e_model(model, modelfile, inputs, target_idex_word, resultdir, batch_size=50):
+def infer_e2e_model(model, modelname, modelfile, inputs, target_idex_word, resultdir, batch_size=50):
     inputs_test_x = inputs[0]
     inputs_test_y = inputs[1]
 
