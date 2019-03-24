@@ -1,7 +1,7 @@
 #coding=utf-8
 __author__ = 'JIA'
 import numpy as np
-import pickle
+import pickle,random
 import json, math
 import Seq2fragment
 import TrainModel_segment
@@ -535,9 +535,11 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
     reall_right = 0
     predict = 0
     fragment_list = []
+    fragtuples_list = []
 
+    print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
-        fragtuples_list = []
+
         index = 0
         while index < len(ptag2list):
             if ptag2list[index] == 'O' or ptag2list[index] == '':
@@ -576,12 +578,13 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
                 fragtuples_list.append(tuple)
                 index += 1
 
-        for tup in fragtuples_list:
-            context_left = testx_word[id][tup[0]:tup[1]]
-            fragment = testx_word[id][tup[2]:tup[3]]
-            context_right = testx_word[id][tup[4]:tup[5]]
-            fragment_tag = tup[6]
-            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+    print('fragtuples_list is OK ...')
+    for tup in fragtuples_list:
+        context_left = testx_word[id][tup[0]:tup[1]]
+        fragment = testx_word[id][tup[2]:tup[3]]
+        context_right = testx_word[id][tup[4]:tup[5]]
+        fragment_tag = tup[6]
+        fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
     P = reall_right / predict
     R = reall_right / 5648.0
@@ -596,11 +599,13 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
     predict_right = 0
     predict = 0
     fragment_list = []
+    fragtuples_list = []
 
+    print('start processing testt ...')
     for id, tag2list in enumerate(testt):
 
         target_left = 0
-        fragtuples_list = []
+
         for index, tag in enumerate(tag2list):
 
             if tag == 'O':
@@ -632,15 +637,9 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
                         max_context = flens
                     max_fragment = max(max_fragment, target_right - target_left)
 
-        for tup in fragtuples_list:
-            context_left = testx_word[id][tup[0]:tup[1]]
-            fragment = testx_word[id][tup[2]:tup[3]]
-            context_right = testx_word[id][tup[4]:tup[5]]
-            fragment_tag = tup[6]
-            fragment_list.append((fragment, fragment_tag, context_left, context_right))
-
+    print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
-        fragtuples_list = []
+
         index = 0
         while index < len(ptag2list):
             if ptag2list[index] == 'O' or ptag2list[index] == '':
@@ -679,17 +678,20 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
                     predict_right += 1
                 index += 1
 
-        for tup in fragtuples_list:
-            context_left = testx_word[id][tup[0]:tup[1]]
-            fragment = testx_word[id][tup[2]:tup[3]]
-            context_right = testx_word[id][tup[4]:tup[5]]
-            fragment_tag = tup[6]
-            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+    print('fragtuples_list is OK .....')
+    for tup in fragtuples_list:
+        context_left = testx_word[id][tup[0]:tup[1]]
+        fragment = testx_word[id][tup[2]:tup[3]]
+        context_right = testx_word[id][tup[4]:tup[5]]
+        fragment_tag = tup[6]
+        fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
     P = predict_right / predict
     R = predict_right / reall_right
     F = 2 * P * R / (P + R)
     print('Lists2Set_42ndTraining----', 'P=', P, 'R=', R, 'F=', F)
+
+    random.shuffle(fragment_list)
 
     return fragment_list, max_context, max_fragment, reall_right
 
