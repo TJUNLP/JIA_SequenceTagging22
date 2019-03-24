@@ -243,32 +243,32 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     LSTM_rightcontext = LSTM(hidden_dim, go_backwards=True, activation='tanh')(embedding_rightcontext)
     Rep_LSTM_rightcontext = RepeatVector(input_fragment_lenth)(LSTM_rightcontext)
 
+    BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh',return_sequences=True), merge_mode='concat')(embedding_fragment)
+    context_ADD = add([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext])
+    context_subtract_l = subtract([BiLSTM_fragment, LSTM_leftcontext])
+    context_subtract_r = subtract([BiLSTM_fragment, LSTM_rightcontext])
+    context_average = average([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext])
+    context_maximum = maximum([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext])
 
+    embedding_mix = concatenate([embedding_fragment, BiLSTM_fragment,
+                                 context_ADD, context_subtract_l, context_subtract_r,
+                                 context_average, context_maximum], axis=-1)
 
     # BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
 
-    decoderlayer1 = Conv1D(25, 1, activation='relu', strides=1, padding='same')(embedding_fragment)
-    decoderlayer2 = Conv1D(25, 2, activation='relu', strides=1, padding='same')(embedding_fragment)
-    decoderlayer3 = Conv1D(25, 3, activation='relu', strides=1, padding='same')(embedding_fragment)
-    decoderlayer4 = Conv1D(25, 4, activation='relu', strides=1, padding='same')(embedding_fragment)
+    decoderlayer1 = Conv1D(50, 1, activation='relu', strides=1, padding='same')(embedding_mix)
+    decoderlayer2 = Conv1D(50, 2, activation='relu', strides=1, padding='same')(embedding_mix)
+    decoderlayer3 = Conv1D(50, 3, activation='relu', strides=1, padding='same')(embedding_mix)
+    decoderlayer4 = Conv1D(50, 4, activation='relu', strides=1, padding='same')(embedding_mix)
 
     CNNs_fragment = concatenate([decoderlayer1, decoderlayer2, decoderlayer3, decoderlayer4], axis=-1)
     CNNs_fragment = Dropout(0.5)(CNNs_fragment)
+    CNNs_fragment = GlobalMaxPooling1D()(CNNs_fragment)
 
-    context_ADD = add([LSTM_leftcontext, CNNs_fragment, LSTM_rightcontext])
-    context_subtract_l = subtract([CNNs_fragment, LSTM_leftcontext])
-    context_subtract_r = subtract([CNNs_fragment, LSTM_rightcontext])
-    context_average = average([LSTM_leftcontext, CNNs_fragment, LSTM_rightcontext])
-    context_maximum = maximum([LSTM_leftcontext, CNNs_fragment, LSTM_rightcontext])
+    concat = Dropout(0.3)(CNNs_fragment)
 
 
-    concat = concatenate([LSTM_leftcontext, CNNs_fragment, LSTM_rightcontext,
-                          context_ADD, context_subtract_l, context_subtract_r,
-                          context_average, context_maximum], axis=-1)
-    concat = Dropout(0.3)(concat)
-    concat_1 = Dense(hidden_dim, activation='tanh')(concat)
-
-    output = Dense(targetvocabsize, activation='softmax')(concat_1)
+    output = Dense(targetvocabsize, activation='softmax')(concat)
 
     Models = Model([word_input_fragment, word_input_leftcontext, word_input_rightcontext,
                     char_input_fragment, char_input_leftcontext, char_input_rightcontext], output)
