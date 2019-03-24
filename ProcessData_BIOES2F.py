@@ -639,11 +639,10 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
 
     print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
-        print('id', id)
 
         index = 0
         while index < len(ptag2list):
-            print('index', index, ptag2list[index])
+
             if ptag2list[index] == 'O' or ptag2list[index] == '':
                 index += 1
                 continue
@@ -678,6 +677,8 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
                     fragtuples_list.append(tuple)
                 else:
                     predict_right += 1
+                index += 1
+            else:
                 index += 1
 
     print('fragtuples_list is OK .....')
