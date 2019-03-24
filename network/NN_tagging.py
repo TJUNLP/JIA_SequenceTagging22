@@ -188,7 +188,7 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
                      w2v_k, c2v_k,
                      hidden_dim=200, batch_size=32,
                      optimizer='rmsprop'):
-    hidden_dim = 200
+    hidden_dim = 100
 
     word_input_fragment = Input(shape=(input_fragment_lenth,), dtype='int32')
     word_embedding_fragment = Embedding(input_dim=wordvocabsize + 1,
