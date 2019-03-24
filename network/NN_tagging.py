@@ -244,7 +244,7 @@ def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
     Rep_LSTM_rightcontext = RepeatVector(1)(LSTM_rightcontext)
     BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
     tmp = Dense(100)(Rep_LSTM_leftcontext)
-    concat = concatenate([embedding_fragment, tmp, ], axis=1)
+    concat = concatenate([embedding_fragment, tmp, ], axis=0)
     concat = Dropout(0.2)(concat)
     concat_1 = Dense(hidden_dim, activation='tanh')(concat)
 
