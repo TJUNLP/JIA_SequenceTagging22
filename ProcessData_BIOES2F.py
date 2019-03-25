@@ -719,6 +719,9 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
     if temp1 == temp2:
         while(True):
             print('11')
+    else:
+        print(str(temp1))
+        print(str(temp2))
 
     return fragment_list, max_context, max_fragment, reall_right
 
