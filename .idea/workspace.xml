@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/TrainModel_simul.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_segment_2t.py" afterPath="$PROJECT_DIR$/TrainModel_segment_2t.py" />
-    </list>
+    <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -88,8 +85,8 @@
       <file leaf-file-name="TrainModel_segment_2t.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="165" column="55" lean-forward="false" selection-start-line="165" selection-start-column="55" selection-end-line="165" selection-end-column="55" />
+            <state relative-caret-position="106">
+              <caret line="151" column="32" lean-forward="true" selection-start-line="151" selection-start-column="32" selection-end-line="151" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -136,16 +133,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
               <caret line="9" column="4" lean-forward="false" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NN_classifer.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network/NN_classifer.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1545">
-              <caret line="121" column="0" lean-forward="false" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -595,13 +582,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Library/Python/3.6/lib/python/site-packages/keras/engine/training.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12">
-          <caret line="548" column="44" lean-forward="false" selection-start-line="548" selection-start-column="44" selection-end-line="548" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task_all.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="962">
@@ -880,10 +860,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Library/Python/3.6/lib/python/site-packages/keras/engine/training.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-600">
+          <caret line="1512" column="24" lean-forward="false" selection-start-line="1512" selection-start-column="12" selection-end-line="1512" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="165" column="55" lean-forward="false" selection-start-line="165" selection-start-column="55" selection-end-line="165" selection-end-column="55" />
+        <state relative-caret-position="106">
+          <caret line="151" column="32" lean-forward="true" selection-start-line="151" selection-start-column="32" selection-end-line="151" selection-end-column="32" />
           <folding />
         </state>
       </provider>
