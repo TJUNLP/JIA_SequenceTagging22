@@ -710,7 +710,15 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
     F = 2 * P * R / (P + R)
     print('Lists2Set_42ndTraining----', 'P=', P, 'R=', R, 'F=', F)
 
+    temp1 = fragment_list[17]
+
     random.shuffle(fragment_list)
+
+    temp2 = fragment_list[17]
+
+    if temp1 == temp2:
+        while(True):
+            print('11')
 
     return fragment_list, max_context, max_fragment, reall_right
 

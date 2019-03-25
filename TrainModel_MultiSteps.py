@@ -92,7 +92,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
         i += 1
         # if os.path.exists(modelfile):
         #     nn_model.load_weights(modelfile)
-        class_weight = {0:10, 1:10, 2:10, 3:10, 4:1}
+        class_weight = {0:5, 1:5, 2:5, 3:5, 4:1}
         checkpointer = ModelCheckpoint(filepath=modelfile + ".best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
         history = nn_model.fit(inputs_train_x,
                                inputs_train_y,
