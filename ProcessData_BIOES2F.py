@@ -91,12 +91,11 @@ def get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIO
     print('len(test_fragment_list)---', len(test_fragment_list))
     print('test_target_right--- ', test_target_right)
 
+    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
+    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
-    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
-    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
-
-    train = Data2Index_42ndclassifer(train_fragment_list, Type_vob, max_context, max_fragment)
-    test = Data2Index_42ndclassifer(test_fragment_list, Type_vob, max_context, max_fragment)
+    train = Data2Index_42ndclassifer(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
+    test = Data2Index_42ndclassifer(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
     print(len(train), len(test))
 
     chartrain = Char2Index_42ndclassifer(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
@@ -157,7 +156,6 @@ def get_word_index(files):
         count += 1
 
     return source_vob, sourc_idex_word, target_vob, target_idex_word, max_s
-
 
 
 def Char2Index_42ndclassifer(fraglist, max_context, max_fragment, max_c, char_vob, word_idex_word):
@@ -368,8 +366,6 @@ def Data2Index_42ndclassifer(fraglist, word2index_Type, max_context, max_fragmen
     return [data_fragment_all, data_leftcontext_all, data_rightcontext_all, data_t_all, data_t_2tpye_all]
 
 
-
-
 def get_Character_index(files):
 
     source_vob = {}
@@ -542,6 +538,11 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
     print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
         fragtuples_list = []
+
+        if len(ptag2list) != len(testx_word[id]) or len(ptag2list) != len(testt[id]):
+            while (True):
+                print('error Lists2Set_42ndTraining ....')
+
         index = 0
         while index < len(ptag2list):
             if ptag2list[index] == 'O' or ptag2list[index] == '':
@@ -650,9 +651,14 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
             fragment_tag = tup[6]
             fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
+    '''
     print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
         fragtuples_list = []
+        
+        if len(ptag2list)!= len(testx_word[id]) or len(ptag2list)!= len(testt[id]):
+            while(True):
+                print('error Lists2Set_42ndTraining ....')
         index = 0
         while index < len(ptag2list):
 
@@ -703,25 +709,13 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
 
             max_context = max(max_context, len(context_left), len(context_right))
             max_fragment = max(max_fragment, len(fragment))
-
+    '''
 
     P = predict_right / predict
     R = predict_right / reall_right
     F = 2 * P * R / (P + R)
     print('Lists2Set_42ndTraining----', 'P=', P, 'R=', R, 'F=', F)
 
-    temp1 = fragment_list[17]
-
-    random.shuffle(fragment_list)
-
-    temp2 = fragment_list[17]
-
-    if temp1 == temp2:
-        while(True):
-            print('11')
-    else:
-        print(str(temp1))
-        print(str(temp2))
 
     return fragment_list, max_context, max_fragment, reall_right
 
