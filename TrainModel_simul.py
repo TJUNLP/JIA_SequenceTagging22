@@ -14,7 +14,7 @@ import numpy as np
 from ProcessData_S2F import get_data
 from Evaluate import evaluation_NER
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from network.NN_tagging import Model_LSTM_BiLSTM_LSTM
+from network.NN_tagging import Model_LSTM_BiLSTM_LSTM, Model_LSTM_BiLSTM_LSTM_simul
 
 
 
@@ -39,7 +39,7 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
     predict = 0
     target = test_target_count
 
-    for num, ptagindex in enumerate(predictions):
+    for num, ptagindex in enumerate(predictions[1]):
 
         next_index = np.argmax(ptagindex)
         ptag = index2type[next_index]
@@ -159,10 +159,6 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
         if earlystopping >= 10:
             break
 
-        if P_dev >= 0.45 and R_dev >= 0.95:
-            nn_model.save_weights(modelfile, overwrite=True)
-            break
-
     return nn_model
 
 
@@ -208,6 +204,17 @@ def SelectModel(modelname, wordvocabsize, targetvocabsize, charvobsize,
                                           input_maxword_length=input_maxword_length,
                                           w2v_k=w2v_k, c2v_k=c2v_k,
                                           hidden_dim=hidden_dim, batch_size=batch_size)
+    elif modelname is 'Model_LSTM_BiLSTM_LSTM_simul':
+        nn_model = Model_LSTM_BiLSTM_LSTM_simul(wordvocabsize=wordvocabsize,
+                                          targetvocabsize=targetvocabsize,
+                                          charvobsize=charvobsize,
+                                          word_W=word_W, char_W=char_W,
+                                          input_fragment_lenth=input_fragment_lenth,
+                                          input_leftcontext_lenth=input_leftcontext_lenth,
+                                          input_rightcontext_lenth=input_rightcontext_lenth,
+                                          input_maxword_length=input_maxword_length,
+                                          w2v_k=w2v_k, c2v_k=c2v_k,
+                                          hidden_dim=hidden_dim, batch_size=batch_size)
 
     return nn_model
 
@@ -219,6 +226,7 @@ if __name__ == "__main__":
     hasNeg = True
 
     modelname = 'Model_LSTM_BiLSTM_LSTM'
+    modelname = 'Model_LSTM_BiLSTM_LSTM_simul'
 
     print(modelname)
 
@@ -264,6 +272,7 @@ if __name__ == "__main__":
     trainx_leftcontext = np.asarray(traindata[1], dtype="int32")
     trainx_rightcontext = np.asarray(traindata[2], dtype="int32")
     trainy = np.asarray(traindata[3], dtype="int32")
+    trainy_2t = np.asarray(traindata[4], dtype="int32")
     trainchar_fragment = np.asarray(chartrain[0], dtype="int32")
     trainchar_leftcontext = np.asarray(chartrain[1], dtype="int32")
     trainchar_rightcontext = np.asarray(chartrain[2], dtype="int32")
@@ -272,6 +281,7 @@ if __name__ == "__main__":
     devx_leftcontext = np.asarray(devdata[1], dtype="int32")
     devx_rightcontext = np.asarray(devdata[2], dtype="int32")
     devy = np.asarray(devdata[3], dtype="int32")
+    devy_2t = np.asarray(devdata[4], dtype="int32")
     devchar_fragment = np.asarray(chardev[0], dtype="int32")
     devchar_leftcontext = np.asarray(chardev[1], dtype="int32")
     devchar_rightcontext = np.asarray(chardev[2], dtype="int32")
@@ -280,6 +290,7 @@ if __name__ == "__main__":
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
     testx_rightcontext = np.asarray(testdata[2], dtype="int32")
     testy = np.asarray(testdata[3], dtype="int32")
+    testy_2t = np.asarray(testdata[4], dtype="int32")
     testchar_fragment = np.asarray(chartest[0], dtype="int32")
     testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
     testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
@@ -298,15 +309,15 @@ if __name__ == "__main__":
 
     inputs_train_x = [trainx_fragment, trainx_leftcontext, trainx_rightcontext,
                     trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext]
-    inputs_train_y = [trainy]
+    inputs_train_y = [trainy, trainy_2t]
 
     inputs_dev_x = [devx_fragment, devx_leftcontext, devx_rightcontext,
                     devchar_fragment, devchar_leftcontext, devchar_rightcontext]
-    inputs_dev_y = [devy]
+    inputs_dev_y = [devy, devy_2t]
 
     inputs_test_x = [testx_fragment, testx_leftcontext, testx_rightcontext,
                      testchar_fragment, testchar_leftcontext, testchar_rightcontext]
-    inputs_test_y = [testy]
+    inputs_test_y = [testy, testy_2t]
 
 
 
@@ -341,68 +352,6 @@ if __name__ == "__main__":
                             inputs_dev_x, inputs_dev_y, inputs_test_x, inputs_test_y,
                             devdata, chardev, Type_idex_word, dev_target_count,
                             testdata, chartest, test_target_count, resultdir, batch_size=batch_size)
-
-        if SecondTrain:
-
-            Train_2ndT_data, Train_2ndT_chardata = tagging4SecondTraining(nn_model, traindata, chartrain, Type_idex_word)
-            Dev_2ndT_data, Dev_2ndT_chardata = tagging4SecondTraining(nn_model, devdata, chardev, Type_idex_word)
-            Test_2ndT_data, Test_2ndT_chardata = tagging4SecondTraining(nn_model, testdata, chartest, Type_idex_word)
-
-            train2ndx_fragment = np.asarray(Train_2ndT_data[0], dtype="int32")
-            train2ndx_leftcontext = np.asarray(Train_2ndT_data[1], dtype="int32")
-            train2ndx_rightcontext = np.asarray(Train_2ndT_data[2], dtype="int32")
-            train2ndy = np.asarray(Train_2ndT_data[3], dtype="int32")
-            train2ndchar_fragment = np.asarray(Train_2ndT_chardata[0], dtype="int32")
-            train2ndchar_leftcontext = np.asarray(Train_2ndT_chardata[1], dtype="int32")
-            train2ndchar_rightcontext = np.asarray(Train_2ndT_chardata[2], dtype="int32")
-
-            dev2ndx_fragment = np.asarray(Dev_2ndT_data[0], dtype="int32")
-            dev2ndx_leftcontext = np.asarray(Dev_2ndT_data[1], dtype="int32")
-            dev2ndx_rightcontext = np.asarray(Dev_2ndT_data[2], dtype="int32")
-            dev2ndy = np.asarray(Dev_2ndT_data[3], dtype="int32")
-            dev2ndchar_fragment = np.asarray(Dev_2ndT_chardata[0], dtype="int32")
-            dev2ndchar_leftcontext = np.asarray(Dev_2ndT_chardata[1], dtype="int32")
-            dev2ndchar_rightcontext = np.asarray(Dev_2ndT_chardata[2], dtype="int32")
-
-            test2ndx_fragment = np.asarray(Test_2ndT_data[0], dtype="int32")
-            test2ndx_leftcontext = np.asarray(Test_2ndT_data[1], dtype="int32")
-            test2ndx_rightcontext = np.asarray(Test_2ndT_data[2], dtype="int32")
-            test2ndy = np.asarray(Test_2ndT_data[3], dtype="int32")
-            test2ndchar_fragment = np.asarray(Test_2ndT_chardata[0], dtype="int32")
-            test2ndchar_leftcontext = np.asarray(Test_2ndT_chardata[1], dtype="int32")
-            test2ndchar_rightcontext = np.asarray(Test_2ndT_chardata[2], dtype="int32")
-
-            inputs_train2nd_x = [train2ndx_fragment, train2ndx_leftcontext, train2ndx_rightcontext,
-                              train2ndchar_fragment, train2ndchar_leftcontext, train2ndchar_rightcontext]
-            inputs_train2nd_y = [train2ndy]
-
-            inputs_dev2nd_x = [dev2ndx_fragment, dev2ndx_leftcontext, dev2ndx_rightcontext,
-                            dev2ndchar_fragment, dev2ndchar_leftcontext, dev2ndchar_rightcontext]
-            inputs_dev2nd_y = [dev2ndy]
-
-            inputs_test2nd_x = [test2ndx_fragment, test2ndx_leftcontext, test2ndx_rightcontext,
-                             test2ndchar_fragment, test2ndchar_leftcontext, test2ndchar_rightcontext]
-            inputs_test2nd_y = [test2ndy]
-
-            if not os.path.exists(modelfile + '.2nd.h5'):
-                print("2nd Training EE model....")
-
-                train_e2e_model(nn_model, modelfile, inputs_train2nd_x, inputs_train2nd_y,
-                                inputs_dev2nd_x, inputs_dev2nd_y, inputs_test2nd_x, inputs_test2nd_y,
-                                Dev_2ndT_data, Dev_2ndT_chardata, Type_idex_word, dev_target_count,
-                                Test_2ndT_data, Test_2ndT_chardata, test_target_count,
-                                resultdir, npochos=100, batch_size=64, retrain=SecondTrain)
-
-            if Test:
-                print("2nd test EE model....")
-                print(datafile)
-                print(modelfile+ '.2nd.h5')
-                infer_e2e_model(nn_model, modelfile+ '.2nd.h5',
-                                inputs_dev2nd_x, inputs_dev2nd_y, inputs_test2nd_x, inputs_test2nd_y,
-                                Dev_2ndT_data, Dev_2ndT_chardata, Type_idex_word, dev_target_count,
-                                Test_2ndT_data, Test_2ndT_chardata, test_target_count, resultdir, batch_size=batch_size)
-
-
 
 
     # import tensorflow as tf
