@@ -92,7 +92,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
         i += 1
         # if os.path.exists(modelfile):
         #     nn_model.load_weights(modelfile)
-
+        class_weight = {0:10, 1:10, 2:10, 3:10, 4:1}
         checkpointer = ModelCheckpoint(filepath=modelfile + ".best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
         history = nn_model.fit(inputs_train_x,
                                inputs_train_y,
@@ -100,7 +100,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                epochs=epochlen,
                                validation_split=0.2,
                                shuffle=True,
-                               # class_weight=class_weight,
+                               class_weight=class_weight,
                                verbose=1,
                                # callbacks=[checkpointer]
                                )
@@ -259,14 +259,14 @@ def Train41stsegment(datafname, datafile, trainfile, testfile, w2v_file, c2v_fil
                                                resultdir=resultdir,
                                                batch_size=batch_size)
 
-        Train42ndclassifer(model2name,
+        Train42ndclassifer(inum, model2name,
                            model_segment, train_B_4segment_BIOES, test_4segment_BIOES,
                            target1_idex_word,
                            word_vob, word_W, character_W, w2v_k, c2v_k,
                            max_c, char_vob, word_idex_word, resultdir, batch_size)
 
 
-def Train42ndclassifer(model2name,
+def Train42ndclassifer(Step_num, model2name,
                        model_segment, train_B_4segment_BIOES, test_4segment_BIOES,
                        target1_idex_word,
                        word_vob, word_W, character_W, word_k, character_k,
@@ -316,7 +316,7 @@ def Train42ndclassifer(model2name,
 
     for inum in range(0, 3):
 
-        model2file = "./model/" + model2name + "_classifer_" + str(inum) + ".h5"
+        model2file = "./model/" + model2name + "_classifer_" + str(Step_num) + '--' + str(inum) + ".h5"
 
         if not os.path.exists(model2file):
 
