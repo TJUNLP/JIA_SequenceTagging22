@@ -541,7 +541,7 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
 
         if len(ptag2list) != len(testt[id]):
             while (True):
-                
+
                 print('error Lists2Set_42ndTest ....')
 
         index = 0
