@@ -539,9 +539,10 @@ def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragm
     for id, ptag2list in enumerate(ptag_BIOES_all):
         fragtuples_list = []
 
-        if len(ptag2list) != len(testx_word[id]) or len(ptag2list) != len(testt[id]):
+        if len(ptag2list) != len(testt[id]):
             while (True):
-                print('error Lists2Set_42ndTraining ....')
+                
+                print('error Lists2Set_42ndTest ....')
 
         index = 0
         while index < len(ptag2list):

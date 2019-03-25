@@ -35,8 +35,8 @@
       <file leaf-file-name="TrainModel_MultiSteps.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="341" column="0" lean-forward="false" selection-start-line="341" selection-start-column="0" selection-end-line="341" selection-end-column="0" />
+            <state relative-caret-position="169">
+              <caret line="193" column="24" lean-forward="false" selection-start-line="193" selection-start-column="24" selection-end-line="193" selection-end-column="24" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -47,20 +47,18 @@
       <file leaf-file-name="ProcessData_BIOES2F.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="718" column="4" lean-forward="false" selection-start-line="718" selection-start-column="4" selection-end-line="718" selection-end-column="4" />
+            <state relative-caret-position="-16">
+              <caret line="543" column="16" lean-forward="false" selection-start-line="543" selection-start-column="16" selection-end-line="543" selection-end-column="16" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
                 <element signature="e#5452#6735#0" expanded="false" />
                 <element signature="e#6843#9122#0" expanded="false" />
                 <element signature="e#9193#10297#0" expanded="false" />
-                <element signature="e#10386#11585#0" expanded="false" />
                 <element signature="e#12988#13867#0" expanded="false" />
                 <element signature="e#13913#14565#0" expanded="false" />
                 <element signature="e#14625#15173#0" expanded="false" />
                 <element signature="e#15246#16325#0" expanded="false" />
-                <element signature="e#16461#17727#0" expanded="false" />
-                <element signature="e#17820#20512#0" expanded="false" />
+                <element signature="e#20581#24747#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -803,16 +801,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="341" column="0" lean-forward="false" selection-start-line="341" selection-start-column="0" selection-end-line="341" selection-end-column="0" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="137">
@@ -825,22 +813,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="193" column="24" lean-forward="false" selection-start-line="193" selection-start-column="24" selection-end-line="193" selection-end-column="24" />
+          <folding>
+            <element signature="e#298#329#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="718" column="4" lean-forward="false" selection-start-line="718" selection-start-column="4" selection-end-line="718" selection-end-column="4" />
+        <state relative-caret-position="-16">
+          <caret line="543" column="16" lean-forward="false" selection-start-line="543" selection-start-column="16" selection-end-line="543" selection-end-column="16" />
           <folding>
             <element signature="e#33#51#0" expanded="true" />
             <element signature="e#5452#6735#0" expanded="false" />
             <element signature="e#6843#9122#0" expanded="false" />
             <element signature="e#9193#10297#0" expanded="false" />
-            <element signature="e#10386#11585#0" expanded="false" />
             <element signature="e#12988#13867#0" expanded="false" />
             <element signature="e#13913#14565#0" expanded="false" />
             <element signature="e#14625#15173#0" expanded="false" />
             <element signature="e#15246#16325#0" expanded="false" />
-            <element signature="e#16461#17727#0" expanded="false" />
-            <element signature="e#17820#20512#0" expanded="false" />
+            <element signature="e#20581#24747#0" expanded="false" />
           </folding>
         </state>
       </provider>
