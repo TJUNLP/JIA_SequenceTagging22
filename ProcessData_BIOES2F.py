@@ -709,14 +709,14 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
 
             max_context = max(max_context, len(context_left), len(context_right))
             max_fragment = max(max_fragment, len(fragment))
-    '''
+    
 
     P = predict_right / predict
     R = predict_right / reall_right
     F = 2 * P * R / (P + R)
     print('Lists2Set_42ndTraining----', 'P=', P, 'R=', R, 'F=', F)
 
-
+    '''
     return fragment_list, max_context, max_fragment, reall_right
 
 

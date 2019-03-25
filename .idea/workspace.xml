@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/ProcessData_BIOES2F.py" afterPath="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
-      <change beforePath="$PROJECT_DIR$/network/NN_tagging.py" afterPath="$PROJECT_DIR$/network/NN_tagging.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ProcessData_BIOES2F.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ProcessData_BIOES2F.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="863">
-              <caret line="100" column="40" lean-forward="false" selection-start-line="100" selection-start-column="16" selection-end-line="100" selection-end-column="40" />
+            <state relative-caret-position="418">
+              <caret line="718" column="4" lean-forward="false" selection-start-line="718" selection-start-column="4" selection-end-line="718" selection-end-column="4" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
                 <element signature="e#5452#6735#0" expanded="false" />
@@ -63,17 +61,16 @@
                 <element signature="e#15246#16325#0" expanded="false" />
                 <element signature="e#16461#17727#0" expanded="false" />
                 <element signature="e#17820#20512#0" expanded="false" />
-                <element signature="e#20609#24771#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NN_tagging.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="NN_tagging.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="368" column="0" lean-forward="true" selection-start-line="368" selection-start-column="0" selection-end-line="368" selection-end-column="0" />
+            <state relative-caret-position="137">
+              <caret line="355" column="100" lean-forward="true" selection-start-line="355" selection-start-column="100" selection-end-line="355" selection-end-column="100" />
               <folding>
                 <element signature="e#16#75#0" expanded="true" />
                 <element signature="e#6857#10472#0" expanded="false" />
@@ -167,8 +164,8 @@
         <option value="$PROJECT_DIR$/ProcessData_segment_PreC2V.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment.py" />
         <option value="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
-        <option value="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
         <option value="$PROJECT_DIR$/network/NN_tagging.py" />
+        <option value="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
       </list>
     </option>
   </component>
@@ -795,27 +792,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="863">
-          <caret line="100" column="40" lean-forward="false" selection-start-line="100" selection-start-column="16" selection-end-line="100" selection-end-column="40" />
-          <folding>
-            <element signature="e#33#51#0" expanded="true" />
-            <element signature="e#5452#6735#0" expanded="false" />
-            <element signature="e#6843#9122#0" expanded="false" />
-            <element signature="e#9193#10297#0" expanded="false" />
-            <element signature="e#10386#11585#0" expanded="false" />
-            <element signature="e#12988#13867#0" expanded="false" />
-            <element signature="e#13913#14565#0" expanded="false" />
-            <element signature="e#14625#15173#0" expanded="false" />
-            <element signature="e#15246#16325#0" expanded="false" />
-            <element signature="e#16461#17727#0" expanded="false" />
-            <element signature="e#17820#20512#0" expanded="false" />
-            <element signature="e#20609#24771#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-433">
@@ -839,12 +815,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="368" column="0" lean-forward="true" selection-start-line="368" selection-start-column="0" selection-end-line="368" selection-end-column="0" />
+        <state relative-caret-position="137">
+          <caret line="355" column="100" lean-forward="true" selection-start-line="355" selection-start-column="100" selection-end-line="355" selection-end-column="100" />
           <folding>
             <element signature="e#16#75#0" expanded="true" />
             <element signature="e#6857#10472#0" expanded="false" />
             <element signature="e#10834#15918#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="718" column="4" lean-forward="false" selection-start-line="718" selection-start-column="4" selection-end-line="718" selection-end-column="4" />
+          <folding>
+            <element signature="e#33#51#0" expanded="true" />
+            <element signature="e#5452#6735#0" expanded="false" />
+            <element signature="e#6843#9122#0" expanded="false" />
+            <element signature="e#9193#10297#0" expanded="false" />
+            <element signature="e#10386#11585#0" expanded="false" />
+            <element signature="e#12988#13867#0" expanded="false" />
+            <element signature="e#13913#14565#0" expanded="false" />
+            <element signature="e#14625#15173#0" expanded="false" />
+            <element signature="e#15246#16325#0" expanded="false" />
+            <element signature="e#16461#17727#0" expanded="false" />
+            <element signature="e#17820#20512#0" expanded="false" />
           </folding>
         </state>
       </provider>
