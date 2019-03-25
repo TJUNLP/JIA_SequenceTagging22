@@ -60,6 +60,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     inputs_test_x, inputs_test_y,
                     Type_idex_word, test_target_count,
                     resultdir, npochos=100, batch_size=50, retrain=False):
+    batch_size = 16
 
     if retrain:
         nn_model.load_weights(modelfile)
