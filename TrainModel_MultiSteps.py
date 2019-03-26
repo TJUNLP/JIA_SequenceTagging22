@@ -101,7 +101,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                epochs=epochlen,
                                validation_split=0.2,
                                shuffle=True,
-                               class_weight=class_weight,
+                               # class_weight=class_weight,
                                verbose=1,
                                # callbacks=[checkpointer]
                                )
@@ -366,7 +366,8 @@ if __name__ == "__main__":
     maxlen = 50
 
     model1name = 'Model_BiLSTM_CRF'
-    model2name = 'Model_LSTM_BiLSTM_LSTM'
+    # model2name = 'Model_LSTM_BiLSTM_LSTM'
+    model2name = 'Model_3Level'
 
     print(model1name)
     print(model2name)

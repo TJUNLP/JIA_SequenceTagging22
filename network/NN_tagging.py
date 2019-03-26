@@ -592,6 +592,8 @@ def Model_3Level(wordvocabsize, targetvocabsize, charvobsize, posivocabsize,
     embedding_fragment = concatenate([word_embedding_fragment, char_embedding_fragment], axis=-1)
     embedding_leftcontext = concatenate([word_embedding_leftcontext, char_embedding_leftcontext], axis=-1)
     embedding_rightcontext = concatenate([word_embedding_rightcontext, char_embedding_rightcontext], axis=-1)
+    embedding_posi = Dense(50, activation=None)(word_embedding_posi)
+    embedding_sent = concatenate([word_embedding_sent, embedding_posi], axis=-1)
 
     LSTM_leftcontext = LSTM(hidden_dim, go_backwards=False, activation='tanh')(embedding_leftcontext)
 
@@ -599,11 +601,14 @@ def Model_3Level(wordvocabsize, targetvocabsize, charvobsize, posivocabsize,
 
     BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
 
-    concat = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext], axis=-1)
+    BiLSTM_sent = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_sent)
+
+    concat = concatenate([BiLSTM_sent, LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext], axis=-1)
     concat = Dropout(0.5)(concat)
     output = Dense(targetvocabsize, activation='softmax')(concat)
 
     Models = Model([word_input_fragment, word_input_leftcontext, word_input_rightcontext,
+                    word_input_posi, word_input_sent,
                     char_input_fragment, char_input_leftcontext, char_input_rightcontext], output)
 
     Models.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=0.001), metrics=['acc'])
