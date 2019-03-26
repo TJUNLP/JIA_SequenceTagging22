@@ -34,7 +34,37 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
                                    testchar_fragment, testchar_leftcontext, testchar_rightcontext],
                                    batch_size=512,
                                       verbose=0)
+    print('2type *************************************************')
+    predict_right = 0
+    predict = 0
+    target = test_target_count
 
+    for num, ptagindex in enumerate(predictions[0]):
+
+        next_index = np.argmax(ptagindex)
+        ptag = index2type[next_index]
+
+        if ptag != 'NULL':
+            predict += 1
+
+        if not any(testy[num]):
+            ttag = 'NULL'
+
+        else:
+            ttag = index2type[np.argmax(testy[num])]
+
+        if ptag == ttag and ttag != 'NULL':
+            predict_right += 1
+
+    P = predict_right / predict
+    R = predict_right / target
+    F = 2 * P * R / (P + R)
+    print('predict_right =, predict =, target =, len(predictions) =', predict_right, predict, target, len(predictions[0]))
+    print('P= ', P)
+    print('R= ', R)
+    print('F= ', F)
+
+    print('5type *************************************************')
     predict_right = 0
     predict = 0
     target = test_target_count
@@ -59,7 +89,7 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
     P = predict_right / predict
     R = predict_right / target
     F = 2 * P * R / (P + R)
-    print('predict_right =, predict =, target =, len(predictions) =', predict_right, predict, target, len(predictions))
+    print('predict_right =, predict =, target =, len(predictions) =', predict_right, predict, target, len(predictions[1]))
     print('P= ', P)
     print('R= ', R)
     print('F= ', F)
@@ -123,8 +153,8 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
         P_dev, R_dev, F_dev = test_model_tagging(nn_model, devdata, chardev, Type_idex_word, dev_target_count)
 
         print('the test result-----------------------')
-        loss, acc = nn_model.evaluate(inputs_test_x, inputs_test_y, verbose=1, batch_size=512)
-        print('\n test_test score:', loss, acc)
+        loss, loss_2type, loss_5type, acc_2type, acc_5type = nn_model.evaluate(inputs_test_x, inputs_test_y, verbose=1, batch_size=512)
+        print('\n test_test score: loss, loss_2type, loss_5type, acc_2type, acc_5type', loss, loss_2type, loss_5type, acc_2type, acc_5type)
         P, R, F = test_model_tagging(nn_model, testdata, chartest, Type_idex_word, test_target_count)
 
         # nn_best_model = SelectModel(modelname,

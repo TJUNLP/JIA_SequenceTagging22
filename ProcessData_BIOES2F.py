@@ -65,11 +65,48 @@ def get_data_4segment_BIOES(trainfile, testfile, w2v_file, c2v_file, datafile, w
     out.close()
 
 
-
-
-
-
 def get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
+                        max_c, char_vob, word_idex_word, batch_size):
+
+    max_context = 0
+    max_fragment = 1
+    train_fragment_list, max_context, max_fragment, train_target_right = get_data_42ndTraining(model_segment,
+                                                                                   train_B_4segment_BIOES,
+                                                                                   max_context, max_fragment,
+                                                                                   index2BIOES=target1_idex_word,
+                                                                                   batch_size=batch_size, Istest=False)
+    test_fragment_list, max_context, max_fragment, test_target_right = get_data_42ndTraining(model_segment,
+                                                                                   test_4segment_BIOES,
+                                                                                   max_context, max_fragment,
+                                                                                   index2BIOES=target1_idex_word,
+                                                                                   batch_size=batch_size,
+                                                                                   Istest=True)
+    test_target_count = 5648
+
+    print('max_context--', max_context, 'max_fragment--', max_fragment)
+    print('len(test_fragment_list)---', len(test_fragment_list))
+    print('test_target_right--- ', test_target_right)
+
+    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
+    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
+
+    train = Data2Index_42ndclassifer(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
+    test = Data2Index_42ndclassifer(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
+    print(len(train), len(test))
+
+    chartrain = Char2Index_42ndclassifer(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+
+    chartest = Char2Index_42ndclassifer(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    print(len(chartrain), len(chartest))
+
+    print ("dataset created!")
+
+    return train, test, chartrain, chartest, Type_vob, Type_idex_word, max_fragment, max_context, test_target_count
+
+
+
+
+def get_data_4classifer_3l(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
                         max_c, char_vob, word_idex_word, batch_size):
 
     max_context = 0
@@ -529,6 +566,44 @@ def get_data_42ndTraining(nn_model, test_4segment_BIOES, max_context, max_fragme
     return fragment_list, max_context, max_fragment, target_right
 
 
+
+def get_data_42ndTraining_3l(nn_model, test_4segment_BIOES, max_context, max_fragment, index2BIOES, batch_size=256, Istest=False):
+
+    index2BIOES[0] = ''
+
+    testx_word = np.asarray(test_4segment_BIOES[0], dtype="int32")
+    testx_char = np.asarray(test_4segment_BIOES[2], dtype="int32")
+    testy = np.asarray(test_4segment_BIOES[1], dtype="int32")
+    testt = test_4segment_BIOES[3]
+
+    predictions = nn_model.predict([testx_word, testx_char], batch_size=batch_size, verbose=1)
+
+    ptag_BIOES_all = []
+    for si in range(0, len(predictions)):
+
+        ptag_BIOES = []
+        for word in predictions[si]:
+            next_index = np.argmax(word)
+            next_token = index2BIOES[next_index]
+            if next_token == '':
+                break
+            ptag_BIOES.append(next_token)
+
+        ptag_BIOES_all.append(ptag_BIOES)
+
+
+    print('is test ? ', Istest)
+    if not Istest:
+        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTraining(ptag_BIOES_all, test_4segment_BIOES[0], testt, max_context, max_fragment)
+    else:
+        fragment_list, max_context, max_fragment, target_right = Lists2Set_42ndTest(ptag_BIOES_all, test_4segment_BIOES[0], testt, max_context, max_fragment)
+
+    print('len(fragment_list) = ', len(fragment_list))
+    print('the count right target is ', target_right)
+
+    return fragment_list, max_context, max_fragment, target_right
+
+
 def Lists2Set_42ndTest(ptag_BIOES_all, testx_word, testt, max_context, max_fragment):
     reall_right = 0
     predict = 0
@@ -652,12 +727,12 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
             fragment_tag = tup[6]
             fragment_list.append((fragment, fragment_tag, context_left, context_right))
 
-    '''
+
     print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
         fragtuples_list = []
         
-        if len(ptag2list)!= len(testx_word[id]) or len(ptag2list)!= len(testt[id]):
+        if len(ptag2list)!= len(testt[id]):
             while(True):
                 print('error Lists2Set_42ndTraining ....')
         index = 0
@@ -717,7 +792,7 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
     F = 2 * P * R / (P + R)
     print('Lists2Set_42ndTraining----', 'P=', P, 'R=', R, 'F=', F)
 
-    '''
+
     return fragment_list, max_context, max_fragment, reall_right
 
 
