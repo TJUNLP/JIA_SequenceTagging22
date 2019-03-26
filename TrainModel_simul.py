@@ -240,7 +240,7 @@ if __name__ == "__main__":
     datafname = 'data_tagging_4type_PreC2V.1'
 
     if hasNeg:
-        datafname = 'data_tagging_5type_PreC2V.Ergodic.1'
+        datafname = 'data_tagging_5type_2type_PreC2V.Ergodic.1'
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
