@@ -456,7 +456,10 @@ def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_frag
             data_t_2tp[1] = 1
 
         data_leftcontext = [0] * max(0, max_context-len(context_left)) + context_left
-        
+        print(data_leftcontext)
+        if len(data_leftcontext) != 5:
+            while(1):
+                print(data_leftcontext)
         data_rightcontext = context_right + [0] * max(0, max_context-len(context_right))
 
 
