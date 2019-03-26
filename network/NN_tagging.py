@@ -478,11 +478,14 @@ def Model_LSTM_BiLSTM_LSTM_simul(wordvocabsize, targetvocabsize, charvobsize,
     concat2 = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext, output_2t_2input], axis=-1)
     concat2 = Dropout(0.5)(concat2)
 
-    output = Dense(targetvocabsize, activation='softmax')(concat2)
+    output = Dense(targetvocabsize, activation='softmax', name='5type')(concat2)
 
     Models = Model([word_input_fragment, word_input_leftcontext, word_input_rightcontext,
                     char_input_fragment, char_input_leftcontext, char_input_rightcontext], [output_2t, output])
 
-    Models.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=0.001), metrics=['acc'])
+    Models.compile(loss='categorical_crossentropy',
+                   loss_weights={'5type': 1., '2type': 0.4},
+                   optimizer=optimizers.RMSprop(lr=0.001),
+                   metrics=['acc'])
 
     return Models

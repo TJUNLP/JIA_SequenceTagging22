@@ -25,6 +25,7 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
     testx_rightcontext = np.asarray(testdata[2], dtype="int32")
     testy = np.asarray(testdata[3], dtype="int32")
+    testy_2t = np.asarray(testdata[4], dtype="int32")
     testchar_fragment = np.asarray(chardata[0], dtype="int32")
     testchar_leftcontext = np.asarray(chardata[1], dtype="int32")
     testchar_rightcontext = np.asarray(chardata[2], dtype="int32")
@@ -48,7 +49,7 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
             predict += 1
 
 
-        ttag = np.argmax(testy[num])
+        ttag = np.argmax(testy_2t[num])
 
         if ptag == ttag and ttag != 0:
             predict_right += 1
@@ -141,7 +142,8 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                epochs=epochlen,
                                validation_data=(inputs_dev_x, inputs_dev_y),
                                shuffle=True,
-                               class_weight=class_weight,
+                               class_weight={'5type':{0: 1., 1: 1., 2: 1., 3: 1., 4: 0.1},
+                                             '2type':{0: 0.02, 1: 1.}},
                                verbose=1,
                                # callbacks=[checkpointer]
                                )

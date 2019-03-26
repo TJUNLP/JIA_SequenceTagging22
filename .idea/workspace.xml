@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ProcessData_BIOES2F.py" afterPath="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel_simul.py" afterPath="$PROJECT_DIR$/TrainModel_simul.py" />
+      <change beforePath="$PROJECT_DIR$/network/NN_tagging.py" afterPath="$PROJECT_DIR$/network/NN_tagging.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -47,7 +47,7 @@
       <file leaf-file-name="NN_single.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/NN_single.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1020">
+            <state relative-caret-position="185">
               <caret line="86" column="23" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="23" />
               <folding />
             </state>
@@ -69,8 +69,8 @@
       <file leaf-file-name="NN_tagging.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="480" column="56" lean-forward="false" selection-start-line="480" selection-start-column="56" selection-end-line="480" selection-end-column="56" />
+            <state relative-caret-position="425">
+              <caret line="486" column="58" lean-forward="false" selection-start-line="486" selection-start-column="58" selection-end-line="486" selection-end-column="58" />
               <folding>
                 <element signature="e#16#75#0" expanded="true" />
                 <element signature="e#6857#10472#0" expanded="false" />
@@ -117,8 +117,8 @@
       <file leaf-file-name="TrainModel_simul.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_simul.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="52" column="37" lean-forward="false" selection-start-line="52" selection-start-column="37" selection-end-line="52" selection-end-column="37" />
+            <state relative-caret-position="232">
+              <caret line="144" column="87" lean-forward="false" selection-start-line="144" selection-start-column="87" selection-end-line="144" selection-end-column="87" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -200,8 +200,8 @@
         <option value="$PROJECT_DIR$/TrainModel_segment.py" />
         <option value="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment_2t.py" />
-        <option value="$PROJECT_DIR$/network/NN_tagging.py" />
         <option value="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
+        <option value="$PROJECT_DIR$/network/NN_tagging.py" />
         <option value="$PROJECT_DIR$/TrainModel_simul.py" />
       </list>
     </option>
@@ -457,7 +457,7 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25274727" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25274727" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -751,26 +751,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_single.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1020">
-          <caret line="86" column="23" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="111" column="19" lean-forward="true" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Python/3.6/lib/python/site-packages/keras/engine/training.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-600">
-          <caret line="1512" column="24" lean-forward="false" selection-start-line="1512" selection-start-column="12" selection-end-line="1512" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -814,18 +798,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="480" column="56" lean-forward="false" selection-start-line="480" selection-start-column="56" selection-end-line="480" selection-end-column="56" />
-          <folding>
-            <element signature="e#16#75#0" expanded="true" />
-            <element signature="e#6857#10472#0" expanded="false" />
-            <element signature="e#10834#15918#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-317">
@@ -854,6 +826,42 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="340" column="12" lean-forward="true" selection-start-line="340" selection-start-column="12" selection-end-line="340" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_single.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="86" column="23" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Python/3.6/lib/python/site-packages/keras/engine/training.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-237">
+          <caret line="548" column="8" lean-forward="false" selection-start-line="548" selection-start-column="8" selection-end-line="548" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="486" column="58" lean-forward="false" selection-start-line="486" selection-start-column="58" selection-end-line="486" selection-end-column="58" />
+          <folding>
+            <element signature="e#16#75#0" expanded="true" />
+            <element signature="e#6857#10472#0" expanded="false" />
+            <element signature="e#10834#15918#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
@@ -864,18 +872,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="354">
-          <caret line="340" column="12" lean-forward="true" selection-start-line="340" selection-start-column="12" selection-end-line="340" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_simul.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="52" column="37" lean-forward="false" selection-start-line="52" selection-start-column="37" selection-end-line="52" selection-end-column="37" />
+        <state relative-caret-position="232">
+          <caret line="144" column="87" lean-forward="false" selection-start-line="144" selection-start-column="87" selection-end-line="144" selection-end-column="87" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>
