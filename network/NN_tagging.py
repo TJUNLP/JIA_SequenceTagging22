@@ -605,7 +605,7 @@ def Model_3Level(wordvocabsize, targetvocabsize, charvobsize, posivocabsize,
 
     concat = concatenate([BiLSTM_sent, LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext], axis=-1)
     concat = Dropout(0.5)(concat)
-    output = Dense(targetvocabsize, activation='softmax')(concat)
+    output = Dense(targetvocabsize, activation='softmax')(BiLSTM_sent)
 
     Models = Model([word_input_fragment, word_input_leftcontext, word_input_rightcontext,
                     word_input_posi, word_input_sent,
