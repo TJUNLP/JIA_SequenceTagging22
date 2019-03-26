@@ -128,8 +128,8 @@ def get_data_4classifer_3l(model_segment, train_B_4segment_BIOES, test_4segment_
     print('len(test_fragment_list)---', len(test_fragment_list))
     print('test_target_right--- ', test_target_right)
 
-    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
-    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
+    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4:'NULL'}
+    Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
 
     train = Data2Index_42ndclassifer_3l(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
     test = Data2Index_42ndclassifer_3l(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
@@ -456,6 +456,10 @@ def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_frag
             data_t_2tp[1] = 1
 
         data_leftcontext = [0] * max(0, max_context-len(context_left)) + context_left
+        print(data_leftcontext)
+        if len(data_leftcontext) != 5:
+            while(1):
+                print(data_leftcontext)
         data_rightcontext = context_right + [0] * max(0, max_context-len(context_right))
 
 
