@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/ProcessData_BIOES2F.py" afterPath="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
-    </list>
+    <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,10 +60,11 @@
       <file leaf-file-name="ProcessData_BIOES2F.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2006">
-              <caret line="1069" column="81" lean-forward="false" selection-start-line="1069" selection-start-column="81" selection-end-line="1069" selection-end-column="81" />
+            <state relative-caret-position="-1501">
+              <caret line="951" column="4" lean-forward="false" selection-start-line="951" selection-start-column="4" selection-end-line="951" selection-end-column="4" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
+                <element signature="e#353#2971#0" expanded="false" />
                 <element signature="e#3152#5413#0" expanded="false" />
                 <element signature="e#8367#9650#0" expanded="false" />
                 <element signature="e#12108#13212#0" expanded="false" />
@@ -817,10 +816,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2006">
-          <caret line="1069" column="81" lean-forward="false" selection-start-line="1069" selection-start-column="81" selection-end-line="1069" selection-end-column="81" />
+        <state relative-caret-position="-1501">
+          <caret line="951" column="4" lean-forward="false" selection-start-line="951" selection-start-column="4" selection-end-line="951" selection-end-column="4" />
           <folding>
             <element signature="e#33#51#0" expanded="true" />
+            <element signature="e#353#2971#0" expanded="false" />
             <element signature="e#3152#5413#0" expanded="false" />
             <element signature="e#8367#9650#0" expanded="false" />
             <element signature="e#12108#13212#0" expanded="false" />
