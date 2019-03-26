@@ -131,8 +131,8 @@ def get_data_4classifer_3l(model_segment, train_B_4segment_BIOES, test_4segment_
     Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
     Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
 
-    train = Data2Index_42ndclassifer_3l(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
-    test = Data2Index_42ndclassifer_3l(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
+    train = Data2Index_42ndclassifer_3l(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=True)
+    test = Data2Index_42ndclassifer_3l(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=True)
     print(len(train), len(test))
 
     chartrain = Char2Index_42ndclassifer(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
