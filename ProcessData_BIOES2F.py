@@ -809,8 +809,8 @@ def Lists2Set_42ndTest_3l(ptag_BIOES_all, testx_word, testt, max_context, max_fr
             list_left = [i for i in range(1, tup[0] + 1)]
             list_left.reverse()
             feature_posi = list_left + [0 for i in range(tup[0], tup[1])] + [i for i in range(1, len(testx_word[id]) - tup[1] + 1)]
-            print(tup[0], tup[1])
-            print(feature_posi)
+            # print(tup[0], tup[1])
+            # print(feature_posi)
             feature_sent = testx_word[id]
             fragment_tag = tup[3]
             fragment_list.append((fragment, fragment_tag, context_left, context_right, feature_posi, feature_sent))
@@ -993,10 +993,10 @@ def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, 
             list_left.reverse()
             feature_posi = list_left + [0 for i in range(tup[0], tup[1])] + [i for i in range(1, len(testx_word[id]) - tup[1] + 1)]
 
-            print(feature_posi)
-            print(str(tup), len(testx_word[id]))
+            # print(feature_posi)
+            # print(str(tup), len(testx_word[id]))
             feature_sent = testx_word[id]
-            fragment_tag = tup[6]
+            fragment_tag = tup[3]
             fragment_list.append((fragment, fragment_tag, context_left, context_right, feature_posi, feature_sent))
 
     print('start processing ptag_BIOES_all ...')
@@ -1055,8 +1055,8 @@ def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, 
             list_left = [i for i in range(1, tup[0] + 1)]
             list_left.reverse()
             feature_posi = list_left + [0 for i in range(tup[0], tup[1])] + [i for i in range(1, len(testx_word[id]) - tup[1] + 1)]
-            print(tup[0], tup[1])
-            print(feature_posi)
+            # print(tup[0], tup[1])
+            # print(feature_posi)
             feature_sent = testx_word[id]
             fragment_tag = tup[3]
             fragment_list.append((fragment, fragment_tag, context_left, context_right, feature_posi, feature_sent))
