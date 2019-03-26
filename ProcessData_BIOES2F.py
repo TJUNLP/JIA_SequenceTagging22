@@ -128,7 +128,7 @@ def get_data_4classifer_3l(model_segment, train_B_4segment_BIOES, test_4segment_
     print('len(test_fragment_list)---', len(test_fragment_list))
     print('test_target_right--- ', test_target_right)
 
-    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4:'NULL'}
+    Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
     Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
 
     train = Data2Index_42ndclassifer_3l(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
@@ -448,7 +448,9 @@ def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_frag
             data_t = np.zeros(4)
 
         if fragment_tag in word2index_Type.keys():
-            data_t[word2index_Type[fragment_tag]] = 1
+            inn = word2index_Type[fragment_tag]
+            data_t[inn] = 1
+
         data_t_2tp = np.zeros(2)
         if fragment_tag == 'NULL':
             data_t_2tp[0] = 1
