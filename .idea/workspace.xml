@@ -67,7 +67,7 @@
       <file leaf-file-name="NN_tagging.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4860">
+            <state relative-caret-position="378">
               <caret line="480" column="10" lean-forward="false" selection-start-line="480" selection-start-column="4" selection-end-line="480" selection-end-column="10" />
               <folding>
                 <element signature="e#16#75#0" expanded="true" />
@@ -81,8 +81,8 @@
       <file leaf-file-name="TrainModel_simul.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_simul.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="239">
-              <caret line="242" column="63" lean-forward="false" selection-start-line="242" selection-start-column="63" selection-end-line="242" selection-end-column="63" />
+            <state relative-caret-position="294">
+              <caret line="321" column="21" lean-forward="false" selection-start-line="321" selection-start-column="21" selection-end-line="321" selection-end-column="21" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -177,8 +177,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="9" />
-    <option name="y" value="23" />
+    <option name="x" value="612" />
+    <option name="y" value="-774" />
     <option name="width" value="1251" />
     <option name="height" value="732" />
   </component>
@@ -416,7 +416,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="9" y="23" width="1251" height="732" extended-state="0" />
+    <frame x="612" y="-774" width="1251" height="732" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -672,6 +672,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-85">
           <caret line="806" column="8" lean-forward="false" selection-start-line="806" selection-start-column="8" selection-end-line="806" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -679,6 +680,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="203">
           <caret line="629" column="4" lean-forward="false" selection-start-line="629" selection-start-column="4" selection-end-line="629" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -739,6 +741,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-600">
           <caret line="1512" column="24" lean-forward="false" selection-start-line="1512" selection-start-column="12" selection-end-line="1512" selection-end-column="24" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -778,18 +781,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="218">
           <caret line="256" column="48" lean-forward="false" selection-start-line="256" selection-start-column="45" selection-end-line="256" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4860">
-          <caret line="480" column="10" lean-forward="false" selection-start-line="480" selection-start-column="4" selection-end-line="480" selection-end-column="10" />
-          <folding>
-            <element signature="e#16#75#0" expanded="true" />
-            <element signature="e#6857#10472#0" expanded="false" />
-            <element signature="e#10834#15918#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -816,10 +808,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="480" column="10" lean-forward="false" selection-start-line="480" selection-start-column="4" selection-end-line="480" selection-end-column="10" />
+          <folding>
+            <element signature="e#16#75#0" expanded="true" />
+            <element signature="e#6857#10472#0" expanded="false" />
+            <element signature="e#10834#15918#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_simul.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="239">
-          <caret line="242" column="63" lean-forward="false" selection-start-line="242" selection-start-column="63" selection-end-line="242" selection-end-column="63" />
+        <state relative-caret-position="294">
+          <caret line="321" column="21" lean-forward="false" selection-start-line="321" selection-start-column="21" selection-end-line="321" selection-end-column="21" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>

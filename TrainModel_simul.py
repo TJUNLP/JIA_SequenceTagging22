@@ -311,15 +311,15 @@ if __name__ == "__main__":
 
     inputs_train_x = [trainx_fragment, trainx_leftcontext, trainx_rightcontext,
                     trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext]
-    inputs_train_y = [trainy, trainy_2t]
+    inputs_train_y = [trainy_2t, trainy]
 
     inputs_dev_x = [devx_fragment, devx_leftcontext, devx_rightcontext,
                     devchar_fragment, devchar_leftcontext, devchar_rightcontext]
-    inputs_dev_y = [devy, devy_2t]
+    inputs_dev_y = [devy_2t, devy]
 
     inputs_test_x = [testx_fragment, testx_leftcontext, testx_rightcontext,
                      testchar_fragment, testchar_leftcontext, testchar_rightcontext]
-    inputs_test_y = [testy, testy_2t]
+    inputs_test_y = [testy_2t, testy]
 
 
 
