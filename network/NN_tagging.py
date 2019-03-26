@@ -580,7 +580,7 @@ def Model_3Level(wordvocabsize, targetvocabsize, charvobsize, posivocabsize,
     word_embedding_sent = Dropout(0.5)(word_embedding_sent)
 
     word_input_posi = Input(shape=(input_sent_lenth,), dtype='int32')
-    word_embedding_posi = Embedding(input_dim=posivocabsize + 1,
+    word_embedding_posi = Embedding(input_dim=posivocabsize,
                                output_dim=posi_k,
                                input_length=input_sent_lenth,
                                mask_zero=True,
