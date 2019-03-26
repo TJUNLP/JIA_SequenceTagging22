@@ -12,10 +12,10 @@ import pickle, datetime, codecs
 import os.path
 import numpy as np
 import TrainModel_segment
-from ProcessData_BIOES2F import get_data_4segment_BIOES, get_data_4classifer
+from ProcessData_BIOES2F import get_data_4segment_BIOES, get_data_4classifer, get_data_4classifer_3l
 from Evaluate import evaluation_NER
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from network.NN_tagging import Model_LSTM_BiLSTM_LSTM
+from network.NN_tagging import Model_LSTM_BiLSTM_LSTM, Model_3Level
 
 
 
@@ -162,11 +162,11 @@ def infer_e2e_model(nnmodel, modelname, modelfile,
     test_model_tagging(nnmodel, inputs_test_x, inputs_test_y, Type_idex_word, test_target_count)
 
 
-def SelectModel(modelname, wordvocabsize, targetvocabsize, charvobsize,
-                word_W, char_W,
+def SelectModel(modelname, wordvocabsize, targetvocabsize, charvobsize, posivocabsize,
+                word_W, char_W, posi_W,
                 input_fragment_lenth, input_leftcontext_lenth,
-                input_rightcontext_lenth, input_maxword_length,
-                w2v_k, c2v_k,
+                input_rightcontext_lenth, input_maxword_length, input_sent_lenth,
+                w2v_k, c2v_k, posi_k,
                 hidden_dim=200, batch_size=32):
     nn_model = None
 
@@ -181,6 +181,19 @@ def SelectModel(modelname, wordvocabsize, targetvocabsize, charvobsize,
                                           input_maxword_length=input_maxword_length,
                                           w2v_k=w2v_k, c2v_k=c2v_k,
                                           hidden_dim=hidden_dim, batch_size=batch_size)
+    elif modelname is 'Model_3Level':
+            nn_model = Model_3Level(wordvocabsize=wordvocabsize,
+                                              targetvocabsize=targetvocabsize,
+                                              charvobsize=charvobsize,
+                                    posivocabsize=posivocabsize,
+                                              word_W=word_W, char_W=char_W, posi_W=posi_W,
+                                              input_fragment_lenth=input_fragment_lenth,
+                                              input_leftcontext_lenth=input_leftcontext_lenth,
+                                              input_rightcontext_lenth=input_rightcontext_lenth,
+                                              input_maxword_length=input_maxword_length,
+                                    input_sent_lenth=input_sent_lenth,
+                                              w2v_k=w2v_k, c2v_k=c2v_k, posi_k=posi_k,
+                                              hidden_dim=hidden_dim, batch_size=batch_size)
 
     return nn_model
 
@@ -264,24 +277,28 @@ def Train41stsegment(datafname, datafile, trainfile, testfile, w2v_file, c2v_fil
                            model_segment, train_B_4segment_BIOES, test_4segment_BIOES,
                            target1_idex_word,
                            word_vob, word_W, character_W, w2v_k, c2v_k,
-                           max_c, char_vob, word_idex_word, resultdir, batch_size)
+                           max_s, max_c, char_vob, word_idex_word, resultdir, batch_size)
 
 
 def Train42ndclassifer(Step_num, model2name,
                        model_segment, train_B_4segment_BIOES, test_4segment_BIOES,
                        target1_idex_word,
                        word_vob, word_W, character_W, word_k, character_k,
-                        max_c, char_vob, word_idex_word, resultdir, batch_size):
+                       max_s, max_c, char_vob, word_idex_word, resultdir, batch_size):
 
     traindata, testdata, chartrain, chartest, \
-    Type_vob, Type_idex_word, max_fragment, max_context, \
-    test_target_count = get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
-                        max_c, char_vob, word_idex_word, batch_size)
+    Type_vob, Type_idex_word, feature_posi_k, feature_posi_W, \
+    max_fragment, max_context, \
+    test_target_count = get_data_4classifer_3l(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
+                                               max_s, max_c, char_vob, word_idex_word, batch_size)
 
     trainx_fragment = np.asarray(traindata[0], dtype="int32")
     trainx_leftcontext = np.asarray(traindata[1], dtype="int32")
     trainx_rightcontext = np.asarray(traindata[2], dtype="int32")
     trainy = np.asarray(traindata[3], dtype="int32")
+    trainx_posi = np.asarray(traindata[4], dtype="int32")
+    trainx_sent = np.asarray(traindata[5], dtype="int32")
+
     trainchar_fragment = np.asarray(chartrain[0], dtype="int32")
     trainchar_leftcontext = np.asarray(chartrain[1], dtype="int32")
     trainchar_rightcontext = np.asarray(chartrain[2], dtype="int32")
@@ -290,16 +307,18 @@ def Train42ndclassifer(Step_num, model2name,
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
     testx_rightcontext = np.asarray(testdata[2], dtype="int32")
     testy = np.asarray(testdata[3], dtype="int32")
+    testx_posi = np.asarray(testdata[4], dtype="int32")
+    testx_sent = np.asarray(testdata[5], dtype="int32")
     testchar_fragment = np.asarray(chartest[0], dtype="int32")
     testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
     testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
 
 
-    inputs_train_x = [trainx_fragment, trainx_leftcontext, trainx_rightcontext,
+    inputs_train_x = [trainx_fragment, trainx_leftcontext, trainx_rightcontext, trainx_posi, trainx_sent,
                     trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext]
     inputs_train_y = [trainy]
 
-    inputs_test_x = [testx_fragment, testx_leftcontext, testx_rightcontext,
+    inputs_test_x = [testx_fragment, testx_leftcontext, testx_rightcontext, testx_posi, testx_sent,
                      testchar_fragment, testchar_leftcontext, testchar_rightcontext]
     inputs_test_y = [testy]
 
@@ -307,12 +326,14 @@ def Train42ndclassifer(Step_num, model2name,
                           wordvocabsize=len(word_vob),
                           targetvocabsize=len(Type_vob),
                           charvobsize=len(char_vob),
-                          word_W=word_W, char_W=character_W,
+                          posivocabsize=len(max_s),
+                          word_W=word_W, char_W=character_W, posi_W=feature_posi_W,
                           input_fragment_lenth=max_fragment,
                           input_leftcontext_lenth=max_context,
                           input_rightcontext_lenth=max_context,
                           input_maxword_length=max_c,
-                          w2v_k=word_k, c2v_k=character_k,
+                          input_sent_lenth=max_s,
+                          w2v_k=word_k, c2v_k=character_k, posi_k=feature_posi_k,
                           hidden_dim=200, batch_size=batch_size)
 
     for inum in range(0, 3):

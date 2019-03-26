@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/ProcessData_BIOES2F.py" afterPath="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
+      <change beforePath="$PROJECT_DIR$/TrainModel_MultiSteps.py" afterPath="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel_simul.py" afterPath="$PROJECT_DIR$/TrainModel_simul.py" />
       <change beforePath="$PROJECT_DIR$/network/NN_tagging.py" afterPath="$PROJECT_DIR$/network/NN_tagging.py" />
     </list>
@@ -34,43 +36,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TrainModel_segment.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="119" column="38" lean-forward="false" selection-start-line="119" selection-start-column="38" selection-end-line="119" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NN_single.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/network/NN_single.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="86" column="23" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="23" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Seq2fragment.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6675">
-              <caret line="449" column="4" lean-forward="false" selection-start-line="449" selection-start-column="4" selection-end-line="449" selection-end-column="4" />
-              <folding>
-                <element signature="e#18591#21442#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="NN_tagging.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="486" column="58" lean-forward="false" selection-start-line="486" selection-start-column="58" selection-end-line="486" selection-end-column="58" />
+            <state relative-caret-position="306">
+              <caret line="588" column="23" lean-forward="false" selection-start-line="588" selection-start-column="4" selection-end-line="588" selection-end-column="23" />
               <folding>
                 <element signature="e#16#75#0" expanded="true" />
                 <element signature="e#6857#10472#0" expanded="false" />
@@ -83,8 +53,8 @@
       <file leaf-file-name="TrainModel_MultiSteps.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="193" column="24" lean-forward="false" selection-start-line="193" selection-start-column="24" selection-end-line="193" selection-end-column="24" />
+            <state relative-caret-position="-931">
+              <caret line="164" column="4" lean-forward="false" selection-start-line="164" selection-start-column="4" selection-end-line="164" selection-end-column="4" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -95,20 +65,21 @@
       <file leaf-file-name="ProcessData_BIOES2F.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5580">
-              <caret line="847" column="31" lean-forward="true" selection-start-line="847" selection-start-column="31" selection-end-line="847" selection-end-column="31" />
+            <state relative-caret-position="389">
+              <caret line="142" column="60" lean-forward="false" selection-start-line="142" selection-start-column="60" selection-end-line="142" selection-end-column="60" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
-                <element signature="e#353#2971#0" expanded="false" />
                 <element signature="e#3152#5413#0" expanded="false" />
-                <element signature="e#7895#9178#0" expanded="false" />
-                <element signature="e#9286#11565#0" expanded="false" />
-                <element signature="e#11636#12740#0" expanded="false" />
-                <element signature="e#15431#16310#0" expanded="false" />
-                <element signature="e#16356#17008#0" expanded="false" />
-                <element signature="e#17068#17616#0" expanded="false" />
-                <element signature="e#17689#18768#0" expanded="false" />
-                <element signature="e#24414#28526#0" expanded="false" />
+                <element signature="e#8346#9629#0" expanded="false" />
+                <element signature="e#12087#13191#0" expanded="false" />
+                <element signature="e#14584#15842#0" expanded="false" />
+                <element signature="e#17522#18401#0" expanded="false" />
+                <element signature="e#18447#19099#0" expanded="false" />
+                <element signature="e#19159#19707#0" expanded="false" />
+                <element signature="e#19780#20859#0" expanded="false" />
+                <element signature="e#20995#22261#0" expanded="false" />
+                <element signature="e#23766#26414#0" expanded="false" />
+                <element signature="e#29513#33625#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -118,30 +89,10 @@
         <entry file="file://$PROJECT_DIR$/TrainModel_simul.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="232">
-              <caret line="144" column="87" lean-forward="false" selection-start-line="144" selection-start-column="87" selection-end-line="144" selection-end-column="87" />
+              <caret line="144" column="86" lean-forward="false" selection-start-line="144" selection-start-column="86" selection-end-line="144" selection-end-column="86" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TrainModel_segment_2t.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="354">
-              <caret line="340" column="12" lean-forward="true" selection-start-line="340" selection-start-column="12" selection-end-line="340" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProcessData_S2F.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-317">
-              <caret line="227" column="4" lean-forward="false" selection-start-line="227" selection-start-column="4" selection-end-line="227" selection-end-column="4" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -198,10 +149,10 @@
         <option value="$PROJECT_DIR$/TrainModel_classifer.py" />
         <option value="$PROJECT_DIR$/ProcessData_segment_PreC2V.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment.py" />
-        <option value="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
         <option value="$PROJECT_DIR$/TrainModel_segment_2t.py" />
-        <option value="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
         <option value="$PROJECT_DIR$/network/NN_tagging.py" />
+        <option value="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
+        <option value="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
         <option value="$PROJECT_DIR$/TrainModel_simul.py" />
       </list>
     </option>
@@ -618,13 +569,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2531">
-          <caret line="533" column="0" lean-forward="true" selection-start-line="455" selection-start-column="0" selection-end-line="533" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_1task_pos.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-72">
@@ -758,28 +702,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6675">
-          <caret line="449" column="4" lean-forward="false" selection-start-line="449" selection-start-column="4" selection-end-line="449" selection-end-column="4" />
-          <folding>
-            <element signature="e#18591#21442#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="565">
           <caret line="218" column="31" lean-forward="true" selection-start-line="218" selection-start-column="31" selection-end-line="218" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="119" column="38" lean-forward="false" selection-start-line="119" selection-start-column="38" selection-end-line="119" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -806,38 +732,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5580">
-          <caret line="847" column="31" lean-forward="true" selection-start-line="847" selection-start-column="31" selection-end-line="847" selection-end-column="31" />
-          <folding>
-            <element signature="e#33#51#0" expanded="true" />
-            <element signature="e#353#2971#0" expanded="false" />
-            <element signature="e#3152#5413#0" expanded="false" />
-            <element signature="e#7895#9178#0" expanded="false" />
-            <element signature="e#9286#11565#0" expanded="false" />
-            <element signature="e#11636#12740#0" expanded="false" />
-            <element signature="e#15431#16310#0" expanded="false" />
-            <element signature="e#16356#17008#0" expanded="false" />
-            <element signature="e#17068#17616#0" expanded="false" />
-            <element signature="e#17689#18768#0" expanded="false" />
-            <element signature="e#24414#28526#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="354">
           <caret line="340" column="12" lean-forward="true" selection-start-line="340" selection-start-column="12" selection-end-line="340" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_single.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="86" column="23" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="23" />
           <folding />
         </state>
       </provider>
@@ -850,10 +748,79 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PrecessData.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="95" column="0" lean-forward="false" selection-start-line="95" selection-start-column="0" selection-end-line="107" selection-end-column="15" />
+          <folding>
+            <element signature="e#141#483#0" expanded="false" />
+            <element signature="e#529#1184#0" expanded="false" />
+            <element signature="e#1231#2027#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="119" column="38" lean-forward="false" selection-start-line="119" selection-start-column="38" selection-end-line="119" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_single.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="86" column="23" lean-forward="false" selection-start-line="86" selection-start-column="4" selection-end-line="86" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="449" column="4" lean-forward="false" selection-start-line="449" selection-start-column="4" selection-end-line="449" selection-end-column="4" />
+          <folding>
+            <element signature="e#18591#21442#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-931">
+          <caret line="164" column="4" lean-forward="false" selection-start-line="164" selection-start-column="4" selection-end-line="164" selection-end-column="4" />
+          <folding>
+            <element signature="e#298#329#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="389">
+          <caret line="142" column="60" lean-forward="false" selection-start-line="142" selection-start-column="60" selection-end-line="142" selection-end-column="60" />
+          <folding>
+            <element signature="e#33#51#0" expanded="true" />
+            <element signature="e#3152#5413#0" expanded="false" />
+            <element signature="e#8346#9629#0" expanded="false" />
+            <element signature="e#12087#13191#0" expanded="false" />
+            <element signature="e#14584#15842#0" expanded="false" />
+            <element signature="e#17522#18401#0" expanded="false" />
+            <element signature="e#18447#19099#0" expanded="false" />
+            <element signature="e#19159#19707#0" expanded="false" />
+            <element signature="e#19780#20859#0" expanded="false" />
+            <element signature="e#20995#22261#0" expanded="false" />
+            <element signature="e#23766#26414#0" expanded="false" />
+            <element signature="e#29513#33625#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="486" column="58" lean-forward="false" selection-start-line="486" selection-start-column="58" selection-end-line="486" selection-end-column="58" />
+        <state relative-caret-position="306">
+          <caret line="588" column="23" lean-forward="false" selection-start-line="588" selection-start-column="4" selection-end-line="588" selection-end-column="23" />
           <folding>
             <element signature="e#16#75#0" expanded="true" />
             <element signature="e#6857#10472#0" expanded="false" />
@@ -862,20 +829,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="193" column="24" lean-forward="false" selection-start-line="193" selection-start-column="24" selection-end-line="193" selection-end-column="24" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_simul.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
-          <caret line="144" column="87" lean-forward="false" selection-start-line="144" selection-start-column="87" selection-end-line="144" selection-end-column="87" />
+          <caret line="144" column="86" lean-forward="false" selection-start-line="144" selection-start-column="86" selection-end-line="144" selection-end-column="86" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
           </folding>

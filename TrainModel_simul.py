@@ -142,7 +142,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                epochs=epochlen,
                                validation_data=(inputs_dev_x, inputs_dev_y),
                                shuffle=True,
-                               class_weight={'5type':{0: 1., 1: 1., 2: 1., 3: 1., 4: 0.1},
+                               class_weight={'5type':{0: 1., 1: 1., 2: 1., 3: 1., 4: 1},
                                              '2type':{0: 0.02, 1: 1.}},
                                verbose=1,
                                # callbacks=[checkpointer]
