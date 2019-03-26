@@ -806,7 +806,7 @@ def Lists2Set_42ndTest_3l(ptag_BIOES_all, testx_word, testt, max_context, max_fr
                 index += 1
 
         for tup in fragtuples_list:
-            context_left = testx_word[id][max(0, tup[0]-max_context):tup[1]]
+            context_left = testx_word[id][max(0, tup[0]-5):tup[1]]
             fragment = testx_word[id][tup[0]:tup[1]]
             context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+max_context)]
 
@@ -819,6 +819,7 @@ def Lists2Set_42ndTest_3l(ptag_BIOES_all, testx_word, testt, max_context, max_fr
             fragment_tag = tup[3]
             fragment_list.append((fragment, fragment_tag, context_left, context_right, feature_posi, feature_sent))
 
+            max_context = max(max_context, len(context_left), len(context_right))
             max_fragment = max(max_fragment, len(fragment))
 
     P = reall_right / predict
@@ -989,7 +990,7 @@ def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, 
                     max_fragment = max(max_fragment, target_right - target_left)
 
         for tup in fragtuples_list:
-            context_left = testx_word[id][max(0, tup[0]-max_context):tup[1]]
+            context_left = testx_word[id][max(0, tup[0]-5):tup[1]]
             fragment = testx_word[id][tup[0]:tup[1]]
             context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+max_context)]
 
@@ -1002,6 +1003,8 @@ def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, 
             feature_sent = testx_word[id]
             fragment_tag = tup[3]
             fragment_list.append((fragment, fragment_tag, context_left, context_right, feature_posi, feature_sent))
+
+            max_context = max(max_context, len(context_left), len(context_right))
 
     print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
@@ -1052,7 +1055,7 @@ def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, 
                 index += 1
 
         for tup in fragtuples_list:
-            context_left = testx_word[id][max(0, tup[0]-max_context):tup[1]]
+            context_left = testx_word[id][max(0, tup[0]-5):tup[1]]
             fragment = testx_word[id][tup[0]:tup[1]]
             context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+max_context)]
 
@@ -1064,7 +1067,7 @@ def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, 
             feature_sent = testx_word[id]
             fragment_tag = tup[3]
             fragment_list.append((fragment, fragment_tag, context_left, context_right, feature_posi, feature_sent))
-
+            max_context = max(max_context, len(context_left), len(context_right))
             max_fragment = max(max_fragment, len(fragment))
 
     P = predict_right / predict
