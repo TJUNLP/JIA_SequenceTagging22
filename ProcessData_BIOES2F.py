@@ -796,7 +796,129 @@ def Lists2Set_42ndTraining(ptag_BIOES_all, testx_word, testt, max_context, max_f
     return fragment_list, max_context, max_fragment, reall_right
 
 
+def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, max_fragment=1, ):
+    reall_right = 0
+    predict_right = 0
+    predict = 0
+    fragment_list = []
+
+    print('start processing testt ...')
+    for id, tag2list in enumerate(testt):
+        fragtuples_list = []
+        target_left = 0
+
+        for index, tag in enumerate(tag2list):
+
+            if tag == 'O':
+                continue
+
+            else:
+                if tag.__contains__('B-'):
+                    target_left = index
+
+                elif tag.__contains__('I-'):
+                    continue
+
+                else:
+                    if tag.__contains__('S-'):
+
+                        target_left = index
+                        target_right = index + 1
+
+                    elif tag.__contains__('E-'):
+
+                        target_right = index + 1
+
+                    reltag = tag[2:]
+                    tuple_posi = (target_left, target_right, len(tag2list), reltag)
+                    fragtuples_list.append(tuple_posi)
+                    reall_right += 1
+
+                    max_fragment = max(max_fragment, target_right - target_left)
+
+        for tup in fragtuples_list:
+            context_left = testx_word[id][max(0, tup[0]-max_context):tup[1]]
+            fragment = testx_word[id][tup[0]:tup[1]]
+            context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+max_context)]
+
+            list_left = [i * -1 for i in range(1, tup[0] + 1)]
+            list_left.reverse()
+            feature_posi = list_left + [0 for i in range(tup[0], tup[1])] + [i for i in range(1, tup[2] - tup[1] + 1)]
+            print(tup[0], tup[1])
+            print(feature_posi)
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right, feature_posi))
+
+    print('start processing ptag_BIOES_all ...')
+    for id, ptag2list in enumerate(ptag_BIOES_all):
+        fragtuples_list = []
+
+        if len(ptag2list) != len(testt[id]):
+            while (True):
+                print('error Lists2Set_42ndTraining ....')
+        index = 0
+        while index < len(ptag2list):
+
+            if ptag2list[index] == 'O' or ptag2list[index] == '':
+                index += 1
+                continue
+            elif ptag2list[index] == 'B':
+                target_left = index
+                index += 1
+                while index < len(ptag2list):
+                    if ptag2list[index] == 'I':
+                        index += 1
+                        continue
+                    elif ptag2list[index] == 'E':
+                        target_right = index + 1
+                        predict += 1
+                        if 'B-' in testt[id][target_left] and \
+                                'E-' in testt[id][index]:
+                            predict_right += 1
+                            break
+
+                        tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), 'NULL')
+                        fragtuples_list.append(tuple)
+                        index += 1
+                        break
+                    else:
+                        break
+
+            elif ptag2list[index] == 'S':
+                predict += 1
+                if 'S-' not in testt[id][index]:
+                    target_left = index
+                    target_right = index + 1
+                    tuple = (0, target_right, target_left, target_right, target_left, len(ptag2list), 'NULL')
+                    fragtuples_list.append(tuple)
+                else:
+                    predict_right += 1
+                index += 1
+            else:
+                index += 1
+
+        for tup in fragtuples_list:
+            context_left = testx_word[id][tup[0]:tup[1]]
+            fragment = testx_word[id][tup[2]:tup[3]]
+            context_right = testx_word[id][tup[4]:tup[5]]
+            fragment_tag = tup[6]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+
+            max_context = max(max_context, len(context_left), len(context_right))
+            max_fragment = max(max_fragment, len(fragment))
+
+    P = predict_right / predict
+    R = predict_right / reall_right
+    F = 2 * P * R / (P + R)
+    print('Lists2Set_42ndTraining----', 'P=', P, 'R=', R, 'F=', F)
+
+    return fragment_list, max_context, max_fragment, reall_right
+
+
 if __name__ == '__main__':
 
     resultdir = "./data/result/"
+
+
+
 

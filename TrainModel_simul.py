@@ -41,19 +41,16 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
 
     for num, ptagindex in enumerate(predictions[0]):
 
-        next_index = np.argmax(ptagindex)
-        ptag = index2type[next_index]
+        ptag = np.argmax(ptagindex)
 
-        if ptag != 'NULL':
+
+        if ptag != 0:
             predict += 1
 
-        if not any(testy[num]):
-            ttag = 'NULL'
 
-        else:
-            ttag = index2type[np.argmax(testy[num])]
+        ttag = np.argmax(testy[num])
 
-        if ptag == ttag and ttag != 'NULL':
+        if ptag == ttag and ttag != 0:
             predict_right += 1
 
     P = predict_right / predict
