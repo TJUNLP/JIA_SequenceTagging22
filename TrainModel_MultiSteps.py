@@ -373,8 +373,8 @@ if __name__ == "__main__":
     maxlen = 50
 
     model1name = 'Model_BiLSTM_CRF'
-    model2name = 'Model_LSTM_BiLSTM_LSTM'
-    # model2name = 'Model_3Level'
+    # model2name = 'Model_LSTM_BiLSTM_LSTM'
+    model2name = 'Model_3Level'
 
     print(model1name)
     print(model2name)
