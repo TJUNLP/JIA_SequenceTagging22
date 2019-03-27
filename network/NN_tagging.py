@@ -601,7 +601,7 @@ def Model_3Level(wordvocabsize, targetvocabsize, charvobsize, posivocabsize,
 
     BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
 
-    BiLSTM_sent = Bidirectional(LSTM(hidden_dim // 2, activation='tanh', dropout=0.5), merge_mode='avg')(embedding_sent)
+    BiLSTM_sent = Bidirectional(LSTM(hidden_dim // 2, activation='tanh', dropout=0.5), merge_mode='ave')(embedding_sent)
 
     concat = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext], axis=-1)
     concat = Dropout(0.5)(concat)
