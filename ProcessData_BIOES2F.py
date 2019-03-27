@@ -807,7 +807,7 @@ def Lists2Set_42ndTest_3l(ptag_BIOES_all, testx_word, testt, max_context, max_fr
         for tup in fragtuples_list:
             context_left = testx_word[id][max(0, tup[0]-5):tup[1]]
             fragment = testx_word[id][tup[0]:tup[1]]
-            context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+max_context)]
+            context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+5)]
 
             list_left = [i for i in range(1, tup[0] + 1)]
             list_left.reverse()
@@ -991,7 +991,7 @@ def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, 
         for tup in fragtuples_list:
             context_left = testx_word[id][max(0, tup[0]-5):tup[1]]
             fragment = testx_word[id][tup[0]:tup[1]]
-            context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+max_context)]
+            context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+5)]
 
             list_left = [i for i in range(1, tup[0] + 1)]
             list_left.reverse()
@@ -1056,7 +1056,7 @@ def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, 
         for tup in fragtuples_list:
             context_left = testx_word[id][max(0, tup[0]-5):tup[1]]
             fragment = testx_word[id][tup[0]:tup[1]]
-            context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+max_context)]
+            context_right = testx_word[id][tup[0]:min(tup[2], tup[1]+5)]
 
             list_left = [i for i in range(1, tup[0] + 1)]
             list_left.reverse()
