@@ -286,24 +286,24 @@ def Train42ndclassifer(Step_num, model2name,
                        word_vob, word_W, character_W, word_k, character_k,
                        max_s, max_c, char_vob, word_idex_word, resultdir, batch_size):
 
-    traindata, testdata, chartrain, chartest, \
-    Type_vob, Type_idex_word, \
-    max_fragment, max_context, \
-    test_target_count = get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
-                                               max_c, char_vob, word_idex_word, batch_size)
-
     # traindata, testdata, chartrain, chartest, \
-    # Type_vob, Type_idex_word, feature_posi_k, feature_posi_W, \
+    # Type_vob, Type_idex_word, \
     # max_fragment, max_context, \
-    # test_target_count = get_data_4classifer_3l(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
-    #                                            max_s, max_c, char_vob, word_idex_word, batch_size)
+    # test_target_count = get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
+    #                                            max_c, char_vob, word_idex_word, batch_size)
+
+    traindata, testdata, chartrain, chartest, \
+    Type_vob, Type_idex_word, feature_posi_k, feature_posi_W, \
+    max_fragment, max_context, \
+    test_target_count = get_data_4classifer_3l(model_segment, train_B_4segment_BIOES, test_4segment_BIOES, target1_idex_word,
+                                               max_s, max_c, char_vob, word_idex_word, batch_size)
 
     trainx_fragment = np.asarray(traindata[0], dtype="int32")
     trainx_leftcontext = np.asarray(traindata[1], dtype="int32")
     trainx_rightcontext = np.asarray(traindata[2], dtype="int32")
     trainy = np.asarray(traindata[3], dtype="int32")
-    # trainx_posi = np.asarray(traindata[4], dtype="int32")
-    # trainx_sent = np.asarray(traindata[5], dtype="int32")
+    trainx_posi = np.asarray(traindata[4], dtype="int32")
+    trainx_sent = np.asarray(traindata[5], dtype="int32")
 
     trainchar_fragment = np.asarray(chartrain[0], dtype="int32")
     trainchar_leftcontext = np.asarray(chartrain[1], dtype="int32")
@@ -313,23 +313,22 @@ def Train42ndclassifer(Step_num, model2name,
     testx_leftcontext = np.asarray(testdata[1], dtype="int32")
     testx_rightcontext = np.asarray(testdata[2], dtype="int32")
     testy = np.asarray(testdata[3], dtype="int32")
-    # testx_posi = np.asarray(testdata[4], dtype="int32")
-    # testx_sent = np.asarray(testdata[5], dtype="int32")
+    testx_posi = np.asarray(testdata[4], dtype="int32")
+    testx_sent = np.asarray(testdata[5], dtype="int32")
     testchar_fragment = np.asarray(chartest[0], dtype="int32")
     testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
     testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
 
 
-    inputs_train_x = [trainx_fragment, trainx_leftcontext, trainx_rightcontext,
+    inputs_train_x = [trainx_fragment, trainx_leftcontext, trainx_rightcontext, trainx_posi, trainx_sent,
                     trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext]
     inputs_train_y = [trainy]
 
-    inputs_test_x = [testx_fragment, testx_leftcontext, testx_rightcontext,
+    inputs_test_x = [testx_fragment, testx_leftcontext, testx_rightcontext, testx_posi, testx_sent,
                      testchar_fragment, testchar_leftcontext, testchar_rightcontext]
     inputs_test_y = [testy]
 
-    feature_posi_W = None
-    feature_posi_k = 1
+
     model_classifer = SelectModel(model2name,
                           wordvocabsize=len(word_vob),
                           targetvocabsize=len(Type_vob),
