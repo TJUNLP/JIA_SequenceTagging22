@@ -535,7 +535,7 @@ if __name__ == "__main__":
     withFix = False
     withPos = False
 
-    datafile = "./model/data_CONLL03_Attention_1" + ".pkl"
+    datafile = "./model_data/data_CONLL03_Attention_1" + ".pkl"
 
 
     modelfile = "next ...."
