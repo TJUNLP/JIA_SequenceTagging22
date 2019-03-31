@@ -37,7 +37,7 @@ from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_Coor
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg_softmax_softmax
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order3_DenseAvg_crf_softmax
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order4_DenseAvg
-from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order7_Serial_All
+from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_Attention
 from network.BiLSTM_CRF_multi2_order import BiLSTM_CRF_multi2_order7_Serial_All_2
 
 def test_model_divide(nn_model, testdata, chardata, pos_data, index2word, resultfile='', batch_size=50):
@@ -329,6 +329,19 @@ def SelectModel(modelname, sourcevocabsize, targetvocabsize, source_W,
                                                  input_word_length=input_word_length,
                                                  char_emd_dim=char_emd_dim,
                                                  sourcepossize=sourcepossize, pos_W=pos_W, pos_emd_dim=pos_emd_dim)
+    elif modelname is 'BiLSTM_CRF_multi2_Attention':
+        nn_model = BiLSTM_CRF_multi2_Attention(sourcevocabsize=sourcevocabsize,
+                                                         targetvocabsize=targetvocabsize,
+                                                         source_W=source_W,
+                                                         input_seq_lenth=input_seq_lenth,
+                                                         output_seq_lenth=output_seq_lenth,
+                                                         hidden_dim=hidden_dim, emd_dim=emd_dim,
+                                                         sourcecharsize=sourcecharsize,
+                                                         character_W=character_W,
+                                                         input_word_length=input_word_length,
+                                                         char_emd_dim=char_emd_dim,
+                                                         sourcepossize=sourcepossize, pos_W=pos_W,
+                                                         pos_emd_dim=pos_emd_dim)
 
 
     return nn_model
@@ -400,19 +413,11 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     while (epoch < npochos):
         epoch = epoch + 1
         i += 1
-        # for x_word, y, x_word_val, y_val, input_char, input_char_val,x_pos_train, x_pos_dev,sample_weight \
-        #         in get_training_xy_otherset(i, x_train, y_train,
-        #                                           x_dev, y_dev,
-        #                                           max_s,max_c,
-        #                                           chartrain, chardev,
-        #                                           pos_train, pos_dev,
-        #                                           len(target_vob), target_idex_word,
-        #                                     sample_weight_value=30,
-        #                                     shuffle=True):
-        history = nn_model.fit([x_word, input_char], [y_BIOES, y],#y_Type
+
+        history = nn_model.fit([x_word, input_char], [y_O, y],#y_Type
                                batch_size=batch_size,
                                epochs=1,
-                               validation_data=([x_word_val, input_char_val], [y_BIOES_val, y_val]),#y_Type_val
+                               validation_data=([x_word_val, input_char_val], [y_O_val, y_val]),#y_Type_val
                                shuffle=True,
                                class_weight=None, #[None, Type_Class_weight],
                                verbose=1)
@@ -519,6 +524,7 @@ if __name__ == "__main__":
     # modelname = 'BiLSTM_CRF_multi2_order4_DenseAvg'
     modelname = 'BiLSTM_CRF_multi2_order7_Serial_All_2'
 
+    modelname = 'BiLSTM_CRF_multi2_Attention'
 
     print(modelname)
 
@@ -529,9 +535,8 @@ if __name__ == "__main__":
     withFix = False
     withPos = False
 
-    # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_2" + ".pkl"
-    datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V" + ".pkl"
-    # datafile = "./model/data_fix=" + str(withFix) + "_pos=" + str(withPos) + ".pkl"
+    datafile = "./model/data_CONLL03_Attention_1" + ".pkl"
+
 
     modelfile = "next ...."
 
@@ -559,8 +564,7 @@ if __name__ == "__main__":
     for inum in range(3):
 
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_classweight(1-10)_1.h5"
-        modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(
-            withPos) + "_PreC2V" + "_" + str(inum) + ".h5"
+        modelfile = "./model/" + modelname + "__Attention_yO__" + str(inum) + ".h5"
 
         # modelfile = "./model/" + modelname + "__" + "data_fix=" + str(withFix) + "_pos=" + str(withPos) + "_PreC2V_11.h5"
 

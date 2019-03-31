@@ -145,9 +145,11 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
                 targetvec[0] = 1
                 data_t.append(targetvec)
 
-                targetvecO = np.zeros(2 + 1)
-                targetvecO[0] = 1
-                data_tO.append(targetvecO)
+                # targetvecO = np.zeros(2 + 1)
+                # targetvecO[0] = 1
+                # data_tO.append(targetvecO)
+
+                data_tO.append(0.00)
 
                 targetvecBIOES = np.zeros(5 + 1)
                 targetvecBIOES[0] = 1
@@ -183,12 +185,18 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
         targetvec[target_vob[sent[4]]] = 1
         data_t.append(targetvec)
 
-        targetvecO = np.zeros(2 + 1)
+        # targetvecO = np.zeros(2 + 1)
+        # if sent[4] == 'O':
+        #     targetvecO[1] = 1
+        # else:
+        #     targetvecO[2] = 1
+        # data_tO.append(targetvecO)
+
         if sent[4] == 'O':
-            targetvecO[1] = 1
+            data_tO.append(0.00)
         else:
-            targetvecO[2] = 1
-        data_tO.append(targetvecO)
+            data_tO.append(1.00)
+
 
         targetvecBIOES = np.zeros(5 + 1)
         if sent[4] == 'O':
@@ -709,7 +717,7 @@ def get_Character_index_withFix(files):
 
 
 
-def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile,w2v_k=300,char_emd_dim=25, withFix = True, maxlen = 50, Poswidth=3):
+def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile,w2v_k=300,char_emd_dim=25, withFix=False, maxlen = 50, Poswidth=3):
     """
     数据处理的入口函数
     Converts the input files  into the end2end model input formats
@@ -753,12 +761,7 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile,w2v_k=300,
     # print('entlabel vocab size:'+str(len(entlabel_vob)))
     print('shape in pos_W:', pos_W.shape)
 
-
-
-    if withFix is True:
-        source_char, sourc_idex_char, max_c = get_Character_index_withFix({trainfile, devfile, testfile})
-    else:
-        source_char, sourc_idex_char, max_c = get_Character_index({trainfile, devfile, testfile})
+    source_char, sourc_idex_char, max_c = get_Character_index({trainfile, devfile, testfile})
 
     print("source char size: ", source_char.__len__())
     print("max_c: ", max_c)
@@ -767,14 +770,9 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile,w2v_k=300,
     character_W, character_k = load_vec_character(c2v_file, source_char,char_emd_dim)
     print('character_W shape:',character_W.shape)
 
-    if withFix is True:
-        chartrain = make_idx_character_index_withFix(trainfile,max_s, max_c, source_char)
-        chardev = make_idx_character_index_withFix(devfile, max_s, max_c, source_char)
-        chartest = make_idx_character_index_withFix(testfile, max_s, max_c, source_char)
-    else:
-        chartrain = make_idx_character_index(trainfile,max_s, max_c, source_char)
-        chardev = make_idx_character_index(devfile, max_s, max_c, source_char)
-        chartest = make_idx_character_index(testfile, max_s, max_c, source_char)
+    chartrain = make_idx_character_index(trainfile,max_s, max_c, source_char)
+    chardev = make_idx_character_index(devfile, max_s, max_c, source_char)
+    chartest = make_idx_character_index(testfile, max_s, max_c, source_char)
 
     print(datafile, "dataset created!")
     out = open(datafile, 'wb')#
