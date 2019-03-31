@@ -927,6 +927,7 @@ def BiLSTM_CRF_multi2_Attention(sourcevocabsize, targetvocabsize, source_W, inpu
     output1 = TimeDistributed(Dense(1, activation='sigmoid'), name='BIOES')(output_pre1)
 
     Attention = TimeDistributed(RepeatVector(hidden_dim * 2))(output1)
+    Attention = TimeDistributed(Flatten())(Attention)
     Attention = multiply([BiLSTM1, Attention])
     BiLSTM2 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding1)
     BiLSTM2 = BatchNormalization(axis=1)(BiLSTM2)
