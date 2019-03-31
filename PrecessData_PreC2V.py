@@ -149,7 +149,7 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
                 # targetvecO[0] = 1
                 # data_tO.append(targetvecO)
 
-                data_tO.append(0.00)
+                data_tO.append([0.00])
 
                 targetvecBIOES = np.zeros(5 + 1)
                 targetvecBIOES[0] = 1
@@ -193,9 +193,9 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
         # data_tO.append(targetvecO)
 
         if sent[4] == 'O':
-            data_tO.append(0.00)
+            data_tO.append([0.00])
         else:
-            data_tO.append(1.00)
+            data_tO.append([1.00])
 
 
         targetvecBIOES = np.zeros(5 + 1)

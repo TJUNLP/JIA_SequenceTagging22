@@ -926,7 +926,8 @@ def BiLSTM_CRF_multi2_Attention(sourcevocabsize, targetvocabsize, source_W, inpu
     output_pre1 = TimeDistributed(Dense(hidden_dim, activation='relu'))(BiLSTM1_dropout)
     output1 = TimeDistributed(Dense(1, activation='sigmoid'), name='BIOES')(output_pre1)
 
-    Attention = multiply([BiLSTM1, output1])
+    Attention = TimeDistributed(RepeatVector(hidden_dim * 2))(output1)
+    Attention = multiply([BiLSTM1, Attention])
     BiLSTM2 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding1)
     BiLSTM2 = BatchNormalization(axis=1)(BiLSTM2)
     BiLSTM2_dropout = Dropout(0.5)(BiLSTM2)
@@ -939,7 +940,7 @@ def BiLSTM_CRF_multi2_Attention(sourcevocabsize, targetvocabsize, source_W, inpu
 
     # Models.compile(loss=crflayer.loss_function, optimizer=optimizers.RMSprop(lr=0.001), metrics=[crflayer.accuracy])
     Models.compile(optimizer=optimizers.RMSprop(lr=0.001),
-                   loss={'Type': crflayer.loss_function, 'BIOES': 'mse'},
+                   loss={'Type': crflayer.loss_function, 'BIOES': 'mean_squared_error'},
                    loss_weights={'BIOES': 1., 'Type': 1.},
                    metrics={'BIOES': ['acc'], 'Type': [crflayer.accuracy]})
     return Models
