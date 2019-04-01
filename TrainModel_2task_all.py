@@ -413,13 +413,15 @@ def train_e2e_model(Modelname, datafile, modelfile, resultdir, npochos=100,hidde
     while (epoch < npochos):
         epoch = epoch + 1
         i += 1
-
+        checkpointer = ModelCheckpoint(filepath=modelfile + ".best_model.h5", monitor='val_loss', verbose=0, save_best_only=True, save_weights_only=True)
+        reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1, patience=5, min_lr=0.00001)
         history = nn_model.fit([x_word, input_char], [y_O, y],#y_Type
                                batch_size=batch_size,
                                epochs=1,
                                validation_data=([x_word_val, input_char_val], [y_O_val, y_val]),#y_Type_val
                                shuffle=True,
                                class_weight=None, #[None, Type_Class_weight],
+                               callbacks=[reduce_lr, checkpointer],
                                verbose=1)
 
         # plt.plot(history.history['acc'])

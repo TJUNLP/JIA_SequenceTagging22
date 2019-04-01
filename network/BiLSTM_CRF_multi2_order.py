@@ -929,11 +929,14 @@ def BiLSTM_CRF_multi2_Attention(sourcevocabsize, targetvocabsize, source_W, inpu
     Attention = TimeDistributed(RepeatVector(hidden_dim * 2))(output1)
     Attention = TimeDistributed(Flatten())(Attention)
     Attention = multiply([BiLSTM1, Attention])
-    BiLSTM2 = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding1)
+    Attention = BatchNormalization(axis=1)(Attention)
+    Attention_dropout = Dropout(0.5)(Attention)
+
+    BiLSTM2 = Bidirectional(LSTM(hidden_dim // 2, return_sequences=True), merge_mode='concat')(Attention_dropout)
     BiLSTM2 = BatchNormalization(axis=1)(BiLSTM2)
     BiLSTM2_dropout = Dropout(0.5)(BiLSTM2)
 
-    hiddenlayer2_1 = TimeDistributed(Dense(targetvocabsize + 1))(Attention)
+    hiddenlayer2_1 = TimeDistributed(Dense(targetvocabsize + 1))(BiLSTM2_dropout)
     crflayer = CRF(targetvocabsize + 1, sparse_target=False, name='Type')
     output2 = crflayer(hiddenlayer2_1)
 
