@@ -88,7 +88,7 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
         else:
             predict += 1
             predict1Step_tag = test_fragment_list[num][4]
-            ttag_5t = index2type(np.argmax(testy_5t[num]))
+            ttag_5t = index2type[np.argmax(testy_5t[num])]
             if predict1Step_tag == ttag_5t:
                 predict_right += 1
 
