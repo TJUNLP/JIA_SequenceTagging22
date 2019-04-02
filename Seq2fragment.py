@@ -113,21 +113,21 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
             if ptag2list[index] == 'O' or ptag2list[index] == '':
                 index += 1
                 continue
-            elif ptag2list[index] == 'B':
+            elif ptag2list[index] == 'B-':
                     target_left = index
                     index += 1
                     while index < len(ptag2list):
-                        if ptag2list[index] == 'I':
+                        if ptag2list[index] == 'I-':
                             index += 1
                             continue
-                        elif ptag2list[index] == 'E':
-
+                        elif ptag2list[index] == 'E-':
+                            predtag = ptag2list[index][2:]
                             reltag = 'NULL'
                             if 'B-' in target_idex_word[tag2list_all[pid][target_left]] and \
                                 'E-' in target_idex_word[tag2list_all[pid][index]]:
                                 reltag = target_idex_word[tag2list_all[pid][index]][2:]
 
-                            tuple = (0, index + 1, target_left, index + 1, target_left, len(ptag2list), reltag)
+                            tuple = (0, index + 1, target_left, index + 1, target_left, len(ptag2list), reltag, predtag)
                             fragtuples_list.append(tuple)
                             index += 1
                             break
@@ -135,13 +135,13 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
 
                             break
 
-            elif ptag2list[index] == 'S':
-
+            elif ptag2list[index] == 'S-':
+                predtag = ptag2list[index][2:]
                 reltag = 'NULL'
                 if 'S-' in target_idex_word[tag2list_all[pid][index]]:
                     reltag = target_idex_word[tag2list_all[pid][index]][2:]
 
-                tuple = (0, index + 1, index, index + 1, index, len(ptag2list), reltag)
+                tuple = (0, index + 1, index, index + 1, index, len(ptag2list), reltag, predtag)
                 fragtuples_list.append(tuple)
                 index += 1
                 continue
@@ -151,7 +151,8 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
             fragment = sen2list_all[pid][tup[2]:tup[3]]
             context_right = sen2list_all[pid][tup[4]:tup[5]]
             fragment_tag = tup[6]
-            fragment_list.append((fragment, fragment_tag, context_left, context_right))
+            predict1Step_tag = tup[7]
+            fragment_list.append((fragment, fragment_tag, context_left, context_right, predict1Step_tag))
 
     return fragment_list
 

@@ -23,16 +23,15 @@ from keras.callbacks import Callback
 
 
 def Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth,
-                              output_seq_lenth,
-                              hidden_dim, emd_dim,
-                              sourcecharsize, character_W, input_word_length, char_emd_dim,
-                              batch_size=32, loss='categorical_crossentropy', optimizer='rmsprop'):
+                     emd_dim,
+                     sourcecharsize, character_W, input_word_length, char_emd_dim,
+                     batch_size=32):
 
     word_input = Input(shape=(input_seq_lenth,), dtype='int32')
 
     char_input = Input(shape=(input_seq_lenth, input_word_length,), dtype='int32')
 
-    char_embedding = Embedding(input_dim= sourcecharsize,
+    char_embedding = Embedding(input_dim=sourcecharsize,
                                output_dim=char_emd_dim,
                                batch_input_shape=(batch_size, input_seq_lenth, input_word_length),
                                mask_zero=False,
@@ -60,7 +59,7 @@ def Model_BiLSTM_CRF(sourcevocabsize, targetvocabsize, source_W, input_seq_lenth
 
     embedding = concatenate([word_embedding_dropout, char_macpool], axis=-1)
 
-    BiLSTM = Bidirectional(LSTM(hidden_dim, return_sequences=True), merge_mode='concat')(embedding)
+    BiLSTM = Bidirectional(LSTM(200, return_sequences=True), merge_mode='concat')(embedding)
     BiLSTM = BatchNormalization(axis=1)(BiLSTM)
     BiLSTM_dropout = Dropout(0.5)(BiLSTM)
 
