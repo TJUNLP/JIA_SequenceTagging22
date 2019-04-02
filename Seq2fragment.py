@@ -109,19 +109,19 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
         fragtuples_list = []
         index = 0
         while index < len(ptag2list):
-            print(ptag2list[index])
-            print(target_idex_word[tag2list_all[pid][index]])
+            # print('*******', ptag2list[index])
+            # print('-------', target_idex_word[tag2list_all[pid][index]])
             if ptag2list[index] == 'O' or ptag2list[index] == '':
                 index += 1
                 continue
-            elif ptag2list[index] == 'B-':
+            elif 'B-' in ptag2list[index]:
                     target_left = index
                     index += 1
                     while index < len(ptag2list):
-                        if ptag2list[index] == 'I-':
+                        if 'I-' in ptag2list[index]:
                             index += 1
                             continue
-                        elif ptag2list[index] == 'E-':
+                        elif 'E-' in ptag2list[index]:
                             predtag = ptag2list[index][2:]
                             reltag = 'NULL'
                             if 'B-' in target_idex_word[tag2list_all[pid][target_left]] and \
@@ -136,7 +136,7 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
 
                             break
 
-            elif ptag2list[index] == 'S-':
+            elif 'S-' in ptag2list[index]:
                 predtag = ptag2list[index][2:]
                 reltag = 'NULL'
                 if 'S-' in target_idex_word[tag2list_all[pid][index]]:
