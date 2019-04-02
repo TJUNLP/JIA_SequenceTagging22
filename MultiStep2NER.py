@@ -110,7 +110,7 @@ if __name__ == '__main__':
     datafile_1Step = "./model_data/" + dataname_1Step + ".pkl"
 
     modelname_1Step = 'Model_BiLSTM_CRF'
-    inum = 2
+    inum = 0
     modelfile_1Step = "./model/" + dataname_1Step + '__' + modelname_1Step + "__single_" + str(inum) + ".h5"
 
     traindata, devdata, testdata, source_W, source_vob, sourc_idex_word, \
@@ -119,7 +119,7 @@ if __name__ == '__main__':
     pos_train, pos_dev, pos_test, pos_vob, pos_idex_word, pos_W, pos_k \
         = pickle.load(open(datafile_1Step, 'rb'))
 
-    batch_size_1Step =32
+    batch_size_1Step = 32
 
     model_1Step = TrainModel_1task.SelectModel(modelname_1Step,
                           sourcevocabsize=len(source_vob),
