@@ -2,7 +2,7 @@
 import numpy as np
 import pickle, os
 import ProcessData_segment_PreC2V
-import TrainModel_segment, TrainModel_tagging, TrainModel_segment_2t
+import TrainModel_segment, TrainModel_tagging, TrainModel_segment_2t, TrainModel_1task
 from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
 import Seq2fragment
 import ProcessData_S2F
@@ -42,8 +42,8 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
         testresult_1Step.append(ptag_1Step)
 
 
-    P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
-    print('divide---BIOES>>>>>>>>>>', P, R, F)
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult2, resultfile='')
+    print('NER test results  >>>>>>>>>>', P, R, F)
 
     return testresult_1Step
 
@@ -106,34 +106,36 @@ if __name__ == '__main__':
 
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
 
-
-    datafile_1Step = "./model_data/data_segment_BIOES_PreC2V.1" + ".pkl"
+    dataname_1Step = 'data_CONLL03__conventionalNER'
+    datafile_1Step = "./model_data/" + dataname_1Step + ".pkl"
 
     modelname_1Step = 'Model_BiLSTM_CRF'
     inum = 2
-    modelfile_1Step = "./model/" + modelname_1Step + "__PreC2V" + "__segment_" + str(inum) + ".h5"
+    modelfile_1Step = "./model/" + dataname_1Step + '__' + modelname_1Step + "__single_" + str(inum) + ".h5"
 
-    traindata, devdata, testdata, chartrain, chardev, chartest,\
-    source_W, character_W,\
-    source_vob, index2word, target_vob, index2tag, source_char,\
-    max_s, w2v_k, max_c, c2v_k = pickle.load(open(datafile_1Step, 'rb'))
+    traindata, devdata, testdata, source_W, source_vob, sourc_idex_word, \
+    target_vob, target_idex_word, max_s, k, \
+    chartrain, chardev, chartest, source_char, character_W, max_c, char_emd_dim, \
+    pos_train, pos_dev, pos_test, pos_vob, pos_idex_word, pos_W, pos_k \
+        = pickle.load(open(datafile_1Step, 'rb'))
 
     batch_size_1Step =32
 
-    model_1Step = TrainModel_segment.SelectModel(modelname_1Step,
-                                             sourcevocabsize=len(source_vob),
-                                             targetvocabsize=len(target_vob),
+    model_1Step = TrainModel_1task.SelectModel(modelname_1Step,
+                          sourcevocabsize=len(source_vob),
+                          targetvocabsize=len(target_vob),
                           source_W=source_W,
                           input_seq_lenth=max_s,
-                          output_seq_lenth=max_s,
-                          hidden_dim=200, emd_dim=w2v_k,
+                          emd_dim=k,
                           sourcecharsize=len(source_char),
                           character_W=character_W,
-                          input_word_length=max_c, char_emd_dim=c2v_k, batch_size=batch_size_1Step)
+                          input_word_length=max_c,
+                          char_emd_dim=char_emd_dim,
+                          batch_size=batch_size_1Step)
 
     model_1Step.load_weights(modelfile_1Step)
 
-    testresult_1Step = test_model_segment(model_1Step, testdata, chartest, index2tag)
+    testresult_1Step = test_model_segment(model_1Step, testdata, chartest, target_idex_word)
 
     hasNeg = True
 
