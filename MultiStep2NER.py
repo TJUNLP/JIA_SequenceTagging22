@@ -65,7 +65,7 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
     testx_fragment = np.asarray(test_2Step[0], dtype="int32")
     testx_leftcontext = np.asarray(test_2Step[1], dtype="int32")
     testx_rightcontext = np.asarray(test_2Step[2], dtype="int32")
-    testy_5t = test_2Step[3]
+    testy_5t = np.asarray(test_2Step[3], dtype="int32")
     testy_2t = np.asarray(test_2Step[4], dtype="int32")
     testchar_fragment = np.asarray(chartest_2Step[0], dtype="int32")
     testchar_leftcontext = np.asarray(chartest_2Step[1], dtype="int32")
