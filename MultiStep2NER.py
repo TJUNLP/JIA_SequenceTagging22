@@ -163,6 +163,9 @@ if __name__ == '__main__':
         Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
         Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
+    Type_idex_word_2t = {0: 'NULL', 1: 'NE'}
+    Type_vob_2t = {'NULL': 0, 'NE': 1}
+
     batch_size_2Step =512
 
     testx_fragment = np.asarray(testdata[0], dtype="int32")
@@ -175,7 +178,7 @@ if __name__ == '__main__':
 
     model_2Step = TrainModel_segment_2t.SelectModel(modelname_2Step,
                           wordvocabsize=len(word_vob),
-                          targetvocabsize=len(Type_vob),
+                          targetvocabsize=len(Type_vob_2t),
                           charvobsize=len(char_vob),
                           word_W=word_W, char_W=character_W,
                           input_fragment_lenth=max_fragment,
