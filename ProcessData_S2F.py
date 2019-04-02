@@ -71,12 +71,12 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300
     print('len(test_fragment_list)---', len(test_fragment_list))
     print('test_target_count--- ', test_target_count)
 
-    # if hasNeg:
-    #     Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
-    #     Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
-    # else:
-    #     Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
-    #     Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
+    if hasNeg:
+        Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
+        Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
+    else:
+        Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
+        Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
     train = make_idx_word_index(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)
     dev = make_idx_word_index(dev_fragment_list, Type_vob, max_context, max_fragment, hasNeg=hasNeg)

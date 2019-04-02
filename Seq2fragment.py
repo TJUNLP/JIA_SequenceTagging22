@@ -109,7 +109,8 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
         fragtuples_list = []
         index = 0
         while index < len(ptag2list):
-
+            print(ptag2list[index])
+            print(target_idex_word[tag2list_all[pid][index]])
             if ptag2list[index] == 'O' or ptag2list[index] == '':
                 index += 1
                 continue

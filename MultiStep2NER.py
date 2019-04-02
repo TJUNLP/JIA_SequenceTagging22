@@ -50,7 +50,7 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
 
 def test_model_taggiing(model_2Step, testresult_1Step, testfile,
                         word_vob, word_idex_word, char_vob,
-                        target_idex_word, Type_vob, index2type, max_context, max_fragment, hasNeg):
+                        target_vob, target_idex_word, Type_vob, index2type, max_context, max_fragment, hasNeg):
 
 
     test_fragment_list = Seq2fragment.Seq2frag4test(testresult_1Step, testfile, word_vob, target_vob, target_idex_word)
@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
     hasNeg = True
 
-    datafname = 'data_tagging_5type_2type_PreC2V.Ergodic.2'
+    datafname = 'data_tagging_5type_2type_PreC2V.Ergodic.1'
 
     datafile_2Step = "./model_data/" + datafname + ".pkl"
     modelname_2Step = 'Model_LSTM_BiLSTM_LSTM'
@@ -195,7 +195,7 @@ if __name__ == '__main__':
 
     test_model_taggiing(model_2Step, testresult_1Step, testfile,
                         word_vob, word_idex_word, char_vob,
-                        target_idex_word, Type_vob, Type_idex_word, max_context, max_fragment, hasNeg=hasNeg)
+                        target_vob, target_idex_word, Type_vob, Type_idex_word, max_context, max_fragment, hasNeg=hasNeg)
 
 
 
