@@ -43,7 +43,7 @@ def test_model_segment(nn_model, testdata, chartest, index2tag):
 
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER(testresult2, resultfile='')
-    print('NER test results  >>>>>>>>>>', P, R, F)
+    print('NER test results  >>>>>>>>>>', P, R, F, PR_count, P_count, TR_count)
 
     return testresult_1Step
 
@@ -65,7 +65,8 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
     testx_fragment = np.asarray(test_2Step[0], dtype="int32")
     testx_leftcontext = np.asarray(test_2Step[1], dtype="int32")
     testx_rightcontext = np.asarray(test_2Step[2], dtype="int32")
-    testy = np.asarray(test_2Step[4], dtype="int32")
+    testy_5t = test_2Step[3]
+    testy_2t = np.asarray(test_2Step[4], dtype="int32")
     testchar_fragment = np.asarray(chartest_2Step[0], dtype="int32")
     testchar_leftcontext = np.asarray(chartest_2Step[1], dtype="int32")
     testchar_rightcontext = np.asarray(chartest_2Step[2], dtype="int32")
@@ -80,17 +81,15 @@ def test_model_taggiing(model_2Step, testresult_1Step, testfile,
 
     for num, ptagindex in enumerate(predictions):
 
-        if not any(testy[num]):
-            ttag = 'NULL'
+        ttag_2t = np.argmax(testy_2t[num])
+        ptag_2t = np.argmax(ptagindex)
+        if ptag_2t == 0:
+            continue
         else:
-            ttag = index2type[np.argmax(testy[num])]
-
-        next_index = np.argmax(ptagindex)
-        ptag = index2type[next_index]
-        if ptag != 'NULL':
             predict += 1
             predict1Step_tag = test_fragment_list[num][4]
-            if predict1Step_tag == ttag:
+            ttag_5t = index2type(np.argmax(testy_5t[num]))
+            if predict1Step_tag == ttag_5t:
                 predict_right += 1
 
     P = predict_right / predict
@@ -157,8 +156,12 @@ if __name__ == '__main__':
     max_context, max_fragment, max_c, \
     train_target_count, dev_target_count, test_target_count = pickle.load(open(datafile_2Step, 'rb'))
 
-    Type_idex_word = {0: 'NULL', 1: 'NE'}
-    Type_vob = {'NULL': 0, 'NE': 1}
+    if hasNeg:
+        Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
+        Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
+    else:
+        Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
+        Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
     batch_size_2Step =512
 
