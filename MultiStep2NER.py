@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
     hasNeg = True
 
-    datafname = 'data_tagging_5type_2type_PreC2V.Ergodic.1'
+    datafname = 'data_tagging_5type_2type_PreC2V.Ergodic.2'
 
     datafile_2Step = "./model_data/" + datafname + ".pkl"
     modelname_2Step = 'Model_LSTM_BiLSTM_LSTM'
