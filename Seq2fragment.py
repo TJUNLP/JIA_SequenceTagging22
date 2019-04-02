@@ -145,6 +145,8 @@ def Lists2Set4test(testresult_1Step, sen2list_all, tag2list_all, target_idex_wor
                 fragtuples_list.append(tuple)
                 index += 1
                 continue
+            else:
+                index += 1
 
         for tup in fragtuples_list:
             context_left = sen2list_all[pid][tup[0]:tup[1]]
