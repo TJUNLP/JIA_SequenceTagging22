@@ -145,11 +145,11 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
                 targetvec[0] = 1
                 data_t.append(targetvec)
 
-                # targetvecO = np.zeros(2 + 1)
-                # targetvecO[0] = 1
-                # data_tO.append(targetvecO)
+                targetvecO = np.zeros(2 + 1)
+                targetvecO[0] = 1
+                data_tO.append(targetvecO)
 
-                data_tO.append([0.00])
+                # data_tO.append([0.00])
 
                 targetvecBIOES = np.zeros(5 + 1)
                 targetvecBIOES[0] = 1
@@ -185,17 +185,12 @@ def make_idx_data_index(file, max_s, source_vob, target_vob):
         targetvec[target_vob[sent[4]]] = 1
         data_t.append(targetvec)
 
-        # targetvecO = np.zeros(2 + 1)
-        # if sent[4] == 'O':
-        #     targetvecO[1] = 1
-        # else:
-        #     targetvecO[2] = 1
-        # data_tO.append(targetvecO)
-
+        targetvecO = np.zeros(2 + 1)
         if sent[4] == 'O':
-            data_tO.append([0.00])
+            targetvecO[1] = 1
         else:
-            data_tO.append([1.00])
+            targetvecO[2] = 1
+        data_tO.append(targetvecO)
 
 
         targetvecBIOES = np.zeros(5 + 1)
