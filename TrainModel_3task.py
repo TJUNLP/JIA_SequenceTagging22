@@ -13,7 +13,7 @@ import os.path
 import numpy as np
 import matplotlib.pyplot as plt
 from keras import backend as K
-from PrecessData_multi_nerpos import get_data, make_idx_data_index
+import PrecessData_multi_nerpos, PrecessData_PreC2V
 from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
 # from keras.models import Sequential
 # from keras.layers.embeddings import Embedding
@@ -326,7 +326,8 @@ if __name__ == "__main__":
     Label = False
     if not os.path.exists(datafile):
         print("Precess data....")
-        get_data(trainfile,devfile, testfile, w2v_file, datafile, w2v_k=100, char_emd_dim=25, maxlen=maxlen)
+        PrecessData_multi_nerpos.\
+            get_data(trainfile,devfile, testfile, w2v_file, datafile, w2v_k=100, char_emd_dim=25, maxlen=maxlen)
     if not os.path.exists(modelfile):
         print("Lstm data has extisted: " + datafile)
         print("Training EE model....")

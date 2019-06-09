@@ -751,15 +751,15 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile,w2v_k=300,
     dev = make_idx_data_index(devfile,max_s,source_vob,target_vob)
     test = make_idx_data_index(testfile, max_s, source_vob, target_vob)
 
-    pos_vob, pos_idex_word = get_Feature_index([trainfile,devfile,testfile])
-    pos_train = make_idx_POS_index(trainfile, max_s, pos_vob, Poswidth=Poswidth)
-    pos_dev = make_idx_POS_index(devfile, max_s, pos_vob, Poswidth=Poswidth)
-    pos_test = make_idx_POS_index(testfile, max_s, pos_vob, Poswidth=Poswidth)
-    pos_W, pos_k = load_vec_pos(pos_vob, 30)
+    # pos_vob, pos_idex_word = get_Feature_index([trainfile,devfile,testfile])
+    # pos_train = make_idx_POS_index(trainfile, max_s, pos_vob, Poswidth=Poswidth)
+    # pos_dev = make_idx_POS_index(devfile, max_s, pos_vob, Poswidth=Poswidth)
+    # pos_test = make_idx_POS_index(testfile, max_s, pos_vob, Poswidth=Poswidth)
+    # pos_W, pos_k = load_vec_pos(pos_vob, 30)
     # pos_k, pos_W = load_vec_onehot(pos_vob)
 
     # print('entlabel vocab size:'+str(len(entlabel_vob)))
-    print('shape in pos_W:', pos_W.shape)
+    # print('shape in pos_W:', pos_W.shape)
 
     source_char, sourc_idex_char, max_c = get_Character_index({trainfile, devfile, testfile})
 
@@ -778,8 +778,7 @@ def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile,w2v_k=300,
     out = open(datafile, 'wb')#
     pickle.dump([train, dev, test, source_W, source_vob, sourc_idex_word,
                 target_vob, target_idex_word, max_s, k,
-                 chartrain,chardev,chartest, source_char, character_W, max_c, char_emd_dim,
-                 pos_train, pos_dev, pos_test, pos_vob, pos_idex_word, pos_W, pos_k], out, 0)
+                 chartrain,chardev,chartest, source_char, character_W, max_c, char_emd_dim], out, 0)
     out.close()
 
 
