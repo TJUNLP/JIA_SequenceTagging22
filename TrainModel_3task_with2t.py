@@ -244,7 +244,7 @@ if __name__ == "__main__":
 
     x_word_test = np.asarray(test[0], dtype="int32")
     y_test = np.asarray(test[1], dtype="int32")
-    y_O_test= np.asarray(dev[2], dtype="int32")
+    y_O_test = np.asarray(dev[2], dtype="int32")
     y_BIOES_test = np.asarray(test[3], dtype="int32")
     y_Type_test = np.asarray(test[4], dtype="int32")
 
@@ -284,7 +284,7 @@ if __name__ == "__main__":
             train_e2e_model(nn_model, modelfile,
                             inputs_train_x, inputs_train_y,
                             inputs_dev_x, inputs_dev_y,
-                            inputs_test_y, inputs_test_y,
+                            inputs_test_x, inputs_test_y,
                             resultdir,
                             npoches=100,  batch_size=batch_size, retrain=False)
         else:
@@ -293,7 +293,7 @@ if __name__ == "__main__":
                 train_e2e_model(nn_model, modelfile,
                             inputs_train_x, inputs_train_y,
                             inputs_dev_x, inputs_dev_y,
-                            inputs_test_y, inputs_test_y,
+                            inputs_test_x, inputs_test_y,
                             resultdir,
                             npoches=100,  batch_size=batch_size, retrain=False)
 
