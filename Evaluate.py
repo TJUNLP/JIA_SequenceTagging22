@@ -930,27 +930,24 @@ def evaluation_NER_BIOES_TYPE(testresult, testresult_type, resultfile):
                         tmpcount = 0
                         for ki in range(i, j+1):
                             if testresult_type[ti][0][ki] != 'O':
-                                tmpcount += 1
-                        if tmpcount >= ((j+1-i) / 2) - 0.01:
-                            total_predict += 1
+                                total_predict += 1
+                                break
+                                # tmpcount += 1
+                        # if tmpcount >= ((j+1-i) / 2) - 0.01:
+                        #     total_predict += 1
 
 
-                        if ttag[i].__contains__('B'):
-                            k = i+1
-                            while k < len(ttag):
-                                if ttag[k].__contains__('I'):
-                                    k += 1
-                                elif ttag[k].__contains__('E'):
-                                    if j ==k:
+                        if ttag[i].__contains__('B') and ttag[j].__contains__('E'):
 
-                                        tmpcount = 0
-                                        for ki in range(i, j + 1):
-                                            if testresult_type[ti][0][ki] == testresult_type[ti][1][ki]:
-                                                tmpcount += 1
-                                        if tmpcount > ((j + 1 - i) / 2 - 0.01):
-                                            total_predict_right += 1
-
+                            tmpcount = 0
+                            for ki in range(i, j + 1):
+                                if testresult_type[ti][0][ki] == testresult_type[ti][1][ki]:
+                                    total_predict_right += 1
                                     break
+                                    # tmpcount += 1
+                            # if tmpcount >= ((j + 1 - i) / 2 - 0.01):
+                            #     total_predict_right += 1
+
                         i = j + 1
                         break
                     else:
