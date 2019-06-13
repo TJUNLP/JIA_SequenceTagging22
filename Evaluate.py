@@ -928,8 +928,8 @@ def evaluation_NER_BIOES_TYPE(testresult, testresult_type, resultfile):
                             i += 1
                     elif ptag[j].__contains__('E'):
                         tmpcount = 0
-                        for k in range(i, j+1):
-                            if testresult_type[ti][0][k] != 'O':
+                        for ki in range(i, j+1):
+                            if testresult_type[ti][0][ki] != 'O':
                                 tmpcount += 1
                         if tmpcount >= ((j+1-i) / 2) - 0.01:
                             total_predict += 1
@@ -944,8 +944,8 @@ def evaluation_NER_BIOES_TYPE(testresult, testresult_type, resultfile):
                                     if j ==k:
 
                                         tmpcount = 0
-                                        for k in range(i, j + 1):
-                                            if testresult_type[ti][0][k] == testresult_type[ti][1][k]:
+                                        for ki in range(i, j + 1):
+                                            if testresult_type[ti][0][ki] == testresult_type[ti][1][ki]:
                                                 tmpcount += 1
                                         if tmpcount > ((j + 1 - i) / 2 - 0.01):
                                             total_predict_right += 1
