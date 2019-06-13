@@ -931,7 +931,7 @@ def evaluation_NER_BIOES_TYPE(testresult, testresult_type, resultfile):
                         for k in range(i, j+1):
                             if testresult_type[ti][0][k] != 'O':
                                 tmpcount += 1
-                        if tmpcount >= ((j+1-i) / 2 - 0.01):
+                        if tmpcount >= ((j+1-i) / 2) - 0.01:
                             total_predict += 1
 
 
@@ -947,7 +947,7 @@ def evaluation_NER_BIOES_TYPE(testresult, testresult_type, resultfile):
                                         for k in range(i, j + 1):
                                             if testresult_type[ti][0][k] == testresult_type[ti][1][k]:
                                                 tmpcount += 1
-                                        if tmpcount > ((j + 1 - i) / 2 - 0.01) :
+                                        if tmpcount > ((j + 1 - i) / 2 - 0.01):
                                             total_predict_right += 1
 
                                     break

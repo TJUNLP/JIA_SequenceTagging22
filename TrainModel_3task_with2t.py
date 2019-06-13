@@ -83,12 +83,12 @@ def test_model(nn_model, input_x, input_y, index2word, resultfile='', batch_size
 
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
-    print('BIOES>>>>>>>>>>', P, R, F)
+    print('BIOES>>>>>>>>>>', P, R, F, PR_count, P_count, TR_count)
     P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile='')
-    print('Type>>>>>>>>>>', P, R, F)
+    print('Type>>>>>>>>>>', P, R, F, PR_count, P_count, TR_count)
 
     P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES_TYPE(testresult2, testresult3, resultfile='')
-    print('Type>>>>>>>>>>', P, R, F)
+    print('BIOES-Type>>>>>>>>>>', P, R, F, PR_count, P_count, TR_count)
 
 
     return P, R, F, PR_count, P_count, TR_count
