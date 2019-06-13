@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from keras import backend as K
 import PrecessData_multi_nerpos, PrecessData_PreC2V
-from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
+from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type, evaluation_NER_BIOES_TYPE
 # from keras.models import Sequential
 # from keras.layers.embeddings import Embedding
 from keras.layers import Flatten,Lambda,Conv2D
@@ -85,6 +85,9 @@ def test_model(nn_model, input_x, input_y, index2word, resultfile='', batch_size
     P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES(testresult2, resultfile='')
     print('BIOES>>>>>>>>>>', P, R, F)
     P, R, F, PR_count, P_count, TR_count = evaluation_NER_Type(testresult3, resultfile='')
+    print('Type>>>>>>>>>>', P, R, F)
+
+    P, R, F, PR_count, P_count, TR_count = evaluation_NER_BIOES_TYPE(testresult2, testresult3, resultfile='')
     print('Type>>>>>>>>>>', P, R, F)
 
 
