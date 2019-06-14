@@ -8,7 +8,7 @@ from keras import optimizers
 from keras.layers.normalization import BatchNormalization
 import tensorflow as tf
 from keras import backend as K
-
+from keras.legacy.layers import Merge
 
 # def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
 #                      word_W, char_W,
@@ -614,3 +614,143 @@ def Model_3Level(wordvocabsize, targetvocabsize, charvobsize, posivocabsize,
     Models.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=0.001), metrics=['acc'])
 
     return Models
+
+def Model_3Level_tag2v(wordvocabsize, targetvocabsize, charvobsize, posivocabsize,
+                     word_W, char_W, posi_W,
+                     input_fragment_lenth, input_leftcontext_lenth, input_rightcontext_lenth,
+                     input_maxword_length, input_sent_lenth,
+                     w2v_k, c2v_k, posi_k,
+                     hidden_dim=200, batch_size=32,
+                     optimizer='rmsprop'):
+
+
+
+    word_input_fragment = Input(shape=(input_fragment_lenth,), dtype='int32')
+    word_embedding_fragment = Embedding(input_dim=wordvocabsize + 1,
+                               output_dim=w2v_k,
+                               input_length=input_fragment_lenth,
+                               mask_zero=True,
+                               trainable=True,
+                               weights=[word_W])(word_input_fragment)
+    word_embedding_fragment = Dropout(0.5)(word_embedding_fragment)
+
+    char_input_fragment = Input(shape=(input_fragment_lenth, input_maxword_length,), dtype='int32')
+    char_embedding_fragment = TimeDistributed(Embedding(input_dim=charvobsize,
+                               output_dim=c2v_k,
+                               batch_input_shape=(batch_size, input_fragment_lenth, input_maxword_length),
+                               mask_zero=False,
+                               trainable=True,
+                               weights=[char_W]))(char_input_fragment)
+
+    char_cnn_fragment = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))
+    char_embedding_fragment = char_cnn_fragment(char_embedding_fragment)
+    char_embedding_fragment = TimeDistributed(GlobalMaxPooling1D())(char_embedding_fragment)
+    char_embedding_fragment = Dropout(0.25)(char_embedding_fragment)
+
+
+    word_input_leftcontext = Input(shape=(input_leftcontext_lenth,), dtype='int32')
+    word_embedding_leftcontext = Embedding(input_dim=wordvocabsize + 1,
+                               output_dim=w2v_k,
+                               input_length=input_leftcontext_lenth,
+                               mask_zero=True,
+                               trainable=True,
+                               weights=[word_W])(word_input_leftcontext)
+    word_embedding_leftcontext = Dropout(0.5)(word_embedding_leftcontext)
+
+    char_input_leftcontext = Input(shape=(input_leftcontext_lenth, input_maxword_length,), dtype='int32')
+    char_embedding_leftcontext = TimeDistributed(Embedding(input_dim=charvobsize,
+                                                        output_dim=c2v_k,
+                                                        batch_input_shape=(
+                                                        batch_size, input_leftcontext_lenth, input_maxword_length),
+                                                        mask_zero=False,
+                                                        trainable=True,
+                                                        weights=[char_W]))(char_input_leftcontext)
+
+    char_cnn_context = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))
+
+    char_embedding_leftcontext = char_cnn_context(char_embedding_leftcontext)
+    char_embedding_leftcontext = TimeDistributed(GlobalMaxPooling1D())(char_embedding_leftcontext)
+    char_embedding_leftcontext = Dropout(0.25)(char_embedding_leftcontext)
+
+
+    word_input_rightcontext = Input(shape=(input_rightcontext_lenth,), dtype='int32')
+    word_embedding_rightcontext = Embedding(input_dim=wordvocabsize + 1,
+                               output_dim=w2v_k,
+                               input_length=input_rightcontext_lenth,
+                               mask_zero=True,
+                               trainable=True,
+                               weights=[word_W])(word_input_rightcontext)
+    word_embedding_rightcontext = Dropout(0.5)(word_embedding_rightcontext)
+
+    char_input_rightcontext = Input(shape=(input_rightcontext_lenth, input_maxword_length,), dtype='int32')
+    char_embedding_rightcontext = TimeDistributed(Embedding(input_dim=charvobsize,
+                                                        output_dim=c2v_k,
+                                                        batch_input_shape=(
+                                                        batch_size, input_rightcontext_lenth, input_maxword_length),
+                                                        mask_zero=False,
+                                                        trainable=True,
+                                                        weights=[char_W]))(char_input_rightcontext)
+    char_embedding_rightcontext = char_cnn_context(char_embedding_rightcontext)
+    char_embedding_rightcontext = TimeDistributed(GlobalMaxPooling1D())(char_embedding_rightcontext)
+    char_embedding_rightcontext = Dropout(0.25)(char_embedding_rightcontext)
+
+    word_input_sent = Input(shape=(input_sent_lenth,), dtype='int32')
+    word_embedding_sent = Embedding(input_dim=wordvocabsize + 1,
+                               output_dim=w2v_k,
+                               input_length=input_sent_lenth,
+                               mask_zero=True,
+                               trainable=True,
+                               weights=[word_W])(word_input_sent)
+    word_embedding_sent = Dropout(0.5)(word_embedding_sent)
+
+    word_input_posi = Input(shape=(input_sent_lenth,), dtype='int32')
+    word_embedding_posi = Embedding(input_dim=posivocabsize,
+                               output_dim=posi_k,
+                               input_length=input_sent_lenth,
+                               mask_zero=True,
+                               trainable=True,
+                               weights=[posi_W])(word_input_posi)
+    word_embedding_posi = Dropout(0.5)(word_embedding_posi)
+
+
+    embedding_fragment = concatenate([word_embedding_fragment, char_embedding_fragment], axis=-1)
+    embedding_leftcontext = concatenate([word_embedding_leftcontext, char_embedding_leftcontext], axis=-1)
+    embedding_rightcontext = concatenate([word_embedding_rightcontext, char_embedding_rightcontext], axis=-1)
+    embedding_posi = Dense(50, activation=None)(word_embedding_posi)
+    embedding_sent = concatenate([word_embedding_sent, embedding_posi], axis=-1)
+
+    LSTM_leftcontext = LSTM(hidden_dim, go_backwards=False, activation='tanh')(embedding_leftcontext)
+
+    LSTM_rightcontext = LSTM(hidden_dim, go_backwards=True, activation='tanh')(embedding_rightcontext)
+
+    BiLSTM_fragment = Bidirectional(LSTM(hidden_dim // 2, activation='tanh'), merge_mode='concat')(embedding_fragment)
+
+    BiLSTM_sent = Bidirectional(LSTM(200, activation='tanh'), merge_mode='concat')(embedding_sent)
+
+    tag2vec_input = Input(shape=(input_sent_lenth, 5, ), dtype='float32')
+    tag2vec_dense = Dense(200 * 2, activation='tanh')(tag2vec_input)
+
+    Manhattan = subtract([BiLSTM_sent, tag2vec_dense])
+    # Manhattan = Lambda(lambda x: K.abs(x)))(Manhattan)
+    Manhattan_distance = Merge(mode=lambda x: Get_Manhattan(x[0], x[1]),
+                               output_shape=lambda x: (x[0][0], 1))([BiLSTM_sent, tag2vec_dense])
+    output = Dense(2, activation='softmax')(Manhattan_distance)
+
+    # concat = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext, BiLSTM_sent], axis=-1)
+    # concat = Dropout(0.5)(concat)
+    # output = Dense(targetvocabsize, activation='softmax')(concat)
+
+    Models = Model([word_input_fragment, word_input_leftcontext, word_input_rightcontext,
+                    word_input_posi, word_input_sent,
+                    char_input_fragment, char_input_leftcontext, char_input_rightcontext,
+                    tag2vec_input], output)
+
+    Models.compile(loss='categorical_crossentropy', optimizer=optimizers.RMSprop(lr=0.001), metrics=['acc'])
+
+    return Models
+
+
+def Get_Manhattan(left, right):
+
+    return K.exp(-K.sum(K.abs(left - right), axis=1, keepdims=True))
+

@@ -90,13 +90,13 @@ def get_data_4classifer(model_segment, train_B_4segment_BIOES, test_4segment_BIO
     Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
     Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
-    train = Data2Index_42ndclassifer(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
-    test = Data2Index_42ndclassifer(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False)
+    train = Data2Index_42ndclassifer(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False, istest= False)
+    test = Data2Index_42ndclassifer(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=False, istest= True)
     print(len(train), len(test))
 
-    chartrain = Char2Index_42ndclassifer(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    chartrain = Char2Index_42ndclassifer(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word, hasNeg=False, istest= False)
 
-    chartest = Char2Index_42ndclassifer(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    chartest = Char2Index_42ndclassifer(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word, hasNeg=False, istest= True)
     print(len(chartrain), len(chartest))
 
     print ("dataset created!")
@@ -131,13 +131,13 @@ def get_data_4classifer_3l(model_segment, train_B_4segment_BIOES, test_4segment_
     Type_idex_word = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
     Type_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL': 4}
 
-    train = Data2Index_42ndclassifer_3l(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=True)
-    test = Data2Index_42ndclassifer_3l(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=True)
+    train = Data2Index_42ndclassifer_3l(train_fragment_list, Type_vob, max_context, max_fragment, hasNeg=True, istest=False)
+    test = Data2Index_42ndclassifer_3l(test_fragment_list, Type_vob, max_context, max_fragment, hasNeg=True, istest=True)
     print(len(train), len(test))
 
-    chartrain = Char2Index_42ndclassifer(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    chartrain = Char2Index_42ndclassifer(train_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word, hasNeg=True, istest=False)
 
-    chartest = Char2Index_42ndclassifer(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word)
+    chartest = Char2Index_42ndclassifer(test_fragment_list, max_context, max_fragment, max_c, char_vob, word_idex_word, hasNeg=True, istest=True)
     print(len(chartrain), len(chartest))
 
     feature_posi_k, feature_posi_W = load_vec_onehot(k=max_s)
@@ -214,7 +214,7 @@ def get_word_index(files):
     return source_vob, sourc_idex_word, target_vob, target_idex_word, max_s
 
 
-def Char2Index_42ndclassifer(fraglist, max_context, max_fragment, max_c, char_vob, word_idex_word):
+def Char2Index_42ndclassifer(fraglist, max_context, max_fragment, max_c, char_vob, word_idex_word, hasNeg, istest):
 
     char_fragment_all = []
     char_leftcontext_all = []
@@ -279,6 +279,15 @@ def Char2Index_42ndclassifer(fraglist, max_context, max_fragment, max_c, char_vo
 
         data_rightcontext = data_rightcontext + [[0] * max_c] * max(0, max_context - len(context_right))
         char_rightcontext_all.append(data_rightcontext)
+
+        if not istest:
+            tcount = 4
+            if hasNeg:
+                tcount = 5
+
+            char_fragment_all.append(data_fragment * (tcount-1))
+            char_leftcontext_all.append(data_leftcontext * (tcount-1))
+            char_rightcontext_all.append(data_rightcontext * (tcount-1))
 
     return [char_fragment_all, char_leftcontext_all, char_rightcontext_all]
 
@@ -381,7 +390,7 @@ def Data2Index_4segment_BIOES(file, max_s, source_vob, target_vob, target1_vob):
     return data_s_all, data_tBIOES_all, data_t_all
 
 
-def Data2Index_42ndclassifer(fraglist, word2index_Type, max_context, max_fragment, hasNeg=True):
+def Data2Index_42ndclassifer(fraglist, word2index_Type, max_context, max_fragment, hasNeg=True, istest= False):
 
     data_fragment_all = []
     data_leftcontext_all = []
@@ -397,32 +406,57 @@ def Data2Index_42ndclassifer(fraglist, word2index_Type, max_context, max_fragmen
         context_right = line[3]
 
         data_fragment = fragment[0:min(len(fragment), max_fragment)] + [0] * max(0, max_fragment-len(fragment))
-        if hasNeg:
-            data_t = np.zeros(5)
-        else:
-            data_t = np.zeros(4)
+        data_leftcontext = [0] * max(0, max_context-len(context_left)) + context_left
+        data_rightcontext = context_right + [0] * max(0, max_context-len(context_right))
 
-        if fragment_tag in word2index_Type.keys():
-            data_t[word2index_Type[fragment_tag]] = 1
+        tcount = 4
+        if hasNeg:
+            tcount = 5
+
+        data_t = np.zeros(tcount)
+
+        # if fragment_tag in word2index_Type.keys():
+        data_t[word2index_Type[fragment_tag]] = 1
+
         data_t_2tp = np.zeros(2)
         if fragment_tag == 'NULL':
             data_t_2tp[0] = 1
         else:
             data_t_2tp[1] = 1
 
-        data_leftcontext = [0] * max(0, max_context-len(context_left)) + context_left
-        data_rightcontext = context_right + [0] * max(0, max_context-len(context_right))
+        if istest:
+            data_fragment_mul = [data_fragment]
+            data_leftcontext_mul = [data_leftcontext]
+            data_rightcontext_mul = [data_rightcontext]
+            data_t_mul = [data_t]
+            data_t_2tp_mul = [data_t_2tp]
 
-        data_fragment_all.append(data_fragment)
-        data_leftcontext_all.append(data_leftcontext)
-        data_rightcontext_all.append(data_rightcontext)
-        data_t_all.append(data_t)
-        data_t_2tpye_all.append(data_t_2tp)
+        else:
+            data_fragment_mul = [data_fragment * tcount]
+            data_leftcontext_mul = [data_leftcontext * tcount]
+            data_rightcontext_mul = [data_rightcontext * tcount]
+            data_t_mul = [data_t]
+            for ftag in word2index_Type.keys():
+                if ftag != fragment_tag:
+                    data_t = np.zeros(tcount)
+                    data_t[word2index_Type[ftag]] = 1
+                    data_t_mul.append(data_t)
+
+            data_t_2tp_mul = [data_t_2tp]
+            data_t_2tp = np.zeros(2)
+            data_t_2tp[0] = 1
+            data_t_2tp_mul.append(data_t_2tp * (tcount - 1))
+
+        data_fragment_all.extend(data_fragment_mul)
+        data_leftcontext_all.extend(data_leftcontext_mul)
+        data_rightcontext_all.extend(data_rightcontext_mul)
+        data_t_all.extend(data_t_mul)
+        data_t_2tpye_all.extend(data_t_2tp_mul)
 
     return [data_fragment_all, data_leftcontext_all, data_rightcontext_all, data_t_all, data_t_2tpye_all]
 
 
-def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_fragment, hasNeg=True):
+def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_fragment, hasNeg, istest):
 
     data_fragment_all = []
     data_leftcontext_all = []
@@ -442,6 +476,9 @@ def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_frag
         feature_sent = line[5]
 
         data_fragment = fragment[0:min(len(fragment), max_fragment)] + [0] * max(0, max_fragment-len(fragment))
+        data_leftcontext = [0] * max(0, max_context-len(context_left)) + context_left
+        data_rightcontext = context_right + [0] * max(0, max_context-len(context_right))
+
         if hasNeg:
             data_t = np.zeros(5)
         else:
@@ -457,19 +494,58 @@ def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_frag
         else:
             data_t_2tp[1] = 1
 
-        data_leftcontext = [0] * max(0, max_context-len(context_left)) + context_left
-
-        data_rightcontext = context_right + [0] * max(0, max_context-len(context_right))
 
 
+        tcount = 4
+        if hasNeg:
+            tcount = 5
 
-        data_fragment_all.append(data_fragment)
-        data_leftcontext_all.append(data_leftcontext)
-        data_rightcontext_all.append(data_rightcontext)
-        data_feature_posi_all.append(feature_posi)
-        data_sentence_all.append(feature_sent)
-        data_t_all.append(data_t)
-        data_t_2tpye_all.append(data_t_2tp)
+        data_t = np.zeros(tcount)
+
+        # if fragment_tag in word2index_Type.keys():
+        data_t[word2index_Type[fragment_tag]] = 1
+
+        data_t_2tp = np.zeros(2)
+        if fragment_tag == 'NULL':
+            data_t_2tp[0] = 1
+        else:
+            data_t_2tp[1] = 1
+
+        if istest:
+            data_fragment_mul = [data_fragment]
+            data_leftcontext_mul = [data_leftcontext]
+            data_rightcontext_mul = [data_rightcontext]
+            data_t_mul = [data_t]
+            data_t_2tp_mul = [data_t_2tp]
+            feature_posi_mul = [feature_posi]
+            feature_sent_mul = [feature_sent]
+
+        else:
+            data_fragment_mul = [data_fragment * tcount]
+            data_leftcontext_mul = [data_leftcontext * tcount]
+            data_rightcontext_mul = [data_rightcontext * tcount]
+            feature_posi_mul = [feature_posi * tcount]
+            feature_sent_mul = [feature_sent]
+            data_t_mul = [data_t]
+            for ftag in word2index_Type.keys():
+                if ftag != fragment_tag:
+                    data_t = np.zeros(tcount)
+                    data_t[word2index_Type[ftag]] = 1
+                    data_t_mul.append(data_t)
+
+            data_t_2tp_mul = [data_t_2tp]
+            data_t_2tp = np.zeros(2)
+            data_t_2tp[0] = 1
+            data_t_2tp_mul.append(data_t_2tp * (tcount - 1))
+
+        data_fragment_all.extend(data_fragment_mul)
+        data_leftcontext_all.extend(data_leftcontext_mul)
+        data_rightcontext_all.extend(data_rightcontext_mul)
+        data_t_all.extend(data_t_mul)
+        data_t_2tpye_all.extend(data_t_2tp_mul)
+        data_feature_posi_all.extend(feature_posi_mul)
+        data_sentence_all.extend(feature_sent_mul)
+
 
     return [data_fragment_all, data_leftcontext_all, data_rightcontext_all, data_t_all,
             data_feature_posi_all, data_sentence_all, data_t_2tpye_all]
@@ -1080,6 +1156,13 @@ def Lists2Set_42ndTraining_3l(ptag_BIOES_all, testx_word, testt, max_context=5, 
 if __name__ == '__main__':
 
     resultdir = "./data/result/"
+
+    aList = [123, 'xyz', 'zara', 'abc', 123]
+    bList = [2009, 'manni']
+    aList.extend(['222' * 3])
+    print(aList)
+    aList.append(bList)
+    print(aList)
 
 
 

@@ -15,7 +15,7 @@ import TrainModel_segment
 from ProcessData_BIOES2F import get_data_4segment_BIOES, get_data_4classifer, get_data_4classifer_3l
 from Evaluate import evaluation_NER
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from network.NN_tagging import Model_LSTM_BiLSTM_LSTM, Model_3Level
+from network.NN_tagging import Model_LSTM_BiLSTM_LSTM, Model_3Level, Model_3Level_tag2v
 
 
 
@@ -195,6 +195,20 @@ def SelectModel(modelname, wordvocabsize, targetvocabsize, charvobsize, posivoca
                                               w2v_k=w2v_k, c2v_k=c2v_k, posi_k=posi_k,
                                               hidden_dim=hidden_dim, batch_size=batch_size)
 
+    elif modelname is 'Model_3Level_tag2v':
+            nn_model = Model_3Level_tag2v(wordvocabsize=wordvocabsize,
+                                              targetvocabsize=targetvocabsize,
+                                              charvobsize=charvobsize,
+                                    posivocabsize=posivocabsize,
+                                              word_W=word_W, char_W=char_W, posi_W=posi_W,
+                                              input_fragment_lenth=input_fragment_lenth,
+                                              input_leftcontext_lenth=input_leftcontext_lenth,
+                                              input_rightcontext_lenth=input_rightcontext_lenth,
+                                              input_maxword_length=input_maxword_length,
+                                    input_sent_lenth=input_sent_lenth,
+                                              w2v_k=w2v_k, c2v_k=c2v_k, posi_k=posi_k,
+                                              hidden_dim=hidden_dim, batch_size=batch_size)
+
     return nn_model
 
 
@@ -304,6 +318,7 @@ def Train42ndclassifer(Step_num, model2name,
     trainy = np.asarray(traindata[3], dtype="int32")
     trainx_posi = np.asarray(traindata[4], dtype="int32")
     trainx_sent = np.asarray(traindata[5], dtype="int32")
+    trainy_2tpye = np.asarray(traindata[5], dtype="int32")
 
     trainchar_fragment = np.asarray(chartrain[0], dtype="int32")
     trainchar_leftcontext = np.asarray(chartrain[1], dtype="int32")
@@ -315,18 +330,22 @@ def Train42ndclassifer(Step_num, model2name,
     testy = np.asarray(testdata[3], dtype="int32")
     testx_posi = np.asarray(testdata[4], dtype="int32")
     testx_sent = np.asarray(testdata[5], dtype="int32")
+    testy_2tpye = np.asarray(testdata[6], dtype="int32")
+
     testchar_fragment = np.asarray(chartest[0], dtype="int32")
     testchar_leftcontext = np.asarray(chartest[1], dtype="int32")
     testchar_rightcontext = np.asarray(chartest[2], dtype="int32")
 
 
     inputs_train_x = [trainx_fragment, trainx_leftcontext, trainx_rightcontext, trainx_posi, trainx_sent,
-                    trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext]
-    inputs_train_y = [trainy]
+                    trainchar_fragment, trainchar_leftcontext, trainchar_rightcontext,
+                      trainy]
+    inputs_train_y = [trainy_2tpye]
 
     inputs_test_x = [testx_fragment, testx_leftcontext, testx_rightcontext, testx_posi, testx_sent,
-                     testchar_fragment, testchar_leftcontext, testchar_rightcontext]
-    inputs_test_y = [testy]
+                     testchar_fragment, testchar_leftcontext, testchar_rightcontext,
+                     testy]
+    inputs_test_y = [testy_2tpye]
 
 
     model_classifer = SelectModel(model2name,
@@ -374,7 +393,7 @@ if __name__ == "__main__":
 
     model1name = 'Model_BiLSTM_CRF'
     # model2name = 'Model_LSTM_BiLSTM_LSTM'
-    model2name = 'Model_3Level'
+    model2name = 'Model_3Level_tag2v'
 
     print(model1name)
     print(model2name)

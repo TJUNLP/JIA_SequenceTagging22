@@ -1,11 +1,13 @@
 #coding=utf-8
 __author__ = 'JIA'
+
 import numpy as np
 import pickle
 import json, math
 import Seq2fragment
 import TrainModel_segment
 from Evaluate import evaluation_NER, evaluation_NER2, evaluation_NER_BIOES,evaluation_NER_Type
+
 
 def get_data(trainfile,devfile, testfile,w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg = True):
 
