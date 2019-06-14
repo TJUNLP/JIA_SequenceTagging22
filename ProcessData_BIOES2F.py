@@ -285,9 +285,9 @@ def Char2Index_42ndclassifer(fraglist, max_context, max_fragment, max_c, char_vo
             if hasNeg:
                 tcount = 5
 
-            char_fragment_all.append([data_fragment] * (tcount-1))
-            char_leftcontext_all.append([data_leftcontext] * (tcount-1))
-            char_rightcontext_all.append([data_rightcontext] * (tcount-1))
+            char_fragment_all.extend([data_fragment] * (tcount-1))
+            char_leftcontext_all.extend([data_leftcontext] * (tcount-1))
+            char_rightcontext_all.extend([data_rightcontext] * (tcount-1))
 
     return [char_fragment_all, char_leftcontext_all, char_rightcontext_all]
 
@@ -479,23 +479,6 @@ def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_frag
         data_leftcontext = [0] * max(0, max_context-len(context_left)) + context_left
         data_rightcontext = context_right + [0] * max(0, max_context-len(context_right))
 
-        if hasNeg:
-            data_t = np.zeros(5)
-        else:
-            data_t = np.zeros(4)
-
-        if fragment_tag in word2index_Type.keys():
-            inn = word2index_Type[fragment_tag]
-            data_t[inn] = 1
-
-        data_t_2tp = np.zeros(2)
-        if fragment_tag == 'NULL':
-            data_t_2tp[0] = 1
-        else:
-            data_t_2tp[1] = 1
-
-
-
         tcount = 4
         if hasNeg:
             tcount = 5
@@ -536,7 +519,7 @@ def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_frag
             data_t_2tp_mul = [data_t_2tp]
             data_t_2tp = np.zeros(2)
             data_t_2tp[0] = 1
-            data_t_2tp_mul.append([data_t_2tp] * (tcount - 1))
+            data_t_2tp_mul.extend([data_t_2tp] * (tcount - 1))
 
         data_fragment_all.extend(data_fragment_mul)
         data_leftcontext_all.extend(data_leftcontext_mul)
@@ -1157,9 +1140,11 @@ if __name__ == '__main__':
 
     resultdir = "./data/result/"
 
-    aList = [[123], ['xyz']]
+    aList = [123, 'xyz']
     bList = [2009]
-    aList.extend([bList] * 3)
+    aList.extend(bList)
+    print(aList)
+    aList.extend(bList * 3)
     print(aList)
     aList.append(bList)
     print(aList)
