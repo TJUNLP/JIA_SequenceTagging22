@@ -727,7 +727,7 @@ def Model_3Level_tag2v(wordvocabsize, targetvocabsize, charvobsize, posivocabsiz
 
     BiLSTM_sent = Bidirectional(LSTM(200, activation='tanh'), merge_mode='concat')(embedding_sent)
 
-    tag2vec_input = Input(shape=(input_sent_lenth, 5, ), dtype='float32')
+    tag2vec_input = Input(shape=(5, ), dtype='float32')
     tag2vec_dense = Dense(200 * 2, activation='tanh')(tag2vec_input)
 
     # Manhattan = subtract([BiLSTM_sent, tag2vec_dense])
