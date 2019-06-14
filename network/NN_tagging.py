@@ -8,7 +8,7 @@ from keras import optimizers
 from keras.layers.normalization import BatchNormalization
 import tensorflow as tf
 from keras import backend as K
-from keras.legacy.layers import Merge
+from keras.layers import Merge
 
 # def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
 #                      word_W, char_W,

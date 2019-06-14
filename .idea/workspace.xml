@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/ProcessData_BIOES2F.py" afterPath="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
-      <change beforePath="$PROJECT_DIR$/ProcessData_S2F.py" afterPath="$PROJECT_DIR$/ProcessData_S2F.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_MultiSteps.py" afterPath="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
       <change beforePath="$PROJECT_DIR$/network/NN_tagging.py" afterPath="$PROJECT_DIR$/network/NN_tagging.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -50,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TrainModel_MultiSteps.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TrainModel_MultiSteps.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2439">
-              <caret line="214" column="40" lean-forward="false" selection-start-line="214" selection-start-column="32" selection-end-line="214" selection-end-column="40" />
+            <state relative-caret-position="231">
+              <caret line="392" column="0" lean-forward="true" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
               </folding>
@@ -62,14 +58,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NN_tagging.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NN_tagging.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="248">
-              <caret line="736" column="10" lean-forward="false" selection-start-line="736" selection-start-column="4" selection-end-line="736" selection-end-column="10" />
+            <state relative-caret-position="150">
+              <caret line="10" column="10" lean-forward="false" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
               <folding>
-                <element signature="e#16#75#0" expanded="true" />
-                <element signature="e#28623#35401#0" expanded="false" />
+                <element signature="e#28616#35394#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -819,23 +814,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
+    <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="736" column="10" lean-forward="false" selection-start-line="736" selection-start-column="4" selection-end-line="736" selection-end-column="10" />
+        <state relative-caret-position="231">
+          <caret line="392" column="0" lean-forward="true" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
           <folding>
-            <element signature="e#16#75#0" expanded="true" />
-            <element signature="e#28623#35401#0" expanded="false" />
+            <element signature="e#298#329#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
+    <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2439">
-          <caret line="214" column="40" lean-forward="false" selection-start-line="214" selection-start-column="32" selection-end-line="214" selection-end-column="40" />
+        <state relative-caret-position="150">
+          <caret line="10" column="10" lean-forward="false" selection-start-line="10" selection-start-column="10" selection-end-line="10" selection-end-column="10" />
           <folding>
-            <element signature="e#298#329#0" expanded="true" />
+            <element signature="e#28616#35394#0" expanded="false" />
           </folding>
         </state>
       </provider>
