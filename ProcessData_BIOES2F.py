@@ -285,9 +285,9 @@ def Char2Index_42ndclassifer(fraglist, max_context, max_fragment, max_c, char_vo
             if hasNeg:
                 tcount = 5
 
-            char_fragment_all.append(data_fragment * (tcount-1))
-            char_leftcontext_all.append(data_leftcontext * (tcount-1))
-            char_rightcontext_all.append(data_rightcontext * (tcount-1))
+            char_fragment_all.append([data_fragment] * (tcount-1))
+            char_leftcontext_all.append([data_leftcontext] * (tcount-1))
+            char_rightcontext_all.append([data_rightcontext] * (tcount-1))
 
     return [char_fragment_all, char_leftcontext_all, char_rightcontext_all]
 
@@ -521,11 +521,11 @@ def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_frag
             feature_sent_mul = [feature_sent]
 
         else:
-            data_fragment_mul = [data_fragment * tcount]
-            data_leftcontext_mul = [data_leftcontext * tcount]
-            data_rightcontext_mul = [data_rightcontext * tcount]
-            feature_posi_mul = [feature_posi * tcount]
-            feature_sent_mul = [feature_sent]
+            data_fragment_mul = [data_fragment] * tcount
+            data_leftcontext_mul = [data_leftcontext] * tcount
+            data_rightcontext_mul = [data_rightcontext] * tcount
+            feature_posi_mul = [feature_posi] * tcount
+            feature_sent_mul = [feature_sent] * tcount
             data_t_mul = [data_t]
             for ftag in word2index_Type.keys():
                 if ftag != fragment_tag:
@@ -536,7 +536,7 @@ def Data2Index_42ndclassifer_3l(fraglist, word2index_Type, max_context, max_frag
             data_t_2tp_mul = [data_t_2tp]
             data_t_2tp = np.zeros(2)
             data_t_2tp[0] = 1
-            data_t_2tp_mul.append(data_t_2tp * (tcount - 1))
+            data_t_2tp_mul.append([data_t_2tp] * (tcount - 1))
 
         data_fragment_all.extend(data_fragment_mul)
         data_leftcontext_all.extend(data_leftcontext_mul)
@@ -1157,9 +1157,9 @@ if __name__ == '__main__':
 
     resultdir = "./data/result/"
 
-    aList = [123, 'xyz', 'zara', 'abc', 123]
-    bList = [2009, 'manni']
-    aList.extend(['222' * 3])
+    aList = [[123], ['xyz']]
+    bList = [2009]
+    aList.extend([bList] * 3)
     print(aList)
     aList.append(bList)
     print(aList)
