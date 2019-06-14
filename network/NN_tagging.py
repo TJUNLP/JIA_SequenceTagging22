@@ -8,7 +8,7 @@ from keras import optimizers
 from keras.layers.normalization import BatchNormalization
 import tensorflow as tf
 from keras import backend as K
-from keras.layers import merge
+from keras.layers import merge, Lambda
 
 # def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
 #                      word_W, char_W,
@@ -730,11 +730,14 @@ def Model_3Level_tag2v(wordvocabsize, targetvocabsize, charvobsize, posivocabsiz
     tag2vec_input = Input(shape=(input_sent_lenth, 5, ), dtype='float32')
     tag2vec_dense = Dense(200 * 2, activation='tanh')(tag2vec_input)
 
-    Manhattan = subtract([BiLSTM_sent, tag2vec_dense])
+    # Manhattan = subtract([BiLSTM_sent, tag2vec_dense])
     # Manhattan = Lambda(lambda x: K.abs(x)))(Manhattan)
-    Manhattan_distance = merge([BiLSTM_sent, tag2vec_dense], mode=lambda x: Get_Manhattan(x[0], x[1]),
-                               output_shape=lambda x: (x[0][0], 1))
-    output = Dense(2, activation='softmax')(Manhattan_distance)
+    # Manhattan_distance = merge([BiLSTM_sent, tag2vec_dense], mode=lambda x: Get_Manhattan(x[0], x[1]),
+    #                            output_shape=lambda x: (x[0][0], 1))
+
+    distance = Lambda(Manhattan_distance, output_shape=eucl_dist_output_shape)([BiLSTM_sent, tag2vec_dense])
+
+    output = Dense(2, activation='softmax')(distance)
 
     # concat = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext, BiLSTM_sent], axis=-1)
     # concat = Dropout(0.5)(concat)
@@ -750,7 +753,16 @@ def Model_3Level_tag2v(wordvocabsize, targetvocabsize, charvobsize, posivocabsiz
     return Models
 
 
-def Get_Manhattan(left, right):
-
+def Manhattan_distance(vects):
+    left, right = vects
     return K.exp(-K.sum(K.abs(left - right), axis=1, keepdims=True))
 
+def Euclidean_distance(vects):
+    x, y = vects
+    sum_square = K.sum(K.square(x - y), axis=1, keepdims=True)
+    return K.sqrt(K.maximum(sum_square, K.epsilon()))
+
+def eucl_dist_output_shape(shapes):
+    # 在这里我们需要求修改output_shape, 为(batch, 1)
+    shape1, shape2 = shapes
+    return (shape1[0], 1)
