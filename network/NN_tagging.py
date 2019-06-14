@@ -8,7 +8,7 @@ from keras import optimizers
 from keras.layers.normalization import BatchNormalization
 import tensorflow as tf
 from keras import backend as K
-from keras.legacy.layers import Merge
+from keras.layers import merge
 
 # def Model_LSTM_BiLSTM_LSTM(wordvocabsize, targetvocabsize, charvobsize,
 #                      word_W, char_W,
@@ -732,8 +732,8 @@ def Model_3Level_tag2v(wordvocabsize, targetvocabsize, charvobsize, posivocabsiz
 
     Manhattan = subtract([BiLSTM_sent, tag2vec_dense])
     # Manhattan = Lambda(lambda x: K.abs(x)))(Manhattan)
-    Manhattan_distance = Merge(mode=lambda x: Get_Manhattan(x[0], x[1]),
-                               output_shape=lambda x: (x[0][0], 1))([BiLSTM_sent, tag2vec_dense])
+    Manhattan_distance = merge([BiLSTM_sent, tag2vec_dense], mode=lambda x: Get_Manhattan(x[0], x[1]),
+                               output_shape=lambda x: (x[0][0], 1))
     output = Dense(2, activation='softmax')(Manhattan_distance)
 
     # concat = concatenate([LSTM_leftcontext, BiLSTM_fragment, LSTM_rightcontext, BiLSTM_sent], axis=-1)
