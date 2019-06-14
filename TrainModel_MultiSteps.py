@@ -412,7 +412,7 @@ if __name__ == "__main__":
 
     model1file = 'model1file'
 
-    batch_size = 32
+    batch_size = 50
     hidden_dim = 200
     SecondTrain = True
     retrain = False
