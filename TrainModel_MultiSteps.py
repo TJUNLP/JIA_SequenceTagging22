@@ -318,7 +318,7 @@ def Train42ndclassifer(Step_num, model2name,
     trainy = np.asarray(traindata[3], dtype="float32")
     trainx_posi = np.asarray(traindata[4], dtype="int32")
     trainx_sent = np.asarray(traindata[5], dtype="int32")
-    trainy_2tpye = np.asarray(traindata[5], dtype="int32")
+    trainy_2tpye = np.asarray(traindata[6], dtype="int32")
 
     trainchar_fragment = np.asarray(chartrain[0], dtype="int32")
     trainchar_leftcontext = np.asarray(chartrain[1], dtype="int32")
