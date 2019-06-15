@@ -1,2 +1,4 @@
 /model/
 /data/w2v/
+/model_data/
+/__pycache__/
