@@ -763,20 +763,21 @@ def CreatePairs(fragment_list, max_s, max_posi, target_vob):
 
         data_s = sent[0:min(len(sent), max_s)] + [0] * max(0, max_s - len(sent))
 
-        list_left = [min(i, max_posi) for i in range(1, fragment_l)]
+        list_left = [min(i, max_posi) for i in range(1, fragment_l+1)]
         list_left.reverse()
         feature_posi = list_left + [0 for i in range(fragment_l, fragment_r)] + \
                        [min(i, max_posi) for i in range(1, len(sent) - fragment_r + 1)]
         data_posi = feature_posi[0:min(len(sent), max_s)] + [max_posi] * max(0, max_s - len(sent))
-        pairs.append([data_s, data_posi, fragment_tag])
-        labels.append([1])
+
+        pairs.append([data_s, data_posi, [fragment_tag]])
+        labels.append(1)
 
         inc = random.randrange(1, len(target_vob.keys()))
         dn = (fragment_tag + inc) % len(target_vob.keys())
-        pairs.append([data_s, data_posi, dn])
-        labels.append([0])
+        pairs.append([data_s, data_posi, [dn]])
+        labels.append(0)
 
-    return np.array(pairs, dtype='int32'), np.array(labels, dtype='int32')
+    return np.array(pairs), np.array(labels)
 
 
 def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50):
@@ -920,11 +921,12 @@ if __name__=="__main__":
     pairs_train, labels_train = CreatePairs(fragment_train, max_s, max_posi, TYPE_vob)
     print('CreatePairs train len = ', len(pairs_train), len(labels_train))
 
-    # for ss in pairs_train[:, 0]:
-    #     print(len(ss))
-    #     print(ss)
+    for ss in pairs_train[:, 2]:
+        if len(ss) != 124:
+            print(len(ss))
+            print(ss)
 
-    train_x1_posi = np.asarray(list(pairs_train[:, 1]), dtype="int32")
+    train_x1_posi = np.asarray(pairs_train[:, 1], dtype="int32")
     train_x1_sent = np.asarray(pairs_train[:, 0], dtype="int32")
     train_x2_tag = np.asarray(pairs_train[:, 2], dtype="int32")
     train_y = np.asarray(labels_train, dtype="int32")
