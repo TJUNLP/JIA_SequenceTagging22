@@ -17,7 +17,7 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from network.NN_Siamese import Model_BiLSTM__MLP
 
 
-def test_model(nn_model, fragment_test):
+def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
 
     predict = 0
     predict_right = 0
@@ -116,7 +116,8 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
 
 def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     inputs_dev_x, inputs_dev_y, fragment_test,
-                    resultdir, npoches=100, batch_size=50, retrain=False):
+                    resultdir, type_vob, max_s, max_posi,
+                    npoches=100, batch_size=50, retrain=False):
 
     if retrain:
         nn_model.load_weights(modelfile)
@@ -159,7 +160,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                callbacks=[reduce_lr, checkpointer])
 
         print('the test result-----------------------')
-        P, R, F = test_model(nn_model, fragment_test)
+        P, R, F = test_model(nn_model, fragment_test, type_vob, max_s, max_posi)
 
         if F > maxF:
             earlystop = 0
@@ -174,11 +175,11 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
     return nn_model
 
 
-def infer_e2e_model(nnmodel, modelname, modelfile, fragment_test, resultdir):
+def infer_e2e_model(nnmodel, modelname, modelfile, fragment_test, resultdir, type_vob, max_s, max_posi):
 
     nnmodel.load_weights(modelfile)
     resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
-    P, R, F = test_model(nnmodel, fragment_test)
+    P, R, F = test_model(nnmodel, fragment_test, type_vob, max_s, max_posi)
     print('P = ', P, 'R = ', R, 'F = ', F)
 
 
@@ -277,14 +278,14 @@ if __name__ == "__main__":
             print(modelfile)
             train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     inputs_dev_x, inputs_dev_y, fragment_test,
-                    resultdir, npoches=100, batch_size=50, retrain=False)
+                    resultdir, TYPE_vob, max_s, max_posi, npoches=100, batch_size=50, retrain=False)
 
         else:
             if retrain:
                 print("ReTraining EE model....")
                 train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                 inputs_dev_x, inputs_dev_y, fragment_test,
-                                resultdir, npoches=100, batch_size=50, retrain=False)
+                                resultdir, TYPE_vob, max_s, max_posi, npoches=100, batch_size=50, retrain=False)
 
         if Test:
             print("test EE model....")
