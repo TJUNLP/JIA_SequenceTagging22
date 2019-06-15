@@ -251,6 +251,17 @@ if __name__ == "__main__":
     dev_x2_tag = np.asarray(pairs_dev[:, 2], dtype="int32")
     dev_y = np.asarray(labels_dev, dtype="int32")
 
+    train_x1_sent = pairs_train[:, 0]
+    train_x1_posi = pairs_train[:, 1]
+    train_x2_tag = pairs_train[:, 2]
+    train_y = labels_train
+
+    dev_x1_sent = pairs_dev[:, 0]
+    dev_x1_posi = pairs_dev[:, 1]
+    dev_x2_tag = pairs_dev[:, 2]
+    dev_y = labels_dev
+
+
     nn_model = SelectModel(modelname,
                            wordvocabsize=len(word_vob),
                            tagvocabsize=len(TYPE_vob),

@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/PrecessData_Siamese.py" afterPath="$PROJECT_DIR$/PrecessData_Siamese.py" />
+      <change beforePath="$PROJECT_DIR$/TrainModel_Siamese.py" afterPath="$PROJECT_DIR$/TrainModel_Siamese.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,7 +19,7 @@
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$MultiStep2NER.coverage" NAME="MultiStep2NER Coverage Results" MODIFIED="1554203263281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task_pos.coverage" NAME="TrainModel_2task_pos Coverage Results" MODIFIED="1543379889285" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task.coverage" NAME="TrainModel_2task Coverage Results" MODIFIED="1548825614356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$PrecessData_Siamese.coverage" NAME="PrecessData_Siamese Coverage Results" MODIFIED="1560570633023" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$PrecessData_Siamese.coverage" NAME="PrecessData_Siamese Coverage Results" MODIFIED="1560589395899" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$BiLSTM_CRF_multi2_order.coverage" NAME="BiLSTM_CRF_multi2_order Coverage Results" MODIFIED="1548679327193" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/network" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel.coverage" NAME="TrainModel Coverage Results" MODIFIED="1535877051429" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$ProcessData_BIOES2F.coverage" NAME="ProcessData_BIOES2F Coverage Results" MODIFIED="1560492972201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -35,11 +36,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="250" column="41" lean-forward="false" selection-start-line="250" selection-start-column="41" selection-end-line="250" selection-end-column="41" />
+            <state relative-caret-position="2751">
+              <caret line="258" column="33" lean-forward="false" selection-start-line="258" selection-start-column="33" selection-end-line="258" selection-end-column="33" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
                 <element signature="e#2311#3783#0" expanded="false" />
@@ -63,11 +64,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PrecessData_Siamese.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PrecessData_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="778" column="44" lean-forward="false" selection-start-line="778" selection-start-column="44" selection-end-line="778" selection-end-column="44" />
+            <state relative-caret-position="-1986">
+              <caret line="778" column="73" lean-forward="false" selection-start-line="778" selection-start-column="73" selection-end-line="778" selection-end-column="73" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
                 <element signature="e#198#540#0" expanded="false" />
@@ -144,8 +145,8 @@
         <option value="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
         <option value="$PROJECT_DIR$/Seq2fragment.py" />
         <option value="$PROJECT_DIR$/network/NN_Siamese.py" />
-        <option value="$PROJECT_DIR$/TrainModel_Siamese.py" />
         <option value="$PROJECT_DIR$/PrecessData_Siamese.py" />
+        <option value="$PROJECT_DIR$/TrainModel_Siamese.py" />
       </list>
     </option>
   </component>
@@ -400,7 +401,7 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23076923" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32025117" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -435,13 +436,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///usr/local/Cellar/python3/3.6.1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/typing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="2218" column="8" lean-forward="false" selection-start-line="2218" selection-start-column="8" selection-end-line="2218" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/Cellar/python3/3.6.1/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/gensim/models/word2vec.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
@@ -776,7 +770,7 @@
         <state relative-caret-position="147">
           <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="163" selection-end-column="15" />
           <folding>
-            <element signature="e#33#51#0" expanded="true" />
+            <element signature="e#33#51#0" expanded="false" />
             <element signature="e#353#2971#0" expanded="false" />
             <element signature="e#3152#5499#0" expanded="false" />
             <element signature="e#8532#9815#0" expanded="false" />
@@ -826,21 +820,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
+    <entry file="file://$USER_HOME$/Library/Caches/PyCharm2017.3/python_stubs/-1645354321/numpy/core/multiarray.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="250" column="41" lean-forward="false" selection-start-line="250" selection-start-column="41" selection-end-line="250" selection-end-column="41" />
-          <folding>
-            <element signature="e#298#329#0" expanded="true" />
-            <element signature="e#2311#3783#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="130">
+          <caret line="115" column="4" lean-forward="false" selection-start-line="115" selection-start-column="4" selection-end-line="115" selection-end-column="4" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="778" column="44" lean-forward="false" selection-start-line="778" selection-start-column="44" selection-end-line="778" selection-end-column="44" />
+        <state relative-caret-position="-1986">
+          <caret line="778" column="73" lean-forward="false" selection-start-line="778" selection-start-column="73" selection-end-line="778" selection-end-column="73" />
           <folding>
             <element signature="e#33#51#0" expanded="true" />
             <element signature="e#198#540#0" expanded="false" />
@@ -853,6 +844,17 @@
             <element signature="e#13218#14111#0" expanded="false" />
             <element signature="e#14152#15146#0" expanded="false" />
             <element signature="e#15196#17916#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2751">
+          <caret line="258" column="33" lean-forward="false" selection-start-line="258" selection-start-column="33" selection-end-line="258" selection-end-column="33" />
+          <folding>
+            <element signature="e#298#329#0" expanded="true" />
+            <element signature="e#2311#3783#0" expanded="false" />
           </folding>
         </state>
       </provider>
