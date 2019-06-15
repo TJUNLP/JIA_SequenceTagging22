@@ -48,7 +48,7 @@ def load_vec_txt(fname, vocab, k=300):
 
 def load_vec_random(vocab_c_inx, k=30):
 
-    W = np.zeros(shape=(vocab_c_inx.__len__()+1, k))
+    W = np.zeros(shape=(vocab_c_inx.__len__(), k))
 
     for i in vocab_c_inx.keys():
         W[vocab_c_inx[i]] = np.random.uniform(-1*math.sqrt(3/k), math.sqrt(3/k), k)
