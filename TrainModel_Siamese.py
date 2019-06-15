@@ -31,15 +31,20 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
 
         data_s = sent[0:min(len(sent), max_s)] + [0] * max(0, max_s - len(sent))
 
-        list_left = [min(i, max_posi) for i in range(1, fragment_l)]
+        list_left = [min(i, max_posi) for i in range(1, fragment_l+1)]
         list_left.reverse()
         feature_posi = list_left + [0 for i in range(fragment_l, fragment_r)] + \
                        [min(i, max_posi) for i in range(1, len(sent) - fragment_r + 1)]
         data_posi = feature_posi[0:min(len(sent), max_s)] + [max_posi] * max(0, max_s - len(sent))
 
-        pairs = []
+        data_s_all = []
+        data_posi_all = []
+        data_tag_all = []
         for ins in target_vob.values():
-            pairs.append([data_s, data_posi, ins])
+            data_s_all.append(data_s)
+            data_posi_all.append(data_posi)
+            data_tag_all.append([ins])
+        pairs = [data_s_all, data_posi_all, data_tag_all]
 
         x1_sent = np.asarray(pairs[0], dtype="int32")
         x1_posi = np.asarray(pairs[1], dtype="int32")

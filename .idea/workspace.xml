@@ -38,11 +38,11 @@
       <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-338">
-              <caret line="242" column="4" lean-forward="false" selection-start-line="242" selection-start-column="4" selection-end-line="242" selection-end-column="4" />
+            <state relative-caret-position="18">
+              <caret line="37" column="17" lean-forward="false" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="17" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
-                <element signature="e#2340#3812#0" expanded="false" />
+                <element signature="e#2528#4000#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -67,7 +67,7 @@
       <file leaf-file-name="PrecessData_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-704">
+            <state relative-caret-position="104">
               <caret line="752" column="4" lean-forward="false" selection-start-line="752" selection-start-column="4" selection-end-line="752" selection-end-column="4" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
@@ -401,7 +401,7 @@
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.41130298" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41130298" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
@@ -831,7 +831,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-704">
+        <state relative-caret-position="104">
           <caret line="752" column="4" lean-forward="false" selection-start-line="752" selection-start-column="4" selection-end-line="752" selection-end-column="4" />
           <folding>
             <element signature="e#33#51#0" expanded="true" />
@@ -851,11 +851,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-338">
-          <caret line="242" column="4" lean-forward="false" selection-start-line="242" selection-start-column="4" selection-end-line="242" selection-end-column="4" />
+        <state relative-caret-position="18">
+          <caret line="37" column="17" lean-forward="false" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="17" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
-            <element signature="e#2340#3812#0" expanded="false" />
+            <element signature="e#2528#4000#0" expanded="false" />
           </folding>
         </state>
       </provider>
