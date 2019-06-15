@@ -752,8 +752,10 @@ def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fra
 
 def CreatePairs(fragment_list, max_s, max_posi, target_vob):
 
-    pairs = []
     labels = []
+    data_s_all = []
+    data_posi_all = []
+    data_tag_all = []
 
     for frag in fragment_list:
         fragment_l = int(frag[0])
@@ -768,16 +770,21 @@ def CreatePairs(fragment_list, max_s, max_posi, target_vob):
         feature_posi = list_left + [0 for i in range(fragment_l, fragment_r)] + \
                        [min(i, max_posi) for i in range(1, len(sent) - fragment_r + 1)]
         data_posi = feature_posi[0:min(len(sent), max_s)] + [max_posi] * max(0, max_s - len(sent))
+        data_s_all.append(data_s)
+        data_posi_all.append(data_posi)
+        data_tag_all.append([fragment_tag])
 
-        pairs.append([data_s, data_posi, [fragment_tag]])
         labels.append(1)
 
         inc = random.randrange(1, len(target_vob.keys()))
         dn = (fragment_tag + inc) % len(target_vob.keys())
-        pairs.append([data_s, data_posi, [dn]])
+        data_s_all.append(data_s)
+        data_posi_all.append(data_posi)
+        data_tag_all.append([dn])
         labels.append(0)
 
-    return np.array(pairs), np.array(labels)
+    pairs = [data_s_all, data_posi_all, data_tag_all]
+    return pairs, labels
 
 
 def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50):
@@ -921,12 +928,16 @@ if __name__=="__main__":
     pairs_train, labels_train = CreatePairs(fragment_train, max_s, max_posi, TYPE_vob)
     print('CreatePairs train len = ', len(pairs_train), len(labels_train))
 
-    for ss in pairs_train[:, 2]:
-        if len(ss) != 124:
-            print(len(ss))
-            print(ss)
 
-    train_x1_posi = np.asarray(pairs_train[:, 1], dtype="int32")
-    train_x1_sent = np.asarray(pairs_train[:, 0], dtype="int32")
+    # for ss in pairs_train[:, 2]:
+    #     if len(ss) != 124:
+    #         print(len(ss))
+    #         print(ss)
+    a = [[3, 2, 3], [4, 5, 6]]
+    a = np.array(a)
+    print(a[:, 0])
+    print(a[:, 0].shape)
+    train_x1_posi = np.asarray(a[:, 1], dtype="int32")
+    train_x1_sent = np.asarray(a[:, 0], dtype="int32")
     train_x2_tag = np.asarray(pairs_train[:, 2], dtype="int32")
     train_y = np.asarray(labels_train, dtype="int32")
