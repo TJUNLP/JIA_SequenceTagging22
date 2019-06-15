@@ -23,11 +23,17 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
     predict_right = 0
     totel_right = len(fragment_test)
 
+    data_s_all = []
+    data_posi_all = []
+    data_tag_all = []
+    fragment_tag_list = []
     for frag in fragment_test:
         fragment_l = int(frag[0])
         fragment_r = int(frag[1])
         fragment_tag = target_vob[frag[2]]
         sent = frag[3]
+
+        fragment_tag_list.append(fragment_tag)
 
         data_s = sent[0:min(len(sent), max_s)] + [0] * max(0, max_s - len(sent))
 
@@ -37,30 +43,30 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
                        [min(i, max_posi) for i in range(1, len(sent) - fragment_r + 1)]
         data_posi = feature_posi[0:min(len(sent), max_s)] + [max_posi] * max(0, max_s - len(sent))
 
-        data_s_all = []
-        data_posi_all = []
-        data_tag_all = []
         for ins in target_vob.values():
             data_s_all.append(data_s)
             data_posi_all.append(data_posi)
             data_tag_all.append([ins])
-        pairs = [data_s_all, data_posi_all, data_tag_all]
+    pairs = [data_s_all, data_posi_all, data_tag_all]
 
-        x1_sent = np.asarray(pairs[0], dtype="int32")
-        x1_posi = np.asarray(pairs[1], dtype="int32")
-        x2_tag = np.asarray(pairs[2], dtype="int32")
+    x1_sent = np.asarray(pairs[0], dtype="int32")
+    x1_posi = np.asarray(pairs[1], dtype="int32")
+    x2_tag = np.asarray(pairs[2], dtype="int32")
 
-        predictions = nn_model.predict([x1_sent, x1_posi, x2_tag], batch_size=4, verbose=0)
+    predictions = nn_model.predict([x1_sent, x1_posi, x2_tag], batch_size=512, verbose=0)
 
-        mindis = 1
-        mindis_where = 0
-        for num, disvlaue in enumerate(predictions):
-            if disvlaue < mindis:
-                mindis = disvlaue
-                mindis_where = pairs[2][num]
+    assert len(predictions)//4 == len(fragment_tag_list)
+    for i in range(len(predictions)//4):
+        subpredictions = predictions[i*4:i*4+4]
+        mindis = min(predictions)
+        mindis_where = predictions.index(min(predictions))
+        # for num, disvlaue in enumerate(predictions):
+        #     if disvlaue < mindis:
+        #         mindis = disvlaue
+        #         mindis_where = pairs[2][num]
         if mindis < 0.5:
             predict += 1
-            if mindis_where == fragment_tag:
+            if mindis_where == fragment_tag_list[i]:
                 predict_right += 1
 
     P = predict_right / predict
@@ -229,7 +235,7 @@ if __name__ == "__main__":
 
     modelfile = "next ...."
 
-    batch_size = 512
+    batch_size = 64
     hidden_dim = 200
     SecondTrain = True
     retrain = False
