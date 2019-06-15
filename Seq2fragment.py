@@ -20,13 +20,18 @@ def Seq2frag(file, source_vob, target_vob, target_idex_word, max_context=0, max_
     target_count = 5648
 
     if hasNeg:
-        # fragment_list, max_context, max_fragment, target_count = Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
-        fragment_list, max_context, max_fragment, target_count = Lists2Set_neg_Ergodic(sen2list_all, tag2list_all,
-                                                                                           target_idex_word,
-                                                                                           max_context, max_fragment, POS2list_all=POS2list_all)
+        # fragment_list, max_context, max_fragment, target_count = \
+        # Lists2Set_neg_PartErgodic(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
+
+        fragment_list, max_context, max_fragment, target_count = \
+            Lists2Set_neg_Ergodic(sen2list_all, tag2list_all, target_idex_word,
+                                  max_context, max_fragment, POS2list_all=POS2list_all)
 
     else:
-        fragment_list, max_context, max_fragment = Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
+        fragment_list, max_context, max_fragment = \
+            Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment)
+        target_count = len(fragment_list)
+
     print('len(fragment_list) = ', len(fragment_list))
     print('target_count -----', target_count)
 
