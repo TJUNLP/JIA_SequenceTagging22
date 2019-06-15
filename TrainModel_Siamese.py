@@ -241,14 +241,14 @@ if __name__ == "__main__":
     posi_W, posi_W,\
     target_vob, target_id2word, max_s, max_posi = pickle.load(open(datafile, 'rb'))
 
-    train_x1_sent = np.asarray(pairs_train[0], dtype="int32")
-    train_x1_posi = np.asarray(pairs_train[1], dtype="int32")
-    train_x2_tag = np.asarray(pairs_train[2], dtype="int32")
+    train_x1_sent = np.asarray(pairs_train[:, 0], dtype="int32")
+    train_x1_posi = np.asarray(pairs_train[:, 1], dtype="int32")
+    train_x2_tag = np.asarray(pairs_train[:, 2], dtype="int32")
     train_y = np.asarray(labels_train, dtype="int32")
 
-    dev_x1_sent = np.asarray(pairs_dev[0], dtype="int32")
-    dev_x1_posi = np.asarray(pairs_dev[1], dtype="int32")
-    dev_x2_tag = np.asarray(pairs_dev[2], dtype="int32")
+    dev_x1_sent = np.asarray(pairs_dev[:, 0], dtype="int32")
+    dev_x1_posi = np.asarray(pairs_dev[:, 1], dtype="int32")
+    dev_x2_tag = np.asarray(pairs_dev[:, 2], dtype="int32")
     dev_y = np.asarray(labels_dev, dtype="int32")
 
     nn_model = SelectModel(modelname,
