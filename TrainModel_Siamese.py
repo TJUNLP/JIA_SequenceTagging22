@@ -58,8 +58,11 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
     assert len(predictions)//4 == len(fragment_tag_list)
     for i in range(len(predictions)//4):
         subpredictions = predictions[i*4:i*4+4]
-        mindis = min(predictions)
-        mindis_where = predictions.index(min(predictions))
+        subpredictions = subpredictions.flatten().tolist()
+        print(subpredictions)
+        mindis = min(subpredictions)
+        mindis_where = subpredictions.index(min(subpredictions))
+        print(subpredictions, mindis, mindis_where)
         # for num, disvlaue in enumerate(predictions):
         #     if disvlaue < mindis:
         #         mindis = disvlaue
@@ -235,7 +238,7 @@ if __name__ == "__main__":
 
     modelfile = "next ...."
 
-    batch_size = 64
+    batch_size = 6400
     hidden_dim = 200
     SecondTrain = True
     retrain = False
@@ -302,7 +305,7 @@ if __name__ == "__main__":
             print("test EE model....")
             print(datafile)
             print(modelfile)
-            infer_e2e_model(nn_model, modelname, modelfile, fragment_test, resultdir)
+            infer_e2e_model(nn_model, modelname, modelfile, fragment_test, resultdir, TYPE_vob, max_s, max_posi)
 
 
 
