@@ -776,7 +776,7 @@ def CreatePairs(fragment_list, max_s, max_posi, target_vob):
         pairs.append([data_s, data_posi, dn])
         labels.append([0])
 
-    return pairs, labels
+    return np.array(pairs), np.array(labels)
 
 
 def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50):
