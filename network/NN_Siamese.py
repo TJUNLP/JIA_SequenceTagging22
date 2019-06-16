@@ -29,7 +29,7 @@ def Model_BiLSTM__MLP(wordvocabsize, tagvocabsize, posivocabsize,
     embedding_posi = Embedding(input_dim=posivocabsize,
                                     output_dim=posi2v_k,
                                     input_length=input_sent_lenth,
-                                    mask_zero=True,
+                                    mask_zero=False,
                                     trainable=True,
                                     weights=[posi_W])(input_posi)
     embedding_posi = Dropout(0.5)(embedding_posi)

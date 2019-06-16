@@ -183,7 +183,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
 
         print(nowepoch, P, R, F, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>maxF=', maxF)
 
-        if earlystop >= 20:
+        if earlystop >= 50:
             break
 
     return nn_model
@@ -238,7 +238,7 @@ if __name__ == "__main__":
 
     modelfile = "next ...."
 
-    batch_size = 64
+    batch_size = 256
     hidden_dim = 200
     SecondTrain = True
     retrain = False
@@ -282,7 +282,7 @@ if __name__ == "__main__":
     inputs_dev_y = [dev_y]
 
 
-    for inum in range(0, 3):
+    for inum in range(3, 6):
 
         modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 
