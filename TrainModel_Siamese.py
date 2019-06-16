@@ -59,10 +59,10 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
     for i in range(len(predictions)//4):
         subpredictions = predictions[i*4:i*4+4]
         subpredictions = subpredictions.flatten().tolist()
-        print(subpredictions)
+
         mindis = min(subpredictions)
         mindis_where = subpredictions.index(min(subpredictions))
-        print(subpredictions, mindis, mindis_where)
+
         # for num, disvlaue in enumerate(predictions):
         #     if disvlaue < mindis:
         #         mindis = disvlaue
