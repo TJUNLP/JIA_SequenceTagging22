@@ -762,6 +762,8 @@ def CreatePairs(fragment_list, max_s, max_posi, target_vob):
         fragment_r = int(frag[1])
         fragment_tag = target_vob[frag[2]]
         sent = frag[3]
+        print(fragment_l, fragment_r)
+        print(sent)
 
         data_s = sent[0:min(len(sent), max_s)] + [0] * max(0, max_s - len(sent))
 
@@ -871,7 +873,8 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
 
     print(datafile, "dataset created!")
     out = open(datafile, 'wb')#
-    pickle.dump([pairs_train, labels_train, pairs_dev, labels_dev, fragment_test,
+    pickle.dump([pairs_train, labels_train, pairs_dev, labels_dev,
+                 fragment_train, fragment_dev, fragment_test,
                 word_vob, word_id2word, word_W, w2v_k,
                 TYPE_vob, TYPE_id2type, type_W, type_k,
                  posi_W, posi_W,
@@ -892,8 +895,46 @@ if __name__=="__main__":
     modelfile = "./data/model/model.pkl"
     resultdir = "./data/result/"
 
-    a = -1
-    # 报错
-    assert a > 0, "a超出范围"
-    # 正常运行
-    assert a < 0
+    word_vob, word_id2word, target_vob, target_id2word, max_s = get_word_index(trainfile, {devfile, testfile})
+    print("source vocab size: ", str(len(word_vob)))
+    print("word_id2word size: ", str(len(word_id2word)))
+    print("target vocab size: " + str(target_vob))
+    print("target_id2word size: " + str(target_id2word))
+    # if max_s > maxlen:
+    #     max_s = maxlen
+    print('max soure sent lenth is ' + str(max_s))
+
+    TYPE_id2type = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
+    TYPE_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
+
+
+    word_w2v, w2v_k, word_W = load_vec_txt(w2v_file,word_vob,k=100)
+    print("word2vec loaded!")
+    print("all vocab size: " + str(len(word_vob)))
+    print("source_W  size: " + str(len(word_W)))
+    print("num words in source word2vec: " + str(len(word_w2v)))
+
+    type_k, type_W = load_vec_random(TYPE_vob, k=w2v_k)
+    print('TYPE_k, TYPE_W', type_k, len(type_W))
+
+    max_posi = 50
+    posi_k, posi_W = load_vec_onehot(k=max_posi + 1)
+    print('posi_k, posi_W', posi_k, len(posi_W))
+
+    # train = make_idx_word_index(trainfile, max_s, word_vob, target_vob)
+    # dev = make_idx_word_index(devfile, max_s, word_vob, target_vob)
+    # test = make_idx_word_index(testfile, max_s, word_vob, target_vob)
+    # print('train len  ', train.__len__(), len(train[0]))
+    # print('dev len  ', dev.__len__(), len(dev[0]))
+    # print('test len  ', test.__len__(), len(test[1]))
+
+    sen2list_train, tag2list_train = ReadfromTXT2Lists(trainfile, word_vob, target_vob)
+    print('sen2list_train len = ', len(sen2list_train))
+    print('tag2list_all len = ', len(tag2list_train))
+
+    fragment_train, max_context, max_fragment = \
+        Lists2Set(sen2list_train, tag2list_train, target_id2word, max_context=0, max_fragment=1)
+    print('len(fragment_train) = ', len(fragment_train))
+
+    pairs_train, labels_train = CreatePairs(fragment_train, max_s, max_posi, TYPE_vob)
+    print('CreatePairs train len = ', len(pairs_train), len(labels_train))

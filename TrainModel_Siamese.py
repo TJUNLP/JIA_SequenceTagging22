@@ -129,7 +129,7 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
 
 
 def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
-                    inputs_dev_x, inputs_dev_y, fragment_test,
+                    inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
                     resultdir, type_vob, max_s, max_posi,
                     npoches=100, batch_size=50, retrain=False):
 
@@ -173,6 +173,12 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                verbose=1,
                                callbacks=[reduce_lr, checkpointer])
 
+        print('the train result-----------------------')
+        P, R, F = test_model(nn_model, fragment_train, type_vob, max_s, max_posi)
+        print(P, R, F)
+        print('the dev result-----------------------')
+        P, R, F = test_model(nn_model, fragment_dev, type_vob, max_s, max_posi)
+        print(P, R, F)
         print('the test result-----------------------')
         P, R, F = test_model(nn_model, fragment_test, type_vob, max_s, max_posi)
 
@@ -193,6 +199,14 @@ def infer_e2e_model(nnmodel, modelname, modelfile, fragment_test, resultdir, typ
 
     nnmodel.load_weights(modelfile)
     resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
+
+    print('the train result-----------------------')
+    P, R, F = test_model(nn_model, fragment_train, type_vob, max_s, max_posi)
+    print(P, R, F)
+    print('the dev result-----------------------')
+    P, R, F = test_model(nn_model, fragment_dev, type_vob, max_s, max_posi)
+    print(P, R, F)
+    print('the test result-----------------------')
     P, R, F = test_model(nnmodel, fragment_test, type_vob, max_s, max_posi)
     print('P = ', P, 'R = ', R, 'F = ', F)
 
@@ -250,7 +264,8 @@ if __name__ == "__main__":
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile,
                  w2v_k=100, c2v_k=50, maxlen=maxlen)
 
-    pairs_train, labels_train, pairs_dev, labels_dev, fragment_test,\
+    pairs_train, labels_train, pairs_dev, labels_dev, \
+    fragment_train, fragment_dev, fragment_test,\
     word_vob, word_id2word, word_W, w2v_k,\
     TYPE_vob, TYPE_id2type, type_W, type_k,\
     posi_W, posi_W,\
@@ -291,14 +306,14 @@ if __name__ == "__main__":
             print("Training EE model....")
             print(modelfile)
             train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
-                    inputs_dev_x, inputs_dev_y, fragment_test,
+                    inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
                     resultdir, TYPE_vob, max_s, max_posi, npoches=100, batch_size=50, retrain=False)
 
         else:
             if retrain:
                 print("ReTraining EE model....")
                 train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
-                                inputs_dev_x, inputs_dev_y, fragment_test,
+                                inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
                                 resultdir, TYPE_vob, max_s, max_posi, npoches=100, batch_size=50, retrain=False)
 
         if Test:
