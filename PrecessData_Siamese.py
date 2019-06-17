@@ -762,8 +762,8 @@ def CreatePairs(fragment_list, max_s, max_posi, target_vob):
         fragment_r = int(frag[1])
         fragment_tag = target_vob[frag[2]]
         sent = frag[3]
-        print(fragment_l, fragment_r)
-        print(sent)
+        # print(fragment_l, fragment_r)
+        # print(sent)
 
         data_s = sent[0:min(len(sent), max_s)] + [0] * max(0, max_s - len(sent))
 
