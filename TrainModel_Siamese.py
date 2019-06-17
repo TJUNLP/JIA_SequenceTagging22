@@ -237,6 +237,8 @@ if __name__ == "__main__":
     hasNeg = True
 
     modelname = 'Model_BiLSTM__MLP'
+    # modelname = 'Model_BiLSTM__MLP_attention'
+    # modelname = 'Model_BiLSTM__MLP_attention'
 
     print(modelname)
 
@@ -297,7 +299,7 @@ if __name__ == "__main__":
     inputs_dev_y = [dev_y]
 
 
-    for inum in range(3, 6):
+    for inum in range(6, 9):
 
         modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 

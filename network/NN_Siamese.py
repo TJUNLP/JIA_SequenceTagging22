@@ -48,9 +48,12 @@ def Model_BiLSTM__MLP(wordvocabsize, tagvocabsize, posivocabsize,
 
     mlp_x2_0 = Flatten()(tag_embedding)
     mlp_x2_0 = Dropout(0.5)(mlp_x2_0)
-    mlp_x2_1 = Dense(200, activation='tanh')(mlp_x2_0)
-    mlp_x2_1 = Dropout(0.5)(mlp_x2_1)
-    mlp_x2_2 = Dense(400, activation='tanh')(mlp_x2_1)
+    mlp_x2_1_1 = Dense(200, activation='tanh')(mlp_x2_0)
+    mlp_x2_1_1 = Dropout(0.5)(mlp_x2_1_1)
+    mlp_x2_1_2 = Dense(200, activation='relu')(mlp_x2_0)
+    mlp_x2_1_2 = Dropout(0.5)(mlp_x2_1_2)
+    mlp_x2_1 = concatenate([mlp_x2_1_1, mlp_x2_1_2])
+    mlp_x2_2 = Dense(400, activation='relu')(mlp_x2_1)
     mlp_x2_2 = Dropout(0.5)(mlp_x2_2)
 
     distance = Lambda(euclidean_distance,
