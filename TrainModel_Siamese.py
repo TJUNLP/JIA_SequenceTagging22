@@ -42,10 +42,10 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
         fragment_tag_list.append(fragment_tag)
 
         data_s = sent[0:min(len(sent), max_s)] + [0] * max(0, max_s - len(sent))
-        data_context_r = [1] + sent[fragment_l:min(len(sent), max_s)]
+        data_context_r = sent[fragment_l:min(len(sent), max_s)]
         data_context_r = data_context_r + [0] * max(0, max_s - len(data_context_r))
         data_context_l = sent[max(0, fragment_r - max_s):fragment_r]
-        data_context_l = [0] * max(0, max_s - len(sent)) + data_context_l + [1]
+        data_context_l = [0] * max(0, max_s - len(data_context_l)) + data_context_l
 
         data_fragment = sent[fragment_l:fragment_r]
 
@@ -55,13 +55,17 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
                        [min(i, max_posi) for i in range(1, len(sent) - fragment_r + 1)]
         data_posi = feature_posi[0:min(len(sent), max_s)] + [max_posi] * max(0, max_s - len(sent))
 
-        data_c_l_posi = [min(i, max_posi) for i in range(1, len(data_context_l)-len(data_fragment)+1)].reverse() + \
-                        [0 for i in range(fragment_l, fragment_r+1)]
+        data_c_l_posi = [min(i, max_posi) for i in range(1, len(data_context_l)-len(data_fragment)+1)]
+        data_c_l_posi.reverse()
+        data_c_l_posi = data_c_l_posi + [0 for i in range(fragment_l, fragment_r+1)]
         data_c_r_posi = [0 for i in range(fragment_l, fragment_r + 1)] + \
                         [min(i, max_posi) for i in range(1, len(data_context_r) - len(data_fragment) + 1)]
 
         padlen = max(0, max_fragment - len(data_fragment))
         data_fragment = [0] * (padlen // 2) + data_fragment + [0] * (padlen - padlen // 2)
+
+        data_context_r = [1] + data_context_r
+        data_context_l = data_context_l + [1]
 
         for ins in target_vob.values():
             data_s_all.append(data_s)

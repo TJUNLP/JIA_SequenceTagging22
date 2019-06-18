@@ -813,9 +813,9 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
 
         data_s = sent[0:min(len(sent), max_s)] + [0] * max(0, max_s - len(sent))
         data_context_r = sent[fragment_l:min(len(sent), max_s)]
-        data_context_r = [1] + data_context_r + [0] * max(0, max_s - len(data_context_r))
+        data_context_r = data_context_r + [0] * max(0, max_s - len(data_context_r))
         data_context_l = sent[max(0, fragment_r - max_s):fragment_r]
-        data_context_l = [0] * max(0, max_s - len(data_context_l)) + data_context_l + [1]
+        data_context_l = [0] * max(0, max_s - len(data_context_l)) + data_context_l
 
         data_fragment = sent[fragment_l:fragment_r]
 
@@ -833,6 +833,9 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
 
         padlen = max(0, max_fragment - len(data_fragment))
         data_fragment = [0] * (padlen // 2) + data_fragment + [0] * (padlen - padlen // 2)
+
+        data_context_r = [1] + data_context_r
+        data_context_l = data_context_l + [1]
 
         data_s_all.append(data_s)
         data_posi_all.append(data_posi)
