@@ -91,8 +91,8 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
 
 
     # predictions = nn_model.predict([x1_sent, x1_posi, x2_tag], batch_size=512, verbose=0)
-    predictions = nn_model.predict([x1_context_r, x1_c_l_posi,
-                                    x1_context_l, x1_c_r_posi,
+    predictions = nn_model.predict([x1_context_l, x1_c_l_posi,
+                                    x1_context_r, x1_c_r_posi,
                                     x1_fragment, x2_tag], batch_size=512, verbose=0)
 
     assert len(predictions)//4 == len(fragment_tag_list)
