@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/PrecessData_Siamese.py" afterPath="$PROJECT_DIR$/PrecessData_Siamese.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel_Siamese.py" afterPath="$PROJECT_DIR$/TrainModel_Siamese.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,11 +40,11 @@
       <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="116">
-              <caret line="298" column="31" lean-forward="false" selection-start-line="298" selection-start-column="31" selection-end-line="298" selection-end-column="31" />
+            <state relative-caret-position="264">
+              <caret line="49" column="40" lean-forward="false" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="40" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
-                <element signature="e#4801#6273#0" expanded="false" />
+                <element signature="e#4800#6272#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -69,8 +70,8 @@
       <file leaf-file-name="PrecessData_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="817" column="22" lean-forward="false" selection-start-line="817" selection-start-column="8" selection-end-line="817" selection-end-column="22" />
+            <state relative-caret-position="139">
+              <caret line="819" column="40" lean-forward="false" selection-start-line="819" selection-start-column="40" selection-end-line="819" selection-end-column="40" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
                 <element signature="e#198#540#0" expanded="false" />
@@ -145,8 +146,8 @@
         <option value="$PROJECT_DIR$/network/NN_tagging.py" />
         <option value="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
         <option value="$PROJECT_DIR$/Seq2fragment.py" />
-        <option value="$PROJECT_DIR$/PrecessData_Siamese.py" />
         <option value="$PROJECT_DIR$/network/NN_Siamese.py" />
+        <option value="$PROJECT_DIR$/PrecessData_Siamese.py" />
         <option value="$PROJECT_DIR$/TrainModel_Siamese.py" />
       </list>
     </option>
@@ -783,25 +784,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="817" column="22" lean-forward="false" selection-start-line="817" selection-start-column="8" selection-end-line="817" selection-end-column="22" />
-          <folding>
-            <element signature="e#33#51#0" expanded="true" />
-            <element signature="e#198#540#0" expanded="false" />
-            <element signature="e#1530#2078#0" expanded="false" />
-            <element signature="e#2373#5452#0" expanded="false" />
-            <element signature="e#5522#6625#0" expanded="false" />
-            <element signature="e#6702#9110#0" expanded="false" />
-            <element signature="e#9179#10973#0" expanded="false" />
-            <element signature="e#13248#14141#0" expanded="false" />
-            <element signature="e#14182#15176#0" expanded="false" />
-            <element signature="e#15226#17946#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_classifer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="467">
@@ -825,13 +807,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="139">
+          <caret line="819" column="40" lean-forward="false" selection-start-line="819" selection-start-column="40" selection-end-line="819" selection-end-column="40" />
+          <folding>
+            <element signature="e#33#51#0" expanded="true" />
+            <element signature="e#198#540#0" expanded="false" />
+            <element signature="e#1530#2078#0" expanded="false" />
+            <element signature="e#2373#5452#0" expanded="false" />
+            <element signature="e#5522#6625#0" expanded="false" />
+            <element signature="e#6702#9110#0" expanded="false" />
+            <element signature="e#9179#10973#0" expanded="false" />
+            <element signature="e#13248#14141#0" expanded="false" />
+            <element signature="e#14182#15176#0" expanded="false" />
+            <element signature="e#15226#17946#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="116">
-          <caret line="298" column="31" lean-forward="false" selection-start-line="298" selection-start-column="31" selection-end-line="298" selection-end-column="31" />
+        <state relative-caret-position="264">
+          <caret line="49" column="40" lean-forward="false" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="40" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
-            <element signature="e#4801#6273#0" expanded="false" />
+            <element signature="e#4800#6272#0" expanded="false" />
           </folding>
         </state>
       </provider>

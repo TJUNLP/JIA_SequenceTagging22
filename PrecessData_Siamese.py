@@ -817,7 +817,7 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
         data_context_l = sent[max(0, fragment_r - max_s):fragment_r]
         data_context_l = [0] * max(0, max_s - len(sent)) + data_context_l + [1]
 
-        data_fragment = sent[fragment_l, fragment_r]
+        data_fragment = sent[fragment_l:fragment_r]
 
         list_left = [min(i, max_posi) for i in range(1, fragment_l+1)]
         list_left.reverse()
