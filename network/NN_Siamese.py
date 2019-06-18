@@ -66,6 +66,103 @@ def Model_BiLSTM__MLP(wordvocabsize, tagvocabsize, posivocabsize,
     return mymodel
 
 
+def Model_BiLSTM__MLP_context(wordvocabsize, tagvocabsize, posivocabsize,
+                     word_W, posi_W, tag_W,
+                     input_sent_lenth, input_frament_lenth,
+                     w2v_k, posi2v_k, tag2v_k,
+                    batch_size=32):
+
+    word_input_f = Input(shape=(input_frament_lenth,), dtype='int32')
+    word_embedding_f = Embedding(input_dim=wordvocabsize + 1,
+                                    output_dim=w2v_k,
+                                    input_length=input_frament_lenth,
+                                    mask_zero=False,
+                                    trainable=True,
+                                    weights=[word_W])(word_input_f)
+    # word_embedding_f = Dropout(0.5)(word_embedding_f)
+
+    word_input_context_l = Input(shape=(input_sent_lenth+1,), dtype='int32')
+    word_embedding_context_l = Embedding(input_dim=wordvocabsize + 1,
+                                    output_dim=w2v_k,
+                                    input_length=input_sent_lenth+1,
+                                    mask_zero=True,
+                                    trainable=True,
+                                    weights=[word_W])(word_input_context_l)
+    # word_embedding_context_l = Dropout(0.5)(word_input_context_l)
+
+    word_input_context_r = Input(shape=(input_sent_lenth+1,), dtype='int32')
+    word_embedding_context_r = Embedding(input_dim=wordvocabsize + 1,
+                                    output_dim=w2v_k,
+                                    input_length=input_sent_lenth+1,
+                                    mask_zero=True,
+                                    trainable=True,
+                                    weights=[word_W])(word_input_context_r)
+    # word_embedding_context_r = Dropout(0.5)(word_embedding_context_r)
+
+    posi_input_context_l = Input(shape=(input_sent_lenth+1,), dtype='int32')
+    posi_embedding_context_l = Embedding(input_dim=posivocabsize,
+                                    output_dim=posi2v_k,
+                                    input_length=input_sent_lenth+1,
+                                    mask_zero=False,
+                                    trainable=True,
+                                    weights=[posi_W])(posi_input_context_l)
+    # posi_embedding_context_l = Dropout(0.5)(posi_embedding_context_l)
+
+    posi_input_context_r = Input(shape=(input_sent_lenth+1,), dtype='int32')
+    posi_embedding_context_r = Embedding(input_dim=posivocabsize,
+                                    output_dim=posi2v_k,
+                                    input_length=input_sent_lenth+1,
+                                    mask_zero=False,
+                                    trainable=True,
+                                    weights=[posi_W])(posi_input_context_r)
+    # posi_embedding_context_r = Dropout(0.5)(posi_embedding_context_r)
+
+    input_tag = Input(shape=(1,), dtype='int32')
+    tag_embedding = Embedding(input_dim=tagvocabsize,
+                                    output_dim=tag2v_k,
+                                    input_length=1,
+                                    mask_zero=False,
+                                    trainable=True,
+                                    weights=[tag_W])(input_tag)
+
+
+
+    cnn2 = Conv1D(100, 2, activation='relu', strides=1, padding='valid')(word_embedding_f)
+    cnn2 = Dropout(0.3)(cnn2)
+    cnn4 = Conv1D(100, 4, activation='relu', strides=1, padding='valid')(cnn2)
+    CNN_x1_f = GlobalMaxPooling1D()(cnn4)
+
+    embedding_x1_l = concatenate([word_embedding_context_l, posi_embedding_context_l], axis=-1)
+    BiLSTM_x1_l = LSTM(100, activation='tanh',return_sequences=False)(embedding_x1_l)
+
+    embedding_x1_r = concatenate([word_embedding_context_r, posi_embedding_context_r], axis=-1)
+    BiLSTM_x1_r = LSTM(100, activation='tanh',return_sequences=False, go_backwards=True)(embedding_x1_r)
+
+    x1_all = concatenate([BiLSTM_x1_l, CNN_x1_f, BiLSTM_x1_r], axis=-1)
+    x1_all = Dropout(0.5)(x1_all)
+
+    mlp_x2_0 = Flatten()(tag_embedding)
+    mlp_x2_0 = Dropout(0.5)(mlp_x2_0)
+    mlp_x2_1_1 = Dense(400, activation='tanh')(mlp_x2_0)
+    mlp_x2_1_1 = Dropout(0.5)(mlp_x2_1_1)
+    # mlp_x2_1_2 = Dense(200, activation='relu')(mlp_x2_0)
+    # mlp_x2_1_2 = Dropout(0.5)(mlp_x2_1_2)
+    # mlp_x2_1 = concatenate([mlp_x2_1_1, mlp_x2_1_2])
+    mlp_x2_2 = Dense(300, activation='tanh')(mlp_x2_1_1)
+    x2_all = Dropout(0.5)(mlp_x2_2)
+
+    distance = Lambda(euclidean_distance,
+                      output_shape=eucl_dist_output_shape)([x1_all, x2_all])
+
+    mymodel = Model([word_input_context_l, posi_input_context_l,
+                     word_input_context_r, posi_input_context_r,
+                     word_input_f, input_tag], distance)
+
+    mymodel.compile(loss=contrastive_loss, optimizer=optimizers.Adam(lr=0.001), metrics=[acc_siamese])
+
+    return mymodel
+
+
 def euclidean_distance(vects):
     # 计算欧式距离
     x, y = vects

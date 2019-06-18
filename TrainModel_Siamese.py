@@ -14,10 +14,10 @@ import numpy as np
 from PrecessData_Siamese import get_data
 from Evaluate import evaluation_NER
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from network.NN_Siamese import Model_BiLSTM__MLP
+from network.NN_Siamese import Model_BiLSTM__MLP, Model_BiLSTM__MLP_context
 
 
-def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
+def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragment):
 
     predict = 0
     predict_right = 0
@@ -26,6 +26,12 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
     data_s_all = []
     data_posi_all = []
     data_tag_all = []
+    data_context_r_all = []
+    data_context_l_all = []
+    data_fragment_all = []
+    data_c_l_posi_all = []
+    data_c_r_posi_all = []
+
     fragment_tag_list = []
     for frag in fragment_test:
         fragment_l = int(frag[0])
@@ -36,6 +42,12 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
         fragment_tag_list.append(fragment_tag)
 
         data_s = sent[0:min(len(sent), max_s)] + [0] * max(0, max_s - len(sent))
+        data_context_r = [1] + sent[fragment_l:min(len(sent), max_s)]
+        data_context_r = data_context_r + [0] * max(0, max_s - len(data_context_r))
+        data_context_l = sent[max(0, fragment_r - max_s):fragment_r]
+        data_context_l = [0] * max(0, max_s - len(sent)) + data_context_l + [1]
+
+        data_fragment = sent[fragment_l, fragment_r]
 
         list_left = [min(i, max_posi) for i in range(1, fragment_l+1)]
         list_left.reverse()
@@ -43,17 +55,41 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi):
                        [min(i, max_posi) for i in range(1, len(sent) - fragment_r + 1)]
         data_posi = feature_posi[0:min(len(sent), max_s)] + [max_posi] * max(0, max_s - len(sent))
 
+        data_c_l_posi = [min(i, max_posi) for i in range(1, len(data_context_l)-len(data_fragment)+1)].reverse() + \
+                        [0 for i in range(fragment_l, fragment_r+1)]
+        data_c_r_posi = [0 for i in range(fragment_l, fragment_r + 1)] + \
+                        [min(i, max_posi) for i in range(1, len(data_context_r) - len(data_fragment) + 1)]
+
+        padlen = max(0, max_fragment - len(data_fragment))
+        data_fragment = [0] * (padlen // 2) + data_fragment + [0] * (padlen - padlen // 2)
+
         for ins in target_vob.values():
             data_s_all.append(data_s)
             data_posi_all.append(data_posi)
             data_tag_all.append([ins])
-    pairs = [data_s_all, data_posi_all, data_tag_all]
+            data_context_l_all.append(data_context_l)
+            data_context_r_all.append(data_context_r)
+            data_fragment_all.append(data_fragment)
+            data_c_l_posi_all.append(data_c_l_posi)
+            data_c_r_posi_all.append(data_c_r_posi)
+
+    pairs = [data_s_all, data_posi_all, data_tag_all,
+             data_context_r_all, data_context_l_all, data_fragment_all, data_c_l_posi_all, data_c_r_posi_all]
 
     x1_sent = np.asarray(pairs[0], dtype="int32")
     x1_posi = np.asarray(pairs[1], dtype="int32")
     x2_tag = np.asarray(pairs[2], dtype="int32")
+    x1_context_r = np.asarray(pairs_train[3], dtype="int32")
+    x1_context_l = np.asarray(pairs_train[4], dtype="int32")
+    x1_fragment = np.asarray(pairs_train[5], dtype="int32")
+    x1_c_l_posi = np.asarray(pairs_train[6], dtype="int32")
+    x1_c_r_posi = np.asarray(pairs_train[7], dtype="int32")
 
-    predictions = nn_model.predict([x1_sent, x1_posi, x2_tag], batch_size=512, verbose=0)
+
+    # predictions = nn_model.predict([x1_sent, x1_posi, x2_tag], batch_size=512, verbose=0)
+    predictions = nn_model.predict([x1_context_r, x1_c_l_posi,
+                                    x1_context_l, x1_c_r_posi,
+                                    x1_fragment, x2_tag], batch_size=512, verbose=0)
 
     assert len(predictions)//4 == len(fragment_tag_list)
     for i in range(len(predictions)//4):
@@ -130,7 +166,7 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
 
 def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
-                    resultdir, type_vob, max_s, max_posi,
+                    resultdir, type_vob, max_s, max_posi, max_fragment,
                     npoches=100, batch_size=50, retrain=False):
 
     if retrain:
@@ -174,13 +210,13 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                callbacks=[reduce_lr, checkpointer])
 
         print('the train result-----------------------')
-        P, R, F = test_model(nn_model, fragment_train, type_vob, max_s, max_posi)
+        P, R, F = test_model(nn_model, fragment_train, type_vob, max_s, max_posi, max_fragment)
         print(P, R, F)
         print('the dev result-----------------------')
-        P, R, F = test_model(nn_model, fragment_dev, type_vob, max_s, max_posi)
+        P, R, F = test_model(nn_model, fragment_dev, type_vob, max_s, max_posi, max_fragment)
         print(P, R, F)
         print('the test result-----------------------')
-        P, R, F = test_model(nn_model, fragment_test, type_vob, max_s, max_posi)
+        P, R, F = test_model(nn_model, fragment_test, type_vob, max_s, max_posi, max_fragment)
 
         if F > maxF:
             earlystop = 0
@@ -195,25 +231,25 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
     return nn_model
 
 
-def infer_e2e_model(nnmodel, modelname, modelfile, fragment_test, resultdir, type_vob, max_s, max_posi):
+def infer_e2e_model(nnmodel, modelname, modelfile, fragment_test, resultdir, type_vob, max_s, max_posi, max_fragment):
 
     nnmodel.load_weights(modelfile)
     resultfile = resultdir + "result-" + modelname + '-' + str(datetime.datetime.now())+'.txt'
 
     print('the train result-----------------------')
-    P, R, F = test_model(nn_model, fragment_train, type_vob, max_s, max_posi)
+    P, R, F = test_model(nn_model, fragment_train, type_vob, max_s, max_posi, max_fragment)
     print(P, R, F)
     print('the dev result-----------------------')
-    P, R, F = test_model(nn_model, fragment_dev, type_vob, max_s, max_posi)
+    P, R, F = test_model(nn_model, fragment_dev, type_vob, max_s, max_posi, max_fragment)
     print(P, R, F)
     print('the test result-----------------------')
-    P, R, F = test_model(nnmodel, fragment_test, type_vob, max_s, max_posi)
+    P, R, F = test_model(nnmodel, fragment_test, type_vob, max_s, max_posi, max_fragment)
     print('P = ', P, 'R = ', R, 'F = ', F)
 
 
 def SelectModel(modelname, wordvocabsize, tagvocabsize, posivocabsize,
                      word_W, posi_W, tag_W,
-                     input_sent_lenth,
+                     input_sent_lenth, input_frament_lenth,
                      w2v_k, posi2v_k, tag2v_k,
                      batch_size=32):
     nn_model = None
@@ -227,6 +263,16 @@ def SelectModel(modelname, wordvocabsize, tagvocabsize, posivocabsize,
                                      w2v_k=w2v_k, posi2v_k=posi2v_k, tag2v_k=tag2v_k,
                                      batch_size=batch_size)
 
+    if modelname is 'Model_BiLSTM__MLP_context':
+        nn_model = Model_BiLSTM__MLP_context(wordvocabsize=wordvocabsize,
+                                             tagvocabsize=tagvocabsize,
+                                             posivocabsize=posivocabsize,
+                                             word_W=word_W, posi_W=posi_W, tag_W=tag_W,
+                                             input_sent_lenth=input_sent_lenth,
+                                             input_frament_lenth=input_frament_lenth,
+                                             w2v_k=w2v_k, posi2v_k=posi2v_k, tag2v_k=tag2v_k,
+                                             batch_size=batch_size)
+
     return nn_model
 
 
@@ -239,6 +285,7 @@ if __name__ == "__main__":
     modelname = 'Model_BiLSTM__MLP'
     # modelname = 'Model_BiLSTM__MLP_attention'
     # modelname = 'Model_BiLSTM__MLP_attention'
+    modelname = 'Model_BiLSTM__MLP_context'
 
     print(modelname)
 
@@ -249,7 +296,7 @@ if __name__ == "__main__":
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     resultdir = "./data/result/"
 
-    datafname = 'data_Siamese.1'#1
+    datafname = 'data_Siamese.2'#1
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
@@ -271,16 +318,26 @@ if __name__ == "__main__":
     word_vob, word_id2word, word_W, w2v_k,\
     TYPE_vob, TYPE_id2type, type_W, type_k,\
     posi_W, posi_W,\
-    target_vob, target_id2word, max_s, max_posi = pickle.load(open(datafile, 'rb'))
+    target_vob, target_id2word, max_s, max_posi, max_fragment = pickle.load(open(datafile, 'rb'))
 
     train_x1_sent = np.asarray(pairs_train[0], dtype="int32")
     train_x1_posi = np.asarray(pairs_train[1], dtype="int32")
     train_x2_tag = np.asarray(pairs_train[2], dtype="int32")
+    train_x1_context_r = np.asarray(pairs_train[3], dtype="int32")
+    train_x1_context_l = np.asarray(pairs_train[4], dtype="int32")
+    train_x1_fragment = np.asarray(pairs_train[5], dtype="int32")
+    train_x1_c_l_posi = np.asarray(pairs_train[6], dtype="int32")
+    train_x1_c_r_posi = np.asarray(pairs_train[7], dtype="int32")
     train_y = np.asarray(labels_train, dtype="int32")
 
     dev_x1_sent = np.asarray(pairs_dev[0], dtype="int32")
     dev_x1_posi = np.asarray(pairs_dev[1], dtype="int32")
     dev_x2_tag = np.asarray(pairs_dev[2], dtype="int32")
+    dev_x1_context_r = np.asarray(pairs_dev[3], dtype="int32")
+    dev_x1_context_l = np.asarray(pairs_dev[4], dtype="int32")
+    dev_x1_fragment = np.asarray(pairs_dev[5], dtype="int32")
+    dev_x1_c_l_posi = np.asarray(pairs_dev[6], dtype="int32")
+    dev_x1_c_r_posi = np.asarray(pairs_dev[7], dtype="int32")
     dev_y = np.asarray(labels_dev, dtype="int32")
 
     nn_model = SelectModel(modelname,
@@ -288,14 +345,20 @@ if __name__ == "__main__":
                            tagvocabsize=len(TYPE_vob),
                            posivocabsize=max_posi+1,
                            word_W=word_W, posi_W=posi_W, tag_W=type_W,
-                           input_sent_lenth=max_s,
+                           input_sent_lenth=max_s, input_frament_lenth=max_fragment,
                            w2v_k=w2v_k, posi2v_k=max_posi+1, tag2v_k=type_k,
                            batch_size=batch_size)
 
-    inputs_train_x = [train_x1_sent, train_x1_posi, train_x2_tag]
+    # inputs_train_x = [train_x1_sent, train_x1_posi, train_x2_tag]
+    inputs_train_x = [train_x1_context_l, train_x1_c_l_posi,
+                      train_x1_context_r, train_x1_c_r_posi,
+                      train_x1_fragment, train_x2_tag]
     inputs_train_y = [train_y]
 
-    inputs_dev_x = [dev_x1_sent, dev_x1_posi, dev_x2_tag]
+    # inputs_dev_x = [dev_x1_sent, dev_x1_posi, dev_x2_tag]
+    inputs_dev_x = [dev_x1_context_l, dev_x1_c_l_posi,
+                    dev_x1_context_r, dev_x1_c_r_posi,
+                    dev_x1_fragment, dev_x2_tag]
     inputs_dev_y = [dev_y]
 
 
@@ -309,20 +372,20 @@ if __name__ == "__main__":
             print(modelfile)
             train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
-                    resultdir, TYPE_vob, max_s, max_posi, npoches=100, batch_size=50, retrain=False)
+                    resultdir, TYPE_vob, max_s, max_posi, max_fragment, npoches=100, batch_size=50, retrain=False)
 
         else:
             if retrain:
                 print("ReTraining EE model....")
                 train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                 inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
-                                resultdir, TYPE_vob, max_s, max_posi, npoches=100, batch_size=50, retrain=False)
+                                resultdir, TYPE_vob, max_s, max_posi, max_fragment, npoches=100, batch_size=50, retrain=False)
 
         if Test:
             print("test EE model....")
             print(datafile)
             print(modelfile)
-            infer_e2e_model(nn_model, modelname, modelfile, fragment_test, resultdir, TYPE_vob, max_s, max_posi)
+            infer_e2e_model(nn_model, modelname, modelfile, fragment_test, resultdir, TYPE_vob, max_s, max_posi, max_fragment)
 
 
 

@@ -416,11 +416,20 @@ def get_word_index(train, test):
     sourc_idex_word = {}
     target_idex_word = {}
     count = 1
-    tarcount=1
+    tarcount = 1
 
     max_s = 0
     num=0
     token =0
+
+    if not source_vob.__contains__("**PlaceHolder**"):
+        source_vob["**PlaceHolder**"] = count
+        sourc_idex_word[count] = "**PlaceHolder**"
+        count += 1
+    if not source_vob.__contains__("**UNK**"):
+        source_vob["**UNK**"] = count
+        sourc_idex_word[count] = "**UNK**"
+        count += 1
 
     if not target_vob.__contains__("O"):
         target_vob["O"] = tarcount
@@ -478,14 +487,7 @@ def get_word_index(train, test):
                 tarcount += 1
 
     f.close()
-    if not source_vob.__contains__("**END**"):
-        source_vob["**END**"] = count
-        sourc_idex_word[count] = "**END**"
-        count+=1
-    if not source_vob.__contains__("**UNK**"):
-        source_vob["**UNK**"] = count
-        sourc_idex_word[count] = "**UNK**"
-        count+=1
+
     return source_vob, sourc_idex_word, target_vob, target_idex_word, max_s
 
 
@@ -789,6 +791,76 @@ def CreatePairs(fragment_list, max_s, max_posi, target_vob):
     return pairs, labels
 
 
+def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
+
+    labels = []
+    data_s_all = []
+    data_posi_all = []
+    data_tag_all = []
+    data_context_r_all = []
+    data_context_l_all = []
+    data_fragment_all = []
+    data_c_l_posi_all = []
+    data_c_r_posi_all = []
+
+    for frag in fragment_list:
+        fragment_l = int(frag[0])
+        fragment_r = int(frag[1])
+        fragment_tag = target_vob[frag[2]]
+        sent = frag[3]
+        # print(fragment_l, fragment_r)
+        # print(sent)
+
+        data_s = sent[0:min(len(sent), max_s)] + [0] * max(0, max_s - len(sent))
+        data_context_r = [1] + sent[fragment_l:min(len(sent), max_s)]
+        data_context_r = data_context_r + [0] * max(0, max_s - len(data_context_r))
+        data_context_l = sent[max(0, fragment_r - max_s):fragment_r]
+        data_context_l = [0] * max(0, max_s - len(sent)) + data_context_l + [1]
+
+        data_fragment = sent[fragment_l, fragment_r]
+
+        list_left = [min(i, max_posi) for i in range(1, fragment_l+1)]
+        list_left.reverse()
+        feature_posi = list_left + [0 for i in range(fragment_l, fragment_r)] + \
+                       [min(i, max_posi) for i in range(1, len(sent) - fragment_r + 1)]
+        data_posi = feature_posi[0:min(len(sent), max_s)] + [max_posi] * max(0, max_s - len(sent))
+
+        data_c_l_posi = [min(i, max_posi) for i in range(1, len(data_context_l)-len(data_fragment)+1)].reverse() + \
+                        [0 for i in range(fragment_l, fragment_r+1)]
+        data_c_r_posi = [0 for i in range(fragment_l, fragment_r + 1)] + \
+                        [min(i, max_posi) for i in range(1, len(data_context_r) - len(data_fragment) + 1)]
+
+        padlen = max(0, max_fragment - len(data_fragment))
+        data_fragment = [0] * (padlen // 2) + data_fragment + [0] * (padlen - padlen // 2)
+
+        data_s_all.append(data_s)
+        data_posi_all.append(data_posi)
+        data_tag_all.append([fragment_tag])
+        data_context_l_all.append(data_context_l)
+        data_context_r_all.append(data_context_r)
+        data_fragment_all.append(data_fragment)
+        data_c_l_posi_all.append(data_c_l_posi)
+        data_c_r_posi_all.append(data_c_r_posi)
+        labels.append(1)
+
+        inc = random.randrange(1, len(target_vob.keys()))
+        dn = (fragment_tag + inc) % len(target_vob.keys())
+        data_s_all.append(data_s)
+        data_posi_all.append(data_posi)
+        data_tag_all.append([dn])
+        data_context_l_all.append(data_context_l)
+        data_context_r_all.append(data_context_r)
+        data_fragment_all.append(data_fragment)
+        data_c_l_posi_all.append(data_c_l_posi)
+        data_c_r_posi_all.append(data_c_r_posi)
+        labels.append(0)
+
+    pairs = [data_s_all, data_posi_all, data_tag_all,
+             data_context_r_all, data_context_l_all, data_fragment_all, data_c_l_posi_all, data_c_r_posi_all]
+
+    return pairs, labels
+
+
 def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50):
 
     """
@@ -832,31 +904,33 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
     print('sen2list_train len = ', len(sen2list_train))
     print('tag2list_all len = ', len(tag2list_train))
 
-    fragment_train, max_context, max_fragment = \
-        Lists2Set(sen2list_train, tag2list_train, target_id2word, max_context=0, max_fragment=1)
-    print('len(fragment_train) = ', len(fragment_train))
-
-    pairs_train, labels_train = CreatePairs(fragment_train, max_s, max_posi, TYPE_vob)
-    print('CreatePairs train len = ', len(pairs_train), len(labels_train))
-
     sen2list_dev, tag2list_dev = ReadfromTXT2Lists(devfile, word_vob, target_vob)
     print('sen2list_dev len = ', len(sen2list_dev))
     print('tag2list_all len = ', len(tag2list_dev))
-
-    fragment_dev, max_context, max_fragment = \
-        Lists2Set(sen2list_dev, tag2list_dev, target_id2word, max_context=max_context, max_fragment=max_fragment)
-    print('len(fragment_dev) = ', len(fragment_dev))
-
-    pairs_dev, labels_dev = CreatePairs(fragment_dev, max_s, max_posi, TYPE_vob)
-    print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))
 
     sen2list_test, tag2list_test = ReadfromTXT2Lists(testfile, word_vob, target_vob)
     print('sen2list_train len = ', len(sen2list_test))
     print('tag2list_all len = ', len(tag2list_test))
 
+    fragment_train, max_context, max_fragment = \
+        Lists2Set(sen2list_train, tag2list_train, target_id2word, max_context=0, max_fragment=1)
+    print('len(fragment_train) = ', len(fragment_train))
+
     fragment_test, max_context, max_fragment = \
         Lists2Set(sen2list_test, tag2list_test, target_id2word, max_context=max_context, max_fragment=max_fragment)
     print('len(fragment_train) = ', len(fragment_test))
+
+    fragment_dev, max_context, max_fragment = \
+        Lists2Set(sen2list_dev, tag2list_dev, target_id2word, max_context=max_context, max_fragment=max_fragment)
+    print('len(fragment_dev) = ', len(fragment_dev))
+
+    pairs_dev, labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
+    print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))
+
+    pairs_train, labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob)
+    print('CreatePairs train len = ', len(pairs_train), len(labels_train))
+
+
 
     # source_char, sourc_idex_char, max_c = get_Character_index({trainfile, devfile, testfile})
     #
@@ -878,7 +952,7 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
                 word_vob, word_id2word, word_W, w2v_k,
                 TYPE_vob, TYPE_id2type, type_W, type_k,
                  posi_W, posi_W,
-                target_vob, target_id2word, max_s, max_posi], out, 0)
+                target_vob, target_id2word, max_s, max_posi, max_fragment], out, 0)
     out.close()
 
 
@@ -894,47 +968,3 @@ if __name__=="__main__":
     datafile = "./data/model/data.pkl"
     modelfile = "./data/model/model.pkl"
     resultdir = "./data/result/"
-
-    word_vob, word_id2word, target_vob, target_id2word, max_s = get_word_index(trainfile, {devfile, testfile})
-    print("source vocab size: ", str(len(word_vob)))
-    print("word_id2word size: ", str(len(word_id2word)))
-    print("target vocab size: " + str(target_vob))
-    print("target_id2word size: " + str(target_id2word))
-    # if max_s > maxlen:
-    #     max_s = maxlen
-    print('max soure sent lenth is ' + str(max_s))
-
-    TYPE_id2type = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
-    TYPE_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
-
-
-    word_w2v, w2v_k, word_W = load_vec_txt(w2v_file,word_vob,k=100)
-    print("word2vec loaded!")
-    print("all vocab size: " + str(len(word_vob)))
-    print("source_W  size: " + str(len(word_W)))
-    print("num words in source word2vec: " + str(len(word_w2v)))
-
-    type_k, type_W = load_vec_random(TYPE_vob, k=w2v_k)
-    print('TYPE_k, TYPE_W', type_k, len(type_W))
-
-    max_posi = 50
-    posi_k, posi_W = load_vec_onehot(k=max_posi + 1)
-    print('posi_k, posi_W', posi_k, len(posi_W))
-
-    # train = make_idx_word_index(trainfile, max_s, word_vob, target_vob)
-    # dev = make_idx_word_index(devfile, max_s, word_vob, target_vob)
-    # test = make_idx_word_index(testfile, max_s, word_vob, target_vob)
-    # print('train len  ', train.__len__(), len(train[0]))
-    # print('dev len  ', dev.__len__(), len(dev[0]))
-    # print('test len  ', test.__len__(), len(test[1]))
-
-    sen2list_train, tag2list_train = ReadfromTXT2Lists(trainfile, word_vob, target_vob)
-    print('sen2list_train len = ', len(sen2list_train))
-    print('tag2list_all len = ', len(tag2list_train))
-
-    fragment_train, max_context, max_fragment = \
-        Lists2Set(sen2list_train, tag2list_train, target_id2word, max_context=0, max_fragment=1)
-    print('len(fragment_train) = ', len(fragment_train))
-
-    pairs_train, labels_train = CreatePairs(fragment_train, max_s, max_posi, TYPE_vob)
-    print('CreatePairs train len = ', len(pairs_train), len(labels_train))
