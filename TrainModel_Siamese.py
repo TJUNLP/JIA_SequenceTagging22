@@ -83,11 +83,11 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
     x1_sent = np.asarray(pairs[0], dtype="int32")
     x1_posi = np.asarray(pairs[1], dtype="int32")
     x2_tag = np.asarray(pairs[2], dtype="int32")
-    x1_context_r = np.asarray(pairs_train[3], dtype="int32")
-    x1_context_l = np.asarray(pairs_train[4], dtype="int32")
-    x1_fragment = np.asarray(pairs_train[5], dtype="int32")
-    x1_c_l_posi = np.asarray(pairs_train[6], dtype="int32")
-    x1_c_r_posi = np.asarray(pairs_train[7], dtype="int32")
+    x1_context_r = np.asarray(pairs[3], dtype="int32")
+    x1_context_l = np.asarray(pairs[4], dtype="int32")
+    x1_fragment = np.asarray(pairs[5], dtype="int32")
+    x1_c_l_posi = np.asarray(pairs[6], dtype="int32")
+    x1_c_r_posi = np.asarray(pairs[7], dtype="int32")
 
 
     # predictions = nn_model.predict([x1_sent, x1_posi, x2_tag], batch_size=512, verbose=0)
@@ -305,7 +305,7 @@ if __name__ == "__main__":
 
     modelfile = "next ...."
 
-    batch_size = 256
+    batch_size = 2560
     hidden_dim = 200
     SecondTrain = True
     retrain = False
