@@ -196,7 +196,7 @@ def Lists2Set_2Test(ptag_BIOES_all, testx_word, testt, ):
     F = 2 * P * R / (P + R)
     print('Lists2Set_42ndTest----', 'P=', P, 'R=', R, 'F=', F)
 
-    return fragment_list, reall_right
+    return fragtuples_list, reall_right
 
 
 def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragment):
