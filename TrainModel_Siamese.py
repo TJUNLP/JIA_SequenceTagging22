@@ -279,6 +279,7 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
                                     x1_context_r, x1_c_r_posi,
                                     x1_fragment, x2_tag], batch_size=512, verbose=0)
     Ddict = {}
+    Vdict = {}
     assert len(predictions)//4 == len(fragment_tag_list)
     for i in range(len(predictions)//4):
         subpredictions = predictions[i*4:i*4+4]
@@ -297,15 +298,21 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
         #     if disvlaue < mindis:
         #         mindis = disvlaue
         #         mindis_where = pairs[2][num]
-        if mindis < 0.5 and D > 0.02:
+        if mindis < 0.5:
             predict += 1
             if mindis_where == fragment_tag_list[i]:
                 predict_right += 1
 
-                if D//0.001 not in Ddict:
-                    Ddict[D//0.001] = 1
+
+                if mindis//0.01 not in Vdict:
+                    Vdict[mindis//0.01] = 1
                 else:
-                    Ddict[D//0.001] += 1
+                    Vdict[mindis//0.01] +=1
+
+                # if D//0.001 not in Ddict:
+                #     Ddict[D//0.001] = 1
+                # else:
+                #     Ddict[D//0.001] += 1
 
 
 
@@ -316,8 +323,10 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
     print('predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
     print('P = ', P, 'R = ', R, 'F = ', F)
 
-    Dlist = sorted(Ddict.items(), key=lambda x:x[0], reverse=True)
-    print(Dlist)
+    # Dlist = sorted(Ddict.items(), key=lambda x:x[0], reverse=True)
+    # print(Dlist)
+    Vlist = sorted(Vdict.items(), key=lambda x:x[0], reverse=True)
+    print(Vlist)
 
     return P, R, F
 

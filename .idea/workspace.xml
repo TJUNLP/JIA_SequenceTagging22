@@ -39,11 +39,11 @@
       <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="526">
-              <caret line="320" column="0" lean-forward="true" selection-start-line="320" selection-start-column="0" selection-end-line="320" selection-end-column="0" />
+            <state relative-caret-position="197">
+              <caret line="311" column="0" lean-forward="false" selection-start-line="311" selection-start-column="0" selection-end-line="314" selection-end-column="42" />
               <folding>
                 <element signature="e#298#335#0" expanded="true" />
-                <element signature="e#16664#18136#0" expanded="false" />
+                <element signature="e#16920#18392#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -854,11 +854,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
-          <caret line="320" column="0" lean-forward="true" selection-start-line="320" selection-start-column="0" selection-end-line="320" selection-end-column="0" />
+        <state relative-caret-position="197">
+          <caret line="311" column="0" lean-forward="false" selection-start-line="311" selection-start-column="0" selection-end-line="314" selection-end-column="42" />
           <folding>
             <element signature="e#298#335#0" expanded="true" />
-            <element signature="e#16664#18136#0" expanded="false" />
+            <element signature="e#16920#18392#0" expanded="false" />
           </folding>
         </state>
       </provider>
