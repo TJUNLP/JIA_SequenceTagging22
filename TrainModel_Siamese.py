@@ -297,7 +297,7 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
         #     if disvlaue < mindis:
         #         mindis = disvlaue
         #         mindis_where = pairs[2][num]
-        if mindis < 0.5 and D > 0.005:
+        if mindis < 0.5 and D > 0.02:
             predict += 1
             if mindis_where == fragment_tag_list[i]:
                 predict_right += 1
@@ -316,8 +316,8 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
     print('predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
     print('P = ', P, 'R = ', R, 'F = ', F)
 
-    # Dlist = sorted(Ddict.items(), key=lambda x:x[0], reverse=True)
-    # print(Dlist)
+    Dlist = sorted(Ddict.items(), key=lambda x:x[0], reverse=True)
+    print(Dlist)
 
     return P, R, F
 
