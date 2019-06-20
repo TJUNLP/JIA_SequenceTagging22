@@ -632,7 +632,7 @@ if __name__ == "__main__":
 
     modelfile = "next ...."
 
-    batch_size = 256
+    batch_size = 512 #256
     hidden_dim = 200
     SecondTrain = True
     retrain = False
