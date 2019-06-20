@@ -17,6 +17,187 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from network.NN_Siamese import Model_BiLSTM__MLP, Model_BiLSTM__MLP_context
 
 
+def Train41stsegment():
+
+    model1name = 'Model_BiLSTM_CRF'
+
+    print(model1name)
+
+    w2v_file = "./data/w2v/glove.6B.100d.txt"
+    c2v_file = "./data/w2v/C0NLL2003.NER.c2v.txt"
+    # trainfile = "./data/CoNLL2003_NER/eng.train.BIOES.txt"
+    # devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
+    trainfile = "./data/CoNLL2003_NER/eng.train.testa.BIOES.txt"
+    testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
+    resultdir = "./data/result/"
+
+
+    datafname = 'data_2step.BIOES.A_B.1'
+    datafile = "./model_data/" + datafname + ".pkl"
+
+    model1file = 'model1file'
+
+    batch_size = 50
+    Test = True
+
+    if not os.path.exists(datafile):
+        print("Precess data....")
+        from ProcessData_BIOES2F import get_data_4segment_BIOES
+        get_data_4segment_BIOES(trainfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, c2v_k=50, maxlen=maxlen)
+
+    print('Loading data ...')
+    train_A_4segment_BIOES, train_B_4segment_BIOES, test_4segment_BIOES, \
+    word_W, character_W, \
+    word_vob, word_idex_word, char_vob, \
+    max_s, w2v_k, max_c, c2v_k = pickle.load(open(datafile, 'rb'))
+    print("data has extisted: " + datafile)
+
+    target1_idex_word = {1: 'O', 2: 'I', 3: 'B', 4: 'E', 5: 'S'}
+    target1_vob = {'O': 1, 'I': 2, 'B': 3, 'E': 4, 'S': 5}
+
+    trainx_word = np.asarray(train_A_4segment_BIOES[0], dtype="int32")
+    trainx_char = np.asarray(train_A_4segment_BIOES[2], dtype="int32")
+    trainy = np.asarray(train_A_4segment_BIOES[1], dtype="int32")
+
+    testx_word = np.asarray(test_4segment_BIOES[0], dtype="int32")
+    testx_char = np.asarray(test_4segment_BIOES[2], dtype="int32")
+    testy = np.asarray(test_4segment_BIOES[1], dtype="int32")
+
+    import TrainModel_segment
+    model_segment = TrainModel_segment.SelectModel(modelname=model1name,
+                                                   sourcevocabsize=len(word_vob),
+                                                   targetvocabsize=len(target1_vob),
+                                                   source_W=word_W,
+                                                   input_seq_lenth=max_s,
+                                                   output_seq_lenth=max_s,
+                                                   hidden_dim=200,
+                                                   emd_dim=w2v_k,
+                                                   sourcecharsize=len(char_vob),
+                                                   character_W=character_W,
+                                                   input_word_length=max_c,
+                                                   char_emd_dim=c2v_k,
+                                                   batch_size=batch_size)
+
+    if os.path.exists(model1file):
+        model_segment.load_weights(model1file)
+
+    inputs_train_x = [trainx_word, trainx_char]
+    inputs_train_y = [trainy]
+    inputs_test_x = [testx_word, testx_char]
+    inputs_test_y = [testy]
+    print("model_segment has extisted...")
+
+
+    inum = 1
+    model1file = "./model/" + model1name + "__" + datafname + "_segment_" + str(inum) + ".h5"
+
+    if Test:
+        print("test model_segment ....")
+        print(datafile)
+        print(model1file)
+        TrainModel_segment.infer_e2e_model(model=model_segment, modelname=model1name,
+                                           modelfile=model1file,
+                                           inputs=[inputs_test_x, inputs_test_y],
+                                           target_idex_word=target1_idex_word,
+                                           resultdir=resultdir,
+                                           batch_size=batch_size)
+
+    fragment_test, target_right = get_data_fromBIOES_2Test(model_segment, test_4segment_BIOES, target1_idex_word)
+
+    return fragment_test, target_right
+
+
+def get_data_fromBIOES_2Test(nn_model, test_4segment_BIOES, index2BIOES):
+
+    index2BIOES[0] = ''
+
+    testx_word = np.asarray(test_4segment_BIOES[0], dtype="int32")
+    testx_char = np.asarray(test_4segment_BIOES[2], dtype="int32")
+    testy = np.asarray(test_4segment_BIOES[1], dtype="int32")
+    testt = test_4segment_BIOES[3]
+
+    predictions = nn_model.predict([testx_word, testx_char], batch_size=512, verbose=1)
+
+    ptag_BIOES_all = []
+    for si in range(0, len(predictions)):
+
+        ptag_BIOES = []
+        for word in predictions[si]:
+            next_index = np.argmax(word)
+            next_token = index2BIOES[next_index]
+            if next_token == '':
+                break
+            ptag_BIOES.append(next_token)
+
+        ptag_BIOES_all.append(ptag_BIOES)
+
+    fragment_list, target_right = Lists2Set_2Test(ptag_BIOES_all, test_4segment_BIOES[0], testt)
+
+    print('len(fragment_list) = ', len(fragment_list))
+    print('the count right target is ', target_right)
+
+    return fragment_list, target_right
+
+def Lists2Set_2Test(ptag_BIOES_all, testx_word, testt, ):
+    reall_right = 0
+    predict = 0
+    fragment_list = []
+
+    print('start processing ptag_BIOES_all ...')
+    for id, ptag2list in enumerate(ptag_BIOES_all):
+        fragtuples_list = []
+
+        assert len(ptag2list) == len(testt[id])
+        index = 0
+        while index < len(ptag2list):
+
+            if ptag2list[index] == 'O' or ptag2list[index] == '':
+                index += 1
+                continue
+
+            elif ptag2list[index] == 'B':
+                target_left = index
+                index += 1
+                while index < len(ptag2list):
+                    if ptag2list[index] == 'I':
+                        index += 1
+                        continue
+                    elif ptag2list[index] == 'E':
+                        target_right = index + 1
+                        reltag = 'NULL'
+                        if 'B-' in testt[id][target_left] and 'E-' in testt[id][index]:
+                            reltag = testt[id][target_left][2:]
+                            reall_right += 1
+                        predict += 1
+                        tuple = (target_left, target_right, reltag, testx_word[id])
+                        fragtuples_list.append(tuple)
+                        index += 1
+                        break
+                    else:
+                        break
+
+            elif ptag2list[index] == 'S':
+                target_left = index
+                target_right = index + 1
+                reltag = 'NULL'
+                if 'S-' in testt[id][index]:
+                    reltag = testt[id][target_left][2:]
+                    reall_right += 1
+                predict += 1
+                tuple = (target_left, target_right, reltag, testx_word[id])
+                fragtuples_list.append(tuple)
+                index += 1
+
+            else:
+                index += 1
+
+    P = reall_right / predict
+    R = reall_right / 5648.0
+    F = 2 * P * R / (P + R)
+    print('Lists2Set_42ndTest----', 'P=', P, 'R=', R, 'F=', F)
+
+    return fragment_list, reall_right
+
 
 def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragment):
 
@@ -385,6 +566,7 @@ def SelectModel(modelname, wordvocabsize, tagvocabsize, posivocabsize,
     return nn_model
 
 
+
 if __name__ == "__main__":
 
     maxlen = 50
@@ -498,195 +680,16 @@ if __name__ == "__main__":
             infer_e2e_model(nn_model, modelname, modelfile, fragment_test, resultdir, TYPE_vob, max_s, max_posi, max_fragment)
 
         if Test42Step:
+            fragment_test, target_right = Train41stsegment()
             nn_model.load_weights(modelfile)
             test_model_withBIOES(nn_model, fragment_test, TYPE_vob, max_s, max_posi, max_fragment)
 
 
-def Train41stsegment():
 
-    model1name = 'Model_BiLSTM_CRF'
+# import tensorflow as tf
+# import keras.backend.tensorflow_backend as KTF
+#
+# KTF.set_session(tf.Session(config=tf.ConfigProto(device_count={'gpu': 0})))
 
-    print(model1name)
-
-    w2v_file = "./data/w2v/glove.6B.100d.txt"
-    c2v_file = "./data/w2v/C0NLL2003.NER.c2v.txt"
-    # trainfile = "./data/CoNLL2003_NER/eng.train.BIOES.txt"
-    # devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
-    trainfile = "./data/CoNLL2003_NER/eng.train.testa.BIOES.txt"
-    testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
-    resultdir = "./data/result/"
-
-
-    datafname = 'data_2step.BIOES.A_B.1'
-    datafile = "./model_data/" + datafname + ".pkl"
-
-    model1file = 'model1file'
-
-    batch_size = 50
-    Test = True
-
-    if not os.path.exists(datafile):
-        print("Precess data....")
-        from ProcessData_BIOES2F import get_data_4segment_BIOES
-        get_data_4segment_BIOES(trainfile, testfile, w2v_file, c2v_file, datafile, w2v_k=100, c2v_k=50, maxlen=maxlen)
-
-    print('Loading data ...')
-    train_A_4segment_BIOES, train_B_4segment_BIOES, test_4segment_BIOES, \
-    word_W, character_W, \
-    word_vob, word_idex_word, char_vob, \
-    max_s, w2v_k, max_c, c2v_k = pickle.load(open(datafile, 'rb'))
-    print("data has extisted: " + datafile)
-
-    target1_idex_word = {1: 'O', 2: 'I', 3: 'B', 4: 'E', 5: 'S'}
-    target1_vob = {'O': 1, 'I': 2, 'B': 3, 'E': 4, 'S': 5}
-
-    trainx_word = np.asarray(train_A_4segment_BIOES[0], dtype="int32")
-    trainx_char = np.asarray(train_A_4segment_BIOES[2], dtype="int32")
-    trainy = np.asarray(train_A_4segment_BIOES[1], dtype="int32")
-
-    testx_word = np.asarray(test_4segment_BIOES[0], dtype="int32")
-    testx_char = np.asarray(test_4segment_BIOES[2], dtype="int32")
-    testy = np.asarray(test_4segment_BIOES[1], dtype="int32")
-
-    import TrainModel_segment
-    model_segment = TrainModel_segment.SelectModel(modelname=model1name,
-                                                   sourcevocabsize=len(word_vob),
-                                                   targetvocabsize=len(target1_vob),
-                                                   source_W=word_W,
-                                                   input_seq_lenth=max_s,
-                                                   output_seq_lenth=max_s,
-                                                   hidden_dim=200,
-                                                   emd_dim=w2v_k,
-                                                   sourcecharsize=len(char_vob),
-                                                   character_W=character_W,
-                                                   input_word_length=max_c,
-                                                   char_emd_dim=c2v_k,
-                                                   batch_size=batch_size)
-
-    if os.path.exists(model1file):
-        model_segment.load_weights(model1file)
-
-    inputs_train_x = [trainx_word, trainx_char]
-    inputs_train_y = [trainy]
-    inputs_test_x = [testx_word, testx_char]
-    inputs_test_y = [testy]
-    print("model_segment has extisted...")
-
-    for inum in range(0, 3):
-
-        model1file = "./model/" + model1name + "__" + datafname + "_segment_" + str(inum) + ".h5"
-
-        if Test:
-            print("test model_segment ....")
-            print(datafile)
-            print(model1file)
-            TrainModel_segment.infer_e2e_model(model=model_segment, modelname=model1name,
-                                               modelfile=model1file,
-                                               inputs=[inputs_test_x, inputs_test_y],
-                                               target_idex_word=target1_idex_word,
-                                               resultdir=resultdir,
-                                               batch_size=batch_size)
-
-        fragment_test, target_right = get_data_fromBIOES_2Test(model_segment, test_4segment_BIOES, target1_idex_word)
-
-
-def get_data_fromBIOES_2Test(nn_model, test_4segment_BIOES, index2BIOES):
-
-    index2BIOES[0] = ''
-
-    testx_word = np.asarray(test_4segment_BIOES[0], dtype="int32")
-    testx_char = np.asarray(test_4segment_BIOES[2], dtype="int32")
-    testy = np.asarray(test_4segment_BIOES[1], dtype="int32")
-    testt = test_4segment_BIOES[3]
-
-    predictions = nn_model.predict([testx_word, testx_char], batch_size=512, verbose=1)
-
-    ptag_BIOES_all = []
-    for si in range(0, len(predictions)):
-
-        ptag_BIOES = []
-        for word in predictions[si]:
-            next_index = np.argmax(word)
-            next_token = index2BIOES[next_index]
-            if next_token == '':
-                break
-            ptag_BIOES.append(next_token)
-
-        ptag_BIOES_all.append(ptag_BIOES)
-
-    fragment_list, target_right = Lists2Set_2Test(ptag_BIOES_all, test_4segment_BIOES[0], testt)
-
-    print('len(fragment_list) = ', len(fragment_list))
-    print('the count right target is ', target_right)
-
-    return fragment_list, target_right
-
-def Lists2Set_2Test(ptag_BIOES_all, testx_word, testt, ):
-    reall_right = 0
-    predict = 0
-    fragment_list = []
-
-    print('start processing ptag_BIOES_all ...')
-    for id, ptag2list in enumerate(ptag_BIOES_all):
-        fragtuples_list = []
-
-        assert len(ptag2list) == len(testt[id])
-        index = 0
-        while index < len(ptag2list):
-
-            if ptag2list[index] == 'O' or ptag2list[index] == '':
-                index += 1
-                continue
-
-            elif ptag2list[index] == 'B':
-                target_left = index
-                index += 1
-                while index < len(ptag2list):
-                    if ptag2list[index] == 'I':
-                        index += 1
-                        continue
-                    elif ptag2list[index] == 'E':
-                        target_right = index + 1
-                        reltag = 'NULL'
-                        if 'B-' in testt[id][target_left] and 'E-' in testt[id][index]:
-                            reltag = testt[id][target_left][2:]
-                            reall_right += 1
-                        predict += 1
-                        tuple = (target_left, target_right, reltag, testx_word[id])
-                        fragtuples_list.append(tuple)
-                        index += 1
-                        break
-                    else:
-                        break
-
-            elif ptag2list[index] == 'S':
-                target_left = index
-                target_right = index + 1
-                reltag = 'NULL'
-                if 'S-' in testt[id][index]:
-                    reltag = testt[id][target_left][2:]
-                    reall_right += 1
-                predict += 1
-                tuple = (target_left, target_right, reltag, testx_word[id])
-                fragtuples_list.append(tuple)
-                index += 1
-
-            else:
-                index += 1
-
-    P = reall_right / predict
-    R = reall_right / 5648.0
-    F = 2 * P * R / (P + R)
-    print('Lists2Set_42ndTest----', 'P=', P, 'R=', R, 'F=', F)
-
-    return fragment_list, reall_right
-
-
-
-    # import tensorflow as tf
-    # import keras.backend.tensorflow_backend as KTF
-    #
-    # KTF.set_session(tf.Session(config=tf.ConfigProto(device_count={'gpu': 0})))
-
-    # CUDA_VISIBLE_DEVICES=1 python3 TrainModel.py
+# CUDA_VISIBLE_DEVICES=1 python3 TrainModel.py
 
