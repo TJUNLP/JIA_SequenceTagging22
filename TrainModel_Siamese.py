@@ -303,10 +303,15 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
             if mindis_where == fragment_tag_list[i]:
                 predict_right += 1
 
-                if D//0.01 not in Ddict:
-                    Ddict[D//0.01] = 1
+                if mindis//0.01 not in Ddict:
+                    Ddict[mindis//0.01] = 1
                 else:
-                    Ddict[D//0.01] += 1
+                    Ddict[mindis//0.01] += 1
+
+                # if D//0.001 not in Ddict:
+                #     Ddict[D//0.001] = 1
+                # else:
+                #     Ddict[D//0.001] += 1
 
                 # if mindis // 0.01 not in Vdict:
                 #     Vdict[mindis // 0.01] = 1
@@ -317,7 +322,7 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
             if mindis//0.01 not in Vdict:
                 Vdict[mindis//0.01] = 1
             else:
-                Vdict[mindis//0.01] +=1
+                Vdict[mindis//0.01] += 1
 
 
 
