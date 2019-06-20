@@ -218,7 +218,10 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
     for frag in fragment_test:
         fragment_l = int(frag[0])
         fragment_r = int(frag[1])
-        fragment_tag = target_vob[frag[2]]
+        if frag[2] == 'NULL':
+            fragment_tag = len(target_vob)
+        else:
+            fragment_tag = target_vob[frag[2]]
         sent = frag[3]
 
         fragment_tag_list.append(fragment_tag)
