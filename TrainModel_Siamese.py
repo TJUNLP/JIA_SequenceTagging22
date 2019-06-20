@@ -8,7 +8,7 @@
 # config.gpu_options.allow_growth = True
 # sess = tf.Session(config=config)
 
-import pickle, datetime, codecs
+import pickle, datetime, codecs, math
 import os.path
 import numpy as np
 from PrecessData_Siamese import get_data
@@ -278,11 +278,17 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
     predictions = nn_model.predict([x1_context_l, x1_c_l_posi,
                                     x1_context_r, x1_c_r_posi,
                                     x1_fragment, x2_tag], batch_size=512, verbose=0)
-
+    Ddict = {}
     assert len(predictions)//4 == len(fragment_tag_list)
     for i in range(len(predictions)//4):
         subpredictions = predictions[i*4:i*4+4]
         subpredictions = subpredictions.flatten().tolist()
+
+        u = 0.25 * (subpredictions[0] + subpredictions[1] + subpredictions[2] + subpredictions[3])
+        D = 0
+        for v in subpredictions:
+            D += math.pow(v-u, 2)
+        D = 0.25 * D
 
         mindis = min(subpredictions)
         mindis_where = subpredictions.index(min(subpredictions))
@@ -296,11 +302,23 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
             if mindis_where == fragment_tag_list[i]:
                 predict_right += 1
 
+                if D//1 not in Ddict:
+                    Ddict[D//1] = 1
+                else:
+                    Ddict[D//1] += 1
+
+
+
+
     P = predict_right / predict
     R = predict_right / totel_right
     F = 2 * P * R / (P + R)
     print('predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
     print('P = ', P, 'R = ', R, 'F = ', F)
+
+    Dlist = sorted(Ddict.items(), key=lambda x:x[0], reverse=True)
+
+    print(Dlist)
 
     return P, R, F
 
