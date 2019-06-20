@@ -17,7 +17,7 @@ from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from network.NN_Siamese import Model_BiLSTM__MLP, Model_BiLSTM__MLP_context
 
 
-def Train41stsegment():
+def Train41stsegment(sen2list_test):
 
     model1name = 'Model_BiLSTM_CRF'
 
@@ -102,12 +102,12 @@ def Train41stsegment():
                                            resultdir=resultdir,
                                            batch_size=batch_size)
 
-    fragment_test, target_right = get_data_fromBIOES_2Test(model_segment, test_4segment_BIOES, target1_idex_word)
+    fragment_test, target_right = get_data_fromBIOES_2Test(model_segment, test_4segment_BIOES, target1_idex_word, sen2list_test)
 
     return fragment_test, target_right
 
 
-def get_data_fromBIOES_2Test(nn_model, test_4segment_BIOES, index2BIOES):
+def get_data_fromBIOES_2Test(nn_model, test_4segment_BIOES, index2BIOES, sen2list_test):
 
     index2BIOES[0] = ''
 
@@ -131,14 +131,14 @@ def get_data_fromBIOES_2Test(nn_model, test_4segment_BIOES, index2BIOES):
 
         ptag_BIOES_all.append(ptag_BIOES)
 
-    fragment_list, target_right = Lists2Set_2Test(ptag_BIOES_all, test_4segment_BIOES[0], testt)
+    fragment_list, target_right = Lists2Set_2Test(ptag_BIOES_all, test_4segment_BIOES[0], testt, sen2list_test)
 
     print('len(fragment_list) = ', len(fragment_list))
     print('the count right target is ', target_right)
 
     return fragment_list, target_right
 
-def Lists2Set_2Test(ptag_BIOES_all, testx_word, testt, ):
+def Lists2Set_2Test(ptag_BIOES_all, testx_word, testt, sen2list_test):
     reall_right = 0
     predict = 0
     fragment_list = []
@@ -168,7 +168,7 @@ def Lists2Set_2Test(ptag_BIOES_all, testx_word, testt, ):
                             reltag = testt[id][target_left][2:]
                             reall_right += 1
                         predict += 1
-                        tuple = (target_left, target_right, reltag, testx_word[id])
+                        tuple = (target_left, target_right, reltag, sen2list_test[id])
                         fragtuples_list.append(tuple)
                         index += 1
                         break
@@ -183,7 +183,7 @@ def Lists2Set_2Test(ptag_BIOES_all, testx_word, testt, ):
                     reltag = testt[id][target_left][2:]
                     reall_right += 1
                 predict += 1
-                tuple = (target_left, target_right, reltag, testx_word[id])
+                tuple = (target_left, target_right, reltag, sen2list_test[id])
                 fragtuples_list.append(tuple)
                 index += 1
 
@@ -202,7 +202,7 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
 
     predict = 0
     predict_right = 0
-    totel_right = len(fragment_test)
+    totel_right = 5648
 
     data_s_all = []
     data_posi_all = []
@@ -683,9 +683,14 @@ if __name__ == "__main__":
 
         if Test42Step:
             print("Test42Step ---------------------------------------")
-            fragment_test, target_right = Train41stsegment()
+            from PrecessData_Siamese import ReadfromTXT2Lists
+            sen2list_test, tag2list_test = ReadfromTXT2Lists(testfile, word_vob, target_vob)
+            print('sen2list_train len = ', len(sen2list_test))
+            print('tag2list_all len = ', len(tag2list_test))
+
+            fragment_test2, target_right = Train41stsegment(sen2list_test)
             nn_model.load_weights(modelfile)
-            test_model_withBIOES(nn_model, fragment_test, TYPE_vob, max_s, max_posi, max_fragment)
+            test_model_withBIOES(nn_model, fragment_test2, TYPE_vob, max_s, max_posi, max_fragment)
 
 
 

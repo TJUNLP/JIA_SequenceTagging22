@@ -17,7 +17,7 @@
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$ProcessData_S2F.coverage" NAME="ProcessData_S2F Coverage Results" MODIFIED="1553222161086" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$MultiStep2NER.coverage" NAME="MultiStep2NER Coverage Results" MODIFIED="1554203263281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task_pos.coverage" NAME="TrainModel_2task_pos Coverage Results" MODIFIED="1543379889285" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_Siamese.coverage" NAME="TrainModel_Siamese Coverage Results" MODIFIED="1561016276183" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_Siamese.coverage" NAME="TrainModel_Siamese Coverage Results" MODIFIED="1561019136500" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$TrainModel_2task.coverage" NAME="TrainModel_2task Coverage Results" MODIFIED="1548825614356" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$PrecessData_Siamese.coverage" NAME="PrecessData_Siamese Coverage Results" MODIFIED="1560862313658" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/JIA_SequenceTagging22$BiLSTM_CRF_multi2_order.coverage" NAME="BiLSTM_CRF_multi2_order Coverage Results" MODIFIED="1548679327193" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/network" />
@@ -39,11 +39,11 @@
       <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1125">
-              <caret line="200" column="4" lean-forward="false" selection-start-line="200" selection-start-column="4" selection-end-line="200" selection-end-column="4" />
+            <state relative-caret-position="718">
+              <caret line="185" column="73" lean-forward="false" selection-start-line="185" selection-start-column="73" selection-end-line="185" selection-end-column="73" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
-                <element signature="e#16132#17604#0" expanded="false" />
+                <element signature="e#16195#17667#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -56,44 +56,6 @@
               <caret line="317" column="39" lean-forward="false" selection-start-line="317" selection-start-column="24" selection-end-line="317" selection-end-column="46" />
               <folding>
                 <element signature="e#298#329#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TrainModel_segment.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="141" column="0" lean-forward="false" selection-start-line="141" selection-start-column="0" selection-end-line="148" selection-end-column="105" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ProcessData_BIOES2F.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/ProcessData_BIOES2F.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="121" column="112" lean-forward="false" selection-start-line="121" selection-start-column="95" selection-end-line="121" selection-end-column="112" />
-              <folding>
-                <element signature="e#353#2971#0" expanded="false" />
-                <element signature="e#3152#5499#0" expanded="false" />
-                <element signature="e#8307#8497#0" expanded="false" />
-                <element signature="e#8532#9815#0" expanded="false" />
-                <element signature="e#9939#12531#0" expanded="false" />
-                <element signature="e#12602#13706#0" expanded="false" />
-                <element signature="e#13795#14994#0" expanded="false" />
-                <element signature="e#15114#17282#0" expanded="false" />
-                <element signature="e#17393#20046#0" expanded="false" />
-                <element signature="e#20086#20965#0" expanded="false" />
-                <element signature="e#21011#21663#0" expanded="false" />
-                <element signature="e#21723#22271#0" expanded="false" />
-                <element signature="e#22344#23423#0" expanded="false" />
-                <element signature="e#23559#24825#0" expanded="false" />
-                <element signature="e#26330#28978#0" expanded="false" />
-                <element signature="e#32147#36259#0" expanded="false" />
-                <element signature="e#36365#41088#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -119,8 +81,8 @@
       <file leaf-file-name="PrecessData_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="83">
-              <caret line="751" column="24" lean-forward="false" selection-start-line="751" selection-start-column="11" selection-end-line="751" selection-end-column="24" />
+            <state relative-caret-position="240">
+              <caret line="914" column="0" lean-forward="false" selection-start-line="914" selection-start-column="0" selection-end-line="916" selection-end-column="52" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
                 <element signature="e#198#540#0" expanded="false" />
@@ -827,25 +789,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="83">
-          <caret line="751" column="24" lean-forward="false" selection-start-line="751" selection-start-column="11" selection-end-line="751" selection-end-column="24" />
-          <folding>
-            <element signature="e#33#51#0" expanded="true" />
-            <element signature="e#198#540#0" expanded="false" />
-            <element signature="e#1530#2078#0" expanded="false" />
-            <element signature="e#2373#5452#0" expanded="false" />
-            <element signature="e#5522#6625#0" expanded="false" />
-            <element signature="e#6702#9110#0" expanded="false" />
-            <element signature="e#9179#10973#0" expanded="false" />
-            <element signature="e#13248#14141#0" expanded="false" />
-            <element signature="e#14182#15176#0" expanded="false" />
-            <element signature="e#15226#17946#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -890,13 +833,32 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="914" column="0" lean-forward="false" selection-start-line="914" selection-start-column="0" selection-end-line="916" selection-end-column="52" />
+          <folding>
+            <element signature="e#33#51#0" expanded="true" />
+            <element signature="e#198#540#0" expanded="false" />
+            <element signature="e#1530#2078#0" expanded="false" />
+            <element signature="e#2373#5452#0" expanded="false" />
+            <element signature="e#5522#6625#0" expanded="false" />
+            <element signature="e#6702#9110#0" expanded="false" />
+            <element signature="e#9179#10973#0" expanded="false" />
+            <element signature="e#13248#14141#0" expanded="false" />
+            <element signature="e#14182#15176#0" expanded="false" />
+            <element signature="e#15226#17946#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1125">
-          <caret line="200" column="4" lean-forward="false" selection-start-line="200" selection-start-column="4" selection-end-line="200" selection-end-column="4" />
+        <state relative-caret-position="718">
+          <caret line="185" column="73" lean-forward="false" selection-start-line="185" selection-start-column="73" selection-end-line="185" selection-end-column="73" />
           <folding>
             <element signature="e#298#329#0" expanded="true" />
-            <element signature="e#16132#17604#0" expanded="false" />
+            <element signature="e#16195#17667#0" expanded="false" />
           </folding>
         </state>
       </provider>
