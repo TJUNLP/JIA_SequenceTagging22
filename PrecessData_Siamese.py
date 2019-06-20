@@ -837,27 +837,53 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
         data_context_r = [1] + data_context_r
         data_context_l = data_context_l + [1]
 
-        data_s_all.append(data_s)
-        data_posi_all.append(data_posi)
-        data_tag_all.append([fragment_tag])
-        data_context_l_all.append(data_context_l)
-        data_context_r_all.append(data_context_r)
-        data_fragment_all.append(data_fragment)
-        data_c_l_posi_all.append(data_c_l_posi)
-        data_c_r_posi_all.append(data_c_r_posi)
-        labels.append(1)
+        # data_s_all.append(data_s)
+        # data_posi_all.append(data_posi)
+        # data_tag_all.append([fragment_tag])
+        # data_context_l_all.append(data_context_l)
+        # data_context_r_all.append(data_context_r)
+        # data_fragment_all.append(data_fragment)
+        # data_c_l_posi_all.append(data_c_l_posi)
+        # data_c_r_posi_all.append(data_c_r_posi)
+        # labels.append(1)
+        #
+        # inc = random.randrange(1, len(target_vob.keys()))
+        # dn = (fragment_tag + inc) % len(target_vob.keys())
+        # data_s_all.append(data_s)
+        # data_posi_all.append(data_posi)
+        # data_tag_all.append([dn])
+        # data_context_l_all.append(data_context_l)
+        # data_context_r_all.append(data_context_r)
+        # data_fragment_all.append(data_fragment)
+        # data_c_l_posi_all.append(data_c_l_posi)
+        # data_c_r_posi_all.append(data_c_r_posi)
+        # labels.append(0)
 
-        inc = random.randrange(1, len(target_vob.keys()))
-        dn = (fragment_tag + inc) % len(target_vob.keys())
-        data_s_all.append(data_s)
-        data_posi_all.append(data_posi)
-        data_tag_all.append([dn])
-        data_context_l_all.append(data_context_l)
-        data_context_r_all.append(data_context_r)
-        data_fragment_all.append(data_fragment)
-        data_c_l_posi_all.append(data_c_l_posi)
-        data_c_r_posi_all.append(data_c_r_posi)
-        labels.append(0)
+        for inc in target_vob.values():
+
+            if inc == fragment_tag:
+                continue
+
+            data_s_all.append(data_s)
+            data_posi_all.append(data_posi)
+            data_tag_all.append([fragment_tag])
+            data_context_l_all.append(data_context_l)
+            data_context_r_all.append(data_context_r)
+            data_fragment_all.append(data_fragment)
+            data_c_l_posi_all.append(data_c_l_posi)
+            data_c_r_posi_all.append(data_c_r_posi)
+            labels.append(1)
+
+            data_s_all.append(data_s)
+            data_posi_all.append(data_posi)
+            data_tag_all.append([inc])
+            data_context_l_all.append(data_context_l)
+            data_context_r_all.append(data_context_r)
+            data_fragment_all.append(data_fragment)
+            data_c_l_posi_all.append(data_c_l_posi)
+            data_c_r_posi_all.append(data_c_r_posi)
+            labels.append(0)
+
 
     pairs = [data_s_all, data_posi_all, data_tag_all,
              data_context_r_all, data_context_l_all, data_fragment_all, data_c_l_posi_all, data_c_r_posi_all]

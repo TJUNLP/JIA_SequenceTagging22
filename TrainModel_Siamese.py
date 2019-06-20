@@ -627,7 +627,7 @@ if __name__ == "__main__":
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     resultdir = "./data/result/"
 
-    datafname = 'data_Siamese.3'#1
+    datafname = 'data_Siamese.4_allneg'#1,3
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
