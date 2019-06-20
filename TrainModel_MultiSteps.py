@@ -287,11 +287,17 @@ def Train41stsegment(datafname, datafile, trainfile, testfile, w2v_file, c2v_fil
                                                resultdir=resultdir,
                                                batch_size=batch_size)
 
-        Train42ndclassifer(inum, model2name,
-                           model_segment, train_B_4segment_BIOES, test_4segment_BIOES,
-                           target1_idex_word,
-                           word_vob, word_W, character_W, w2v_k, c2v_k,
-                           max_s, max_c, char_vob, word_idex_word, resultdir, batch_size)
+        # Train42ndclassifer(inum, model2name,
+        #                    model_segment, train_B_4segment_BIOES, test_4segment_BIOES,
+        #                    target1_idex_word,
+        #                    word_vob, word_W, character_W, w2v_k, c2v_k,
+        #                    max_s, max_c, char_vob, word_idex_word, resultdir, batch_size)
+
+
+        from TrainModel_Siamese import get_data_fromBIOES_2Test, test_model_withBIOES
+        fragment_list, target_right = get_data_fromBIOES_2Test(nn_model, test_4segment_BIOES, index2BIOES)
+        test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragment)
+
 
 
 def Train42ndclassifer(Step_num, model2name,
@@ -383,6 +389,7 @@ def Train42ndclassifer(Step_num, model2name,
         infer_e2e_model(model_classifer, model2name, model2file,
                         inputs_test_x, inputs_test_y, Type_idex_word,
                         test_target_count, resultdir, batch_size=32)
+
 
 
 
