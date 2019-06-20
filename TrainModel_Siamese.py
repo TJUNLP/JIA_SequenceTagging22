@@ -142,10 +142,9 @@ def Lists2Set_2Test(ptag_BIOES_all, testx_word, testt, ):
     reall_right = 0
     predict = 0
     fragment_list = []
-
+    fragtuples_list = []
     print('start processing ptag_BIOES_all ...')
     for id, ptag2list in enumerate(ptag_BIOES_all):
-        fragtuples_list = []
 
         assert len(ptag2list) == len(testt[id])
         index = 0
@@ -683,6 +682,7 @@ if __name__ == "__main__":
             infer_e2e_model(nn_model, modelname, modelfile, fragment_test, resultdir, TYPE_vob, max_s, max_posi, max_fragment)
 
         if Test42Step:
+            print("Test42Step ---------------------------------------")
             fragment_test, target_right = Train41stsegment()
             nn_model.load_weights(modelfile)
             test_model_withBIOES(nn_model, fragment_test, TYPE_vob, max_s, max_posi, max_fragment)
