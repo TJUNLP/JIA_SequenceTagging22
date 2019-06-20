@@ -302,10 +302,10 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
             if mindis_where == fragment_tag_list[i]:
                 predict_right += 1
 
-                if D//1 not in Ddict:
-                    Ddict[D//1] = 1
+                if D//0.001 not in Ddict:
+                    Ddict[D//0.001] = 1
                 else:
-                    Ddict[D//1] += 1
+                    Ddict[D//0.001] += 1
 
 
 
