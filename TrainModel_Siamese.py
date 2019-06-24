@@ -335,10 +335,10 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
     print('predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
     print('P = ', P, 'R = ', R, 'F = ', F)
 
-    Dlist = sorted(Ddict.items(), key=lambda x:x[0], reverse=True)
-    print(Dlist)
-    Vlist = sorted(Vdict.items(), key=lambda x:x[0], reverse=True)
-    print(Vlist)
+    # Dlist = sorted(Ddict.items(), key=lambda x:x[0], reverse=True)
+    # print(Dlist)
+    # Vlist = sorted(Vdict.items(), key=lambda x:x[0], reverse=True)
+    # print(Vlist)
 
     return P, R, F
 
@@ -636,7 +636,7 @@ if __name__ == "__main__":
     hidden_dim = 200
     SecondTrain = True
     retrain = False
-    Test = False
+    Test = True
     Test42Step = True
 
     if not os.path.exists(datafile):
