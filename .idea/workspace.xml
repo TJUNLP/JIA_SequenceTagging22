@@ -40,23 +40,11 @@
       <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="398">
-              <caret line="341" column="0" lean-forward="true" selection-start-line="341" selection-start-column="0" selection-end-line="341" selection-end-column="0" />
+            <state relative-caret-position="268">
+              <caret line="439" column="29" lean-forward="false" selection-start-line="439" selection-start-column="16" selection-end-line="439" selection-end-column="29" />
               <folding>
                 <element signature="e#298#335#0" expanded="true" />
-                <element signature="e#17292#18764#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TrainModel_MultiSteps.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TrainModel_MultiSteps.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4650">
-              <caret line="317" column="39" lean-forward="false" selection-start-line="317" selection-start-column="24" selection-end-line="317" selection-end-column="46" />
-              <folding>
-                <element signature="e#298#329#0" expanded="true" />
+                <element signature="e#17439#18911#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -65,7 +53,7 @@
       <file leaf-file-name="NN_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1830">
+            <state relative-caret-position="543">
               <caret line="171" column="35" lean-forward="false" selection-start-line="171" selection-start-column="35" selection-end-line="171" selection-end-column="35" />
               <folding>
                 <element signature="e#16#75#0" expanded="true" />
@@ -206,7 +194,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
@@ -224,6 +211,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -418,7 +406,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2609047" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26494345" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -625,13 +613,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1083">
-          <caret line="319" column="49" lean-forward="true" selection-start-line="319" selection-start-column="4" selection-end-line="319" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2220">
@@ -664,13 +645,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="36" column="91" lean-forward="false" selection-start-line="36" selection-start-column="86" selection-end-line="36" selection-end-column="94" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_single.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -682,6 +656,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="27">
           <caret line="405" column="16" lean-forward="false" selection-start-line="405" selection-start-column="10" selection-end-line="405" selection-end-column="16" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -717,6 +692,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="197">
           <caret line="806" column="8" lean-forward="false" selection-start-line="806" selection-start-column="8" selection-end-line="806" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -728,17 +704,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-179">
-          <caret line="31" column="21" lean-forward="false" selection-start-line="31" selection-start-column="12" selection-end-line="31" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/Library/Python/3.6/lib/python/site-packages/keras/layers/recurrent.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="552">
           <caret line="2081" column="8" lean-forward="false" selection-start-line="2081" selection-start-column="8" selection-end-line="2081" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -756,13 +726,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_classifer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="121" column="0" lean-forward="false" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_segment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -776,7 +739,7 @@
         <state relative-caret-position="4650">
           <caret line="317" column="39" lean-forward="false" selection-start-line="317" selection-start-column="24" selection-end-line="317" selection-end-column="46" />
           <folding>
-            <element signature="e#298#329#0" expanded="true" />
+            <element signature="e#298#329#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -807,21 +770,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1830">
-          <caret line="171" column="35" lean-forward="false" selection-start-line="171" selection-start-column="35" selection-end-line="171" selection-end-column="35" />
-          <folding>
-            <element signature="e#16#75#0" expanded="true" />
-            <element signature="e#725#3022#0" expanded="false" />
-            <element signature="e#8910#13994#0" expanded="false" />
-            <element signature="e#14357#19876#0" expanded="false" />
-            <element signature="e#20245#26237#0" expanded="false" />
-            <element signature="e#26662#33440#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5955">
@@ -841,13 +789,67 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_classifer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1410">
+          <caret line="112" column="34" lean-forward="false" selection-start-line="112" selection-start-column="19" selection-end-line="112" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ProcessData_S2F.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="454">
+          <caret line="36" column="90" lean-forward="false" selection-start-line="36" selection-start-column="90" selection-end-line="36" selection-end-column="90" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Seq2fragment.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1484">
+          <caret line="26" column="33" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="33" />
+          <folding>
+            <element signature="e#1381#1974#0" expanded="false" />
+            <element signature="e#2029#2941#0" expanded="false" />
+            <element signature="e#3032#5695#0" expanded="false" />
+            <element signature="e#5798#11675#0" expanded="false" />
+            <element signature="e#11756#13216#0" expanded="false" />
+            <element signature="e#13327#16723#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_segment_2t.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="165" column="43" lean-forward="false" selection-start-line="165" selection-start-column="31" selection-end-line="165" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="543">
+          <caret line="171" column="35" lean-forward="false" selection-start-line="171" selection-start-column="35" selection-end-line="171" selection-end-column="35" />
+          <folding>
+            <element signature="e#16#75#0" expanded="true" />
+            <element signature="e#725#3022#0" expanded="false" />
+            <element signature="e#8910#13994#0" expanded="false" />
+            <element signature="e#14357#19876#0" expanded="false" />
+            <element signature="e#20245#26237#0" expanded="false" />
+            <element signature="e#26662#33440#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="341" column="0" lean-forward="true" selection-start-line="341" selection-start-column="0" selection-end-line="341" selection-end-column="0" />
+        <state relative-caret-position="268">
+          <caret line="439" column="29" lean-forward="false" selection-start-line="439" selection-start-column="16" selection-end-line="439" selection-end-column="29" />
           <folding>
             <element signature="e#298#335#0" expanded="true" />
-            <element signature="e#17292#18764#0" expanded="false" />
+            <element signature="e#17439#18911#0" expanded="false" />
           </folding>
         </state>
       </provider>

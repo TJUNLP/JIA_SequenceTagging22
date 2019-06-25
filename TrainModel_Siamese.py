@@ -429,14 +429,20 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
         mindis = min(subpredictions)
         mindis_where = subpredictions.index(min(subpredictions))
 
-        # for num, disvlaue in enumerate(predictions):
-        #     if disvlaue < mindis:
-        #         mindis = disvlaue
-        #         mindis_where = pairs[2][num]
-        if mindis < 0.5:
+        mincount = 0
+        for num, disvlaue in enumerate(subpredictions):
+            if disvlaue < 0.5:
+                mindis_where = num
+                mincount += 1
+        if mincount == 1:
             predict += 1
             if mindis_where == fragment_tag_list[i]:
                 predict_right += 1
+
+        # if mindis < 0.5:
+        #     predict += 1
+        #     if mindis_where == fragment_tag_list[i]:
+        #         predict_right += 1
 
     P = predict_right / predict
     R = predict_right / totel_right
@@ -637,7 +643,7 @@ if __name__ == "__main__":
     SecondTrain = True
     retrain = False
     Test = True
-    Test42Step = True
+    Test42Step = False
 
     if not os.path.exists(datafile):
         print("Precess data....")
