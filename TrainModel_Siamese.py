@@ -138,6 +138,7 @@ def get_data_fromBIOES_2Test(nn_model, test_4segment_BIOES, index2BIOES, sen2lis
 
     return fragment_list, target_right
 
+
 def Lists2Set_2Test(ptag_BIOES_all, testx_word, testt, sen2list_test):
     reall_right = 0
     predict = 0
@@ -638,7 +639,7 @@ if __name__ == "__main__":
 
     modelfile = "next ...."
 
-    batch_size = 512 #256
+    batch_size = 1024 #512
     hidden_dim = 200
     SecondTrain = True
     retrain = False
