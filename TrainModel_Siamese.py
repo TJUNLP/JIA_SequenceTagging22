@@ -649,7 +649,7 @@ if __name__ == "__main__":
         print("Precess data....")
 
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile,
-                 w2v_k=100, c2v_k=50, maxlen=maxlen)
+                 w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=True)
 
     pairs_train, labels_train, pairs_dev, labels_dev, \
     fragment_train, fragment_dev, fragment_test,\
