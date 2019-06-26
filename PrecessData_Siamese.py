@@ -689,10 +689,10 @@ def ReadfromTXT2Lists(file, source_vob, target_vob):
     return sen2list_all, tag2list_all
 
 
-def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment):
+def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fragment, hasNeg=False):
     fragment_list = []
 
-
+    assert len(sen2list_all) == len(tag2list_all)
     for id, tag2list in enumerate(tag2list_all):
 
         target_left = 0
@@ -712,10 +712,27 @@ def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fra
 
                 elif target_idex_word[tag].__contains__('S-'):
 
+                    target_left = index
+                    target_right = index+1
                     reltag = target_idex_word[tag][2:]
-                    tuple = (0, index+1, index, index+1, index, len(tag2list), reltag)
+                    tuple = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
                     fragtuples_list.append(tuple)
+                    if hasNeg:
+                        inc = random.randrange(0, 5)
+                        if inc == 0:
+                            inc = random.randrange(-2, 3)
+                            reltag = 'NULL'
 
+                            if inc == 0:
+                                target_left = max(0, target_left-1)
+                                target_right = min(len(tag2list), target_right+1)
+                            elif inc < 0:
+                                target_left = max(0, target_left + inc)
+                            else:
+                                target_right = min(len(tag2list), target_right + inc)
+
+                            tuple = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
+                            fragtuples_list.append(tuple)
 
 
                     flens = max(index+1, len(tag2list)-index)
@@ -725,16 +742,34 @@ def Lists2Set(sen2list_all, tag2list_all, target_idex_word, max_context, max_fra
                     target_left = index
 
                 elif target_idex_word[tag].__contains__('E-'):
-
+                    target_right = index+1
                     reltag = target_idex_word[tag][2:]
-                    tuple = (0, index+1, target_left, index+1, target_left, len(tag2list), reltag)
+                    tuple = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
                     fragtuples_list.append(tuple)
 
                     flens = max(index+1, len(tag2list)-target_left)
                     if flens > max_context:
                         max_context = flens
 
-                    max_fragment = max(max_fragment, index+1-target_left)
+                    max_fragment = max(max_fragment, target_right-target_left)
+
+                    if hasNeg:
+                        inc = random.randrange(0, 5)
+                        if inc == 0:
+                            inc = random.randrange(-2, 3)
+                            reltag = 'NULL'
+
+                            if inc == 0:
+                                target_left = max(0, target_left - 1)
+                                target_right = min(len(tag2list), target_right + 1)
+                            elif inc < 0:
+                                target_left = max(0, target_left + inc)
+                            else:
+                                target_right = min(len(tag2list), target_right + inc)
+
+                            tuple = (0, target_right, target_left, target_right, target_left, len(tag2list), reltag)
+                            fragtuples_list.append(tuple)
+                            max_fragment = max(max_fragment, target_right - target_left)
 
                     target_left = index
 
@@ -891,7 +926,7 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
     return pairs, labels
 
 
-def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50):
+def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg=False):
 
     """
     数据处理的入口函数
@@ -908,6 +943,10 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
 
     TYPE_id2type = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
     TYPE_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
+
+    if hasNeg:
+        TYPE_id2type = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC', 4: 'NULL'}
+        TYPE_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3, 'NULL':4}
 
 
     word_w2v, w2v_k, word_W = load_vec_txt(w2v_file,word_vob,k=w2v_k)
@@ -942,24 +981,28 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
     print('sen2list_train len = ', len(sen2list_test))
     print('tag2list_all len = ', len(tag2list_test))
 
+
     fragment_train, max_context, max_fragment = \
-        Lists2Set(sen2list_train, tag2list_train, target_id2word, max_context=0, max_fragment=1)
+        Lists2Set(sen2list_train, tag2list_train, target_id2word, max_context=0, max_fragment=1,
+                  hasNeg=True)
     print('len(fragment_train) = ', len(fragment_train))
 
     fragment_test, max_context, max_fragment = \
-        Lists2Set(sen2list_test, tag2list_test, target_id2word, max_context=max_context, max_fragment=max_fragment)
+        Lists2Set(sen2list_test, tag2list_test, target_id2word, max_context=max_context, max_fragment=max_fragment,
+                  hasNeg=True)
     print('len(fragment_train) = ', len(fragment_test))
 
     fragment_dev, max_context, max_fragment = \
-        Lists2Set(sen2list_dev, tag2list_dev, target_id2word, max_context=max_context, max_fragment=max_fragment)
+        Lists2Set(sen2list_dev, tag2list_dev, target_id2word, max_context=max_context, max_fragment=max_fragment,
+                  hasNeg=True)
     print('len(fragment_dev) = ', len(fragment_dev))
 
-    pairs_dev, labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
-    print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))
 
     pairs_train, labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob)
     print('CreatePairs train len = ', len(pairs_train), len(labels_train))
 
+    pairs_dev, labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
+    print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))
 
 
     # source_char, sourc_idex_char, max_c = get_Character_index({trainfile, devfile, testfile})

@@ -280,9 +280,9 @@ def test_model_withBIOES(nn_model, fragment_test, target_vob, max_s, max_posi, m
                                     x1_fragment, x2_tag], batch_size=512, verbose=0)
     Ddict = {}
     Vdict = {}
-    assert len(predictions)//4 == len(fragment_tag_list)
-    for i in range(len(predictions)//4):
-        subpredictions = predictions[i*4:i*4+4]
+    assert len(predictions)//len(target_vob) == len(fragment_tag_list)
+    for i in range(len(predictions)//len(target_vob)):
+        subpredictions = predictions[i*len(target_vob):i*len(target_vob) + len(target_vob)]
         subpredictions = subpredictions.flatten().tolist()
 
         u = 0.25 * (subpredictions[0] + subpredictions[1] + subpredictions[2] + subpredictions[3])
@@ -421,28 +421,28 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
                                     x1_context_r, x1_c_r_posi,
                                     x1_fragment, x2_tag], batch_size=512, verbose=0)
 
-    assert len(predictions)//4 == len(fragment_tag_list)
-    for i in range(len(predictions)//4):
-        subpredictions = predictions[i*4:i*4+4]
+    assert len(predictions)//len(target_vob) == len(fragment_tag_list)
+    for i in range(len(predictions)//len(target_vob)):
+        subpredictions = predictions[i*len(target_vob):i*len(target_vob) + len(target_vob)]
         subpredictions = subpredictions.flatten().tolist()
 
         mindis = min(subpredictions)
         mindis_where = subpredictions.index(min(subpredictions))
 
-        mincount = 0
-        for num, disvlaue in enumerate(subpredictions):
-            if disvlaue < 0.5:
-                mindis_where = num
-                mincount += 1
-        if mincount == 1:
-            predict += 1
-            if mindis_where == fragment_tag_list[i]:
-                predict_right += 1
-
-        # if mindis < 0.5:
+        # mincount = 0
+        # for num, disvlaue in enumerate(subpredictions):
+        #     if disvlaue < 0.5:
+        #         mindis_where = num
+        #         mincount += 1
+        # if mincount == 1:
         #     predict += 1
         #     if mindis_where == fragment_tag_list[i]:
         #         predict_right += 1
+
+        if mindis < 0.5:
+            predict += 1
+            if mindis_where == fragment_tag_list[i]:
+                predict_right += 1
 
     P = predict_right / predict
     R = predict_right / totel_right
@@ -633,7 +633,7 @@ if __name__ == "__main__":
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     resultdir = "./data/result/"
 
-    datafname = 'data_Siamese.4_allneg'#1,3
+    datafname = 'data_Siamese.4_allneg_segmentNeg'#1,3, 4_allneg
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."

@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/PrecessData_Siamese.py" afterPath="$PROJECT_DIR$/PrecessData_Siamese.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel_Siamese.py" afterPath="$PROJECT_DIR$/TrainModel_Siamese.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,11 +41,11 @@
       <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="268">
-              <caret line="439" column="29" lean-forward="false" selection-start-line="439" selection-start-column="16" selection-end-line="439" selection-end-column="29" />
+            <state relative-caret-position="-2231">
+              <caret line="425" column="89" lean-forward="false" selection-start-line="425" selection-start-column="89" selection-end-line="425" selection-end-column="89" />
               <folding>
                 <element signature="e#298#335#0" expanded="true" />
-                <element signature="e#17439#18911#0" expanded="false" />
+                <element signature="e#17593#19065#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -53,7 +54,7 @@
       <file leaf-file-name="NN_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="543">
+            <state relative-caret-position="962">
               <caret line="171" column="35" lean-forward="false" selection-start-line="171" selection-start-column="35" selection-end-line="171" selection-end-column="35" />
               <folding>
                 <element signature="e#16#75#0" expanded="true" />
@@ -70,8 +71,8 @@
       <file leaf-file-name="PrecessData_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5955">
-              <caret line="886" column="0" lean-forward="false" selection-start-line="886" selection-start-column="0" selection-end-line="886" selection-end-column="0" />
+            <state relative-caret-position="-514">
+              <caret line="1003" column="40" lean-forward="false" selection-start-line="1003" selection-start-column="28" selection-end-line="1003" selection-end-column="40" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
                 <element signature="e#198#540#0" expanded="false" />
@@ -83,6 +84,8 @@
                 <element signature="e#13248#14141#0" expanded="false" />
                 <element signature="e#14182#15176#0" expanded="false" />
                 <element signature="e#15226#17946#0" expanded="false" />
+                <element signature="e#22768#23998#0" expanded="false" />
+                <element signature="e#24082#28041#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -158,9 +161,10 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds">
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="22" />
     <option name="y" value="23" />
-    <option name="width" value="1280" />
+    <option name="width" value="1213" />
     <option name="height" value="732" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -194,7 +198,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -212,6 +215,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -397,7 +401,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1280" height="732" extended-state="0" />
+    <frame x="4" y="23" width="1286" height="732" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -406,7 +410,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967034" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26494345" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26768488" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -613,13 +617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2220">
-          <caret line="152" column="0" lean-forward="false" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Evaluate.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="433">
@@ -738,9 +735,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4650">
           <caret line="317" column="39" lean-forward="false" selection-start-line="317" selection-start-column="24" selection-end-line="317" selection-end-column="46" />
-          <folding>
-            <element signature="e#298#329#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -770,30 +764,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5955">
-          <caret line="886" column="0" lean-forward="false" selection-start-line="886" selection-start-column="0" selection-end-line="886" selection-end-column="0" />
-          <folding>
-            <element signature="e#33#51#0" expanded="true" />
-            <element signature="e#198#540#0" expanded="false" />
-            <element signature="e#1530#2078#0" expanded="false" />
-            <element signature="e#2373#5452#0" expanded="false" />
-            <element signature="e#5522#6625#0" expanded="false" />
-            <element signature="e#6702#9110#0" expanded="false" />
-            <element signature="e#9179#10973#0" expanded="false" />
-            <element signature="e#13248#14141#0" expanded="false" />
-            <element signature="e#14182#15176#0" expanded="false" />
-            <element signature="e#15226#17946#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_classifer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1410">
           <caret line="112" column="34" lean-forward="false" selection-start-line="112" selection-start-column="19" selection-end-line="112" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -801,7 +775,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="454">
           <caret line="36" column="90" lean-forward="false" selection-start-line="36" selection-start-column="90" selection-end-line="36" selection-end-column="90" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -824,13 +797,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="190">
           <caret line="165" column="43" lean-forward="false" selection-start-line="165" selection-start-column="31" selection-end-line="165" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PrecessData_PreC2V.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="164">
+          <caret line="724" column="14" lean-forward="false" selection-start-line="724" selection-start-column="4" selection-end-line="724" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="543">
+        <state relative-caret-position="962">
           <caret line="171" column="35" lean-forward="false" selection-start-line="171" selection-start-column="35" selection-end-line="171" selection-end-column="35" />
           <folding>
             <element signature="e#16#75#0" expanded="true" />
@@ -843,13 +823,34 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-514">
+          <caret line="1003" column="40" lean-forward="false" selection-start-line="1003" selection-start-column="28" selection-end-line="1003" selection-end-column="40" />
+          <folding>
+            <element signature="e#33#51#0" expanded="true" />
+            <element signature="e#198#540#0" expanded="false" />
+            <element signature="e#1530#2078#0" expanded="false" />
+            <element signature="e#2373#5452#0" expanded="false" />
+            <element signature="e#5522#6625#0" expanded="false" />
+            <element signature="e#6702#9110#0" expanded="false" />
+            <element signature="e#9179#10973#0" expanded="false" />
+            <element signature="e#13248#14141#0" expanded="false" />
+            <element signature="e#14182#15176#0" expanded="false" />
+            <element signature="e#15226#17946#0" expanded="false" />
+            <element signature="e#22768#23998#0" expanded="false" />
+            <element signature="e#24082#28041#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="268">
-          <caret line="439" column="29" lean-forward="false" selection-start-line="439" selection-start-column="16" selection-end-line="439" selection-end-column="29" />
+        <state relative-caret-position="-2231">
+          <caret line="425" column="89" lean-forward="false" selection-start-line="425" selection-start-column="89" selection-end-line="425" selection-end-column="89" />
           <folding>
             <element signature="e#298#335#0" expanded="true" />
-            <element signature="e#17439#18911#0" expanded="false" />
+            <element signature="e#17593#19065#0" expanded="false" />
           </folding>
         </state>
       </provider>
