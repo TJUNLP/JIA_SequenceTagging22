@@ -265,7 +265,7 @@ if __name__ == "__main__":
 
     maxlen = 50
 
-    hasNeg = True
+    hasNeg = False
 
     modelname = 'Model_LSTM_BiLSTM_LSTM'
 
@@ -288,7 +288,7 @@ if __name__ == "__main__":
 
     batch_size = 512
     hidden_dim = 200
-    SecondTrain = True
+    SecondTrain = False
     retrain = False
     Test = True
 

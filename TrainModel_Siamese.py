@@ -639,7 +639,7 @@ if __name__ == "__main__":
 
     modelfile = "next ...."
 
-    batch_size = 1024 #512
+    batch_size = 512 #512
     hidden_dim = 200
     SecondTrain = True
     retrain = False
@@ -711,14 +711,14 @@ if __name__ == "__main__":
             print(modelfile)
             train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
-                    resultdir, TYPE_vob, max_s, max_posi, max_fragment, npoches=100, batch_size=50, retrain=False)
+                    resultdir, TYPE_vob, max_s, max_posi, max_fragment, npoches=100, batch_size=batch_size, retrain=False)
 
         else:
             if retrain:
                 print("ReTraining EE model....")
                 train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                 inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
-                                resultdir, TYPE_vob, max_s, max_posi, max_fragment, npoches=100, batch_size=50, retrain=False)
+                                resultdir, TYPE_vob, max_s, max_posi, max_fragment, npoches=100, batch_size=batch_size, retrain=False)
 
         if Test:
             print("test EE model....")
