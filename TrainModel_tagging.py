@@ -163,7 +163,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                epochs=epochlen,
                                validation_data=(inputs_dev_x, inputs_dev_y),
                                shuffle=True,
-                               class_weight=class_weight,
+                               class_weight=None,
                                verbose=1,
                                # callbacks=[checkpointer]
                                )
@@ -208,9 +208,9 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
         if earlystopping >= 10:
             break
 
-        if P_dev >= 0.45 and R_dev >= 0.95:
-            nn_model.save_weights(modelfile, overwrite=True)
-            break
+        # if P_dev >= 0.45 and R_dev >= 0.95:
+        #     nn_model.save_weights(modelfile, overwrite=True)
+        #     break
 
     return nn_model
 
@@ -359,7 +359,7 @@ if __name__ == "__main__":
 
 
 
-    for inum in range(6, 9):
+    for inum in range(9, 12):
 
         modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 
