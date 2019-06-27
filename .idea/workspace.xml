@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/TrainModel_Siamese.py" afterPath="$PROJECT_DIR$/TrainModel_Siamese.py" />
-      <change beforePath="$PROJECT_DIR$/tmpdemo.py" afterPath="$PROJECT_DIR$/tmpdemo.py" />
+      <change beforePath="$PROJECT_DIR$/network/NN_Siamese.py" afterPath="$PROJECT_DIR$/network/NN_Siamese.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,8 +41,8 @@
       <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1047">
-              <caret line="646" column="21" lean-forward="false" selection-start-line="646" selection-start-column="21" selection-end-line="646" selection-end-column="21" />
+            <state relative-caret-position="205">
+              <caret line="703" column="27" lean-forward="false" selection-start-line="703" selection-start-column="27" selection-end-line="703" selection-end-column="27" />
               <folding>
                 <element signature="e#298#335#0" expanded="true" />
                 <element signature="e#645#4410#0" expanded="false" />
@@ -59,16 +58,26 @@
       <file leaf-file-name="NN_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="436">
-              <caret line="152" column="0" lean-forward="false" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+            <state relative-caret-position="377">
+              <caret line="249" column="10" lean-forward="false" selection-start-line="249" selection-start-column="4" selection-end-line="249" selection-end-column="10" />
               <folding>
                 <element signature="e#16#75#0" expanded="true" />
                 <element signature="e#725#3022#0" expanded="false" />
-                <element signature="e#8910#13994#0" expanded="false" />
-                <element signature="e#14357#19876#0" expanded="false" />
-                <element signature="e#20245#26237#0" expanded="false" />
-                <element signature="e#26662#33440#0" expanded="false" />
+                <element signature="e#13950#19034#0" expanded="false" />
+                <element signature="e#19397#24916#0" expanded="false" />
+                <element signature="e#25285#31277#0" expanded="false" />
+                <element signature="e#31702#38480#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BiLSTM_CRF_multi3.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi3.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="410">
+              <caret line="89" column="18" lean-forward="false" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -152,10 +161,10 @@
         <option value="$PROJECT_DIR$/ProcessData_BIOES2F.py" />
         <option value="$PROJECT_DIR$/network/NN_tagging.py" />
         <option value="$PROJECT_DIR$/Seq2fragment.py" />
-        <option value="$PROJECT_DIR$/network/NN_Siamese.py" />
         <option value="$PROJECT_DIR$/TrainModel_MultiSteps.py" />
         <option value="$PROJECT_DIR$/PrecessData_Siamese.py" />
         <option value="$PROJECT_DIR$/tmpdemo.py" />
+        <option value="$PROJECT_DIR$/network/NN_Siamese.py" />
         <option value="$PROJECT_DIR$/TrainModel_Siamese.py" />
       </list>
     </option>
@@ -211,6 +220,11 @@
             <path>
               <item name="JIA_SequenceTagging22" type="b2602c69:ProjectViewProjectNode" />
               <item name="JIA_SequenceTagging22" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="JIA_SequenceTagging22" type="b2602c69:ProjectViewProjectNode" />
+              <item name="JIA_SequenceTagging22" type="462c0819:PsiDirectoryNode" />
+              <item name="network" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -702,13 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="870">
-          <caret line="70" column="59" lean-forward="false" selection-start-line="70" selection-start-column="59" selection-end-line="70" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_tagging.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8424">
@@ -819,25 +826,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/network/BiLSTM_CRF_multi3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="410">
+          <caret line="89" column="18" lean-forward="false" selection-start-line="89" selection-start-column="18" selection-end-line="89" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="436">
-          <caret line="152" column="0" lean-forward="false" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+        <state relative-caret-position="377">
+          <caret line="249" column="10" lean-forward="false" selection-start-line="249" selection-start-column="4" selection-end-line="249" selection-end-column="10" />
           <folding>
             <element signature="e#16#75#0" expanded="true" />
             <element signature="e#725#3022#0" expanded="false" />
-            <element signature="e#8910#13994#0" expanded="false" />
-            <element signature="e#14357#19876#0" expanded="false" />
-            <element signature="e#20245#26237#0" expanded="false" />
-            <element signature="e#26662#33440#0" expanded="false" />
+            <element signature="e#13950#19034#0" expanded="false" />
+            <element signature="e#19397#24916#0" expanded="false" />
+            <element signature="e#25285#31277#0" expanded="false" />
+            <element signature="e#31702#38480#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1047">
-          <caret line="646" column="21" lean-forward="false" selection-start-line="646" selection-start-column="21" selection-end-line="646" selection-end-column="21" />
+        <state relative-caret-position="205">
+          <caret line="703" column="27" lean-forward="false" selection-start-line="703" selection-start-column="27" selection-end-line="703" selection-end-column="27" />
           <folding>
             <element signature="e#298#335#0" expanded="true" />
             <element signature="e#645#4410#0" expanded="false" />

@@ -634,7 +634,7 @@ if __name__ == "__main__":
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     resultdir = "./data/result/"
 
-    datafname = 'data_Siamese.4_allneg_segmentNeg'#1,3, 4_allneg
+    datafname = 'data_Siamese.4_allneg'#1,3, 4_allneg, 4_allneg_segmentNeg
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
@@ -701,7 +701,7 @@ if __name__ == "__main__":
     inputs_dev_y = [dev_y]
 
 
-    for inum in range(6, 9):
+    for inum in range(9, 10):
 
         modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 
