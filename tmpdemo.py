@@ -17,7 +17,7 @@ if __name__ == '__main__':
     while line:
         i += 1
         print(i)
-        ls = line.rstrip('\n').split()
+        ls = line.rstrip('\n').split('\t')
         if len(ls) < 2:
             line = fr.readline()
             continue
@@ -31,13 +31,14 @@ if __name__ == '__main__':
 
     fr = open(fr2, 'r')
     for line in fr.readlines():
-        ls = line.rstrip('\n').split()
+        ls = line.rstrip('\n').split('\t')
         mid = ls[0]
         if mid in middict.keys():
+            fw.write(mid)
+            for v in middict[mid]:
+                fw.write('\t' + v)
 
-            if len(middict[mid]) != 1:
-                print(middict[mid])
-            fw.write(mid + '\t' + middict[mid] + '\n')
+            fw.write('\n')
 
         else:
             print(mid)

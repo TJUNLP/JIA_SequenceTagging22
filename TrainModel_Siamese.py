@@ -644,7 +644,7 @@ if __name__ == "__main__":
     SecondTrain = True
     retrain = False
     Test = True
-    Test42Step = False
+    Test42Step = True
 
     if not os.path.exists(datafile):
         print("Precess data....")
