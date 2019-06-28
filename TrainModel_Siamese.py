@@ -14,7 +14,7 @@ import numpy as np
 from PrecessData_Siamese import get_data
 from Evaluate import evaluation_NER
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
-from network.NN_Siamese import Model_BiLSTM__MLP, Model_BiLSTM__MLP_context
+from network.NN_Siamese import Model_BiLSTM__MLP, Model_BiLSTM__MLP_context, Model_BiLSTM__MLP_context_withClassifer
 
 
 def Train41stsegment(sen2list_test):
@@ -348,6 +348,8 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
 
     predict = 0
     predict_right = 0
+    predict_right_c = 0
+    predict_c = 0
     totel_right = len(fragment_test)
 
     data_s_all = []
@@ -422,33 +424,89 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
                                     x1_context_r, x1_c_r_posi,
                                     x1_fragment, x2_tag], batch_size=512, verbose=0)
 
-    assert len(predictions)//len(target_vob) == len(fragment_tag_list)
-    for i in range(len(predictions)//len(target_vob)):
-        subpredictions = predictions[i*len(target_vob):i*len(target_vob) + len(target_vob)]
-        subpredictions = subpredictions.flatten().tolist()
 
-        mindis = min(subpredictions)
-        mindis_where = subpredictions.index(min(subpredictions))
 
-        # mincount = 0
-        # for num, disvlaue in enumerate(subpredictions):
-        #     if disvlaue < 0.5:
-        #         mindis_where = num
-        #         mincount += 1
-        # if mincount == 1:
-        #     predict += 1
-        #     if mindis_where == fragment_tag_list[i]:
-        #         predict_right += 1
+    if len(predictions) < 2:
+        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) < 2')
+        assert len(predictions) // len(target_vob) == len(fragment_tag_list)
+        for i in range(len(predictions)//len(target_vob)):
+            subpredictions = predictions[i*len(target_vob):i*len(target_vob) + len(target_vob)]
+            subpredictions = subpredictions.flatten().tolist()
 
-        if mindis < 0.5:
-            predict += 1
-            if mindis_where == fragment_tag_list[i]:
-                predict_right += 1
+            mindis = min(subpredictions)
+            mindis_where = subpredictions.index(min(subpredictions))
 
-    P = predict_right / predict
-    R = predict_right / totel_right
-    F = 2 * P * R / (P + R)
-    print('predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
+            # mincount = 0
+            # for num, disvlaue in enumerate(subpredictions):
+            #     if disvlaue < 0.5:
+            #         mindis_where = num
+            #         mincount += 1
+            # if mincount == 1:
+            #     predict += 1
+            #     if mindis_where == fragment_tag_list[i]:
+            #         predict_right += 1
+
+            if mindis < 0.5:
+                predict += 1
+                if mindis_where == fragment_tag_list[i]:
+                    predict_right += 1
+
+
+
+        P = predict_right / predict
+        R = predict_right / totel_right
+        F = 2 * P * R / (P + R)
+        print('predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
+
+    else:
+        assert len(predictions[1]) // len(target_vob) == len(fragment_tag_list)
+        for i in range(len(predictions[1]) // len(target_vob)):
+            subpredictions = predictions[1][i * len(target_vob):i * len(target_vob) + len(target_vob)]
+            subpredictions = subpredictions.flatten().tolist()
+
+            mindis = min(subpredictions)
+            mindis_where = subpredictions.index(min(subpredictions))
+
+            # mincount = 0
+            # for num, disvlaue in enumerate(subpredictions):
+            #     if disvlaue < 0.5:
+            #         mindis_where = num
+            #         mincount += 1
+            # if mincount == 1:
+            #     predict += 1
+            #     if mindis_where == fragment_tag_list[i]:
+            #         predict_right += 1
+
+            if mindis < 0.5:
+                predict += 1
+                if mindis_where == fragment_tag_list[i]:
+                    predict_right += 1
+
+            subpredictions = predictions[0][i * len(target_vob):i * len(target_vob) + len(target_vob)]
+            ptag_npall = None
+            for num, ptagindex in enumerate(subpredictions):
+                ptag_npall += ptagindex
+
+            ptag = np.argmax(ptag_npall)
+
+            if ptag != 'NULL':
+                predict_c += 1
+
+            ttag = fragment_tag_list[i]
+
+            if ptag == ttag and ttag != 'NULL':
+                predict_right_c += 1
+
+        P = predict_right / predict
+        R = predict_right / totel_right
+        F = 2 * P * R / (P + R)
+        print('Distance!!!!!!!!!! predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
+        print('Distance!!!!!!!!!! P= ', P, 'R= ', R, 'F= ', F)
+        P = predict_right_c / predict_c
+        R = predict_right_c / totel_right
+        F = 2 * P * R / (P + R)
+        print('Classifer!!!!!!!!!! predict_right =, predict =, target =, ', predict_right, predict, totel_right)
+        print('classifer!!!!!!!!!! P= ', P, 'R= ', R, 'F= ', F)
 
     return P, R, F
 
@@ -504,7 +562,7 @@ def test_model_tagging(nn_model, testdata, chardata, index2type, test_target_cou
 def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
                     resultdir, type_vob, max_s, max_posi, max_fragment,
-                    npoches=100, batch_size=50, retrain=False):
+                    npoches=100, batch_size=50, retrain=False, inum=0):
 
     if retrain:
         nn_model.load_weights(modelfile)
@@ -560,7 +618,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
             maxF = F
             nn_model.save_weights(modelfile, overwrite=True)
 
-        print(nowepoch, P, R, F, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>maxF=', maxF)
+        print(str(inum), nowepoch, P, R, F, '>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>maxF=', maxF)
 
         if earlystop >= 50:
             break
@@ -600,8 +658,18 @@ def SelectModel(modelname, wordvocabsize, tagvocabsize, posivocabsize,
                                      w2v_k=w2v_k, posi2v_k=posi2v_k, tag2v_k=tag2v_k,
                                      batch_size=batch_size)
 
-    if modelname is 'Model_BiLSTM__MLP_context':
+    elif modelname is 'Model_BiLSTM__MLP_context':
         nn_model = Model_BiLSTM__MLP_context(wordvocabsize=wordvocabsize,
+                                             tagvocabsize=tagvocabsize,
+                                             posivocabsize=posivocabsize,
+                                             word_W=word_W, posi_W=posi_W, tag_W=tag_W,
+                                             input_sent_lenth=input_sent_lenth,
+                                             input_frament_lenth=input_frament_lenth,
+                                             w2v_k=w2v_k, posi2v_k=posi2v_k, tag2v_k=tag2v_k,
+                                             batch_size=batch_size)
+
+    elif modelname is 'Model_BiLSTM__MLP_context_withClassifer':
+        nn_model = Model_BiLSTM__MLP_context_withClassifer(wordvocabsize=wordvocabsize,
                                              tagvocabsize=tagvocabsize,
                                              posivocabsize=posivocabsize,
                                              word_W=word_W, posi_W=posi_W, tag_W=tag_W,
@@ -618,12 +686,13 @@ if __name__ == "__main__":
 
     maxlen = 50
 
-    hasNeg = True
+    hasNeg = False
 
     modelname = 'Model_BiLSTM__MLP'
     # modelname = 'Model_BiLSTM__MLP_attention'
     # modelname = 'Model_BiLSTM__MLP_attention'
     modelname = 'Model_BiLSTM__MLP_context'
+    modelname = 'Model_BiLSTM__MLP_context_withClassifer'
 
     print(modelname)
 
@@ -634,17 +703,17 @@ if __name__ == "__main__":
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     resultdir = "./data/result/"
 
-    datafname = 'data_Siamese.4_allneg'#1,3, 4_allneg, 4_allneg_segmentNeg
+    # datafname = 'data_Siamese.4_allneg' #1,3, 4_allneg, 4_allneg_segmentNeg
+    datafname = 'data_Siamese.4_withClassifer'  # 1,3, 4_allneg, 4_allneg_segmentNeg
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
 
     batch_size = 512 #512
     hidden_dim = 200
-    SecondTrain = True
     retrain = False
     Test = True
-    Test42Step = True
+    Test42Step = False
 
     if not os.path.exists(datafile):
         print("Precess data....")
@@ -652,7 +721,8 @@ if __name__ == "__main__":
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile,
                  w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=True)
 
-    pairs_train, labels_train, pairs_dev, labels_dev, \
+    pairs_train, labels_train, classifer_labels_train, \
+    pairs_dev, labels_dev, classifer_labels_dev, \
     fragment_train, fragment_dev, fragment_test,\
     word_vob, word_id2word, word_W, w2v_k,\
     TYPE_vob, TYPE_id2type, type_W, type_k,\
@@ -668,6 +738,7 @@ if __name__ == "__main__":
     train_x1_c_l_posi = np.asarray(pairs_train[6], dtype="int32")
     train_x1_c_r_posi = np.asarray(pairs_train[7], dtype="int32")
     train_y = np.asarray(labels_train, dtype="int32")
+    train_y_classifer = np.asarray(classifer_labels_train, dtype="int32")
 
     dev_x1_sent = np.asarray(pairs_dev[0], dtype="int32")
     dev_x1_posi = np.asarray(pairs_dev[1], dtype="int32")
@@ -678,6 +749,7 @@ if __name__ == "__main__":
     dev_x1_c_l_posi = np.asarray(pairs_dev[6], dtype="int32")
     dev_x1_c_r_posi = np.asarray(pairs_dev[7], dtype="int32")
     dev_y = np.asarray(labels_dev, dtype="int32")
+    dev_y_classifer = np.asarray(classifer_labels_dev, dtype="int32")
 
     nn_model = SelectModel(modelname,
                            wordvocabsize=len(word_vob),
@@ -692,13 +764,13 @@ if __name__ == "__main__":
     inputs_train_x = [train_x1_context_l, train_x1_c_l_posi,
                       train_x1_context_r, train_x1_c_r_posi,
                       train_x1_fragment, train_x2_tag]
-    inputs_train_y = [train_y]
+    inputs_train_y = [train_y_classifer, train_y]
 
     # inputs_dev_x = [dev_x1_sent, dev_x1_posi, dev_x2_tag]
     inputs_dev_x = [dev_x1_context_l, dev_x1_c_l_posi,
                     dev_x1_context_r, dev_x1_c_r_posi,
                     dev_x1_fragment, dev_x2_tag]
-    inputs_dev_y = [dev_y]
+    inputs_dev_y = [dev_y_classifer, dev_y]
 
 
     for inum in range(9, 10):
@@ -711,14 +783,16 @@ if __name__ == "__main__":
             print(modelfile)
             train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                     inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
-                    resultdir, TYPE_vob, max_s, max_posi, max_fragment, npoches=100, batch_size=batch_size, retrain=False)
+                    resultdir, TYPE_vob, max_s, max_posi, max_fragment,
+                            npoches=100, batch_size=batch_size, retrain=False, inum=inum)
 
         else:
             if retrain:
                 print("ReTraining EE model....")
                 train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                 inputs_dev_x, inputs_dev_y, fragment_train, fragment_dev, fragment_test,
-                                resultdir, TYPE_vob, max_s, max_posi, max_fragment, npoches=100, batch_size=batch_size, retrain=False)
+                                resultdir, TYPE_vob, max_s, max_posi, max_fragment,
+                                npoches=100, batch_size=batch_size, retrain=False, inum=inum)
 
         if Test:
             print("test EE model....")

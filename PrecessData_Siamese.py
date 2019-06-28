@@ -3,8 +3,9 @@ __author__ = 'JIA'
 import numpy as np
 import pickle
 import json
-import re,random
-import math
+import re, random
+import math, keras
+
 from Seq2fragment import Seq2frag, Seq2frag4test
 
 def load_vec_pkl(fname,vocab,k=300):
@@ -832,6 +833,7 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
     data_s_all = []
     data_posi_all = []
     data_tag_all = []
+    classifer_label = []
     data_context_r_all = []
     data_context_l_all = []
     data_fragment_all = []
@@ -908,6 +910,8 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
             data_c_l_posi_all.append(data_c_l_posi)
             data_c_r_posi_all.append(data_c_r_posi)
             labels.append(1)
+            classifer_label.append(fragment_tag)
+
 
             data_s_all.append(data_s)
             data_posi_all.append(data_posi)
@@ -918,12 +922,15 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
             data_c_l_posi_all.append(data_c_l_posi)
             data_c_r_posi_all.append(data_c_r_posi)
             labels.append(0)
+            classifer_label.append(fragment_tag)
 
 
     pairs = [data_s_all, data_posi_all, data_tag_all,
              data_context_r_all, data_context_l_all, data_fragment_all, data_c_l_posi_all, data_c_r_posi_all]
 
-    return pairs, labels
+    classifer_labels = keras.utils.to_categorical(classifer_label, len(target_vob))
+
+    return pairs, labels, classifer_labels
 
 
 def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg=False):
@@ -998,10 +1005,10 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
     print('len(fragment_dev) = ', len(fragment_dev))
 
 
-    pairs_train, labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob)
+    pairs_train, labels_train, classifer_labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob)
     print('CreatePairs train len = ', len(pairs_train), len(labels_train))
 
-    pairs_dev, labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
+    pairs_dev, labels_dev, classifer_labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
     print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))
 
 
@@ -1020,7 +1027,8 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
 
     print(datafile, "dataset created!")
     out = open(datafile, 'wb')#
-    pickle.dump([pairs_train, labels_train, pairs_dev, labels_dev,
+    pickle.dump([pairs_train, labels_train, classifer_labels_train,
+                 pairs_dev, labels_dev, classifer_labels_dev,
                  fragment_train, fragment_dev, fragment_test,
                 word_vob, word_id2word, word_W, w2v_k,
                 TYPE_vob, TYPE_id2type, type_W, type_k,
