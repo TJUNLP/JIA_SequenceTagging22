@@ -255,12 +255,15 @@ def Model_BiLSTM__MLP_context_withClassifer(wordvocabsize, tagvocabsize, posivoc
 
     mymodel = Model([word_input_context_l, posi_input_context_l,
                      word_input_context_r, posi_input_context_r,
-                     word_input_f, input_tag], [classifer, distance])
+                     word_input_f, input_tag], [classifer])
 
-    mymodel.compile(loss={'classifer': 'categorical_crossentropy', 'edistance': contrastive_loss},
-                    loss_weights={'classifer': 1., 'edistance': 1.},
+    mymodel.compile(loss={'classifer': 'categorical_crossentropy'},
                     optimizer=optimizers.Adam(lr=0.001),
-                    metrics={'classifer': ['acc'], 'edistance': [acc_siamese]})
+                    metrics={'classifer': ['acc']})
+    # mymodel.compile(loss={'classifer': 'categorical_crossentropy', 'edistance': contrastive_loss},
+    #                 loss_weights={'classifer': 1., 'edistance': 1.},
+    #                 optimizer=optimizers.Adam(lr=0.001),
+    #                 metrics={'classifer': ['acc'], 'edistance': [acc_siamese]})
 
     return mymodel
 

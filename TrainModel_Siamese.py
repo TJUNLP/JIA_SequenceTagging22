@@ -426,8 +426,8 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
 
 
 
-    if len(predictions) < 2:
-        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) < 2')
+    if len(predictions) < 2 and len(predictions[0]) == 2:
+        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) < 2 and len(predictions[0]) == 2')
         assert len(predictions) // len(target_vob) == len(fragment_tag_list)
         for i in range(len(predictions)//len(target_vob)):
             subpredictions = predictions[i*len(target_vob):i*len(target_vob) + len(target_vob)]
@@ -457,6 +457,33 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
         R = predict_right / totel_right
         F = 2 * P * R / (P + R)
         print('predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
+
+    elif len(predictions) < 2 and len(predictions[0]) == len(target_vob):
+
+        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) < 2 and len(predictions[0]) == 4')
+        assert len(predictions) // len(target_vob) == len(fragment_tag_list)
+        for i in range(len(predictions) // len(target_vob)):
+            subpredictions = predictions[i * len(target_vob):i * len(target_vob) + len(target_vob)]
+
+            ptag_npall = np.zeros(len(target_vob), dtype='float32')
+            for num, ptagindex in enumerate(subpredictions):
+                ptag_npall += ptagindex
+
+            ptag = np.argmax(ptag_npall)
+
+            if ptag != 'NULL':
+                predict_c += 1
+
+            ttag = fragment_tag_list[i]
+
+            if ptag == ttag and ttag != 'NULL':
+                predict_right_c += 1
+
+        P = predict_right_c / predict_c
+        R = predict_right_c / totel_right
+        F = 2 * P * R / (P + R)
+        print('Classifer!!!!!!!!!! predict_right =, predict =, target =, ', predict_right, predict, totel_right)
+        print('classifer!!!!!!!!!! P= ', P, 'R= ', R, 'F= ', F)
 
     else:
         assert len(predictions[1]) // len(target_vob) == len(fragment_tag_list)
@@ -764,16 +791,16 @@ if __name__ == "__main__":
     inputs_train_x = [train_x1_context_l, train_x1_c_l_posi,
                       train_x1_context_r, train_x1_c_r_posi,
                       train_x1_fragment, train_x2_tag]
-    inputs_train_y = [train_y_classifer, train_y]
+    inputs_train_y = [train_y_classifer]
 
     # inputs_dev_x = [dev_x1_sent, dev_x1_posi, dev_x2_tag]
     inputs_dev_x = [dev_x1_context_l, dev_x1_c_l_posi,
                     dev_x1_context_r, dev_x1_c_r_posi,
                     dev_x1_fragment, dev_x2_tag]
-    inputs_dev_y = [dev_y_classifer, dev_y]
+    inputs_dev_y = [dev_y_classifer]
 
 
-    for inum in range(9, 10):
+    for inum in range(0, 3):
 
         modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 

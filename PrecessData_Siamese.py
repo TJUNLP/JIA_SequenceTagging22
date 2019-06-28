@@ -1107,8 +1107,11 @@ if __name__=="__main__":
         Lists2Set(sen2list_dev, tag2list_dev, target_id2word, max_context=max_context, max_fragment=max_fragment)
     print('len(fragment_dev) = ', len(fragment_dev))
 
-    pairs_dev, labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
+    pairs_train, labels_train, classifer_labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob)
+    print('CreatePairs train len = ', len(pairs_train), len(labels_train))
+
+    pairs_dev, labels_dev, classifer_labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
     print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))
 
-    pairs_train, labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob)
-    print('CreatePairs train len = ', len(pairs_train), len(labels_train))
+    for cl in classifer_labels_dev:
+        print(cl)
