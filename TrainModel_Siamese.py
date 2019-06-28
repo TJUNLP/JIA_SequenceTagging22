@@ -483,7 +483,7 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
                     predict_right += 1
 
             subpredictions = predictions[0][i * len(target_vob):i * len(target_vob) + len(target_vob)]
-            ptag_npall = None
+            ptag_npall = np.zeros(len(target_vob),dtype='float32')
             for num, ptagindex in enumerate(subpredictions):
                 ptag_npall += ptagindex
 
