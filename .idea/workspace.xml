@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/PrecessData_Siamese.py" afterPath="$PROJECT_DIR$/PrecessData_Siamese.py" />
-      <change beforePath="$PROJECT_DIR$/TrainModel_Siamese.py" afterPath="$PROJECT_DIR$/TrainModel_Siamese.py" />
       <change beforePath="$PROJECT_DIR$/network/NN_Siamese.py" afterPath="$PROJECT_DIR$/network/NN_Siamese.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,11 +37,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="568">
-              <caret line="620" column="23" lean-forward="false" selection-start-line="620" selection-start-column="23" selection-end-line="620" selection-end-column="23" />
+            <state relative-caret-position="133">
+              <caret line="591" column="17" lean-forward="true" selection-start-line="591" selection-start-column="17" selection-end-line="591" selection-end-column="17" />
               <folding>
                 <element signature="e#298#335#0" expanded="true" />
                 <element signature="e#686#4451#0" expanded="false" />
@@ -78,18 +75,18 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="NN_Siamese.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="NN_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2513">
-              <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="162" selection-end-column="18" />
+            <state relative-caret-position="90">
+              <caret line="240" column="56" lean-forward="false" selection-start-line="240" selection-start-column="56" selection-end-line="240" selection-end-column="56" />
               <folding>
                 <element signature="e#16#75#0" expanded="true" />
                 <element signature="e#725#3022#0" expanded="false" />
-                <element signature="e#14075#19159#0" expanded="false" />
-                <element signature="e#19522#25041#0" expanded="false" />
-                <element signature="e#25410#31402#0" expanded="false" />
-                <element signature="e#31827#38605#0" expanded="false" />
+                <element signature="e#14058#19142#0" expanded="false" />
+                <element signature="e#19505#25024#0" expanded="false" />
+                <element signature="e#25393#31385#0" expanded="false" />
+                <element signature="e#31810#38588#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -177,8 +174,8 @@
         <option value="$PROJECT_DIR$/tmpdemo.py" />
         <option value="$PROJECT_DIR$/TrainModel_tagging.py" />
         <option value="$PROJECT_DIR$/PrecessData_Siamese.py" />
-        <option value="$PROJECT_DIR$/network/NN_Siamese.py" />
         <option value="$PROJECT_DIR$/TrainModel_Siamese.py" />
+        <option value="$PROJECT_DIR$/network/NN_Siamese.py" />
       </list>
     </option>
   </component>
@@ -850,21 +847,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2513">
-          <caret line="68" column="0" lean-forward="false" selection-start-line="68" selection-start-column="0" selection-end-line="162" selection-end-column="18" />
-          <folding>
-            <element signature="e#16#75#0" expanded="true" />
-            <element signature="e#725#3022#0" expanded="false" />
-            <element signature="e#14075#19159#0" expanded="false" />
-            <element signature="e#19522#25041#0" expanded="false" />
-            <element signature="e#25410#31402#0" expanded="false" />
-            <element signature="e#31827#38605#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_2task.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-420">
@@ -885,14 +867,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="568">
-          <caret line="620" column="23" lean-forward="false" selection-start-line="620" selection-start-column="23" selection-end-line="620" selection-end-column="23" />
+        <state relative-caret-position="133">
+          <caret line="591" column="17" lean-forward="true" selection-start-line="591" selection-start-column="17" selection-end-line="591" selection-end-column="17" />
           <folding>
             <element signature="e#298#335#0" expanded="true" />
             <element signature="e#686#4451#0" expanded="false" />
             <element signature="e#4548#5510#0" expanded="false" />
             <element signature="e#5588#7604#0" expanded="false" />
             <element signature="e#19878#21350#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="240" column="56" lean-forward="false" selection-start-line="240" selection-start-column="56" selection-end-line="240" selection-end-column="56" />
+          <folding>
+            <element signature="e#16#75#0" expanded="true" />
+            <element signature="e#725#3022#0" expanded="false" />
+            <element signature="e#14058#19142#0" expanded="false" />
+            <element signature="e#19505#25024#0" expanded="false" />
+            <element signature="e#25393#31385#0" expanded="false" />
+            <element signature="e#31810#38588#0" expanded="false" />
           </folding>
         </state>
       </provider>

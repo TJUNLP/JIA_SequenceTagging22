@@ -238,7 +238,7 @@ def Model_BiLSTM__MLP_context_withClassifer(wordvocabsize, tagvocabsize, posivoc
     x1_all = concatenate([BiLSTM_x1_l, CNN_x1_f, BiLSTM_x1_r], axis=-1)
     x1_all = Dropout(0.5)(x1_all)
 
-    classifer = TimeDistributed(Dense(tagvocabsize, activation='softmax'), name='classifer')(x1_all)
+    classifer = Dense(tagvocabsize, activation='softmax', name='classifer')(x1_all)
 
     mlp_x2_0 = Flatten()(tag_embedding)
     mlp_x2_0 = Dropout(0.5)(mlp_x2_0)
