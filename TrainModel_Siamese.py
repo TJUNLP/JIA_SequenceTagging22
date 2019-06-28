@@ -427,7 +427,7 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
 
 
     if len(predictions) > 2 and len(predictions[0]) == 2:
-        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) < 2 and len(predictions[0]) == 2')
+        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) > 2 and len(predictions[0]) == 2')
         assert len(predictions) // len(target_vob) == len(fragment_tag_list)
         for i in range(len(predictions)//len(target_vob)):
             subpredictions = predictions[i*len(target_vob):i*len(target_vob) + len(target_vob)]
@@ -460,7 +460,7 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
 
     elif len(predictions) > 2 and len(predictions[0]) == len(target_vob):
 
-        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) < 2 and len(predictions[0]) == 4')
+        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) > 2 and len(predictions[0]) == 4')
         assert len(predictions) // len(target_vob) == len(fragment_tag_list)
         for i in range(len(predictions) // len(target_vob)):
             subpredictions = predictions[i * len(target_vob):i * len(target_vob) + len(target_vob)]
@@ -482,7 +482,7 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
         P = predict_right_c / predict_c
         R = predict_right_c / totel_right
         F = 2 * P * R / (P + R)
-        print('Classifer!!!!!!!!!! predict_right =, predict =, target =, ', predict_right, predict, totel_right)
+        print('Classifer!!!!!!!!!! predict_right =, predict =, target =, ', predict_right_c, predict_c, totel_right)
         print('classifer!!!!!!!!!! P= ', P, 'R= ', R, 'F= ', F)
 
     else:
@@ -532,7 +532,7 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
         P = predict_right_c / predict_c
         R = predict_right_c / totel_right
         F = 2 * P * R / (P + R)
-        print('Classifer!!!!!!!!!! predict_right =, predict =, target =, ', predict_right, predict, totel_right)
+        print('Classifer!!!!!!!!!! predict_right =, predict =, target =, ', predict_right_c, predict_c, totel_right)
         print('classifer!!!!!!!!!! P= ', P, 'R= ', R, 'F= ', F)
 
     return P, R, F
@@ -793,16 +793,16 @@ if __name__ == "__main__":
     inputs_train_x = [train_x1_context_l, train_x1_c_l_posi,
                       train_x1_context_r, train_x1_c_r_posi,
                       train_x1_fragment, train_x2_tag]
-    inputs_train_y = [train_y_classifer]
+    inputs_train_y = [train_y_classifer, train_y]
 
     # inputs_dev_x = [dev_x1_sent, dev_x1_posi, dev_x2_tag]
     inputs_dev_x = [dev_x1_context_l, dev_x1_c_l_posi,
                     dev_x1_context_r, dev_x1_c_r_posi,
                     dev_x1_fragment, dev_x2_tag]
-    inputs_dev_y = [dev_y_classifer]
+    inputs_dev_y = [dev_y_classifer, dev_y]
 
 
-    for inum in range(0, 3):
+    for inum in range(3, 6):
 
         modelfile = "./model/" + modelname + "__" + datafname + "_tagging_" + str(inum) + ".h5"
 

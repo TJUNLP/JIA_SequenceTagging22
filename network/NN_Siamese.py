@@ -240,6 +240,8 @@ def Model_BiLSTM__MLP_context_withClassifer(wordvocabsize, tagvocabsize, posivoc
 
     classifer = Dense(tagvocabsize, activation='softmax', name='classifer')(x1_all)
 
+    mlp_x1_1 = Dense(200, activation='tanh')(x1_all)
+
     mlp_x2_0 = Flatten()(tag_embedding)
     mlp_x2_0 = Dropout(0.5)(mlp_x2_0)
     mlp_x2_1_1 = Dense(400, activation='tanh')(mlp_x2_0)
@@ -247,23 +249,23 @@ def Model_BiLSTM__MLP_context_withClassifer(wordvocabsize, tagvocabsize, posivoc
     # mlp_x2_1_2 = Dense(200, activation='relu')(mlp_x2_0)
     # mlp_x2_1_2 = Dropout(0.5)(mlp_x2_1_2)
     # mlp_x2_1 = concatenate([mlp_x2_1_1, mlp_x2_1_2])
-    mlp_x2_2 = Dense(300, activation='tanh')(mlp_x2_1_1)
+    mlp_x2_2 = Dense(200, activation='tanh')(mlp_x2_1_1)
     x2_all = Dropout(0.5)(mlp_x2_2)
 
     distance = Lambda(euclidean_distance,
-                      output_shape=eucl_dist_output_shape, name='edistance')([x1_all, x2_all])
+                      output_shape=eucl_dist_output_shape, name='edistance')([mlp_x1_1, x2_all])
 
     mymodel = Model([word_input_context_l, posi_input_context_l,
                      word_input_context_r, posi_input_context_r,
-                     word_input_f, input_tag], [classifer])
+                     word_input_f, input_tag], [classifer, distance])
 
-    mymodel.compile(loss={'classifer': 'categorical_crossentropy'},
-                    optimizer=optimizers.Adam(lr=0.001),
-                    metrics={'classifer': ['acc']})
-    # mymodel.compile(loss={'classifer': 'categorical_crossentropy', 'edistance': contrastive_loss},
-    #                 loss_weights={'classifer': 1., 'edistance': 1.},
+    # mymodel.compile(loss={'classifer': 'categorical_crossentropy'},
     #                 optimizer=optimizers.Adam(lr=0.001),
-    #                 metrics={'classifer': ['acc'], 'edistance': [acc_siamese]})
+    #                 metrics={'classifer': ['acc']})
+    mymodel.compile(loss={'classifer': 'categorical_crossentropy', 'edistance': contrastive_loss},
+                    loss_weights={'classifer': 1., 'edistance': 1.},
+                    optimizer=optimizers.Adam(lr=0.001),
+                    metrics={'classifer': ['acc'], 'edistance': [acc_siamese]})
 
     return mymodel
 
