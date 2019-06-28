@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/PrecessData_Siamese.py" afterPath="$PROJECT_DIR$/PrecessData_Siamese.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel_Siamese.py" afterPath="$PROJECT_DIR$/TrainModel_Siamese.py" />
-      <change beforePath="$PROJECT_DIR$/network/NN_Siamese.py" afterPath="$PROJECT_DIR$/network/NN_Siamese.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -42,8 +40,8 @@
       <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="802" column="26" lean-forward="false" selection-start-line="802" selection-start-column="26" selection-end-line="802" selection-end-column="26" />
+            <state relative-caret-position="368">
+              <caret line="740" column="20" lean-forward="false" selection-start-line="740" selection-start-column="20" selection-end-line="740" selection-end-column="20" />
               <folding>
                 <element signature="e#298#335#0" expanded="true" />
                 <element signature="e#686#4451#0" expanded="false" />
@@ -81,8 +79,8 @@
       <file leaf-file-name="NN_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="261" column="50" lean-forward="true" selection-start-line="261" selection-start-column="50" selection-end-line="261" selection-end-column="50" />
+            <state relative-caret-position="1182">
+              <caret line="240" column="34" lean-forward="false" selection-start-line="240" selection-start-column="22" selection-end-line="240" selection-end-column="34" />
               <folding>
                 <element signature="e#16#75#0" expanded="true" />
                 <element signature="e#725#3022#0" expanded="false" />
@@ -98,8 +96,8 @@
       <file leaf-file-name="PrecessData_Siamese.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="551">
-              <caret line="1116" column="17" lean-forward="true" selection-start-line="1116" selection-start-column="17" selection-end-line="1116" selection-end-column="17" />
+            <state relative-caret-position="198">
+              <caret line="935" column="4" lean-forward="false" selection-start-line="935" selection-start-column="4" selection-end-line="935" selection-end-column="4" />
               <folding>
                 <element signature="e#33#51#0" expanded="true" />
                 <element signature="e#207#549#0" expanded="false" />
@@ -848,10 +846,25 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1182">
+          <caret line="240" column="34" lean-forward="false" selection-start-line="240" selection-start-column="22" selection-end-line="240" selection-end-column="34" />
+          <folding>
+            <element signature="e#16#75#0" expanded="true" />
+            <element signature="e#725#3022#0" expanded="false" />
+            <element signature="e#14233#19317#0" expanded="false" />
+            <element signature="e#19680#25199#0" expanded="false" />
+            <element signature="e#25568#31560#0" expanded="false" />
+            <element signature="e#31985#38763#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PrecessData_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="551">
-          <caret line="1116" column="17" lean-forward="true" selection-start-line="1116" selection-start-column="17" selection-end-line="1116" selection-end-column="17" />
+        <state relative-caret-position="198">
+          <caret line="935" column="4" lean-forward="false" selection-start-line="935" selection-start-column="4" selection-end-line="935" selection-end-column="4" />
           <folding>
             <element signature="e#33#51#0" expanded="true" />
             <element signature="e#207#549#0" expanded="false" />
@@ -868,25 +881,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="350">
-          <caret line="261" column="50" lean-forward="true" selection-start-line="261" selection-start-column="50" selection-end-line="261" selection-end-column="50" />
-          <folding>
-            <element signature="e#16#75#0" expanded="true" />
-            <element signature="e#725#3022#0" expanded="false" />
-            <element signature="e#14233#19317#0" expanded="false" />
-            <element signature="e#19680#25199#0" expanded="false" />
-            <element signature="e#25568#31560#0" expanded="false" />
-            <element signature="e#31985#38763#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="802" column="26" lean-forward="false" selection-start-line="802" selection-start-column="26" selection-end-line="802" selection-end-column="26" />
+        <state relative-caret-position="368">
+          <caret line="740" column="20" lean-forward="false" selection-start-line="740" selection-start-column="20" selection-end-line="740" selection-end-column="20" />
           <folding>
             <element signature="e#298#335#0" expanded="true" />
             <element signature="e#686#4451#0" expanded="false" />

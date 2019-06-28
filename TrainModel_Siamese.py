@@ -713,7 +713,7 @@ if __name__ == "__main__":
 
     maxlen = 50
 
-    hasNeg = False
+
 
     modelname = 'Model_BiLSTM__MLP'
     # modelname = 'Model_BiLSTM__MLP_attention'
@@ -736,7 +736,9 @@ if __name__ == "__main__":
 
     modelfile = "next ...."
 
-    batch_size = 512 #512
+    hasNeg = False
+
+    batch_size = 256 #512
     hidden_dim = 200
     retrain = False
     Test = True
@@ -746,7 +748,7 @@ if __name__ == "__main__":
         print("Precess data....")
 
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile,
-                 w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=True)
+                 w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=hasNeg)
 
     pairs_train, labels_train, classifer_labels_train, \
     pairs_dev, labels_dev, classifer_labels_dev, \
