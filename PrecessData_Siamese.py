@@ -991,17 +991,17 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
 
     fragment_train, max_context, max_fragment = \
         Lists2Set(sen2list_train, tag2list_train, target_id2word, max_context=0, max_fragment=1,
-                  hasNeg=True)
+                  hasNeg=hasNeg)
     print('len(fragment_train) = ', len(fragment_train))
 
     fragment_test, max_context, max_fragment = \
         Lists2Set(sen2list_test, tag2list_test, target_id2word, max_context=max_context, max_fragment=max_fragment,
-                  hasNeg=True)
+                  hasNeg=hasNeg)
     print('len(fragment_train) = ', len(fragment_test))
 
     fragment_dev, max_context, max_fragment = \
         Lists2Set(sen2list_dev, tag2list_dev, target_id2word, max_context=max_context, max_fragment=max_fragment,
-                  hasNeg=True)
+                  hasNeg=hasNeg)
     print('len(fragment_dev) = ', len(fragment_dev))
 
 
