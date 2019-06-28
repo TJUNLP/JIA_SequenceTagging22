@@ -426,7 +426,7 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
 
 
 
-    if len(predictions) < 2 and len(predictions[0]) == 2:
+    if len(predictions) > 2 and len(predictions[0]) == 2:
         print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) < 2 and len(predictions[0]) == 2')
         assert len(predictions) // len(target_vob) == len(fragment_tag_list)
         for i in range(len(predictions)//len(target_vob)):
@@ -458,7 +458,7 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
         F = 2 * P * R / (P + R)
         print('predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
 
-    elif len(predictions) < 2 and len(predictions[0]) == len(target_vob):
+    elif len(predictions) > 2 and len(predictions[0]) == len(target_vob):
 
         print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) < 2 and len(predictions[0]) == 4')
         assert len(predictions) // len(target_vob) == len(fragment_tag_list)
