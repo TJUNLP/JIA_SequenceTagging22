@@ -909,7 +909,7 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
             data_fragment_all.append(data_fragment)
             data_c_l_posi_all.append(data_c_l_posi)
             data_c_r_posi_all.append(data_c_r_posi)
-            labels.append(1)
+            labels.append([0, 1])
             classifer_label.append(fragment_tag)
 
 
@@ -921,7 +921,7 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
             data_fragment_all.append(data_fragment)
             data_c_l_posi_all.append(data_c_l_posi)
             data_c_r_posi_all.append(data_c_r_posi)
-            labels.append(0)
+            labels.append([0, 1])
             classifer_label.append(fragment_tag)
 
 
@@ -933,7 +933,8 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
     return pairs, labels, classifer_labels
 
 
-def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50, hasNeg=False):
+def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=300, c2v_k=25, maxlen = 50,
+             hasNeg=False, percent=1):
 
     """
     数据处理的入口函数
@@ -1004,9 +1005,11 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
                   hasNeg=hasNeg)
     print('len(fragment_dev) = ', len(fragment_dev))
 
+    # weigtnum = int(len(fragment_train) * percent)
+    # fragment_train = fragment_train[:weigtnum]
 
     pairs_train, labels_train, classifer_labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob)
-    print('CreatePairs train len = ', len(pairs_train), len(labels_train))
+    print('CreatePairs train len = ', len(pairs_train[0]), len(labels_train))
 
     pairs_dev, labels_dev, classifer_labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
     print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))

@@ -426,8 +426,8 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
 
 
 
-    if len(predictions) > 2 and len(predictions[0]) == 2:
-        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) > 2 and len(predictions[0]) == 2')
+    if len(predictions) > 2 and len(predictions[0]) == 1:
+        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) > 2 and len(predictions[0]) == 1')
         assert len(predictions) // len(target_vob) == len(fragment_tag_list)
         for i in range(len(predictions)//len(target_vob)):
             subpredictions = predictions[i*len(target_vob):i*len(target_vob) + len(target_vob)]
@@ -453,10 +453,37 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
 
 
 
-        P = predict_right / predict
+        P = predict_right / max(predict, 0.000001)
         R = predict_right / totel_right
-        F = 2 * P * R / (P + R)
+        F = 2 * P * R / max((P + R), 0.000001)
         print('predict_right =, predict =, totel_right = ', predict_right, predict, totel_right)
+
+    elif len(predictions) > 2 and len(predictions[0]) == 2:
+
+        print('-.- -.- -.- -.- -.- -.- -.- -.- -.- len(predictions) > 2 and len(predictions[0]) == 2')
+        assert len(predictions) // len(target_vob) == len(fragment_tag_list)
+        for i in range(len(predictions) // len(target_vob)):
+            subpredictions = predictions[i * len(target_vob):i * len(target_vob) + len(target_vob)]
+
+            max = 0
+            max_where = -1
+            for num, ptagindex in enumerate(subpredictions):
+                if max < ptagindex[1]:
+                    max = ptagindex[1]
+                    max_where = i * len(target_vob) + num
+
+            ptag = x2_tag[max_where][0]
+
+            ttag = fragment_tag_list[i]
+
+            if ptag == ttag:
+                predict_right_c += 1
+
+        P = predict_right_c / predict_c
+        R = predict_right_c / totel_right
+        F = 2 * P * R / (P + R)
+        print('BiClassifer!!!!!!!!!! predict_right =, predict =, target =, ', predict_right_c, predict_c, totel_right)
+        print('Biclassifer!!!!!!!!!! P= ', P, 'R= ', R, 'F= ', F)
 
     elif len(predictions) > 2 and len(predictions[0]) == len(target_vob):
 
@@ -718,7 +745,7 @@ if __name__ == "__main__":
     modelname = 'Model_BiLSTM__MLP'
     # modelname = 'Model_BiLSTM__MLP_attention'
     # modelname = 'Model_BiLSTM__MLP_attention'
-    modelname = 'Model_BiLSTM__MLP_context'
+    # modelname = 'Model_BiLSTM__MLP_context'
     modelname = 'Model_BiLSTM__MLP_context_withClassifer'
 
     print(modelname)
@@ -731,14 +758,16 @@ if __name__ == "__main__":
     resultdir = "./data/result/"
 
     # datafname = 'data_Siamese.4_allneg' #1,3, 4_allneg, 4_allneg_segmentNeg
-    datafname = 'data_Siamese.4_withClassifer'  # 1,3, 4_allneg, 4_allneg_segmentNeg
+    datafname = 'data_Siamese.4_withClassifer'
+    datafname = 'data_Siamese.4fold_0.05'
+    datafname = 'data_Siamese.4fold_BiC'
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
 
     hasNeg = False
 
-    batch_size = 256 #512
+    batch_size = 128 #16,
     hidden_dim = 200
     retrain = False
     Test = True
@@ -748,7 +777,7 @@ if __name__ == "__main__":
         print("Precess data....")
 
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile,
-                 w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=hasNeg)
+                 w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=hasNeg, percent=0.05)
 
     pairs_train, labels_train, classifer_labels_train, \
     pairs_dev, labels_dev, classifer_labels_dev, \
@@ -793,13 +822,13 @@ if __name__ == "__main__":
     inputs_train_x = [train_x1_context_l, train_x1_c_l_posi,
                       train_x1_context_r, train_x1_c_r_posi,
                       train_x1_fragment, train_x2_tag]
-    inputs_train_y = [train_y_classifer, train_y]
+    inputs_train_y = [train_y]
 
     # inputs_dev_x = [dev_x1_sent, dev_x1_posi, dev_x2_tag]
     inputs_dev_x = [dev_x1_context_l, dev_x1_c_l_posi,
                     dev_x1_context_r, dev_x1_c_r_posi,
                     dev_x1_fragment, dev_x2_tag]
-    inputs_dev_y = [dev_y_classifer, dev_y]
+    inputs_dev_y = [dev_y]
 
 
     for inum in range(3, 6):
