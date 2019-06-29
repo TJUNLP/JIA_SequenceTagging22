@@ -657,7 +657,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                epochs=increment,
                                validation_data=(inputs_dev_x, inputs_dev_y),
                                shuffle=True,
-                               class_weight=None,
+                               class_weight={0: 1., 1: 3.},
                                verbose=1,
                                callbacks=[reduce_lr, checkpointer])
 

@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fb49030c-2933-4420-8691-c38090459d33" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/PrecessData_Siamese.py" afterPath="$PROJECT_DIR$/PrecessData_Siamese.py" />
       <change beforePath="$PROJECT_DIR$/TrainModel_Siamese.py" afterPath="$PROJECT_DIR$/TrainModel_Siamese.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -41,8 +40,8 @@
       <file leaf-file-name="TrainModel_Siamese.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="765" column="41" lean-forward="false" selection-start-line="765" selection-start-column="41" selection-end-line="765" selection-end-column="41" />
+            <state relative-caret-position="353">
+              <caret line="659" column="57" lean-forward="false" selection-start-line="659" selection-start-column="57" selection-end-line="659" selection-end-column="57" />
               <folding>
                 <element signature="e#298#335#0" expanded="true" />
                 <element signature="e#686#4451#0" expanded="false" />
@@ -50,6 +49,18 @@
                 <element signature="e#5588#7604#0" expanded="false" />
                 <element signature="e#7706#13105#0" expanded="false" />
                 <element signature="e#22370#23842#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TrainModel_tagging.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-282">
+              <caret line="127" column="53" lean-forward="true" selection-start-line="127" selection-start-column="8" selection-end-line="127" selection-end-column="53" />
+              <folding>
+                <element signature="e#646#2510#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -809,13 +820,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="297" column="12" lean-forward="true" selection-start-line="297" selection-start-column="12" selection-end-line="297" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/network/NN_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
@@ -851,10 +855,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/TrainModel_tagging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-282">
+          <caret line="127" column="53" lean-forward="true" selection-start-line="127" selection-start-column="8" selection-end-line="127" selection-end-column="53" />
+          <folding>
+            <element signature="e#646#2510#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/TrainModel_Siamese.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="765" column="41" lean-forward="false" selection-start-line="765" selection-start-column="41" selection-end-line="765" selection-end-column="41" />
+        <state relative-caret-position="353">
+          <caret line="659" column="57" lean-forward="false" selection-start-line="659" selection-start-column="57" selection-end-line="659" selection-end-column="57" />
           <folding>
             <element signature="e#298#335#0" expanded="true" />
             <element signature="e#686#4451#0" expanded="false" />
