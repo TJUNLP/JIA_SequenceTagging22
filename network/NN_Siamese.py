@@ -251,11 +251,11 @@ def Model_BiLSTM__MLP_context_withClassifer(wordvocabsize, tagvocabsize, posivoc
     mlp_x2_2 = Dense(300, activation='tanh')(mlp_x2_1_1)
     x2_all = Dropout(0.5)(mlp_x2_2)
 
-    x1x2 = concatenate([x1_all, x2_all],axis=-1)
-    classifer = Dense(2, activation='softmax', name='classifer')(x1x2)
 
     distance = Lambda(euclidean_distance,
                       output_shape=eucl_dist_output_shape, name='edistance')([x1_all, x2_all])
+
+    classifer = Dense(2, activation='softmax', name='classifer')(distance)
 
     mymodel = Model([word_input_context_l, posi_input_context_l,
                      word_input_context_r, posi_input_context_r,
