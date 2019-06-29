@@ -899,18 +899,18 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
         for inc in target_vob.values():
 
             if inc == fragment_tag:
-                continue
+                # continue
 
-            data_s_all.append(data_s)
-            data_posi_all.append(data_posi)
-            data_tag_all.append([fragment_tag])
-            data_context_l_all.append(data_context_l)
-            data_context_r_all.append(data_context_r)
-            data_fragment_all.append(data_fragment)
-            data_c_l_posi_all.append(data_c_l_posi)
-            data_c_r_posi_all.append(data_c_r_posi)
-            labels.append([0, 1])
-            classifer_label.append(fragment_tag)
+                data_s_all.append(data_s)
+                data_posi_all.append(data_posi)
+                data_tag_all.append([fragment_tag])
+                data_context_l_all.append(data_context_l)
+                data_context_r_all.append(data_context_r)
+                data_fragment_all.append(data_fragment)
+                data_c_l_posi_all.append(data_c_l_posi)
+                data_c_r_posi_all.append(data_c_r_posi)
+                labels.append([0, 1])
+                classifer_label.append(fragment_tag)
 
 
             data_s_all.append(data_s)

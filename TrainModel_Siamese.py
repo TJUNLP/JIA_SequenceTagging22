@@ -763,7 +763,7 @@ if __name__ == "__main__":
     # datafname = 'data_Siamese.4_allneg' #1,3, 4_allneg, 4_allneg_segmentNeg
     datafname = 'data_Siamese.4_withClassifer'
     datafname = 'data_Siamese.4fold_0.05'
-    datafname = 'data_Siamese.4fold_BiC'
+    datafname = 'data_Siamese.4fold_BiC.2'
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
