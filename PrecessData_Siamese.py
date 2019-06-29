@@ -921,7 +921,7 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
             data_fragment_all.append(data_fragment)
             data_c_l_posi_all.append(data_c_l_posi)
             data_c_r_posi_all.append(data_c_r_posi)
-            labels.append([0, 1])
+            labels.append([1, 0])
             classifer_label.append(fragment_tag)
 
 
@@ -1116,5 +1116,6 @@ if __name__=="__main__":
     pairs_dev, labels_dev, classifer_labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
     print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))
 
-    for cl in classifer_labels_dev:
-        print(cl)
+    x2_tag = np.asarray(labels_train, dtype="int32")
+    for i in x2_tag:
+        print(i)

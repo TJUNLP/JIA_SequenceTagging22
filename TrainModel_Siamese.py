@@ -465,17 +465,20 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
         for i in range(len(predictions) // len(target_vob)):
             subpredictions = predictions[i * len(target_vob):i * len(target_vob) + len(target_vob)]
 
-            max = 0
+            max_1 = 0
             max_where = -1
             for num, ptagindex in enumerate(subpredictions):
-                if max < ptagindex[1]:
-                    max = ptagindex[1]
+                # print(num, ptagindex)
+                if max_1 < ptagindex[1]:
+                    max_1 = ptagindex[1]
                     max_where = i * len(target_vob) + num
 
             ptag = x2_tag[max_where][0]
 
             ttag = fragment_tag_list[i]
+            # print(max_where, x2_tag[max_where], 'ptag', ptag, 'ttag', ttag)
 
+            predict_c += 1
             if ptag == ttag:
                 predict_right_c += 1
 
@@ -767,7 +770,7 @@ if __name__ == "__main__":
 
     hasNeg = False
 
-    batch_size = 128 #16,
+    batch_size = 256 #16,
     hidden_dim = 200
     retrain = False
     Test = True
