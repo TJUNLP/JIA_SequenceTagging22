@@ -15,7 +15,7 @@ from PrecessData_Siamese import get_data
 from Evaluate import evaluation_NER
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau
 from network.NN_Siamese import Model_BiLSTM__MLP, Model_BiLSTM__MLP_context, Model_BiLSTM__MLP_context_withClassifer
-
+from network.NN_Siamese import Model_BiLSTM__MLP_context_withClassifer_charembedTYPE
 
 def Train41stsegment(sen2list_test):
 
@@ -399,7 +399,8 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
         for ins in target_vob.values():
             data_s_all.append(data_s)
             data_posi_all.append(data_posi)
-            data_tag_all.append([ins])
+            # data_tag_all.append([ins])
+            data_tag_all.append(type_W[ins])
             data_context_l_all.append(data_context_l)
             data_context_r_all.append(data_context_r)
             data_fragment_all.append(data_fragment)
@@ -657,7 +658,7 @@ def train_e2e_model(nn_model, modelfile, inputs_train_x, inputs_train_y,
                                epochs=increment,
                                validation_data=(inputs_dev_x, inputs_dev_y),
                                shuffle=True,
-                               class_weight={0: 1., 1: 3.},
+                               # class_weight={0: 1., 1: 3.},
                                verbose=1,
                                callbacks=[reduce_lr, checkpointer])
 
@@ -699,10 +700,10 @@ def infer_e2e_model(nnmodel, modelname, modelfile, fragment_test, resultdir, typ
     print('P = ', P, 'R = ', R, 'F = ', F)
 
 
-def SelectModel(modelname, wordvocabsize, tagvocabsize, posivocabsize,
-                     word_W, posi_W, tag_W,
+def SelectModel(modelname, wordvocabsize, tagvocabsize, posivocabsize,charvocabsize,
+                     word_W, posi_W, tag_W, char_W,
                      input_sent_lenth, input_frament_lenth,
-                     w2v_k, posi2v_k, tag2v_k,
+                     w2v_k, posi2v_k, tag2v_k, c2v_k, tag_k,
                      batch_size=32):
     nn_model = None
 
@@ -735,6 +736,16 @@ def SelectModel(modelname, wordvocabsize, tagvocabsize, posivocabsize,
                                              w2v_k=w2v_k, posi2v_k=posi2v_k, tag2v_k=tag2v_k,
                                              batch_size=batch_size)
 
+    elif modelname is 'Model_BiLSTM__MLP_context_withClassifer_charembedTYPE':
+        nn_model = Model_BiLSTM__MLP_context_withClassifer_charembedTYPE(wordvocabsize=wordvocabsize,
+                                                           posivocabsize=posivocabsize,
+                                                           charvocabsize=charvocabsize,
+                                                           word_W=word_W, posi_W=posi_W, char_W=char_W,
+                                                           input_sent_lenth=input_sent_lenth,
+                                                           input_frament_lenth=input_frament_lenth,
+                                                           w2v_k=w2v_k, posi2v_k=posi2v_k, c2v_k=c2v_k, tag_k=tag_k,
+                                                           batch_size=batch_size)
+
     return nn_model
 
 
@@ -750,6 +761,7 @@ if __name__ == "__main__":
     # modelname = 'Model_BiLSTM__MLP_attention'
     # modelname = 'Model_BiLSTM__MLP_context'
     modelname = 'Model_BiLSTM__MLP_context_withClassifer'
+    modelname = 'Model_BiLSTM__MLP_context_withClassifer_charembedTYPE'
 
     print(modelname)
 
@@ -764,6 +776,7 @@ if __name__ == "__main__":
     datafname = 'data_Siamese.4_withClassifer'
     datafname = 'data_Siamese.4fold_0.05'
     datafname = 'data_Siamese.4fold_BiC.2'
+    datafname = 'data_Siamese.4fold_BiC.charembedTYPE'
     datafile = "./model_data/" + datafname + ".pkl"
 
     modelfile = "next ...."
@@ -782,12 +795,21 @@ if __name__ == "__main__":
         get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile,
                  w2v_k=100, c2v_k=50, maxlen=maxlen, hasNeg=hasNeg, percent=0.05)
 
-    pairs_train, labels_train, classifer_labels_train, \
-    pairs_dev, labels_dev, classifer_labels_dev, \
+    # pairs_train, labels_train, classifer_labels_train, \
+    # pairs_dev, labels_dev, classifer_labels_dev, \
+    # fragment_train, fragment_dev, fragment_test,\
+    # word_vob, word_id2word, word_W, w2v_k,\
+    # TYPE_vob, TYPE_id2type, type_W, type_k,\
+    # posi_W, posi_W,\
+    # target_vob, target_id2word, max_s, max_posi, max_fragment = pickle.load(open(datafile, 'rb'))
+
+    pairs_train, labels_train, classifer_labels_train,\
+    pairs_dev, labels_dev, classifer_labels_dev,\
     fragment_train, fragment_dev, fragment_test,\
     word_vob, word_id2word, word_W, w2v_k,\
+    char_vob, char_id2char, char_W, c2v_k,\
     TYPE_vob, TYPE_id2type, type_W, type_k,\
-    posi_W, posi_W,\
+    posi_W, posi_k,\
     target_vob, target_id2word, max_s, max_posi, max_fragment = pickle.load(open(datafile, 'rb'))
 
     train_x1_sent = np.asarray(pairs_train[0], dtype="int32")
@@ -816,9 +838,10 @@ if __name__ == "__main__":
                            wordvocabsize=len(word_vob),
                            tagvocabsize=len(TYPE_vob),
                            posivocabsize=max_posi+1,
-                           word_W=word_W, posi_W=posi_W, tag_W=type_W,
+                           charvocabsize=len(char_vob)+1,
+                           word_W=word_W, posi_W=posi_W, tag_W=type_W, char_W=char_W,
                            input_sent_lenth=max_s, input_frament_lenth=max_fragment,
-                           w2v_k=w2v_k, posi2v_k=max_posi+1, tag2v_k=type_k,
+                           w2v_k=w2v_k, posi2v_k=max_posi+1, tag2v_k=type_k, c2v_k=c2v_k, tag_k=type_k,
                            batch_size=batch_size)
 
     # inputs_train_x = [train_x1_sent, train_x1_posi, train_x2_tag]

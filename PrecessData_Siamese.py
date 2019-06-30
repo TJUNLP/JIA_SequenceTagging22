@@ -56,6 +56,23 @@ def load_vec_random(vocab_c_inx, k=30):
 
     return k, W
 
+def load_vec_Charembed(vocab_c_inx, char_vob,  k=30):
+
+    TYPE = ['location', 'organization', 'person', 'miscellaneous']
+
+    max = 13
+    W = {}
+
+    for i, tystr in enumerate(TYPE):
+        for ch in tystr:
+            if i not in W.keys():
+                W[i] = [char_vob[ch]]
+            else:
+                W[i] += [char_vob[ch]]
+
+        W[i] += [0 for s in range(max-len(tystr))]
+
+    return max, W
 
 def load_vec_character(c2vfile, vocab_c_inx, k=50):
 
@@ -827,7 +844,7 @@ def CreatePairs(fragment_list, max_s, max_posi, target_vob):
     return pairs, labels
 
 
-def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
+def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob, type_W):
 
     labels = []
     data_s_all = []
@@ -903,7 +920,8 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
 
                 data_s_all.append(data_s)
                 data_posi_all.append(data_posi)
-                data_tag_all.append([fragment_tag])
+                # data_tag_all.append([fragment_tag])
+                data_tag_all.append(type_W[fragment_tag])
                 data_context_l_all.append(data_context_l)
                 data_context_r_all.append(data_context_r)
                 data_fragment_all.append(data_fragment)
@@ -915,7 +933,8 @@ def CreatePairs2(fragment_list, max_s, max_posi, max_fragment, target_vob):
 
             data_s_all.append(data_s)
             data_posi_all.append(data_posi)
-            data_tag_all.append([inc])
+            # data_tag_all.append([inc])
+            data_tag_all.append(type_W[inc])
             data_context_l_all.append(data_context_l)
             data_context_r_all.append(data_context_r)
             data_fragment_all.append(data_fragment)
@@ -949,6 +968,14 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
     #     max_s = maxlen
     print('max soure sent lenth is ' + str(max_s))
 
+    char_vob, char_id2char, max_c = get_Character_index({trainfile, devfile, testfile})
+    print("source char size: ", char_vob.__len__())
+    print("max_c: ", max_c)
+    print("source char: " + str(char_id2char))
+
+    char_W, char_k = load_vec_character(c2v_file, char_vob, c2v_k)
+    print('character_W shape:', char_W.shape)
+
     TYPE_id2type = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
     TYPE_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
@@ -963,8 +990,10 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
     print("source_W  size: " + str(len(word_W)))
     print("num words in source word2vec: " + str(len(word_w2v)))
 
-    type_k, type_W = load_vec_random(TYPE_vob, k=w2v_k)
-    print('TYPE_k, TYPE_W', type_k, len(type_W))
+    # type_k, type_W = load_vec_random(TYPE_vob, k=w2v_k)
+    type_k, type_W = load_vec_Charembed(TYPE_vob, char_vob, k=w2v_k)
+    print('TYPE_k, TYPE_W', type_k, len(type_W[0]))
+
 
     max_posi = 50
     posi_k, posi_W = load_vec_onehot(k=max_posi + 1)
@@ -1008,10 +1037,10 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
     # weigtnum = int(len(fragment_train) * percent)
     # fragment_train = fragment_train[:weigtnum]
 
-    pairs_train, labels_train, classifer_labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob)
+    pairs_train, labels_train, classifer_labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob, type_W)
     print('CreatePairs train len = ', len(pairs_train[0]), len(labels_train))
 
-    pairs_dev, labels_dev, classifer_labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
+    pairs_dev, labels_dev, classifer_labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob, type_W)
     print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))
 
 
@@ -1034,8 +1063,9 @@ def get_data(trainfile, devfile, testfile, w2v_file, c2v_file, datafile, w2v_k=3
                  pairs_dev, labels_dev, classifer_labels_dev,
                  fragment_train, fragment_dev, fragment_test,
                 word_vob, word_id2word, word_W, w2v_k,
+                 char_vob, char_id2char, char_W, c2v_k,
                 TYPE_vob, TYPE_id2type, type_W, type_k,
-                 posi_W, posi_W,
+                 posi_W, posi_k,
                 target_vob, target_id2word, max_s, max_posi, max_fragment], out, 0)
     out.close()
 
@@ -1049,6 +1079,7 @@ if __name__=="__main__":
     devfile = "./data/CoNLL2003_NER/eng.testa.BIOES.txt"
     testfile = "./data/CoNLL2003_NER/eng.testb.BIOES.txt"
     w2v_file = "./data/w2v/glove.6B.100d.txt"
+    c2v_file = "./data/w2v/C0NLL2003.NER.c2v.txt"
     datafile = "./data/model/data.pkl"
     modelfile = "./data/model/model.pkl"
     resultdir = "./data/result/"
@@ -1062,6 +1093,14 @@ if __name__=="__main__":
     #     max_s = maxlen
     print('max soure sent lenth is ' + str(max_s))
 
+    char_vob, char_idex_char, max_c = get_Character_index({trainfile, devfile, testfile})
+    print("source char size: ", char_vob.__len__())
+    print("max_c: ", max_c)
+    print("source char: " + str(char_idex_char))
+
+    character_W, character_k = load_vec_character(c2v_file, char_vob, 50)
+    print('character_W shape:', character_W.shape)
+
     TYPE_id2type = {0: 'LOC', 1: 'ORG', 2: 'PER', 3: 'MISC'}
     TYPE_vob = {'LOC': 0, 'ORG': 1, 'PER': 2, 'MISC': 3}
 
@@ -1072,50 +1111,8 @@ if __name__=="__main__":
     print("source_W  size: " + str(len(word_W)))
     print("num words in source word2vec: " + str(len(word_w2v)))
 
-    type_k, type_W = load_vec_random(TYPE_vob, k=w2v_k)
+    # type_k, type_W = load_vec_random(TYPE_vob, k=w2v_k)
+    type_k, type_W = load_vec_Charembed(TYPE_vob, char_vob, k=w2v_k)
     print('TYPE_k, TYPE_W', type_k, len(type_W))
-
-    max_posi = 50
-    posi_k, posi_W = load_vec_onehot(k=max_posi + 1)
-    print('posi_k, posi_W', posi_k, len(posi_W))
-
-    # train = make_idx_word_index(trainfile, max_s, word_vob, target_vob)
-    # dev = make_idx_word_index(devfile, max_s, word_vob, target_vob)
-    # test = make_idx_word_index(testfile, max_s, word_vob, target_vob)
-    # print('train len  ', train.__len__(), len(train[0]))
-    # print('dev len  ', dev.__len__(), len(dev[0]))
-    # print('test len  ', test.__len__(), len(test[1]))
-
-    sen2list_train, tag2list_train = ReadfromTXT2Lists(trainfile, word_vob, target_vob)
-    print('sen2list_train len = ', len(sen2list_train))
-    print('tag2list_all len = ', len(tag2list_train))
-
-    sen2list_dev, tag2list_dev = ReadfromTXT2Lists(devfile, word_vob, target_vob)
-    print('sen2list_dev len = ', len(sen2list_dev))
-    print('tag2list_all len = ', len(tag2list_dev))
-
-    sen2list_test, tag2list_test = ReadfromTXT2Lists(testfile, word_vob, target_vob)
-    print('sen2list_train len = ', len(sen2list_test))
-    print('tag2list_all len = ', len(tag2list_test))
-
-    fragment_train, max_context, max_fragment = \
-        Lists2Set(sen2list_train, tag2list_train, target_id2word, max_context=0, max_fragment=1)
-    print('len(fragment_train) = ', len(fragment_train))
-
-    fragment_test, max_context, max_fragment = \
-        Lists2Set(sen2list_test, tag2list_test, target_id2word, max_context=max_context, max_fragment=max_fragment)
-    print('len(fragment_train) = ', len(fragment_test))
-
-    fragment_dev, max_context, max_fragment = \
-        Lists2Set(sen2list_dev, tag2list_dev, target_id2word, max_context=max_context, max_fragment=max_fragment)
-    print('len(fragment_dev) = ', len(fragment_dev))
-
-    pairs_train, labels_train, classifer_labels_train = CreatePairs2(fragment_train, max_s, max_posi, max_fragment, TYPE_vob)
-    print('CreatePairs train len = ', len(pairs_train), len(labels_train))
-
-    pairs_dev, labels_dev, classifer_labels_dev = CreatePairs2(fragment_dev, max_s, max_posi, max_fragment, TYPE_vob)
-    print('CreatePairs dev len = ', len(pairs_dev), len(labels_dev))
-
-    x2_tag = np.asarray(labels_train, dtype="int32")
-    for i in x2_tag:
-        print(i)
+    for tw in type_W:
+        print(tw, type_W[tw])
