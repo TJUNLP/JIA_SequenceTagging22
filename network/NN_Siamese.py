@@ -278,6 +278,8 @@ def Model_BiLSTM__MLP_context_withClassifer_charembedTYPE(wordvocabsize, posivoc
                      input_sent_lenth, input_frament_lenth,
                      w2v_k, posi2v_k, c2v_k, tag_k,
                     batch_size=32):
+    input_maxword_length = 18
+
 
     word_input_f = Input(shape=(input_frament_lenth,), dtype='int32')
     word_embedding_f = Embedding(input_dim=wordvocabsize + 1,
@@ -288,6 +290,22 @@ def Model_BiLSTM__MLP_context_withClassifer_charembedTYPE(wordvocabsize, posivoc
                                     weights=[word_W])(word_input_f)
     # word_embedding_f = Dropout(0.5)(word_embedding_f)
 
+    char_input_f = Input(shape=(input_frament_lenth, input_maxword_length,), dtype='int32')
+    char_embedding_f = TimeDistributed(Embedding(input_dim=charvocabsize,
+                               output_dim=c2v_k,
+                               batch_input_shape=(batch_size, input_frament_lenth, input_maxword_length),
+                               mask_zero=False,
+                               trainable=True,
+                               weights=[char_W]))(char_input_f)
+
+    char_cnn_f = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))
+    char_embedding_fragment = char_cnn_f(char_embedding_f)
+    char_embedding_fragment = TimeDistributed(GlobalMaxPooling1D())(char_embedding_fragment)
+    char_embedding_f = Dropout(0.25)(char_embedding_fragment)
+
+    embedding_f = concatenate([word_embedding_f, char_embedding_f], axis=-1)
+
+
     word_input_context_l = Input(shape=(input_sent_lenth+1,), dtype='int32')
     word_embedding_context_l = Embedding(input_dim=wordvocabsize + 1,
                                     output_dim=w2v_k,
@@ -297,6 +315,20 @@ def Model_BiLSTM__MLP_context_withClassifer_charembedTYPE(wordvocabsize, posivoc
                                     weights=[word_W])(word_input_context_l)
     # word_embedding_context_l = Dropout(0.5)(word_input_context_l)
 
+    char_input_context_l = Input(shape=(input_sent_lenth+1, input_maxword_length,), dtype='int32')
+    char_embedding_context_l = TimeDistributed(Embedding(input_dim=charvocabsize,
+                                                           output_dim=c2v_k,
+                                                           batch_input_shape=(
+                                                               batch_size, input_sent_lenth+1,
+                                                               input_maxword_length),
+                                                           mask_zero=False,
+                                                           trainable=True,
+                                                           weights=[char_W]))(char_input_context_l)
+    char_cnn_c = TimeDistributed(Conv1D(50, 3, activation='relu', padding='valid'))
+    char_embedding_leftcontext = char_cnn_c(char_embedding_context_l)
+    char_embedding_leftcontext = TimeDistributed(GlobalMaxPooling1D())(char_embedding_leftcontext)
+    char_embedding_context_l = Dropout(0.25)(char_embedding_leftcontext)
+
     word_input_context_r = Input(shape=(input_sent_lenth+1,), dtype='int32')
     word_embedding_context_r = Embedding(input_dim=wordvocabsize + 1,
                                     output_dim=w2v_k,
@@ -305,6 +337,20 @@ def Model_BiLSTM__MLP_context_withClassifer_charembedTYPE(wordvocabsize, posivoc
                                     trainable=True,
                                     weights=[word_W])(word_input_context_r)
     # word_embedding_context_r = Dropout(0.5)(word_embedding_context_r)
+
+    char_input_context_r = Input(shape=(input_sent_lenth+1, input_maxword_length,), dtype='int32')
+    char_embedding_context_r = TimeDistributed(Embedding(input_dim=charvocabsize,
+                                                            output_dim=c2v_k,
+                                                            batch_input_shape=(
+                                                                batch_size, input_sent_lenth+1,
+                                                                input_maxword_length),
+                                                            mask_zero=False,
+                                                            trainable=True,
+                                                            weights=[char_W]))(char_input_context_r)
+    char_embedding_rightcontext = char_cnn_c(char_embedding_context_r)
+    char_embedding_rightcontext = TimeDistributed(GlobalMaxPooling1D())(char_embedding_rightcontext)
+    char_embedding_context_r = Dropout(0.25)(char_embedding_rightcontext)
+
 
     posi_input_context_l = Input(shape=(input_sent_lenth+1,), dtype='int32')
     posi_embedding_context_l = Embedding(input_dim=posivocabsize,
@@ -334,15 +380,15 @@ def Model_BiLSTM__MLP_context_withClassifer_charembedTYPE(wordvocabsize, posivoc
 
 
 
-    cnn2 = Conv1D(100, 2, activation='relu', strides=1, padding='valid')(word_embedding_f)
+    cnn2 = Conv1D(100, 2, activation='relu', strides=1, padding='valid')(embedding_f)
     cnn2 = Dropout(0.3)(cnn2)
     cnn4 = Conv1D(100, 4, activation='relu', strides=1, padding='valid')(cnn2)
     CNN_x1_f = GlobalMaxPooling1D()(cnn4)
 
-    embedding_x1_l = concatenate([word_embedding_context_l, posi_embedding_context_l], axis=-1)
+    embedding_x1_l = concatenate([word_embedding_context_l, char_embedding_context_l, posi_embedding_context_l], axis=-1)
     BiLSTM_x1_l = LSTM(100, activation='tanh',return_sequences=False)(embedding_x1_l)
 
-    embedding_x1_r = concatenate([word_embedding_context_r, posi_embedding_context_r], axis=-1)
+    embedding_x1_r = concatenate([word_embedding_context_r, char_embedding_context_r, posi_embedding_context_r], axis=-1)
     BiLSTM_x1_r = LSTM(100, activation='tanh',return_sequences=False, go_backwards=True)(embedding_x1_r)
 
     x1_all = concatenate([BiLSTM_x1_l, CNN_x1_f, BiLSTM_x1_r], axis=-1)
@@ -369,9 +415,9 @@ def Model_BiLSTM__MLP_context_withClassifer_charembedTYPE(wordvocabsize, posivoc
 
     classifer = Dense(2, activation='softmax', name='classifer')(distance)
 
-    mymodel = Model([word_input_context_l, posi_input_context_l,
-                     word_input_context_r, posi_input_context_r,
-                     word_input_f, input_tag], [classifer])
+    mymodel = Model([word_input_context_l, posi_input_context_l, char_input_context_l,
+                     word_input_context_r, posi_input_context_r, char_input_context_r,
+                     word_input_f, char_input_f, input_tag], [classifer])
 
     mymodel.compile(loss={'classifer': 'categorical_crossentropy'},
                     optimizer=optimizers.Adam(lr=0.001),

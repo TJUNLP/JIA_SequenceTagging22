@@ -360,6 +360,9 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
     data_fragment_all = []
     data_c_l_posi_all = []
     data_c_r_posi_all = []
+    char_fragment_all = []
+    char_context_l_all = []
+    char_context_r_all = []
 
     fragment_tag_list = []
     for frag in fragment_test:
@@ -391,10 +394,54 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
                         [min(i, max_posi) for i in range(1, len(data_context_r) - len(data_fragment) + 1)]
 
         padlen = max(0, max_fragment - len(data_fragment))
-        data_fragment = [0] * (padlen // 2) + data_fragment + [0] * (padlen - padlen // 2)
+        word_fragment = [0] * (padlen // 2) + data_fragment + [0] * (padlen - padlen // 2)
+
+        char_fragment = []
+        for wordindex in data_fragment[0: min(len(data_fragment), max_fragment)]:
+            word = word_id2word[wordindex]
+            data_c = []
+            for chr in range(0, min(len(word), max_c)):
+                if not char_vob.__contains__(word[chr]):
+                    data_c.append(char_vob["**UNK**"])
+                else:
+                    data_c.append(char_vob[word[chr]])
+            data_c = data_c + [0] * max(max_c - word.__len__(), 0)
+            char_fragment.append(data_c)
+        char_fragment = [[0] * max_c] * (padlen // 2) + char_fragment + [[0] * max_c] * (padlen - padlen // 2)
 
         data_context_r = [1] + data_context_r
         data_context_l = data_context_l + [1]
+
+        char_context_r = []
+        for wordindex in data_context_r:
+            if wordindex == 0 or wordindex == 1:
+                continue
+            word = word_id2word[wordindex]
+            data_c = []
+            for chr in range(0, min(word.__len__(), max_c)):
+                if not char_vob.__contains__(word[chr]):
+                    data_c.append(char_vob["**UNK**"])
+                else:
+                    data_c.append(char_vob[word[chr]])
+            data_c = data_c + [0] * max(max_c - word.__len__(), 0)
+            char_context_r.append(data_c)
+        char_context_r = [[1] * max_c] + char_context_r + [[0] * max_c] * max(0, max_s - len(char_context_r))
+
+        char_context_l = []
+        for wordindex in data_context_l:
+            if wordindex == 0 or wordindex == 1:
+                continue
+            word = word_id2word[wordindex]
+            data_c = []
+            for chr in range(0, min(word.__len__(), max_c)):
+                if not char_vob.__contains__(word[chr]):
+                    data_c.append(char_vob["**UNK**"])
+                else:
+                    data_c.append(char_vob[word[chr]])
+            data_c = data_c + [0] * max(max_c - word.__len__(), 0)
+            char_context_l.append(data_c)
+        char_context_l = [[0] * max_c] * max(0, max_s - len(char_context_l)) + char_context_l + [[1] * max_c]
+
 
         for ins in target_vob.values():
             data_s_all.append(data_s)
@@ -403,12 +450,17 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
             data_tag_all.append(type_W[ins])
             data_context_l_all.append(data_context_l)
             data_context_r_all.append(data_context_r)
-            data_fragment_all.append(data_fragment)
+            data_fragment_all.append(word_fragment)
             data_c_l_posi_all.append(data_c_l_posi)
             data_c_r_posi_all.append(data_c_r_posi)
+            char_context_l_all.append(char_context_l)
+            char_context_r_all.append(char_context_r)
+            char_fragment_all.append(char_fragment)
 
     pairs = [data_s_all, data_posi_all, data_tag_all,
-             data_context_r_all, data_context_l_all, data_fragment_all, data_c_l_posi_all, data_c_r_posi_all]
+             data_context_r_all, data_context_l_all, data_fragment_all,
+             data_c_l_posi_all, data_c_r_posi_all,
+             char_context_l_all, char_context_r_all, char_fragment_all]
 
     x1_sent = np.asarray(pairs[0], dtype="int32")
     x1_posi = np.asarray(pairs[1], dtype="int32")
@@ -418,12 +470,14 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
     x1_fragment = np.asarray(pairs[5], dtype="int32")
     x1_c_l_posi = np.asarray(pairs[6], dtype="int32")
     x1_c_r_posi = np.asarray(pairs[7], dtype="int32")
-
+    x1_c_l_char = np.asarray(pairs[8], dtype="int32")
+    x1_c_r_char = np.asarray(pairs[9], dtype="int32")
+    x1_fragment_char = np.asarray(pairs[10], dtype="int32")
 
     # predictions = nn_model.predict([x1_sent, x1_posi, x2_tag], batch_size=512, verbose=0)
-    predictions = nn_model.predict([x1_context_l, x1_c_l_posi,
-                                    x1_context_r, x1_c_r_posi,
-                                    x1_fragment, x2_tag], batch_size=512, verbose=0)
+    predictions = nn_model.predict([x1_context_l, x1_c_l_posi, x1_c_l_char,
+                                    x1_context_r, x1_c_r_posi, x1_c_r_char,
+                                    x1_fragment, x1_fragment_char, x2_tag], batch_size=512, verbose=0)
 
 
 
@@ -810,7 +864,7 @@ if __name__ == "__main__":
     char_vob, char_id2char, char_W, c2v_k,\
     TYPE_vob, TYPE_id2type, type_W, type_k,\
     posi_W, posi_k,\
-    target_vob, target_id2word, max_s, max_posi, max_fragment = pickle.load(open(datafile, 'rb'))
+    target_vob, target_id2word, max_s, max_posi, max_fragment, max_c = pickle.load(open(datafile, 'rb'))
 
     train_x1_sent = np.asarray(pairs_train[0], dtype="int32")
     train_x1_posi = np.asarray(pairs_train[1], dtype="int32")
@@ -820,6 +874,9 @@ if __name__ == "__main__":
     train_x1_fragment = np.asarray(pairs_train[5], dtype="int32")
     train_x1_c_l_posi = np.asarray(pairs_train[6], dtype="int32")
     train_x1_c_r_posi = np.asarray(pairs_train[7], dtype="int32")
+    train_x1_c_l_char = np.asarray(pairs_train[8], dtype="int32")
+    train_x1_c_r_char = np.asarray(pairs_train[9], dtype="int32")
+    train_x1_fragment_char = np.asarray(pairs_train[10], dtype="int32")
     train_y = np.asarray(labels_train, dtype="int32")
     train_y_classifer = np.asarray(classifer_labels_train, dtype="int32")
 
@@ -831,6 +888,9 @@ if __name__ == "__main__":
     dev_x1_fragment = np.asarray(pairs_dev[5], dtype="int32")
     dev_x1_c_l_posi = np.asarray(pairs_dev[6], dtype="int32")
     dev_x1_c_r_posi = np.asarray(pairs_dev[7], dtype="int32")
+    dev_x1_c_l_char = np.asarray(pairs_dev[8], dtype="int32")
+    dev_x1_c_r_char = np.asarray(pairs_dev[9], dtype="int32")
+    dev_x1_fragment_char = np.asarray(pairs_dev[10], dtype="int32")
     dev_y = np.asarray(labels_dev, dtype="int32")
     dev_y_classifer = np.asarray(classifer_labels_dev, dtype="int32")
 
@@ -845,15 +905,15 @@ if __name__ == "__main__":
                            batch_size=batch_size)
 
     # inputs_train_x = [train_x1_sent, train_x1_posi, train_x2_tag]
-    inputs_train_x = [train_x1_context_l, train_x1_c_l_posi,
-                      train_x1_context_r, train_x1_c_r_posi,
-                      train_x1_fragment, train_x2_tag]
+    inputs_train_x = [train_x1_context_l, train_x1_c_l_posi, train_x1_c_l_char,
+                      train_x1_context_r, train_x1_c_r_posi, train_x1_c_r_char,
+                      train_x1_fragment, train_x1_fragment_char, train_x2_tag]
     inputs_train_y = [train_y]
 
     # inputs_dev_x = [dev_x1_sent, dev_x1_posi, dev_x2_tag]
-    inputs_dev_x = [dev_x1_context_l, dev_x1_c_l_posi,
-                    dev_x1_context_r, dev_x1_c_r_posi,
-                    dev_x1_fragment, dev_x2_tag]
+    inputs_dev_x = [dev_x1_context_l, dev_x1_c_l_posi, dev_x1_c_l_char,
+                    dev_x1_context_r, dev_x1_c_r_posi, dev_x1_c_r_char,
+                    dev_x1_fragment, dev_x1_fragment_char, dev_x2_tag]
     inputs_dev_y = [dev_y]
 
 
