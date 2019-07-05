@@ -363,6 +363,7 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
     char_fragment_all = []
     char_context_l_all = []
     char_context_r_all = []
+    candidate_tag_list = []
 
     fragment_tag_list = []
     for frag in fragment_test:
@@ -442,12 +443,13 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
             char_context_l.append(data_c)
         char_context_l = [[0] * max_c] * max(0, max_s - len(char_context_l)) + char_context_l + [[1] * max_c]
 
-
+        ctag = []
         for ins in target_vob.values():
             data_s_all.append(data_s)
             data_posi_all.append(data_posi)
             # data_tag_all.append([ins])
             data_tag_all.append(type_W[ins])
+            ctag.append(ins)
             data_context_l_all.append(data_context_l)
             data_context_r_all.append(data_context_r)
             data_fragment_all.append(word_fragment)
@@ -456,6 +458,7 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
             char_context_l_all.append(char_context_l)
             char_context_r_all.append(char_context_r)
             char_fragment_all.append(char_fragment)
+        candidate_tag_list.append(ctag)
 
     pairs = [data_s_all, data_posi_all, data_tag_all,
              data_context_r_all, data_context_l_all, data_fragment_all,
@@ -526,12 +529,12 @@ def test_model(nn_model, fragment_test, target_vob, max_s, max_posi, max_fragmen
                 # print(num, ptagindex)
                 if max_1 < ptagindex[1]:
                     max_1 = ptagindex[1]
-                    max_where = i * len(target_vob) + num
+                    max_where = num
 
-            ptag = x2_tag[max_where][0]
+            ptag = candidate_tag_list[i][max_where]
 
             ttag = fragment_tag_list[i]
-            # print(max_where, x2_tag[max_where], 'ptag', ptag, 'ttag', ttag)
+            # print(max_where, candidate_tag_list[i], 'ptag', ptag, 'ttag', ttag)
 
             predict_c += 1
             if ptag == ttag:
