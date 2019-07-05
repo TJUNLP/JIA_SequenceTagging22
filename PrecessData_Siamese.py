@@ -560,7 +560,7 @@ def get_Character_index(files):
 
     if not source_vob.__contains__("**Placeholder**"):
         source_vob["**Placeholder**"] = 1
-        sourc_idex_word[0] = "**Placeholder**"
+        sourc_idex_word[1] = "**Placeholder**"
         count += 1
 
     for file in files:
